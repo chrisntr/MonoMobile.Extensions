@@ -1,3 +1,4 @@
+using Android.App;
 using Android.Content;
 using Android.Provider;
 
@@ -5,7 +6,7 @@ namespace MonoMobile.Extensions
 {
     public class Device : IDevice
     {
-        public Device(Context context)
+        public Device(Activity context)
         {
             Context = context;
         }

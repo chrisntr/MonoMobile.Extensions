@@ -45,6 +45,10 @@
     <Compile Include="..\..\Shared\IDevice.cs">
       <Link>IDevice.cs</Link>
     </Compile>
+    <Compile Include="..\..\Shared\INotification.cs">
+      <Link>INotification.cs</Link>
+    </Compile>
+    <Compile Include="Notification.cs" />
     <Compile Include="Device.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

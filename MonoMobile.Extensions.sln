@@ -5,6 +5,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MonoDroid", "MonoDroid", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoMobile.Extensions", "MonoDroid\MonoMobile.Extensions\MonoMobile.Extensions.csproj", "{32DFF77E-AE38-48D6-B067-CF555798EA32}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{21B17BB4-06C1-4E6E-BD78-C022CD8F8266}"
+	ProjectSection(SolutionItems) = preProject
+		Shared\ExtensionHelper.cs = Shared\ExtensionHelper.cs
+		Shared\IDevice.cs = Shared\IDevice.cs
+		Shared\INotification.cs = Shared\INotification.cs
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
