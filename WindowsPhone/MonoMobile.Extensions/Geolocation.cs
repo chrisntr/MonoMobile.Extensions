@@ -17,6 +17,10 @@ namespace MonoMobile.Extensions
             _geoWatcher = new GeoCoordinateWatcher();
             _geoWatcher.StatusChanged += OnStatusChanged;
             _geoWatcher.PositionChanged += OnPositionChanged;
+
+            _currentPositionCallback = position => { };
+            _watchPositionCallback = position => { };
+            _errorCallback = error => { };
         }
 
         public void GetCurrentPosition(Action<Position> success, Action<PositionError> error, GeolocationOptions options)
@@ -88,10 +92,10 @@ namespace MonoMobile.Extensions
 
         public void ClearWatch(string watchID)
         {
-            if (watchID == _watchId)
-            {
-                _geoWatcher.Stop();
-            }            
+            if (watchID != _watchId) return;
+
+            _watchPositionCallback = position => { };
+            _geoWatcher.Stop();
         }
 
         private static Position CreatePosition(GeoCoordinate coordinate)
