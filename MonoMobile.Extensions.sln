@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{21B17B
 	ProjectSection(SolutionItems) = preProject
 		Shared\ExtensionHelper.cs = Shared\ExtensionHelper.cs
 		Shared\IDevice.cs = Shared\IDevice.cs
+		Shared\IGeolocation.cs = Shared\IGeolocation.cs
 		Shared\INotification.cs = Shared\INotification.cs
 	EndProjectSection
 EndProject
