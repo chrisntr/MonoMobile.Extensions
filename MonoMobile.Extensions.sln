@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WindowsPhone", "WindowsPhon
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoMobile.Extensions", "WindowsPhone\MonoMobile.Extensions\MonoMobile.Extensions.csproj", "{075AA9A6-A76F-482D-B504-BA0A224B0480}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoMobile.Example", "WindowsPhone\MonoMobile.Example\MonoMobile.Example.csproj", "{F29B8383-1951-4E30-B809-6FC5A764CE22}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,12 @@ Global
 		{075AA9A6-A76F-482D-B504-BA0A224B0480}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{075AA9A6-A76F-482D-B504-BA0A224B0480}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{075AA9A6-A76F-482D-B504-BA0A224B0480}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F29B8383-1951-4E30-B809-6FC5A764CE22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F29B8383-1951-4E30-B809-6FC5A764CE22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F29B8383-1951-4E30-B809-6FC5A764CE22}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{F29B8383-1951-4E30-B809-6FC5A764CE22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F29B8383-1951-4E30-B809-6FC5A764CE22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F29B8383-1951-4E30-B809-6FC5A764CE22}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -38,5 +46,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{32DFF77E-AE38-48D6-B067-CF555798EA32} = {D66A3439-B7B0-4641-9B11-BCD00A611EE5}
 		{075AA9A6-A76F-482D-B504-BA0A224B0480} = {72E85363-D435-44F5-BC8B-6270AD25EA9F}
+		{F29B8383-1951-4E30-B809-6FC5A764CE22} = {72E85363-D435-44F5-BC8B-6270AD25EA9F}
 	EndGlobalSection
 EndGlobal
