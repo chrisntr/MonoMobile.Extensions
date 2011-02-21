@@ -1,42 +1,131 @@
 ﻿using System;
+using System.Device.Location;
 
 namespace MonoMobile.Extensions
 {
     public class Geolocation : IGeolocation
     {
-        public void GetCurrentPosition(Action<Position> geolocationSuccess)
+        private readonly string _watchId;
+        private GeoCoordinateWatcher _geoWatcher;
+        private Action<Position> _currentPositionCallback;
+        private Action<Position> _watchPositionCallback;
+        private Action<PositionError> _errorCallback;
+
+        public Geolocation()
         {
-            throw new NotImplementedException();
+            _watchId = Guid.NewGuid().ToString();
+            _geoWatcher = new GeoCoordinateWatcher();
+            _geoWatcher.StatusChanged += OnStatusChanged;
+            _geoWatcher.PositionChanged += OnPositionChanged;
         }
 
-        public void GetCurrentPosition(Action<Position> geolocationSuccess, Action<PositionError> geolocationError)
+        public void GetCurrentPosition(Action<Position> success, Action<PositionError> error, GeolocationOptions options)
         {
-            throw new NotImplementedException();
+            _currentPositionCallback = success;
+            _errorCallback = error;
+
+            if(options.EnableHighAccuracy && _geoWatcher.DesiredAccuracy != GeoPositionAccuracy.High)
+            {
+                _geoWatcher.StatusChanged -= OnStatusChanged;
+                _geoWatcher.Stop();
+
+                _geoWatcher = new GeoCoordinateWatcher(GeoPositionAccuracy.High);
+                _geoWatcher.StatusChanged += OnStatusChanged;
+            }
+
+            if(_geoWatcher.Status == GeoPositionStatus.Disabled || _geoWatcher.Status == GeoPositionStatus.NoData)
+            {
+                _geoWatcher.Start();
+            }
         }
 
-        public void GetCurrentPosition(Action<Position> geolocationSuccess, Action<PositionError> geolocationError, GeolocationOptions geolocationOptions)
-        {
-            throw new NotImplementedException();
+        private void OnStatusChanged(object sender, GeoPositionStatusChangedEventArgs e)
+        {            
+            switch(e.Status)
+            {
+                case GeoPositionStatus.NoData:
+                case GeoPositionStatus.Disabled:
+                    var errorCode = _geoWatcher.Permission == GeoPositionPermission.Denied
+                                        ? PositionErrorCode.PermissionDenied
+                                        : PositionErrorCode.PositionUnavailable;
+                    _errorCallback(new PositionError(errorCode, "TODO"));
+                    _geoWatcher.Stop();
+                    break;
+                case GeoPositionStatus.Ready:                    
+                    var position = CreatePosition(_geoWatcher.Position.Location);
+                    position.Timestamp = _geoWatcher.Position.Timestamp;
+                    _currentPositionCallback(position);
+                    _geoWatcher.Stop();
+                    break;
+                default :
+                    break;
+            }
         }
 
-        public string WatchPosition(Action<Position> geolocationSuccess)
+        public string WatchPosition(Action<Position> success, Action<PositionError> error, GeolocationOptions options)
         {
-            throw new NotImplementedException();
+            _watchPositionCallback = success;
+            _errorCallback = error;
+            if (options.EnableHighAccuracy && _geoWatcher.DesiredAccuracy != GeoPositionAccuracy.High)
+            {
+                _geoWatcher.PositionChanged -= OnPositionChanged;
+                _geoWatcher.Stop();
+
+                _geoWatcher = new GeoCoordinateWatcher(GeoPositionAccuracy.High);
+                _geoWatcher.PositionChanged += OnPositionChanged;
+            }
+
+            _geoWatcher.Start();
+            return _watchId;            
         }
 
-        public string WatchPosition(Action<Position> geolocationSuccess, Action<PositionError> geolocationError)
+        private void OnPositionChanged(object sender, GeoPositionChangedEventArgs<GeoCoordinate> e)
         {
-            throw new NotImplementedException();
-        }
-
-        public string WatchPosition(Action<Position> geolocationSuccess, Action<PositionError> geolocationError, GeolocationOptions geolocationOptions)
-        {
-            throw new NotImplementedException();
+            var position = CreatePosition(e.Position.Location);
+            position.Timestamp = e.Position.Timestamp;
+            _watchPositionCallback(position);
         }
 
         public void ClearWatch(string watchID)
         {
-            throw new NotImplementedException();
+            if (watchID == _watchId)
+            {
+                _geoWatcher.Stop();
+            }            
         }
+
+        private static Position CreatePosition(GeoCoordinate coordinate)
+        {
+            var position = new Position();
+            var coords = position.Coords;
+
+            coords.Altitude = coordinate.Altitude;
+            coords.Latitude = coordinate.Latitude;
+            coords.Longitude = coordinate.Longitude;
+            coords.Speed = coordinate.Speed;
+            coords.Accuracy = coordinate.HorizontalAccuracy;
+            coords.AltitudeAccuracy = coordinate.VerticalAccuracy;
+            return position;
+        }
+
+        public void GetCurrentPosition(Action<Position> success)
+        {
+            GetCurrentPosition(success, error => {}, new GeolocationOptions());
+        }
+
+        public void GetCurrentPosition(Action<Position> success, Action<PositionError> error)
+        {
+            GetCurrentPosition(success, error, new GeolocationOptions());
+        }
+
+        public string WatchPosition(Action<Position> success)
+        {
+            return WatchPosition(success, error => {}, new GeolocationOptions());
+        }
+
+        public string WatchPosition(Action<Position> success, Action<PositionError> error)
+        {
+            return WatchPosition(success, error, new GeolocationOptions());
+        }              
     }
 }

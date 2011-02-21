@@ -4,13 +4,13 @@ namespace MonoMobile.Extensions
 {
     public interface IGeolocation
     {
-        void GetCurrentPosition(Action<Position> geolocationSuccess);
-        void GetCurrentPosition(Action<Position> geolocationSuccess, Action<PositionError> geolocationError);
-        void GetCurrentPosition(Action<Position> geolocationSuccess, Action<PositionError> geolocationError, GeolocationOptions geolocationOptions);
+        void GetCurrentPosition(Action<Position> success);
+        void GetCurrentPosition(Action<Position> success, Action<PositionError> error);
+        void GetCurrentPosition(Action<Position> success, Action<PositionError> error, GeolocationOptions options);
 
-        string WatchPosition(Action<Position> geolocationSuccess);
-        string WatchPosition(Action<Position> geolocationSuccess, Action<PositionError> geolocationError);
-        string WatchPosition(Action<Position> geolocationSuccess, Action<PositionError> geolocationError, GeolocationOptions geolocationOptions);
+        string WatchPosition(Action<Position> success);
+        string WatchPosition(Action<Position> success, Action<PositionError> error);
+        string WatchPosition(Action<Position> success, Action<PositionError> error, GeolocationOptions options);
 
         void ClearWatch(string watchID);
     }
@@ -25,7 +25,12 @@ namespace MonoMobile.Extensions
     public class Position
     {
         public Coordinates Coords { get; set; }
-        public DateTime Timestamp { get; set; }
+        public DateTimeOffset Timestamp { get; set; }
+
+        public Position()
+        {
+            Coords = new Coordinates();
+        }
     }
 
     public class Coordinates
@@ -36,13 +41,24 @@ namespace MonoMobile.Extensions
         public double Accuracy { get; set; }
         public double AltitudeAccuracy { get; set; }
         public double Heading { get; set; }
-        public double Speet { get; set; }
+        public double Speed { get; set; }
     }
 
     public class PositionError
     {
-        public PositionErrorCode Code { get; set; }
         public string Message { get; set; }
+        public PositionErrorCode Code { get; set; }        
+
+        public PositionError()
+        {
+            
+        }
+
+        public PositionError(PositionErrorCode code, string message)
+        {
+            Code = code;
+            Message = message;
+        }
     }
 
     public enum PositionErrorCode
