@@ -12,3 +12,5 @@ _ReSharper.*
 *.cache
 *~
 *.swp
+*.pidb
+*.userprefs
