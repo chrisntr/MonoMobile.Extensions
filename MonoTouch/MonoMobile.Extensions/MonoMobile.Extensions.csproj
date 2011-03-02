@@ -69,4 +69,19 @@
       <Properties InternalTargetFrameworkVersion="IPhone" />
     </MonoDevelop>
   </ProjectExtensions>
+  <ItemGroup>
+    <Compile Include="..\..\Shared\ExtensionHelper.cs">
+      <Link>ExtensionHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\IDevice.cs">
+      <Link>IDevice.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\IGeolocation.cs">
+      <Link>IGeolocation.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\INotification.cs">
+      <Link>INotification.cs</Link>
+    </Compile>
+    <Compile Include="Geolocation.cs" />
+  </ItemGroup>
 </Project>
