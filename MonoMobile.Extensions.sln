@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MonoDroid", "MonoDroid", "{D66A3439-B7B0-4641-9B11-BCD00A611EE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoMobile.Extensions", "MonoDroid\MonoMobile.Extensions\MonoMobile.Extensions.csproj", "{32DFF77E-AE38-48D6-B067-CF555798EA32}"
+Project("{9344bdbb-3e7f-41fc-a0dd-8665d75ee146}") = "MonoMobile.Extensions", "MonoDroid\MonoMobile.Extensions\MonoMobile.Extensions.csproj", "{73D603BF-84A9-4CFC-BA5A-5DB9E4F3A198}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{21B17BB4-06C1-4E6E-BD78-C022CD8F8266}"
 	ProjectSection(SolutionItems) = preProject
@@ -15,37 +15,55 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{21B17B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WindowsPhone", "WindowsPhone", "{72E85363-D435-44F5-BC8B-6270AD25EA9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoMobile.Extensions", "WindowsPhone\MonoMobile.Extensions\MonoMobile.Extensions.csproj", "{075AA9A6-A76F-482D-B504-BA0A224B0480}"
+Project("{9344bdbb-3e7f-41fc-a0dd-8665d75ee146}") = "MonoMobile.Extensions", "WindowsPhone\MonoMobile.Extensions\MonoMobile.Extensions.csproj", "{D7BBABD9-6579-4E25-A48F-227394D596FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoMobile.Example", "WindowsPhone\MonoMobile.Example\MonoMobile.Example.csproj", "{F29B8383-1951-4E30-B809-6FC5A764CE22}"
+Project("{9344bdbb-3e7f-41fc-a0dd-8665d75ee146}") = "MonoMobile.Example", "WindowsPhone\MonoMobile.Example\MonoMobile.Example.csproj", "{A0DFF013-DD6A-4127-A846-5F02D4E09B63}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MonoTouch", "MonoTouch", "{8A4D3352-DBA8-4BE4-B66C-2BF4A538C725}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoMobile.Extensions", "MonoTouch\MonoMobile.Extensions\MonoMobile.Extensions.csproj", "{87C4E91E-8215-46E6-BC21-41650EEB8C92}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+		Debug|iPhone = Debug|iPhone
+		Release|iPhone = Release|iPhone
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{32DFF77E-AE38-48D6-B067-CF555798EA32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{32DFF77E-AE38-48D6-B067-CF555798EA32}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{32DFF77E-AE38-48D6-B067-CF555798EA32}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{32DFF77E-AE38-48D6-B067-CF555798EA32}.Release|Any CPU.Build.0 = Release|Any CPU
-		{075AA9A6-A76F-482D-B504-BA0A224B0480}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{075AA9A6-A76F-482D-B504-BA0A224B0480}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{075AA9A6-A76F-482D-B504-BA0A224B0480}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{075AA9A6-A76F-482D-B504-BA0A224B0480}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F29B8383-1951-4E30-B809-6FC5A764CE22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F29B8383-1951-4E30-B809-6FC5A764CE22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73D603BF-84A9-4CFC-BA5A-5DB9E4F3A198}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73D603BF-84A9-4CFC-BA5A-5DB9E4F3A198}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87C4E91E-8215-46E6-BC21-41650EEB8C92}.Debug|Any CPU.ActiveCfg = Debug|iPhoneSimulator
+		{87C4E91E-8215-46E6-BC21-41650EEB8C92}.Debug|Any CPU.Build.0 = Debug|iPhoneSimulator
+		{87C4E91E-8215-46E6-BC21-41650EEB8C92}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{87C4E91E-8215-46E6-BC21-41650EEB8C92}.Debug|iPhone.Build.0 = Debug|iPhone
+		{87C4E91E-8215-46E6-BC21-41650EEB8C92}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{87C4E91E-8215-46E6-BC21-41650EEB8C92}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{87C4E91E-8215-46E6-BC21-41650EEB8C92}.Release|Any CPU.ActiveCfg = Release|iPhoneSimulator
+		{87C4E91E-8215-46E6-BC21-41650EEB8C92}.Release|Any CPU.Build.0 = Release|iPhoneSimulator
+		{87C4E91E-8215-46E6-BC21-41650EEB8C92}.Release|iPhone.ActiveCfg = Release|iPhone
+		{87C4E91E-8215-46E6-BC21-41650EEB8C92}.Release|iPhone.Build.0 = Release|iPhone
+		{87C4E91E-8215-46E6-BC21-41650EEB8C92}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{87C4E91E-8215-46E6-BC21-41650EEB8C92}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{A0DFF013-DD6A-4127-A846-5F02D4E09B63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0DFF013-DD6A-4127-A846-5F02D4E09B63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7BBABD9-6579-4E25-A48F-227394D596FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7BBABD9-6579-4E25-A48F-227394D596FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F29B8383-1951-4E30-B809-6FC5A764CE22}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{F29B8383-1951-4E30-B809-6FC5A764CE22}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F29B8383-1951-4E30-B809-6FC5A764CE22}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F29B8383-1951-4E30-B809-6FC5A764CE22}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{73D603BF-84A9-4CFC-BA5A-5DB9E4F3A198} = {D66A3439-B7B0-4641-9B11-BCD00A611EE5}
+		{D7BBABD9-6579-4E25-A48F-227394D596FF} = {72E85363-D435-44F5-BC8B-6270AD25EA9F}
+		{A0DFF013-DD6A-4127-A846-5F02D4E09B63} = {72E85363-D435-44F5-BC8B-6270AD25EA9F}
+		{87C4E91E-8215-46E6-BC21-41650EEB8C92} = {8A4D3352-DBA8-4BE4-B66C-2BF4A538C725}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = MonoDroid\MonoMobile.Extensions\MonoMobile.Extensions.csproj
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{32DFF77E-AE38-48D6-B067-CF555798EA32} = {D66A3439-B7B0-4641-9B11-BCD00A611EE5}
-		{075AA9A6-A76F-482D-B504-BA0A224B0480} = {72E85363-D435-44F5-BC8B-6270AD25EA9F}
-		{F29B8383-1951-4E30-B809-6FC5A764CE22} = {72E85363-D435-44F5-BC8B-6270AD25EA9F}
 	EndGlobalSection
 EndGlobal
