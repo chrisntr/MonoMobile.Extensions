@@ -17,13 +17,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{21B17B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WindowsPhone", "WindowsPhone", "{72E85363-D435-44F5-BC8B-6270AD25EA9F}"
 EndProject
-Project("{9344bdbb-3e7f-41fc-a0dd-8665d75ee146}") = "MonoMobile.Extensions", "WindowsPhone\MonoMobile.Extensions\MonoMobile.Extensions.csproj", "{5892C04D-F109-4FEF-A0EB-6AE93C617274}"
+Project("{9344bdbb-3e7f-41fc-a0dd-8665d75ee146}") = "MonoMobile.Extensions", "WindowsPhone\MonoMobile.Extensions\MonoMobile.Extensions.csproj", "{48718131-DD4F-4177-816A-D470A834F208}"
 EndProject
-Project("{9344bdbb-3e7f-41fc-a0dd-8665d75ee146}") = "MonoMobile.Example", "WindowsPhone\MonoMobile.Example\MonoMobile.Example.csproj", "{852845A4-C496-4878-A9C2-D300E3CBB069}"
+Project("{9344bdbb-3e7f-41fc-a0dd-8665d75ee146}") = "MonoMobile.Example", "WindowsPhone\MonoMobile.Example\MonoMobile.Example.csproj", "{AA90C67A-5C11-4378-B07C-B333BF107878}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MonoTouch", "MonoTouch", "{8A4D3352-DBA8-4BE4-B66C-2BF4A538C725}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoMobile.Extensions", "MonoTouch\MonoMobile.Extensions\MonoMobile.Extensions.csproj", "{87C4E91E-8215-46E6-BC21-41650EEB8C92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoTouch.Example", "MonoTouch\MonoTouch.Example\MonoTouch.Example.csproj", "{EA8AD2F7-5BF5-4442-8607-3DD30E0641EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,16 +45,10 @@ Global
 		{32DFF77E-AE38-48D6-B067-CF555798EA32}.ReleaseMonoDroid|Any CPU.ActiveCfg = ReleaseMonoDroid|Any CPU
 		{32DFF77E-AE38-48D6-B067-CF555798EA32}.ReleaseMonoDroid|Any CPU.Build.0 = ReleaseMonoDroid|Any CPU
 		{32DFF77E-AE38-48D6-B067-CF555798EA32}.ReleaseWindowsPhone|Any CPU.ActiveCfg = ReleaseWindowsPhone|Any CPU
-		{5892C04D-F109-4FEF-A0EB-6AE93C617274}.DebugMonoDroid|Any CPU.ActiveCfg = DebugMonoDroid|Any CPU
-		{5892C04D-F109-4FEF-A0EB-6AE93C617274}.DebugWindowsPhone|Any CPU.ActiveCfg = ReleaseWindowsPhone|Any CPU
-		{5892C04D-F109-4FEF-A0EB-6AE93C617274}.DebugWindowsPhone|Any CPU.Build.0 = ReleaseWindowsPhone|Any CPU
-		{5892C04D-F109-4FEF-A0EB-6AE93C617274}.ReleaseMonoDroid|Any CPU.ActiveCfg = ReleaseMonoDroid|Any CPU
-		{5892C04D-F109-4FEF-A0EB-6AE93C617274}.ReleaseWindowsPhone|Any CPU.ActiveCfg = ReleaseWindowsPhone|Any CPU
-		{5892C04D-F109-4FEF-A0EB-6AE93C617274}.ReleaseWindowsPhone|Any CPU.Build.0 = ReleaseWindowsPhone|Any CPU
-		{852845A4-C496-4878-A9C2-D300E3CBB069}.DebugMonoDroid|Any CPU.ActiveCfg = DebugMonoDroid|Any CPU
-		{852845A4-C496-4878-A9C2-D300E3CBB069}.DebugWindowsPhone|Any CPU.ActiveCfg = DebugMonoDroid|Any CPU
-		{852845A4-C496-4878-A9C2-D300E3CBB069}.ReleaseMonoDroid|Any CPU.ActiveCfg = ReleaseMonoDroid|Any CPU
-		{852845A4-C496-4878-A9C2-D300E3CBB069}.ReleaseWindowsPhone|Any CPU.ActiveCfg = ReleaseWindowsPhone|Any CPU
+		{48718131-DD4F-4177-816A-D470A834F208}.DebugMonoDroid|Any CPU.ActiveCfg = DebugMonoDroid|Any CPU
+		{48718131-DD4F-4177-816A-D470A834F208}.DebugWindowsPhone|Any CPU.ActiveCfg = ReleaseWindowsPhone|Any CPU
+		{48718131-DD4F-4177-816A-D470A834F208}.ReleaseMonoDroid|Any CPU.ActiveCfg = ReleaseMonoDroid|Any CPU
+		{48718131-DD4F-4177-816A-D470A834F208}.ReleaseWindowsPhone|Any CPU.ActiveCfg = ReleaseWindowsPhone|Any CPU
 		{87C4E91E-8215-46E6-BC21-41650EEB8C92}.Debug|iPhone.ActiveCfg = Debug|iPhone
 		{87C4E91E-8215-46E6-BC21-41650EEB8C92}.Debug|iPhone.Build.0 = Debug|iPhone
 		{87C4E91E-8215-46E6-BC21-41650EEB8C92}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
@@ -65,6 +61,10 @@ Global
 		{87C4E91E-8215-46E6-BC21-41650EEB8C92}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 		{87C4E91E-8215-46E6-BC21-41650EEB8C92}.ReleaseMonoDroid|Any CPU.ActiveCfg = Release|iPhoneSimulator
 		{87C4E91E-8215-46E6-BC21-41650EEB8C92}.ReleaseWindowsPhone|Any CPU.ActiveCfg = ReleaseWindowsPhone|Any CPU
+		{AA90C67A-5C11-4378-B07C-B333BF107878}.DebugMonoDroid|Any CPU.ActiveCfg = DebugMonoDroid|Any CPU
+		{AA90C67A-5C11-4378-B07C-B333BF107878}.DebugWindowsPhone|Any CPU.ActiveCfg = DebugMonoDroid|Any CPU
+		{AA90C67A-5C11-4378-B07C-B333BF107878}.ReleaseMonoDroid|Any CPU.ActiveCfg = ReleaseMonoDroid|Any CPU
+		{AA90C67A-5C11-4378-B07C-B333BF107878}.ReleaseWindowsPhone|Any CPU.ActiveCfg = ReleaseWindowsPhone|Any CPU
 		{C4790D64-9278-4EB8-8623-86DC572CB8D1}.Debug|iPhone.ActiveCfg = DebugMonoDroid|Any CPU
 		{C4790D64-9278-4EB8-8623-86DC572CB8D1}.Debug|iPhoneSimulator.ActiveCfg = DebugMonoDroid|Any CPU
 		{C4790D64-9278-4EB8-8623-86DC572CB8D1}.DebugMonoDroid|Any CPU.ActiveCfg = DebugMonoDroid|Any CPU
@@ -75,18 +75,35 @@ Global
 		{C4790D64-9278-4EB8-8623-86DC572CB8D1}.ReleaseMonoDroid|Any CPU.ActiveCfg = ReleaseMonoDroid|Any CPU
 		{C4790D64-9278-4EB8-8623-86DC572CB8D1}.ReleaseMonoDroid|Any CPU.Build.0 = ReleaseMonoDroid|Any CPU
 		{C4790D64-9278-4EB8-8623-86DC572CB8D1}.ReleaseWindowsPhone|Any CPU.ActiveCfg = ReleaseWindowsPhone|Any CPU
+		{EA8AD2F7-5BF5-4442-8607-3DD30E0641EB}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{EA8AD2F7-5BF5-4442-8607-3DD30E0641EB}.Debug|iPhone.Build.0 = Debug|iPhone
+		{EA8AD2F7-5BF5-4442-8607-3DD30E0641EB}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{EA8AD2F7-5BF5-4442-8607-3DD30E0641EB}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{EA8AD2F7-5BF5-4442-8607-3DD30E0641EB}.DebugMonoDroid|Any CPU.ActiveCfg = Debug|iPhoneSimulator
+		{EA8AD2F7-5BF5-4442-8607-3DD30E0641EB}.DebugMonoDroid|Any CPU.Build.0 = Debug|iPhoneSimulator
+		{EA8AD2F7-5BF5-4442-8607-3DD30E0641EB}.DebugWindowsPhone|Any CPU.ActiveCfg = Debug|iPhoneSimulator
+		{EA8AD2F7-5BF5-4442-8607-3DD30E0641EB}.DebugWindowsPhone|Any CPU.Build.0 = Debug|iPhoneSimulator
+		{EA8AD2F7-5BF5-4442-8607-3DD30E0641EB}.Release|iPhone.ActiveCfg = Release|iPhone
+		{EA8AD2F7-5BF5-4442-8607-3DD30E0641EB}.Release|iPhone.Build.0 = Release|iPhone
+		{EA8AD2F7-5BF5-4442-8607-3DD30E0641EB}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{EA8AD2F7-5BF5-4442-8607-3DD30E0641EB}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{EA8AD2F7-5BF5-4442-8607-3DD30E0641EB}.ReleaseMonoDroid|Any CPU.ActiveCfg = Debug|iPhoneSimulator
+		{EA8AD2F7-5BF5-4442-8607-3DD30E0641EB}.ReleaseMonoDroid|Any CPU.Build.0 = Debug|iPhoneSimulator
+		{EA8AD2F7-5BF5-4442-8607-3DD30E0641EB}.ReleaseWindowsPhone|Any CPU.ActiveCfg = Debug|iPhoneSimulator
+		{EA8AD2F7-5BF5-4442-8607-3DD30E0641EB}.ReleaseWindowsPhone|Any CPU.Build.0 = Debug|iPhoneSimulator
 		{F29B8383-1951-4E30-B809-6FC5A764CE22}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{F29B8383-1951-4E30-B809-6FC5A764CE22}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{32DFF77E-AE38-48D6-B067-CF555798EA32} = {D66A3439-B7B0-4641-9B11-BCD00A611EE5}
 		{C4790D64-9278-4EB8-8623-86DC572CB8D1} = {D66A3439-B7B0-4641-9B11-BCD00A611EE5}
-		{5892C04D-F109-4FEF-A0EB-6AE93C617274} = {72E85363-D435-44F5-BC8B-6270AD25EA9F}
-		{852845A4-C496-4878-A9C2-D300E3CBB069} = {72E85363-D435-44F5-BC8B-6270AD25EA9F}
+		{48718131-DD4F-4177-816A-D470A834F208} = {72E85363-D435-44F5-BC8B-6270AD25EA9F}
+		{AA90C67A-5C11-4378-B07C-B333BF107878} = {72E85363-D435-44F5-BC8B-6270AD25EA9F}
 		{87C4E91E-8215-46E6-BC21-41650EEB8C92} = {8A4D3352-DBA8-4BE4-B66C-2BF4A538C725}
+		{EA8AD2F7-5BF5-4442-8607-3DD30E0641EB} = {8A4D3352-DBA8-4BE4-B66C-2BF4A538C725}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = MonoDroid\MonoMobile.Example\MonoMobile.Example.csproj
+		StartupItem = MonoTouch\MonoTouch.Example\MonoTouch.Example.csproj
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
