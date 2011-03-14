@@ -24,6 +24,10 @@
     <ConsolePause>false</ConsolePause>
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>True</MtouchDebug>
+    <MtouchUseLlvm>false</MtouchUseLlvm>
+    <MtouchUseArmv7>false</MtouchUseArmv7>
+    <MtouchUseThumb>false</MtouchUseThumb>
+    <MtouchUseSGen>false</MtouchUseSGen>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -34,6 +38,10 @@
     <MtouchDebug>False</MtouchDebug>
     <ConsolePause>false</ConsolePause>
     <MtouchLink>None</MtouchLink>
+    <MtouchUseLlvm>false</MtouchUseLlvm>
+    <MtouchUseArmv7>false</MtouchUseArmv7>
+    <MtouchUseThumb>false</MtouchUseThumb>
+    <MtouchUseSGen>false</MtouchUseSGen>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>true</DebugSymbols>
@@ -46,6 +54,10 @@
     <ConsolePause>false</ConsolePause>
     <CodesignKey>iPhone Developer</CodesignKey>
     <MtouchDebug>True</MtouchDebug>
+    <MtouchUseLlvm>false</MtouchUseLlvm>
+    <MtouchUseArmv7>false</MtouchUseArmv7>
+    <MtouchUseThumb>false</MtouchUseThumb>
+    <MtouchUseSGen>false</MtouchUseSGen>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -56,6 +68,21 @@
     <MtouchDebug>False</MtouchDebug>
     <ConsolePause>false</ConsolePause>
     <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchUseLlvm>false</MtouchUseLlvm>
+    <MtouchUseArmv7>false</MtouchUseArmv7>
+    <MtouchUseThumb>false</MtouchUseThumb>
+    <MtouchUseSGen>false</MtouchUseSGen>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseWindowsPhone|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\ReleaseWindowsPhone</OutputPath>
+    <WarningLevel>4</WarningLevel>
+    <MtouchDebug>False</MtouchDebug>
+    <MtouchUseSGen>false</MtouchUseSGen>
+    <MtouchUseLlvm>false</MtouchUseLlvm>
+    <MtouchUseThumb>false</MtouchUseThumb>
+    <MtouchUseArmv7>false</MtouchUseArmv7>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
