@@ -73,17 +73,6 @@
     <MtouchUseThumb>false</MtouchUseThumb>
     <MtouchUseSGen>false</MtouchUseSGen>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseWindowsPhone|AnyCPU' ">
-    <DebugType>none</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\ReleaseWindowsPhone</OutputPath>
-    <WarningLevel>4</WarningLevel>
-    <MtouchDebug>False</MtouchDebug>
-    <MtouchUseSGen>false</MtouchUseSGen>
-    <MtouchUseLlvm>false</MtouchUseLlvm>
-    <MtouchUseThumb>false</MtouchUseThumb>
-    <MtouchUseArmv7>false</MtouchUseArmv7>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
