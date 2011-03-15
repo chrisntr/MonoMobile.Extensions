@@ -1,0 +1,45 @@
+
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MonoDroid", "MonoDroid", "{D66A3439-B7B0-4641-9B11-BCD00A611EE5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoMobile.Extensions", "MonoMobile.Extensions\MonoMobile.Extensions.csproj", "{32DFF77E-AE38-48D6-B067-CF555798EA32}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoMobile.Example", "MonoMobile.Example\MonoMobile.Example.csproj", "{C4790D64-9278-4EB8-8623-86DC572CB8D1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{21B17BB4-06C1-4E6E-BD78-C022CD8F8266}"
+	ProjectSection(SolutionItems) = preProject
+		..\Shared\ExtensionHelper.cs = ..\Shared\ExtensionHelper.cs
+		..\Shared\IDevice.cs = ..\Shared\IDevice.cs
+		..\Shared\IGeolocation.cs = ..\Shared\IGeolocation.cs
+		..\Shared\INotification.cs = ..\Shared\INotification.cs
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		DebugMonoDroid|Any CPU = DebugMonoDroid|Any CPU
+		ReleaseMonoDroid|Any CPU = ReleaseMonoDroid|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{32DFF77E-AE38-48D6-B067-CF555798EA32}.DebugMonoDroid|Any CPU.ActiveCfg = DebugMonoDroid|Any CPU
+		{32DFF77E-AE38-48D6-B067-CF555798EA32}.DebugMonoDroid|Any CPU.Build.0 = DebugMonoDroid|Any CPU
+		{32DFF77E-AE38-48D6-B067-CF555798EA32}.ReleaseMonoDroid|Any CPU.ActiveCfg = ReleaseMonoDroid|Any CPU
+		{32DFF77E-AE38-48D6-B067-CF555798EA32}.ReleaseMonoDroid|Any CPU.Build.0 = ReleaseMonoDroid|Any CPU
+		{C4790D64-9278-4EB8-8623-86DC572CB8D1}.DebugMonoDroid|Any CPU.ActiveCfg = DebugMonoDroid|Any CPU
+		{C4790D64-9278-4EB8-8623-86DC572CB8D1}.DebugMonoDroid|Any CPU.Build.0 = DebugMonoDroid|Any CPU
+		{C4790D64-9278-4EB8-8623-86DC572CB8D1}.ReleaseMonoDroid|Any CPU.ActiveCfg = ReleaseMonoDroid|Any CPU
+		{C4790D64-9278-4EB8-8623-86DC572CB8D1}.ReleaseMonoDroid|Any CPU.Build.0 = ReleaseMonoDroid|Any CPU
+		{48718131-DD4F-4177-816A-D470A834F208}.DebugMonoDroid|Any CPU.ActiveCfg = DebugMonoDroid|Any CPU
+		{48718131-DD4F-4177-816A-D470A834F208}.ReleaseMonoDroid|Any CPU.ActiveCfg = ReleaseMonoDroid|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{32DFF77E-AE38-48D6-B067-CF555798EA32} = {D66A3439-B7B0-4641-9B11-BCD00A611EE5}
+		{C4790D64-9278-4EB8-8623-86DC572CB8D1} = {D66A3439-B7B0-4641-9B11-BCD00A611EE5}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = MonoMobile.Example\MonoMobile.Example.csproj
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
