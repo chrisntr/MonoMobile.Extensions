@@ -19,6 +19,8 @@ namespace MonoTouch.Example
 	// The name AppDelegate is referenced in the MainWindow.xib file.
 	public partial class AppDelegate : UIApplicationDelegate
 	{
+		UIButton alertButton;
+		
 		// This method is invoked when the application has loaded its UI and its ready to run
 		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
 		{
@@ -31,6 +33,17 @@ namespace MonoTouch.Example
 			Console.WriteLine ("Device UUID: {0}", device.UUID);
 			Console.WriteLine ("Device Version: {0}", device.Version);
 			Console.WriteLine ("MonoMobile Version: {0}", device.MonoMobileVersion);
+			
+			alertButton = UIButton.FromType(UIButtonType.RoundedRect);
+			alertButton.Frame = new System.Drawing.RectangleF(40f, 20f, 200f, 40f);
+			alertButton.SetTitle("Alert button", UIControlState.Normal);
+			var notification = new Notification();
+			alertButton.TouchUpInside += (s, e) => {
+				notification.Alert("My Message", (i) => {
+					Console.WriteLine ("Button {0} pressed", i);	
+				}, "Alert!", "Button One, Button Two, Button Three");
+			};
+			window.AddSubview(alertButton);
 			
 			window.MakeKeyAndVisible ();
 			

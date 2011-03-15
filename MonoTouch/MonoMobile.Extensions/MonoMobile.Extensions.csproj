@@ -100,5 +100,6 @@
     </Compile>
     <Compile Include="Geolocation.cs" />
     <Compile Include="Device.cs" />
+    <Compile Include="Notification.cs" />
   </ItemGroup>
 </Project>
