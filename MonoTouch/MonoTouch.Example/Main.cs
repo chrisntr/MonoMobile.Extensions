@@ -19,7 +19,7 @@ namespace MonoTouch.Example
 	// The name AppDelegate is referenced in the MainWindow.xib file.
 	public partial class AppDelegate : UIApplicationDelegate
 	{
-		UIButton alertButton, confirmButton;
+		UIButton alertButton, confirmButton, beepButton, vibrateButton;
 		
 		// This method is invoked when the application has loaded its UI and its ready to run
 		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
@@ -55,6 +55,26 @@ namespace MonoTouch.Example
 				}, "Alert!", "One, Two, Cancelled");
 			};
 			window.AddSubview(confirmButton);
+			
+			beepButton = UIButton.FromType(UIButtonType.RoundedRect);
+			beepButton.Frame = new System.Drawing.RectangleF(40f, 100f, 200f, 40f);
+			beepButton.SetTitle("Beep!", UIControlState.Normal);
+			beepButton.TouchUpInside += (s, e) => {
+				// Beep overload just calls beep anyway due to iPhone limitation.
+				// Make sure there's a beep.wav set as content in the root of the app.
+				notification.Beep();
+			};
+			window.AddSubview(beepButton);
+			
+			
+			vibrateButton = UIButton.FromType(UIButtonType.RoundedRect);
+			vibrateButton.Frame = new System.Drawing.RectangleF(40f, 140f, 200f, 40f);
+			vibrateButton.SetTitle("Vibrate!", UIControlState.Normal);
+			vibrateButton.TouchUpInside += (s, e) => {
+				// Vibrate overload just calls vibrate anyway due to iPhone limitation.
+				notification.Vibrate();
+			};
+			window.AddSubview(vibrateButton);
 			
 			window.MakeKeyAndVisible ();
 			
