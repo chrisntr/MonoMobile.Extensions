@@ -101,5 +101,6 @@
     <Compile Include="Geolocation.cs" />
     <Compile Include="Device.cs" />
     <Compile Include="Notification.cs" />
+    <Compile Include="Camera.cs" />
   </ItemGroup>
 </Project>

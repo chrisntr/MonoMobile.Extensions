@@ -97,9 +97,16 @@
       <DependentUpon>MainWindow.xib</DependentUpon>
     </Compile>
     <Compile Include="Main.cs" />
+    <Compile Include="ExampleList.xib.cs">
+      <DependentUpon>ExampleList.xib</DependentUpon>
+    </Compile>
+    <Compile Include="ExampleList.xib.designer.cs">
+      <DependentUpon>ExampleList.xib</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainWindow.xib" />
+    <Page Include="ExampleList.xib" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
