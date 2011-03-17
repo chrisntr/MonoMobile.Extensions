@@ -87,10 +87,13 @@ namespace MonoTouch.Example
 			var camera = new Camera(this);
 			cameraButton = UIButton.FromType(UIButtonType.RoundedRect);
 			cameraButton.Frame = new System.Drawing.RectangleF(40f, 180f, 200f, 40f);
-			cameraButton.SetTitle("GetPicture!", UIControlState.Normal);
+			cameraButton.SetTitle("Get Picture!", UIControlState.Normal);
 			cameraButton.TouchUpInside += (s, e) => {
 				// Vibrate overload just calls vibrate anyway due to iPhone limitation.
-				camera.GetPicture(new Camera.CameraOptions() { SourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum }, null, null);
+				camera.GetPicture(new Camera.CameraOptions() { SourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum }, 
+					(p) => { Console.WriteLine ("Got picture as {0}", p);},
+					() => { Console.WriteLine ("Cancelled"); }
+				);
 			};
 			this.View.AddSubview(cameraButton);
 		}
