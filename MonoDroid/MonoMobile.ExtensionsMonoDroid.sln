@@ -1,4 +1,3 @@
-
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MonoDroid", "MonoDroid", "{D66A3439-B7B0-4641-9B11-BCD00A611EE5}"
@@ -29,8 +28,9 @@ Global
 		{C4790D64-9278-4EB8-8623-86DC572CB8D1}.DebugMonoDroid|Any CPU.Build.0 = DebugMonoDroid|Any CPU
 		{C4790D64-9278-4EB8-8623-86DC572CB8D1}.ReleaseMonoDroid|Any CPU.ActiveCfg = ReleaseMonoDroid|Any CPU
 		{C4790D64-9278-4EB8-8623-86DC572CB8D1}.ReleaseMonoDroid|Any CPU.Build.0 = ReleaseMonoDroid|Any CPU
-		{48718131-DD4F-4177-816A-D470A834F208}.DebugMonoDroid|Any CPU.ActiveCfg = DebugMonoDroid|Any CPU
-		{48718131-DD4F-4177-816A-D470A834F208}.ReleaseMonoDroid|Any CPU.ActiveCfg = ReleaseMonoDroid|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{32DFF77E-AE38-48D6-B067-CF555798EA32} = {D66A3439-B7B0-4641-9B11-BCD00A611EE5}
@@ -38,8 +38,5 @@ Global
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = MonoMobile.Example\MonoMobile.Example.csproj
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal

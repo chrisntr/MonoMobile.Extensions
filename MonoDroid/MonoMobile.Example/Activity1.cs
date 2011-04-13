@@ -14,6 +14,10 @@ namespace MonoMobile.Example
 	[Activity(Label = "MonoMobile Android Example", MainLauncher = true)]
 	public class Activity1 : Activity
 	{
+        IGeolocation location;
+        bool watching = false;
+        string watchid = "";
+
 		protected override void OnCreate (Bundle bundle)
 		{
 			base.OnCreate (bundle);
@@ -22,18 +26,44 @@ namespace MonoMobile.Example
 			SetContentView (Resource.Layout.Main);
 
 		    LocationManager locationManager=(LocationManager) GetSystemService(LocationService);
-            IGeolocation location = new Geolocation(locationManager);
-		    location.WatchPosition(WatchSuccess);
+            
+		    location = new Geolocation(locationManager);
+		    //
 			// Get our button from the layout resource,
 			// and attach an event to it
-			Button button = FindViewById<Button> (Resource.Id.MyButton);
-			
-			button.Click += delegate
+            Button getLocationButton = FindViewById<Button>(Resource.Id.GetLocationButton);
+            Button watchButton = FindViewById<Button>(Resource.Id.WatchButton);
+
+            getLocationButton.Click += delegate
 			                    {
 			                        LogDeviceInfo();
-			                        location.GetCurrentPosition(CurrentPositionSuccess);
+			                        GetCurrentPosition();
 			                    };
+
+		    watchButton.Click += delegate { ToggleWatch(); };
 		}
+
+	    private void GetCurrentPosition()
+	    {
+	        location.GetCurrentPosition(
+	            CurrentPositionSuccess, 
+	            (error) => { },
+	            new GeolocationOptions() {EnableHighAccuracy = true}
+	            );
+	    }
+
+	    
+	    private void ToggleWatch()
+	    {
+	        if (!watching)
+	        {   
+	            watchid=location.WatchPosition(WatchSuccess);
+	        }
+	        else
+	        {
+	            location.ClearWatch(watchid);
+	        }
+	    }
 
 	    private void LogDeviceInfo()
 	    {

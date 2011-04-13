@@ -136,21 +136,23 @@ namespace MonoMobile.Extensions
 
         private void SendLocation(Location lastKnownLocation, Action<Position> success)
         {
-            var position = new Position
-                               {
-                                   Timestamp = DateTime.Now,
-                                   Coords = new Coordinates
-                                                {
-                                                    Accuracy = lastKnownLocation.Accuracy,
-                                                    Heading = lastKnownLocation.Bearing,
-                                                    Altitude = lastKnownLocation.Altitude,
-                                                    AltitudeAccuracy = lastKnownLocation.Accuracy,
-                                                    Latitude = lastKnownLocation.Latitude,
-                                                    Longitude = lastKnownLocation.Longitude,
-                                                    Speed = lastKnownLocation.Speed
-                                                }
-                               };
-            success(position);
+            Position pos=new Position();
+            pos.Timestamp = DateTime.Now;
+            if (lastKnownLocation != null)
+            {
+                pos.Coords = new Coordinates
+                                 {
+                                     Accuracy = lastKnownLocation.Accuracy,
+                                     Heading = lastKnownLocation.Bearing,
+                                     Altitude = lastKnownLocation.Altitude,
+                                     AltitudeAccuracy = lastKnownLocation.Accuracy,
+                                     Latitude = lastKnownLocation.Latitude,
+                                     Longitude = lastKnownLocation.Longitude,
+                                     Speed = lastKnownLocation.Speed
+                                 };
+
+            }
+            success(pos);
         }
     }
 }
