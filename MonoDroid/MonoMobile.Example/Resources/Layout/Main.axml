@@ -14,7 +14,13 @@
     android:id="@+id/WatchButton"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:text="@string/watch"
+    android:text="@string/watchStart"
+    />
+  <TextView
+    android:id="@+id/LocationTextView"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/locationTextView"
     />
 </LinearLayout>
 

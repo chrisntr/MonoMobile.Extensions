@@ -17,6 +17,8 @@ namespace MonoMobile.Example
         IGeolocation location;
         bool watching = false;
         string watchid = "";
+        TextView locationTextView;
+        Button watchButton;
 
 		protected override void OnCreate (Bundle bundle)
 		{
@@ -32,9 +34,12 @@ namespace MonoMobile.Example
 			// Get our button from the layout resource,
 			// and attach an event to it
             Button getLocationButton = FindViewById<Button>(Resource.Id.GetLocationButton);
-            Button watchButton = FindViewById<Button>(Resource.Id.WatchButton);
+            
+		    watchButton = FindViewById<Button>(Resource.Id.WatchButton);
 
-            getLocationButton.Click += delegate
+		    locationTextView = FindViewById<TextView>(Resource.Id.LocationTextView);
+
+		    getLocationButton.Click += delegate
 			                    {
 			                        LogDeviceInfo();
 			                        GetCurrentPosition();
@@ -58,11 +63,14 @@ namespace MonoMobile.Example
 	        if (!watching)
 	        {   
 	            watchid=location.WatchPosition(WatchSuccess);
+                watchButton.Text = GetString(Resource.String.watchStop);
 	        }
 	        else
 	        {
 	            location.ClearWatch(watchid);
+	            watchButton.Text = GetString(Resource.String.watchStart);
 	        }
+	        watching = !watching;
 	    }
 
 	    private void LogDeviceInfo()
@@ -77,12 +85,18 @@ namespace MonoMobile.Example
 
 	    private void CurrentPositionSuccess(Position obj)
 	    {
-            Android.Util.Log.Info("MonoMobile.Extensions", "GetCurrentPosition location: {0}-{1} [{2}]", obj.Coords.Latitude, obj.Coords.Longitude, obj.Coords.Accuracy);
+	        string message = string.Format("GetCurrentPosition location: {0} {1}-{2} [{3}]",obj.Timestamp, obj.Coords.Latitude,
+	                                       obj.Coords.Longitude, obj.Coords.Accuracy);
+            Android.Util.Log.Info("MonoMobile.Extensions",message);
+	        locationTextView.Text = message;
 	    }
 
 	    private void WatchSuccess(Position obj)
 	    {
-            Android.Util.Log.Info("MonoMobile.Extension", "WatchPosition location: {0}-{1} [{2}]", obj.Coords.Latitude, obj.Coords.Longitude, obj.Coords.Accuracy);
+            string message = string.Format("WatchPosition location: {0} {1}-{2} [{3}]",obj.Timestamp, obj.Coords.Latitude,
+                                           obj.Coords.Longitude, obj.Coords.Accuracy);
+            Android.Util.Log.Info("MonoMobile.Extension", message);
+	        locationTextView.Text = message;
 	    }
 	}
 }

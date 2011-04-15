@@ -40,6 +40,9 @@ namespace MonoMobile.Example
 			// aapt resource value: 0x7f050000
 			public const int GetLocationButton = 2131034112;
 			
+			// aapt resource value: 0x7f050002
+			public const int LocationTextView = 2131034114;
+			
 			// aapt resource value: 0x7f050001
 			public const int WatchButton = 2131034113;
 			
@@ -62,14 +65,20 @@ namespace MonoMobile.Example
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f040002
-			public const int app_name = 2130968578;
+			// aapt resource value: 0x7f040003
+			public const int app_name = 2130968579;
 			
 			// aapt resource value: 0x7f040000
 			public const int getlocation = 2130968576;
 			
+			// aapt resource value: 0x7f040004
+			public const int locationTextView = 2130968580;
+			
 			// aapt resource value: 0x7f040001
-			public const int watch = 2130968577;
+			public const int watchStart = 2130968577;
+			
+			// aapt resource value: 0x7f040002
+			public const int watchStop = 2130968578;
 			
 			private String()
 			{
