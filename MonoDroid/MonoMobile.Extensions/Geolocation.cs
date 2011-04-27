@@ -8,7 +8,7 @@ using Java.IO;
 namespace MonoMobile.Extensions
 {
    
-    public class Geolocation : IGeolocation, ILocationListener
+    public class Geolocation : Java.Lang.Object, IGeolocation, ILocationListener
     {
         private readonly LocationManager _locationManager;
 
@@ -16,7 +16,6 @@ namespace MonoMobile.Extensions
         private Action<PositionError> _error;
         private GeolocationOptions _options;
         private string _watchId;
-        private IntPtr _handle;
 
         public Geolocation(LocationManager locationManager)
         {
@@ -25,7 +24,6 @@ namespace MonoMobile.Extensions
             _error = error => { };
             _options= new GeolocationOptions();
             _watchId = Guid.NewGuid().ToString();
-            _handle = new IntPtr(new Random().Next());
         }
 
         #region IGeolocation Members
@@ -117,19 +115,6 @@ namespace MonoMobile.Extensions
             //Dows this concern us ?
         }
 
-        /// <summary>
-        /// Gets the JNI value of the underlying Android object.
-        /// </summary>
-        /// <value>
-        /// A <see cref="T:System.IntPtr"/> containing the JNI handle for an
-        ///           object instance within the Java VM.
-        /// </value>
-        /// <remarks/>
-        public IntPtr Handle
-        {
-            get { return _handle; }
-            set { _handle = value; }
-        }
 
         #endregion
 
