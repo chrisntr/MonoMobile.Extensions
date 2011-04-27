@@ -25,7 +25,7 @@ namespace MonoMobile.Extensions
             _error = error => { };
             _options= new GeolocationOptions();
             _watchId = Guid.NewGuid().ToString();
-            _handle = new IntPtr();
+            _handle = new IntPtr(new Random().Next());
         }
 
         #region IGeolocation Members
@@ -42,7 +42,7 @@ namespace MonoMobile.Extensions
 
         public void GetCurrentPosition(Action<Position> success, Action<PositionError> error, GeolocationOptions options)
         {
-            var criteria = new Criteria {Accuracy = options.EnableHighAccuracy ? Accuracy.Fine : Accuracy.Coarse};
+            var criteria = new Criteria { Accuracy = options.EnableHighAccuracy ? Accuracy.Fine : Accuracy.Coarse};
             string bestProvider = _locationManager.GetBestProvider(criteria, true);
             Location lastKnownLocation=null;
             try
@@ -79,10 +79,8 @@ namespace MonoMobile.Extensions
             _options = options;
             string provider = _options.EnableHighAccuracy ? LocationManager.GpsProvider : LocationManager.NetworkProvider;
             
-            //TODO: set this value based on GeolocationOptions?
-            int minTime = 3000;
-
-            _locationManager.RequestLocationUpdates(provider,minTime, 0,this);
+ 
+            _locationManager.RequestLocationUpdates(provider,_options.MaximumAge, 50,this);
 
             return _watchId;
         }
@@ -130,6 +128,7 @@ namespace MonoMobile.Extensions
         public IntPtr Handle
         {
             get { return _handle; }
+            set { _handle = value; }
         }
 
         #endregion
