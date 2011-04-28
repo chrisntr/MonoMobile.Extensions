@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Timers;
 using Android.Locations;
 using Android.OS;
 using Android.Util;
@@ -16,6 +17,8 @@ namespace MonoMobile.Extensions
         private Action<PositionError> _error;
         private GeolocationOptions _options;
         private string _watchId;
+        private Timer _timedWatch = new Timer();
+        private bool _isTiming = false;
 
         public Geolocation(LocationManager locationManager)
         {
@@ -37,29 +40,32 @@ namespace MonoMobile.Extensions
         {
             GetCurrentPosition(success, error, new GeolocationOptions());
         }
-
+        
         public void GetCurrentPosition(Action<Position> success, Action<PositionError> error, GeolocationOptions options)
         {
-            var criteria = new Criteria { Accuracy = options.EnableHighAccuracy ? Accuracy.Fine : Accuracy.Coarse};
-            string bestProvider = _locationManager.GetBestProvider(criteria, true);
-            Location lastKnownLocation=null;
             try
             {
-                lastKnownLocation = _locationManager.GetLastKnownLocation(bestProvider);
+                if (options.EnableHighAccuracy && options.Timeout > 0)
+                {
+                    WatchPosition(success, error, options);
+                }
+                else
+                {
+                    Location lastKnownLocation=null;
+                    if (options.EnableHighAccuracy)
+                        lastKnownLocation = _locationManager.GetLastKnownLocation(LocationManager.GpsProvider);
+                    
+                    if (lastKnownLocation==null)
+                        lastKnownLocation = _locationManager.GetLastKnownLocation(LocationManager.NetworkProvider);
+                    
+                    SendLocation(lastKnownLocation, success);
+                }
             }
             catch (Exception exception)
             {
                 error(new PositionError(PositionErrorCode.PositionUnavailable, exception.Message));
             }
-            if (lastKnownLocation == null)
-            {
-                error(new PositionError(PositionErrorCode.PositionUnavailable,"No position aquired"));
-            }
-
-            SendLocation(lastKnownLocation, success);
-            
         }
-
         public string WatchPosition(Action<Position> success)
         {
             return WatchPosition(success, error => { });
@@ -76,11 +82,37 @@ namespace MonoMobile.Extensions
             _error = error;
             _options = options;
             string provider = _options.EnableHighAccuracy ? LocationManager.GpsProvider : LocationManager.NetworkProvider;
-            
- 
+            TimeWatch();
+
             _locationManager.RequestLocationUpdates(provider,_options.MaximumAge, 50,this);
 
             return _watchId;
+        }
+
+        private void TimeWatch()
+        {
+            if (_options.Timeout > 0)
+            {
+                _timedWatch=new Timer(_options.Timeout);
+                _timedWatch.Elapsed += (o, e) =>
+                                           {
+                                               if (_isTiming)
+                                               {
+                                                   _timedWatch.Stop();
+                                                   ClearWatch(_watchId);
+                                                   GetCurrentPosition(_success, _error,
+                                                                      new GeolocationOptions()
+                                                                          {
+                                                                              EnableHighAccuracy = false,
+                                                                              MaximumAge = _options.MaximumAge,
+                                                                              Timeout = _options.Timeout
+                                                                          });
+                                                   _isTiming = false;
+                                               }
+                                           };
+                _isTiming = true;
+                _timedWatch.Start();
+            }
         }
 
         public void ClearWatch(string watchID)
@@ -137,6 +169,17 @@ namespace MonoMobile.Extensions
 
             }
             success(pos);
+            StopTiming();
+        }
+
+        private void StopTiming()
+        {
+            if (_isTiming)
+            {
+                _isTiming = false;
+                _timedWatch.Stop();
+                ClearWatch(_watchId);
+            }
         }
     }
 }
