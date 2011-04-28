@@ -25,7 +25,8 @@ namespace MonoMobile.Extensions
 			{
 				alertView.Show();
 				alertView.Dismissed += delegate(object sender, UIButtonEventArgs e) {
-					alertCallback();
+					if(alertCallback != null)
+						alertCallback();
 				};
 			}
 		}
@@ -52,7 +53,8 @@ namespace MonoMobile.Extensions
 				}
 				alertView.Show();
 				alertView.Clicked += delegate(object sender, UIButtonEventArgs e) {
-					confirmCallback(e.ButtonIndex);
+					if(confirmCallback != null)
+						confirmCallback(e.ButtonIndex);
 				};
 			}
 		}
