@@ -37,7 +37,7 @@ namespace MonoTouch.Example
 		
 		#endregion
 		
-		UIButton alertButton, confirmButton, beepButton, vibrateButton, cameraButton;
+		UIButton alertButton, confirmButton, beepButton, vibrateButton, cameraButton, contactButton;
 		
 		public override void ViewDidLoad ()
 		{
@@ -96,6 +96,18 @@ namespace MonoTouch.Example
 				);
 			};
 			this.View.AddSubview(cameraButton);
+			
+			var contact = new Contact() { DisplayName = "Chris Hardy" };
+			contact.Gender = "Male";
+			contact.Name = new ContactName() { FamilyName = "Hardy", GivenName = "Christopher", MiddleName = "Robert" };
+			contactButton = UIButton.FromType(UIButtonType.RoundedRect);
+			contactButton.Frame = new System.Drawing.RectangleF(40f, 220f, 200f, 40f);
+			contactButton.SetTitle("Create Contact?", UIControlState.Normal);
+			contactButton.TouchUpInside += (s, e) => {
+				contact.Save();
+				notification.Alert(String.Format("{0} is {1}", contact.DisplayName, contact.Gender), null);
+			};
+			this.View.AddSubview(contactButton);
 		}
 	}
 }
