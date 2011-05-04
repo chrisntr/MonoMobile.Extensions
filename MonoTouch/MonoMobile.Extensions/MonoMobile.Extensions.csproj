@@ -102,5 +102,6 @@
     <Compile Include="Notification.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="Contact.cs" />
+    <Compile Include="Contacts.cs" />
   </ItemGroup>
 </Project>

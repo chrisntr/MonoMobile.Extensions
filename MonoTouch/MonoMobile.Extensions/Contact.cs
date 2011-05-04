@@ -46,6 +46,8 @@ namespace MonoMobile.Extensions
      
     public class Contact
     {   
+		// Please note the individual cross-platform quirks - http://docs.phonegap.com/phonegap_contacts_contacts.md.html#Contact
+		
         public bool Success { get; set; }
         public bool Update { get; set; }
         public ABRecord Record { get; set; }
@@ -79,47 +81,26 @@ namespace MonoMobile.Extensions
             Record = record;
         }
          
-        public void Save()
+        public void Save(Action<Contact> successCallback, Action<string> errorCallback)
         {
-             
-//          NSNumber* cId = [contactDict valueForKey:kW3ContactId];
-//          Contact* aContact = nil; 
-//          ABRecordRef rec = nil;
-//          if (cId && ![cId isKindOfClass:[NSNull class]]){
-//              rec = ABAddressBookGetPersonWithRecordID(addrBook, [cId intValue]);
-//              if (rec){
-//                  aContact = [[Contact alloc] initFromABRecord: rec ];
-//                  bUpdate = YES;
-//              }
-//          }
-//          if (!aContact){
-//              aContact = [[Contact alloc] init];          
-//          }
-            Contact aContact = null;
-            ABAddressBook addrBook = new ABAddressBook();
-            ABRecord rec = null;
-             
-            if(Id != null)
-            {
-                rec = addrBook.GetPerson(Id);
-                if(rec != null)
-                {
-                    Record = rec;
-                    //this = new Contact(rec);
-                    Update = true;
-                }
-            }
-
-			// Convert to a ABPerson (ABRecord) - might need update or just a new one creating...
-            this.SetContactDataToABRecord();
-            //Success = aContact.
-           
-            //addrBook.Save();
-             
-             
+			// Should return back the Contact that was saved in the
+			// success callback
+            throw new NotImplementedException();
         }
-         
-        private bool SetContactDataToABRecord()
+		
+        public Contact Clone()
+        {
+            throw new NotImplementedException();
+        }
+		
+		public void Remove()
+		{
+			throw new NotImplementedException();
+		}
+		
+		// Use this sort of method (as well as a bunch of others) 
+		// to bind a contact to a ABPerson record to store in the Address book
+		private bool SetContactDataToABRecord()
         {
             var person = Record as ABPerson;
             var success = true;
@@ -152,84 +133,11 @@ namespace MonoMobile.Extensions
                 person.Nickname = DisplayName;  
             }
              
+			// etc etc for each type of property
 			return true;
              
-            // Set Address Book...
-             
-//            ABMutableDictionaryMultiValue addresses = new ABMutableDictionaryMultiValue();
-//            NSMutableDictionary a = new NSMutableDictionary();
-//     
-//            a.Add(new NSString(ABPersonAddressKey.City), new NSString(city));
-//            a.Add(new NSString(ABPersonAddressKey.State), new NSString(state));
-//            a.Add(new NSString(ABPersonAddressKey.Zip), new NSString(zip));
-//            a.Add(new NSString(ABPersonAddressKey.Street), new NSString(addr1));
-//     
-//            addresses.Add(a, new NSString("Home"));
-//            p.SetAddresses(addresses);
-//            // Set PhoneNumbers
-//            foreach(var address in Addresses)
-//            {
-//                 
-//                var multiValueAddress = ABMultiValue<Address 
-//            }
-//            var addres = person.GetAddresses();
-//            addres[
-////          
-//          /NSLog(@"setting phoneNumbers");
-//  NSArray* array = [aContact valueForKey:kW3ContactPhoneNumbers];
-//  if ([array isKindOfClass:[NSArray class]]){
-//      [self setMultiValueStrings: array forProperty: kABPersonPhoneProperty inRecord: person asUpdate: bUpdate];
-//  }
-             
-             
-//          id nn = [aContact valueForKey:kW3ContactNickname];
-//  if (![nn isKindOfClass:[NSNull class]]){
-//      bName = true;
-//      [self setValue: nn forProperty: kABPersonNicknameProperty inRecord: person asUpdate: bUpdate];
-//  }
-//  if (!bName){
-//      // if no name or nickname - try and use displayName as W3Contact must have displayName or ContactName
-//      [self setValue:[aContact valueForKey:kW3ContactDisplayName] forProperty: kABPersonNicknameProperty 
-//                       inRecord: person asUpdate: bUpdate];
-//  }
-//          
-//          ABRecordRef person = self.record;
-//  bool bSuccess= TRUE;
-//  CFErrorRef error;
-//
-//  // set name info
-//  // iOS doesn't have displayName - might have to pull parts from it to create name
-//  bool bName = false;
-//  NSMutableDictionary* dict = [aContact valueForKey:kW3ContactName];
-//  if ([dict isKindOfClass:[NSDictionary class]]){
-//      bName = true;
-//      NSArray* propArray = [[Contact defaultObjectAndProperties] objectForKey: kW3ContactName];
-//      for(id i in propArray){
-//          if (![(NSString*)i isEqualToString:kW3ContactFormattedName]){  //kW3ContactFormattedName is generated from ABRecordCopyCompositeName() and can't be set
-//              [self setValue:[dict valueForKey:i] forProperty: (ABPropertyID)[(NSNumber*)[[Contact defaultW3CtoAB] objectForKey: i]intValue] 
-//                  inRecord: person asUpdate: bUpdate];
-//          }
-//      }
-//  }
-             
-//          bool bSuccess = true;  // if property was null, just ignore and return success
-//  CFErrorRef error;
-//  if (aValue && ![aValue isKindOfClass:[NSNull class]]){
-//      if (bUpdate && ([aValue isKindOfClass:[NSString class]] &&  [aValue length] == 0)) { // if updating, empty string means to delete
-//          aValue = NULL;
-//      } // really only need to set if different - more efficient to just update value or compare and only set if necessay???
-//      bSuccess = ABRecordSetValue(aRecord, aProperty, aValue, &error);
-//      if (!bSuccess){
-//          NSLog(@"error setting @% property", aProperty);
-//      }
-//  }
-//
-//  return bSuccess;
-        }
-         
-        public void Clone()
-        {
-             
+			throw new NotImplementedException();
+			
         }
     }
 }
