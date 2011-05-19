@@ -45,27 +45,29 @@ namespace MonoMobile.Extensions
         {
             try
             {
-                if (options.EnableHighAccuracy && options.Timeout > 0)
-                {
-                    WatchPosition(success, error, options);
-                }
-                else
-                {
-                    Location lastKnownLocation=null;
-                    if (options.EnableHighAccuracy)
-                        lastKnownLocation = _locationManager.GetLastKnownLocation(LocationManager.GpsProvider);
-                    
-                    if (lastKnownLocation==null)
-                        lastKnownLocation = _locationManager.GetLastKnownLocation(LocationManager.NetworkProvider);
-                    
-                    SendLocation(lastKnownLocation, success);
-                }
+                _success = success;
+                _error = error;
+                _options = options;
+                GetLastKnownLocation(_options);
             }
             catch (Exception exception)
             {
                 error(new PositionError(PositionErrorCode.PositionUnavailable, exception.Message));
             }
         }
+
+        private void GetLastKnownLocation(GeolocationOptions options)
+        {
+            Location lastKnownLocation=null;
+            if (options!=null && options.EnableHighAccuracy)
+                lastKnownLocation = _locationManager.GetLastKnownLocation(LocationManager.GpsProvider);
+                    
+            if (lastKnownLocation==null)
+                lastKnownLocation = _locationManager.GetLastKnownLocation(LocationManager.NetworkProvider);
+            
+            SendLocation(lastKnownLocation);
+        }
+
         public string WatchPosition(Action<Position> success)
         {
             return WatchPosition(success, error => { });
@@ -81,7 +83,7 @@ namespace MonoMobile.Extensions
             _success = success;
             _error = error;
             _options = options;
-            string provider = _options.EnableHighAccuracy ? LocationManager.GpsProvider : LocationManager.NetworkProvider;
+            string provider = options==null ? LocationManager.NetworkProvider: _options.EnableHighAccuracy ? LocationManager.GpsProvider : LocationManager.NetworkProvider;
             TimeWatch();
 
             _locationManager.RequestLocationUpdates(provider,_options.MaximumAge, 50,this);
@@ -94,24 +96,24 @@ namespace MonoMobile.Extensions
             if (_options.Timeout > 0)
             {
                 _timedWatch=new Timer(_options.Timeout);
-                _timedWatch.Elapsed += (o, e) =>
-                                           {
-                                               if (_isTiming)
-                                               {
-                                                   _timedWatch.Stop();
-                                                   ClearWatch(_watchId);
-                                                   GetCurrentPosition(_success, _error,
-                                                                      new GeolocationOptions()
-                                                                          {
-                                                                              EnableHighAccuracy = false,
-                                                                              MaximumAge = _options.MaximumAge,
-                                                                              Timeout = _options.Timeout
-                                                                          });
-                                                   _isTiming = false;
-                                               }
-                                           };
+                _timedWatch.Elapsed += TimerElapsed;
                 _isTiming = true;
                 _timedWatch.Start();
+            }
+        }
+
+        private void TimerElapsed(object o, ElapsedEventArgs e)
+        {
+            if (_isTiming)
+            {
+                var options = new GeolocationOptions
+                                  {
+                                      EnableHighAccuracy = false,
+                                      MaximumAge = _options.MaximumAge,
+                                      Timeout = _options.Timeout
+                                  };
+                GetLastKnownLocation(options);
+                StopTiming();
             }
         }
 
@@ -129,28 +131,28 @@ namespace MonoMobile.Extensions
 
         public void OnLocationChanged(Location location)
         {
-            SendLocation(location,_success);
+            SendLocation(location);
         }
 
         public void OnProviderDisabled(string provider)
         {
-            //Dows this concern us ?
+            //Does this concern us ?
         }
 
         public void OnProviderEnabled(string provider)
         {
-            //Dows this concern us ?
+            //Does this concern us ?
         }
 
         public void OnStatusChanged(string provider, int status, Bundle extras)
         {
-            //Dows this concern us ?
+            //Does this concern us ?
         }
 
 
         #endregion
 
-        private void SendLocation(Location lastKnownLocation, Action<Position> success)
+        private void SendLocation(Location lastKnownLocation)
         {
             Position pos=new Position();
             pos.Timestamp = DateTime.Now;
@@ -168,7 +170,7 @@ namespace MonoMobile.Extensions
                                  };
 
             }
-            success(pos);
+            _success(pos);
             StopTiming();
         }
 

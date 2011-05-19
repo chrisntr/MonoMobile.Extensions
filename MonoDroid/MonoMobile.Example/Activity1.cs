@@ -53,7 +53,7 @@ namespace MonoMobile.Example
 	        location.GetCurrentPosition(
 	            CurrentPositionSuccess, 
 	            (error) => { },
-	            new GeolocationOptions() {EnableHighAccuracy = true , Timeout = 1000}
+	            new GeolocationOptions() {EnableHighAccuracy = false }
 	            );
 	    }
 
