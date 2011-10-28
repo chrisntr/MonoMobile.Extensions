@@ -9,7 +9,7 @@ using Java.IO;
 namespace MonoMobile.Extensions
 {
    
-    public class Geolocation : Java.Lang.Object, IGeolocation, ILocationListener
+    public class Geolocation : Java.Lang.Object, IGeolocation
     {
         private readonly LocationManager _locationManager;
 
@@ -124,31 +124,6 @@ namespace MonoMobile.Extensions
 
             _locationManager.RemoveUpdates(this);
         }
-
-        #endregion
-
-        #region ILocationListener Members
-
-        public void OnLocationChanged(Location location)
-        {
-            SendLocation(location);
-        }
-
-        public void OnProviderDisabled(string provider)
-        {
-            //Does this concern us ?
-        }
-
-        public void OnProviderEnabled(string provider)
-        {
-            //Does this concern us ?
-        }
-
-        public void OnStatusChanged(string provider, int status, Bundle extras)
-        {
-            //Does this concern us ?
-        }
-
 
         #endregion
 
