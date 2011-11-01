@@ -10,7 +10,6 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>MonoTouch.Example</RootNamespace>
     <AssemblyName>MonoTouchExample</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,11 +20,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <MtouchLink>None</MtouchLink>
-    <MtouchDebug>True</MtouchDebug>
-    <MtouchUseLlvm>false</MtouchUseLlvm>
+    <MtouchDebug>true</MtouchDebug>
     <ConsolePause>false</ConsolePause>
-    <MtouchUseSGen>false</MtouchUseSGen>
-    <MtouchUseThumb>false</MtouchUseThumb>
     <MtouchUseArmv7>false</MtouchUseArmv7>
     <MtouchExtraArgs>-v -v -v</MtouchExtraArgs>
     <MtouchI18n />
@@ -37,11 +33,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <MtouchLink>None</MtouchLink>
-    <MtouchDebug>False</MtouchDebug>
-    <MtouchUseSGen>false</MtouchUseSGen>
     <ConsolePause>false</ConsolePause>
-    <MtouchUseLlvm>false</MtouchUseLlvm>
-    <MtouchUseThumb>false</MtouchUseThumb>
     <MtouchUseArmv7>false</MtouchUseArmv7>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
@@ -52,13 +44,10 @@
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <MtouchUseSGen>false</MtouchUseSGen>
-    <MtouchDebug>True</MtouchDebug>
+    <MtouchDebug>true</MtouchDebug>
     <CodesignKey>iPhone Developer</CodesignKey>
     <ConsolePause>false</ConsolePause>
-    <MtouchUseThumb>false</MtouchUseThumb>
     <MtouchUseArmv7>false</MtouchUseArmv7>
-    <MtouchUseLlvm>false</MtouchUseLlvm>
     <MtouchI18n />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
@@ -67,13 +56,9 @@
     <OutputPath>bin\iPhone\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <MtouchUseSGen>false</MtouchUseSGen>
-    <MtouchDebug>False</MtouchDebug>
-    <MtouchUseThumb>false</MtouchUseThumb>
     <ConsolePause>false</ConsolePause>
     <CodesignKey>iPhone Developer</CodesignKey>
     <MtouchUseArmv7>false</MtouchUseArmv7>
-    <MtouchUseLlvm>false</MtouchUseLlvm>
     <MtouchExtraArgs>-v -v -v</MtouchExtraArgs>
     <MtouchI18n />
   </PropertyGroup>
@@ -82,10 +67,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
-    <Reference Include="MonoMobileExtensions, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\MonoMobile.Extensions\bin\iPhoneSimulator\Debug\MonoMobileExtensions.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -107,12 +88,13 @@
     <InterfaceDefinition Include="ExampleList.xib" xmlns="" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ProjectExtensions>
-    <MonoDevelop>
-      <Properties InternalTargetFrameworkVersion="IPhone" />
-    </MonoDevelop>
-  </ProjectExtensions>
   <ItemGroup>
     <Content Include="beep.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MonoMobile.Extensions\MonoMobile.Extensions.csproj">
+      <Project>{87C4E91E-8215-46E6-BC21-41650EEB8C92}</Project>
+      <Name>MonoMobile.Extensions</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
