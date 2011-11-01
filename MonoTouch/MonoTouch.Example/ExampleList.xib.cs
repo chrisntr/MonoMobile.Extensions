@@ -37,7 +37,8 @@ namespace MonoTouch.Example
 		
 		#endregion
 		
-		UIButton alertButton, confirmButton, beepButton, vibrateButton, cameraButton;
+		UIButton alertButton, confirmButton, beepButton, vibrateButton, cameraButton, currentLocationButton;
+		Geolocation locator;
 		
 		public override void ViewDidLoad ()
 		{
@@ -96,6 +97,44 @@ namespace MonoTouch.Example
 				);
 			};
 			this.View.AddSubview(cameraButton);
+
+			locator = new Geolocation();
+			currentLocationButton = UIButton.FromType (UIButtonType.RoundedRect);
+			currentLocationButton.Frame = new System.Drawing.RectangleF (40f, 220f, 200f, 40f);
+			currentLocationButton.Enabled = locator.IsGeolocationAvailable;
+			currentLocationButton.SetTitle ("Get current Location!", UIControlState.Normal);
+			currentLocationButton.TouchUpInside += (s, e) =>
+			{
+				locator.GetCurrentPosition()
+					.ContinueWith (t =>
+					{
+						InvokeOnMainThread(() =>
+						{
+							if (t.IsCanceled)
+							{
+								notification.Alert ("Location services disabled or user denied access", () => {});
+							}
+							else if (t.IsFaulted)
+							{
+								notification.Alert ("Error: " + t.Exception.InnerExceptions.First ().Message, () => {});
+							}
+							else
+							{
+								notification.Alert ("Altitude: " + t.Result.Coords.Altitude + Environment.NewLine
+									+ "Latitude: " + t.Result.Coords.Latitude + Environment.NewLine
+									+ "Longitude: " + t.Result.Coords.Longitude + Environment.NewLine
+									+ "Heading: " + t.Result.Coords.Heading,
+								() => {}, "Location", "OK");
+							}
+						});
+					});
+			};
+			this.View.AddSubview (currentLocationButton);
+		}
+
+		public void Update()
+		{
+			currentLocationButton.Enabled = locator.IsGeolocationAvailable;
 		}
 	}
 }

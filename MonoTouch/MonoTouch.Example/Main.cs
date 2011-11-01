@@ -19,7 +19,7 @@ namespace MonoTouch.Example
 	// The name AppDelegate is referenced in the MainWindow.xib file.
 	public partial class AppDelegate : UIApplicationDelegate
 	{
-		UIViewController exampleList;
+		ExampleList exampleList;
 		// This method is invoked when the application has loaded its UI and its ready to run
 		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
 		{
@@ -45,6 +45,7 @@ namespace MonoTouch.Example
 		// This method is required in iPhoneOS 3.0
 		public override void OnActivated (UIApplication application)
 		{
+			exampleList.Update();
 		}
 	}
 }
