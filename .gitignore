@@ -14,3 +14,4 @@ _ReSharper.*
 *.swp
 *.pidb
 *.userprefs
+*.dotCover
