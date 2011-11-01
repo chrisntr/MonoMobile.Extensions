@@ -27,9 +27,7 @@ namespace MonoMobile.Example
 			// Set our view from the "main" layout resource
 			SetContentView (Resource.Layout.Main);
 
-		    LocationManager locationManager=(LocationManager) GetSystemService(LocationService);
-            
-		    location = new Geolocation(locationManager);
+			location = new Geolocation (this);
 		    //
 			// Get our button from the layout resource,
 			// and attach an event to it
@@ -50,13 +48,14 @@ namespace MonoMobile.Example
 
 	    private void GetCurrentPosition()
 	    {
-	        location.GetCurrentPosition(
-	            CurrentPositionSuccess, 
-	            (error) => { },
-	            new GeolocationOptions() {EnableHighAccuracy = false }
-	            );
-	    }
+	    	location.GetCurrentPosition().ContinueWith (t =>
+	    	{
+	    		if (t.IsCanceled || t.IsFaulted)
+	    			return;
 
+	    		CurrentPositionSuccess (t.Result);
+	    	});
+	    }
 	    
 	    private void ToggleWatch()
 	    {
