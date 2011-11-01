@@ -1,23 +1,42 @@
 using System;
+using MonoTouch.CoreLocation;
+using System.Threading.Tasks;
 
 namespace MonoMobile.Extensions
 {
 	public class Geolocation : IGeolocation
 	{
-		public void GetCurrentPosition (Action<Position> success)
+		public bool SupportsHeading
 		{
-			throw new NotImplementedException ();
+			get { return CLLocationManager.HeadingAvailable; }
 		}
 
-		public void GetCurrentPosition (Action<Position> success, Action<PositionError> error)
+		public bool IsGeolocationAvailable
 		{
-			throw new NotImplementedException ();
+			get { return CLLocationManager.LocationServicesEnabled; }
 		}
 
-		public void GetCurrentPosition (Action<Position> success, Action<PositionError> error, GeolocationOptions options)
+		public Task<Position> GetCurrentPosition ()
 		{
-			throw new NotImplementedException ();
+			return GetCurrentPosition (new GeolocationOptions());
 		}
+
+		public Task<Position> GetCurrentPosition (GeolocationOptions options)
+		{
+			// TODO: Timeout, prompt reason, should prompting be explicit?
+			// Heading calibration prompt?
+
+			CLLocationManager location = new CLLocationManager();
+
+			var cldelegate = new GeolocationSingleUpdateDelegate (location);
+			location.Delegate = cldelegate;
+
+			location.StartUpdatingLocation();
+			if (CLLocationManager.HeadingAvailable)
+				location.StartUpdatingHeading();
+			
+			return cldelegate.Task;
+		}		
 
 		public string WatchPosition (Action<Position> success)
 		{
