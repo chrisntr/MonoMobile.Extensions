@@ -1,162 +1,98 @@
 using System;
-using System.Linq;
-using System.Timers;
+using System.Threading.Tasks;
+using Android.Content;
 using Android.Locations;
-using Android.OS;
-using Android.Util;
-using Java.IO;
 
 namespace MonoMobile.Extensions
 {
-   
-    public class Geolocation : Java.Lang.Object, IGeolocation
-    {
-        private readonly LocationManager _locationManager;
+	public class Geolocation
+		: IGeolocation
+	{
+		private readonly LocationManager statusManager;
+		private readonly Context context;
+		private string headingProvider;
 
-        private Action<Position> _success;
-        private Action<PositionError> _error;
-        private GeolocationOptions _options;
-        private string _watchId;
-        private Timer _timedWatch = new Timer();
-        private bool _isTiming = false;
+		public Geolocation (Context context)
+		{
+			if (context == null)
+				throw new ArgumentNullException ("context");
 
-        public Geolocation(LocationManager locationManager)
-        {
-            _locationManager = locationManager;
-            _success = position => { };
-            _error = error => { };
-            _options= new GeolocationOptions();
-            _watchId = Guid.NewGuid().ToString();
-        }
+			this.context = context;
+			this.statusManager = (LocationManager)context.GetSystemService (Context.LocationService);
+		}
 
-        #region IGeolocation Members
+		public bool SupportsHeading
+		{
+			get
+			{
+				if (this.headingProvider == null || !this.statusManager.IsProviderEnabled (this.headingProvider))
+				{
+					Criteria c = new Criteria { BearingRequired = true };
+					string providerName = this.statusManager.GetBestProvider (c, enabledOnly: true);
 
-        public void GetCurrentPosition(Action<Position> success)
-        {
-            GetCurrentPosition(success, (error)=> { });
-        }
+					LocationProvider provider = this.statusManager.GetProvider (providerName);
 
-        public void GetCurrentPosition(Action<Position> success, Action<PositionError> error)
-        {
-            GetCurrentPosition(success, error, new GeolocationOptions());
-        }
-        
-        public void GetCurrentPosition(Action<Position> success, Action<PositionError> error, GeolocationOptions options)
-        {
-            try
-            {
-                _success = success;
-                _error = error;
-                _options = options;
-                GetLastKnownLocation(_options);
-            }
-            catch (Exception exception)
-            {
-                error(new PositionError(PositionErrorCode.PositionUnavailable, exception.Message));
-            }
-        }
+					if (provider.SupportsBearing())
+					{
+						this.headingProvider = providerName;
+						return true;
+					}
+					else
+					{
+						this.headingProvider = null;
+						return false;
+					}
+				}
+				else
+					return true;
+			}
+		}
 
-        private void GetLastKnownLocation(GeolocationOptions options)
-        {
-            Location lastKnownLocation=null;
-            if (options!=null && options.EnableHighAccuracy)
-                lastKnownLocation = _locationManager.GetLastKnownLocation(LocationManager.GpsProvider);
-                    
-            if (lastKnownLocation==null)
-                lastKnownLocation = _locationManager.GetLastKnownLocation(LocationManager.NetworkProvider);
-            
-            SendLocation(lastKnownLocation);
-        }
+		public bool IsGeolocationAvailable
+		{
+			get { return this.statusManager.GetProviders (enabledOnly: true).Count > 0; }
+		}
 
-        public string WatchPosition(Action<Position> success)
-        {
-            return WatchPosition(success, error => { });
-        }
+		public Task<Position> GetCurrentPosition()
+		{
+			return GetCurrentPosition (new GeolocationOptions());
+		}
 
-        public string WatchPosition(Action<Position> success, Action<PositionError> error)
-        {
-            return WatchPosition(success,error,new GeolocationOptions());
-        }
+		public Task<Position> GetCurrentPosition(GeolocationOptions options)
+		{
+			var m = (LocationManager) this.context.GetSystemService (Context.LocationService);
 
-        public string WatchPosition(Action<Position> success, Action<PositionError> error, GeolocationOptions options)
-        {
-            _success = success;
-            _error = error;
-            _options = options;
-            string provider = options==null ? LocationManager.NetworkProvider: _options.EnableHighAccuracy ? LocationManager.GpsProvider : LocationManager.NetworkProvider;
-            TimeWatch();
+			var listener = new GeolocationSingleListener (m);
 
-            _locationManager.RequestLocationUpdates(provider,_options.MaximumAge, 50,this);
+			string provider = this.headingProvider;
+			if (provider == null)
+				provider = m.GetBestProvider (new Criteria { BearingRequired = true }, enabledOnly: true);
 
-            return _watchId;
-        }
+			// TODO: Maybe the listener should be handed the options
+			// and handle this itself.
+			m.RequestLocationUpdates (provider, 250, 250, listener);
 
-        private void TimeWatch()
-        {
-            if (_options.Timeout > 0)
-            {
-                _timedWatch=new Timer(_options.Timeout);
-                _timedWatch.Elapsed += TimerElapsed;
-                _isTiming = true;
-                _timedWatch.Start();
-            }
-        }
+			return listener.Task;
+		}
 
-        private void TimerElapsed(object o, ElapsedEventArgs e)
-        {
-            if (_isTiming)
-            {
-                var options = new GeolocationOptions
-                                  {
-                                      EnableHighAccuracy = false,
-                                      MaximumAge = _options.MaximumAge,
-                                      Timeout = _options.Timeout
-                                  };
-                GetLastKnownLocation(options);
-                StopTiming();
-            }
-        }
+		public string WatchPosition(Action<Position> success)
+		{
+			throw new NotImplementedException();
+		}
 
-        public void ClearWatch(string watchID)
-        {
-            if (watchID != _watchId)
-                return;
+		public string WatchPosition(Action<Position> success, Action<PositionError> error)
+		{
+			throw new NotImplementedException();
+		}
 
-            _locationManager.RemoveUpdates(this);
-        }
+		public string WatchPosition(Action<Position> success, Action<PositionError> error, GeolocationOptions options)
+		{
+			throw new NotImplementedException();
+		}
 
-        #endregion
-
-        private void SendLocation(Location lastKnownLocation)
-        {
-            Position pos=new Position();
-            pos.Timestamp = DateTime.Now;
-            if (lastKnownLocation != null)
-            {
-                pos.Coords = new Coordinates
-                                 {
-                                     Accuracy = lastKnownLocation.Accuracy,
-                                     Heading = lastKnownLocation.Bearing,
-                                     Altitude = lastKnownLocation.Altitude,
-                                     AltitudeAccuracy = lastKnownLocation.Accuracy,
-                                     Latitude = lastKnownLocation.Latitude,
-                                     Longitude = lastKnownLocation.Longitude,
-                                     Speed = lastKnownLocation.Speed
-                                 };
-
-            }
-            _success(pos);
-            StopTiming();
-        }
-
-        private void StopTiming()
-        {
-            if (_isTiming)
-            {
-                _isTiming = false;
-                _timedWatch.Stop();
-                ClearWatch(_watchId);
-            }
-        }
-    }
+		public void ClearWatch(string watchID)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

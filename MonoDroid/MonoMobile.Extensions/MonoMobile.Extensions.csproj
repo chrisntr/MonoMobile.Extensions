@@ -64,6 +64,7 @@
       <Link>INotification.cs</Link>
     </Compile>
     <Compile Include="Geolocation.cs" />
+    <Compile Include="GeolocationSingleListener.cs" />
     <Compile Include="Notification.cs" />
     <Compile Include="Device.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
