@@ -12,6 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{21B17B
 		..\Shared\IDevice.cs = ..\Shared\IDevice.cs
 		..\Shared\IGeolocation.cs = ..\Shared\IGeolocation.cs
 		..\Shared\INotification.cs = ..\Shared\INotification.cs
+		..\Shared\Position.cs = ..\Shared\Position.cs
 	EndProjectSection
 EndProject
 Global

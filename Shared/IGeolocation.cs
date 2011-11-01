@@ -64,18 +64,7 @@ namespace MonoMobile.Extensions
         public bool EnableHighAccuracy { get; set; }
     }
 
-    public class Position
-    {
-        public Coordinates Coords { get; set; }
-        public DateTimeOffset Timestamp { get; set; }
-
-        public Position()
-        {
-            Coords = new Coordinates();
-        }
-    }
-
-    public class Coordinates
+	public class Coordinates
     {
         public double Latitude { get; set; }
         public double Longitude { get; set; }

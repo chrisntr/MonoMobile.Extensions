@@ -63,6 +63,9 @@
     <Compile Include="..\..\Shared\INotification.cs">
       <Link>INotification.cs</Link>
     </Compile>
+    <Compile Include="..\..\Shared\Position.cs">
+      <Link>Position.cs</Link>
+    </Compile>
     <Compile Include="Geolocation.cs" />
     <Compile Include="GeolocationSingleListener.cs" />
     <Compile Include="Notification.cs" />
