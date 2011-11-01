@@ -84,16 +84,16 @@ namespace MonoMobile.Example
 
 	    private void CurrentPositionSuccess(Position obj)
 	    {
-	        string message = string.Format("GetCurrentPosition location: {0} {1}-{2} [{3}]",obj.Timestamp, obj.Coords.Latitude,
-	                                       obj.Coords.Longitude, obj.Coords.Accuracy);
+	        string message = string.Format("GetCurrentPosition location: {0} {1}-{2} [{3}]",obj.Timestamp, obj.Latitude,
+	                                       obj.Longitude, obj.Accuracy);
             Android.Util.Log.Info("MonoMobile.Extensions",message);
 	        locationTextView.Text = message;
 	    }
 
 	    private void WatchSuccess(Position obj)
 	    {
-            string message = string.Format("WatchPosition location: {0} {1}-{2} [{3}]",obj.Timestamp, obj.Coords.Latitude,
-                                           obj.Coords.Longitude, obj.Coords.Accuracy);
+            string message = string.Format("WatchPosition location: {0} {1}-{2} [{3}]",obj.Timestamp, obj.Latitude,
+                                           obj.Longitude, obj.Accuracy);
             Android.Util.Log.Info("MonoMobile.Extension", message);
 	        locationTextView.Text = message;
 	    }

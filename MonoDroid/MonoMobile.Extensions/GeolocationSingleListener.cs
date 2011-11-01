@@ -28,16 +28,16 @@ namespace MonoMobile.Extensions
 
 			var p = new Position();
 			if (location.HasAccuracy)
-				p.Coords.Accuracy = location.Accuracy;
+				p.Accuracy = location.Accuracy;
 			if (location.HasAltitude)
-				p.Coords.Altitude = location.Altitude;
+				p.Altitude = location.Altitude;
 			if (location.HasBearing)
-				p.Coords.Heading = location.Bearing;
+				p.Heading = location.Bearing;
 			if (location.HasSpeed)
-				p.Coords.Speed = location.Speed;
+				p.Speed = location.Speed;
 
-			p.Coords.Longitude = location.Longitude;
-			p.Coords.Latitude = location.Latitude;
+			p.Longitude = location.Longitude;
+			p.Latitude = location.Latitude;
 
 			this.completionSource.TrySetResult (p);
 		}
