@@ -82,5 +82,8 @@
     <Compile Include="Notification.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="GeolocationSingleUpdateDelegate.cs" />
+    <Compile Include="..\..\Shared\Position.cs">
+      <Link>Position.cs</Link>
+    </Compile>
   </ItemGroup>
 </Project>

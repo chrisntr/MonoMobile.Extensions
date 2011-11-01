@@ -120,10 +120,10 @@ namespace MonoTouch.Example
 							}
 							else
 							{
-								notification.Alert ("Altitude: " + t.Result.Coords.Altitude + Environment.NewLine
-									+ "Latitude: " + t.Result.Coords.Latitude + Environment.NewLine
-									+ "Longitude: " + t.Result.Coords.Longitude + Environment.NewLine
-									+ "Heading: " + t.Result.Coords.Heading,
+								notification.Alert ("Altitude: " + t.Result.Altitude + Environment.NewLine
+									+ "Latitude: " + t.Result.Latitude + Environment.NewLine
+									+ "Longitude: " + t.Result.Longitude + Environment.NewLine
+									+ "Heading: " + t.Result.Heading,
 								() => {}, "Location", "OK");
 							}
 						});

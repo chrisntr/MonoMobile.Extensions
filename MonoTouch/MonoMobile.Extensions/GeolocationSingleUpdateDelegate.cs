@@ -39,10 +39,10 @@ namespace MonoMobile.Extensions
 		{
 			this.locations.StopUpdatingLocation();
 			
-			this.position.Coords.Altitude = this.locations.Location.Altitude;
-			this.position.Coords.Latitude = this.locations.Location.Coordinate.Latitude;
-			this.position.Coords.Longitude = this.locations.Location.Coordinate.Longitude;
-			this.position.Coords.Speed = this.locations.Location.Speed;
+			this.position.Altitude = this.locations.Location.Altitude;
+			this.position.Latitude = this.locations.Location.Coordinate.Latitude;
+			this.position.Longitude = this.locations.Location.Coordinate.Longitude;
+			this.position.Speed = this.locations.Location.Speed;
 			
 			this.haveLocation = true;
 			
@@ -54,7 +54,7 @@ namespace MonoMobile.Extensions
 		{
 			this.locations.StopUpdatingHeading();
 			
-			this.position.Coords.Heading = newHeading.TrueHeading;
+			this.position.Heading = newHeading.TrueHeading;
 			
 			this.haveHeading = true;
 			
