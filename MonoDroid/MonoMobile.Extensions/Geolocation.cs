@@ -60,13 +60,21 @@ namespace MonoMobile.Extensions
 
 		public Task<Position> GetCurrentPosition(GeolocationOptions options)
 		{
-			var m = (LocationManager) this.context.GetSystemService (Context.LocationService);
+			var m = (LocationManager)this.context.GetSystemService (Context.LocationService);
 
 			var listener = new GeolocationSingleListener (m);
 
 			string provider = this.headingProvider;
 			if (provider == null)
+			{
 				provider = m.GetBestProvider (new Criteria { BearingRequired = true }, enabledOnly: true);
+				if (provider == null)
+				{
+					var tcs = new TaskCompletionSource<Position>();
+					tcs.SetCanceled();
+					return tcs.Task;
+				}
+			}
 
 			// TODO: Maybe the listener should be handed the options
 			// and handle this itself.
