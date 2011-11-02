@@ -42,6 +42,7 @@ namespace MonoMobile.Extensions
 		/// <returns>
 		/// A <see cref="Task{TResult}"/> for the current position.
 		/// </returns>
+		/// <exception cref="ArgumentNullException"><paramref name="options"/> is <c>null</c>.</exception>
 		/// <remarks>
 		/// If the the underlying OS needs to request location access permissions, it will occur automatically.
 		/// If the user has disallowed location access (now or previously), the future will be canceled.
@@ -59,9 +60,27 @@ namespace MonoMobile.Extensions
     
     public class GeolocationOptions
     {
-        public int Timeout { get; set; }
-        public int MaximumAge { get; set; }        
-        public bool EnableHighAccuracy { get; set; }
+		/// <summary>
+		/// Gets or sets the update internal in milliseconds.
+		/// </summary>
+		/// <remarks>
+		/// The actual interval may be higher or lower than what's specified here, as
+		/// it may only act as a hint to some implementations for power conservation.
+		/// </remarks>
+		public int UpdateInterval
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Gets or sets the distance interval in meters.
+		/// </summary>
+		public double DistanceInterval
+		{
+			get;
+			set;
+		}
     }
 	
 	public class GeolocationException
