@@ -8,6 +8,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{21B17B
 		..\Shared\IGeolocation.cs = ..\Shared\IGeolocation.cs
 		..\Shared\INotification.cs = ..\Shared\INotification.cs
 		..\Shared\Position.cs = ..\Shared\Position.cs
+		..\Shared\DelegatedObserver.cs = ..\Shared\DelegatedObserver.cs
+		..\Shared\PositionListener.cs = ..\Shared\PositionListener.cs
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MonoTouch", "MonoTouch", "{8A4D3352-DBA8-4BE4-B66C-2BF4A538C725}"

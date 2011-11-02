@@ -37,7 +37,9 @@ namespace MonoTouch.Example
 		
 		#endregion
 		
-		UIButton alertButton, confirmButton, beepButton, vibrateButton, cameraButton, currentLocationButton;
+		UILabel longitudeText, latitudeText;
+		UIButton alertButton, confirmButton, beepButton, vibrateButton, cameraButton,
+			currentLocationButton, listenPositionButton;
 		Geolocation locator;
 		
 		public override void ViewDidLoad ()
@@ -130,11 +132,87 @@ namespace MonoTouch.Example
 					});
 			};
 			this.View.AddSubview (currentLocationButton);
+			
+			latitudeText = new UILabel();
+			latitudeText.Frame = new System.Drawing.RectangleF (40f, 300f, 200f, 20f);
+			this.View.AddSubview (latitudeText);
+			
+			longitudeText = new UILabel();
+			longitudeText.Frame = new System.Drawing.RectangleF (40f, 320f, 200f, 20f);
+			this.View.AddSubview (longitudeText);
+			
+			listenPositionButton = UIButton.FromType (UIButtonType.RoundedRect);
+			listenPositionButton.Frame = new System.Drawing.RectangleF (40f, 260f, 200f, 40f);
+			listenPositionButton.Enabled = locator.IsGeolocationAvailable;
+			listenPositionButton.SetTitle ("Start listening", UIControlState.Normal);
+			listenPositionButton.TouchUpInside += (s, e) =>
+			{
+				ToggleListener();
+			};
+			
+			this.View.AddSubview (listenPositionButton);
+		}
+
+		private PositionListener listener;
+		private void ToggleListener()
+		{
+			if (this.listener == null)
+			{
+				listenPositionButton.SetTitle ("Stop listening", UIControlState.Normal);
+				this.listener = this.locator.GetPositionListener();
+				listener.Subscribe (new LocationObserver (UpdateLocation, () => {}, ex => {}));
+			}
+			else
+			{
+				listenPositionButton.SetTitle ("Start listening", UIControlState.Normal);
+				this.listener.Dispose();
+				this.listener = null;
+			}
+		}
+
+		private void UpdateLocation (Position p)
+		{
+			InvokeOnMainThread (() =>
+			{
+				latitudeText.Text = "Latitude: " + p.Latitude;
+				longitudeText.Text = "Longitude: " + p.Longitude;
+			});
 		}
 
 		public void Update()
 		{
 			currentLocationButton.Enabled = locator.IsGeolocationAvailable;
+			listenPositionButton.Enabled = locator.IsGeolocationAvailable;
+		}
+
+		private class LocationObserver
+			: IObserver<Position>
+		{
+			private readonly Action<Position> onNext;
+			private readonly Action onCompleted;
+			private readonly Action<Exception> onError;
+
+			public LocationObserver (Action<Position> onNext, Action onCompleted, Action<Exception> onError)
+			{
+				this.onNext = onNext;
+				this.onCompleted = onCompleted;
+				this.onError = onError;
+			}
+
+			public void OnCompleted()
+			{
+				this.onCompleted();
+			}
+
+			public void OnError (Exception error)
+			{
+				this.onError(error);
+			}
+
+			public void OnNext (Position value)
+			{
+				this.onNext (value);
+			}
 		}
 	}
 }
