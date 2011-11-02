@@ -45,6 +45,7 @@ namespace MonoMobile.Extensions
 			this.position.Latitude = this.locations.Location.Coordinate.Latitude;
 			this.position.Longitude = this.locations.Location.Coordinate.Longitude;
 			this.position.Speed = this.locations.Location.Speed;
+			this.position.Timestamp = new DateTimeOffset (this.locations.Location.Timestamp);
 			
 			this.haveLocation = true;
 			
