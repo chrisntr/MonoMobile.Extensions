@@ -4,6 +4,23 @@ namespace MonoMobile.Extensions
 {
 	public class Position
 	{
+		internal Position()
+		{
+		}
+
+		internal Position (Position position)
+		{
+			Timestamp = position.Timestamp;
+			Latitude = position.Latitude;
+			Longitude = position.Longitude;
+			Altitude = position.AltitudeAccuracy;
+			AltitudeAccuracy = position.AltitudeAccuracy;
+			Accuracy = position.Accuracy;
+			Heading = position.Heading;
+			Speed = position.Speed;
+		}
+
+		// TODO: Do the setters really need to be public?
 		public DateTimeOffset Timestamp
 		{
 			get;
