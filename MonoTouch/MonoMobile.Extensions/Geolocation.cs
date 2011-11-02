@@ -30,32 +30,34 @@ namespace MonoMobile.Extensions
 
 			var cldelegate = new GeolocationSingleUpdateDelegate (location);
 			location.Delegate = cldelegate;
-
+			
+			location.DistanceFilter = options.DistanceInterval;
 			location.StartUpdatingLocation();
 			if (CLLocationManager.HeadingAvailable)
 				location.StartUpdatingHeading();
 			
 			return cldelegate.Task;
-		}		
-
-		public string WatchPosition (Action<Position> success)
+		}
+		
+		public PositionListener GetPositionListener ()
 		{
-			throw new NotImplementedException ();
+			return GetPositionListener (new GeolocationOptions());
 		}
 
-		public string WatchPosition (Action<Position> success, Action<PositionError> error)
+		public PositionListener GetPositionListener (GeolocationOptions options)
 		{
-			throw new NotImplementedException ();
-		}
-
-		public string WatchPosition (Action<Position> success, Action<PositionError> error, GeolocationOptions options)
-		{
-			throw new NotImplementedException ();
-		}
-
-		public void ClearWatch (string watchID)
-		{
-			throw new NotImplementedException ();
+			CLLocationManager location = new CLLocationManager();
+			
+			var cldelegate = new GeolocationContinuousDelegate (location);
+			location.Delegate = cldelegate;
+			
+			location.DistanceFilter = options.DistanceInterval;
+			
+			location.StartUpdatingLocation();
+			if (CLLocationManager.HeadingAvailable)
+				location.StartUpdatingHeading();
+			
+			return cldelegate.PositionListener;
 		}
 	}
 }

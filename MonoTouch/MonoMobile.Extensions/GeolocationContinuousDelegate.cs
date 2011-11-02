@@ -4,33 +4,55 @@ using MonoTouch.CoreLocation;
 namespace MonoMobile.Extensions
 {
 	internal class GeolocationContinuousDelegate
-		: CLLocationManagerDelegate, IGeolocationListener
+		: CLLocationManagerDelegate
 	{
-		public GeolocationContinuousDelegate ()
+		public GeolocationContinuousDelegate (CLLocationManager manager)
 		{
+			this.locations = manager;
+			
+			PositionListener = new PositionListener (pl =>
+			{
+				manager.StopUpdatingHeading();
+				manager.StopUpdatingLocation();
+			});
 		}
 		
-		public override void UpdatedLocation (CLLocationManager manager, CLLocation newLocation, CLLocation oldLocation)
+		public PositionListener PositionListener
 		{
-			
-		}
-		
-		public override void UpdatedHeading (CLLocationManager manager, CLHeading newHeading)
-		{
-			
+			get;
+			private set;
 		}
 
-		public IDisposable Subscribe (IObserver<Position> observer)
+		public override void UpdatedLocation (CLLocationManager manager, CLLocation newLocation, CLLocation oldLocation)
 		{
-			throw new NotImplementedException ();
+			this.position.Altitude = this.locations.Location.Altitude;
+			this.position.Latitude = this.locations.Location.Coordinate.Latitude;
+			this.position.Longitude = this.locations.Location.Coordinate.Longitude;
+			this.position.Speed = this.locations.Location.Speed;
+			this.position.Timestamp = new DateTimeOffset (this.locations.Location.Timestamp);
+			
+			PositionListener.OnNext (this.position);
+		}
+
+		public override void UpdatedHeading (CLLocationManager manager, CLHeading newHeading)
+		{
+			this.position.Heading = newHeading.TrueHeading;
+			
+			PositionListener.OnNext (this.position);
 		}
 		
-		public override void Dispose ()
+		public override void Failed (CLLocationManager manager, MonoTouch.Foundation.NSError error)
 		{
-			throw new NotImplementedException ();
+			PositionListener.OnCompleted();
 		}
 		
-		private readonly Position p = new Position();
+		public override void MonitoringFailed (CLLocationManager manager, CLRegion region, MonoTouch.Foundation.NSError error)
+		{
+			PositionListener.OnCompleted();
+		}
+		
+		private readonly Position position = new Position();
+		private readonly CLLocationManager locations;
 	}
 }
 
