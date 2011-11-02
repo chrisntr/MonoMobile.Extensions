@@ -38,6 +38,7 @@ namespace MonoMobile.Extensions
 
 			p.Longitude = location.Longitude;
 			p.Latitude = location.Latitude;
+			p.Timestamp = new DateTimeOffset (new DateTime (TimeSpan.TicksPerMillisecond * location.Time, DateTimeKind.Utc));
 
 			this.completionSource.TrySetResult (p);
 		}
