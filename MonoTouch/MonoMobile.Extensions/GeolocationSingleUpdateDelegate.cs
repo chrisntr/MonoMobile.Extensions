@@ -27,12 +27,14 @@ namespace MonoMobile.Extensions
 		
 		public override void Failed (CLLocationManager manager, MonoTouch.Foundation.NSError error)
 		{
-			this.tcs.TrySetException (new GeolocationException (error.Domain + ": " + (CLError)error.Code));
+			this.tcs.TrySetCanceled();
+			//this.tcs.TrySetException (new GeolocationException (error.Domain + ": " + (CLError)error.Code));
 		}
 		
 		public override void MonitoringFailed (CLLocationManager manager, CLRegion region, MonoTouch.Foundation.NSError error)
 		{
-			this.tcs.TrySetException (new GeolocationException (error.Domain + ": " + (CLError)error.Code));
+			this.tcs.TrySetCanceled();
+			//this.tcs.TrySetException (new GeolocationException (error.Domain + ": " + (CLError)error.Code));
 		}
 		
 		public override void UpdatedLocation (CLLocationManager manager, CLLocation newLocation, CLLocation oldLocation)
