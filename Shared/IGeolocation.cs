@@ -51,12 +51,20 @@ namespace MonoMobile.Extensions
 		/// </remarks>
 		Task<Position> GetCurrentPosition (GeolocationOptions options);
 
-        string WatchPosition(Action<Position> success);
-        string WatchPosition(Action<Position> success, Action<PositionError> error);
-        string WatchPosition(Action<Position> success, Action<PositionError> error, GeolocationOptions options);
+		/// <summary>
+		/// Gets a <see cref="PositionListener"/>.
+		/// </summary>
+		/// <returns>a <see cref="PositionListener"/>.</returns>
+		PositionListener GetPositionListener();
 
-        void ClearWatch(string watchID);
-    }
+		/// <summary>
+		/// Gets a <see cref="PositionListener"/> for the given <paramref name="options"/>.
+		/// </summary>
+		/// <param name="options">Options for the listening to the current position.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="options"/> is <c>null</c>.</exception>
+		/// <returns>a <see cref="PositionListener"/>.</returns>
+		PositionListener GetPositionListener (GeolocationOptions options);
+	}
     
     public class GeolocationOptions
     {
@@ -96,23 +104,6 @@ namespace MonoMobile.Extensions
 		{
 		}
 	}
-
-    public class PositionError
-    {
-        public string Message { get; set; }
-        public PositionErrorCode Code { get; set; }        
-
-        public PositionError()
-        {
-            
-        }
-
-        public PositionError(PositionErrorCode code, string message)
-        {
-            Code = code;
-            Message = message;
-        }
-    }
 
     public enum PositionErrorCode
     {
