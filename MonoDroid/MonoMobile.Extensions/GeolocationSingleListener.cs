@@ -14,7 +14,6 @@ namespace MonoMobile.Extensions
 				throw new ArgumentNullException ("manager");
 
 			this.manager = manager;
-			this.manager.AddTestProvider ("test", true, true, false, false, false, false, true, 0, 10);
 		}
 
 		public Task<Position> Task
