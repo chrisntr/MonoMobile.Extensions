@@ -51,6 +51,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Shared\DelegatedObserver.cs">
+      <Link>DelegatedObserver.cs</Link>
+    </Compile>
     <Compile Include="..\..\Shared\ExtensionHelper.cs">
       <Link>ExtensionHelper.cs</Link>
     </Compile>
@@ -66,7 +69,11 @@
     <Compile Include="..\..\Shared\Position.cs">
       <Link>Position.cs</Link>
     </Compile>
+    <Compile Include="..\..\Shared\PositionListener.cs">
+      <Link>PositionListener.cs</Link>
+    </Compile>
     <Compile Include="Geolocation.cs" />
+    <Compile Include="GeolocationContinuousListener.cs" />
     <Compile Include="GeolocationSingleListener.cs" />
     <Compile Include="Notification.cs" />
     <Compile Include="Device.cs" />

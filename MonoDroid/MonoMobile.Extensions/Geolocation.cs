@@ -58,7 +58,7 @@ namespace MonoMobile.Extensions
 			return GetCurrentPosition (new GeolocationOptions());
 		}
 
-		public Task<Position> GetCurrentPosition(GeolocationOptions options)
+		public Task<Position> GetCurrentPosition (GeolocationOptions options)
 		{
 			var m = (LocationManager)this.context.GetSystemService (Context.LocationService);
 
@@ -67,40 +67,42 @@ namespace MonoMobile.Extensions
 			string provider = this.headingProvider;
 			if (provider == null)
 			{
-				provider = m.GetBestProvider (new Criteria { BearingRequired = true }, enabledOnly: true);
-				if (provider == null)
-				{
-					var tcs = new TaskCompletionSource<Position>();
-					tcs.SetCanceled();
-					return tcs.Task;
-				}
+			    provider = m.GetBestProvider (new Criteria { BearingRequired = true }, enabledOnly: true);
+			    if (provider == null)
+			    {
+			        var tcs = new TaskCompletionSource<Position>();
+			        tcs.SetCanceled();
+			        return tcs.Task;
+			    }
 			}
 
 			// TODO: Maybe the listener should be handed the options
 			// and handle this itself.
-			m.RequestLocationUpdates (provider, 250, 250, listener);
+			m.RequestLocationUpdates (provider, 250, (float)options.DistanceInterval, listener);
 
 			return listener.Task;
 		}
 
-		public string WatchPosition(Action<Position> success)
+		public PositionListener GetPositionListener()
 		{
-			throw new NotImplementedException();
+			return GetPositionListener (new GeolocationOptions());
 		}
 
-		public string WatchPosition(Action<Position> success, Action<PositionError> error)
+		public PositionListener GetPositionListener (GeolocationOptions options)
 		{
-			throw new NotImplementedException();
-		}
+			var m = (LocationManager)this.context.GetSystemService (Context.LocationService);
 
-		public string WatchPosition(Action<Position> success, Action<PositionError> error, GeolocationOptions options)
-		{
-			throw new NotImplementedException();
-		}
+			var listener = new GeolocationContinuousListener (m);
 
-		public void ClearWatch(string watchID)
-		{
-			throw new NotImplementedException();
+			string provider = this.headingProvider;
+			if (provider == null)
+				provider = m.GetBestProvider (new Criteria { BearingRequired = true }, enabledOnly: true);
+
+			// TODO: Maybe the listener should be handed the options
+			// and handle this itself.
+			m.RequestLocationUpdates (provider, options.UpdateInterval, (float)options.DistanceInterval, listener);
+
+			return listener.PositionListener;
 		}
 	}
 }
