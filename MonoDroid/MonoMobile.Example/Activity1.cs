@@ -16,7 +16,7 @@ namespace MonoMobile.Example
 	{
         IGeolocation location;
         bool watching = false;
-        string watchid = "";
+        PositionListener listener;
         TextView locationTextView;
         Button watchButton;
 
@@ -61,13 +61,14 @@ namespace MonoMobile.Example
 	    {
 	        if (!watching)
 	        {   
-	            watchid=location.WatchPosition(WatchSuccess);
-                watchButton.Text = GetString(Resource.String.watchStop);
+	            listener = location.GetPositionListener();
+	            listener.Subscribe (new LocationObserver (WatchSuccess, ToggleWatch, ex => { }));
+	            watchButton.Text = GetString (Resource.String.watchStop);
 	        }
 	        else
 	        {
-	            location.ClearWatch(watchid);
-	            watchButton.Text = GetString(Resource.String.watchStart);
+	            listener.Dispose();
+	            watchButton.Text = GetString (Resource.String.watchStart);
 	        }
 	        watching = !watching;
 	    }
@@ -97,6 +98,36 @@ namespace MonoMobile.Example
             Android.Util.Log.Info("MonoMobile.Extension", message);
 	        locationTextView.Text = message;
 	    }
+
+		private class LocationObserver
+			: IObserver<Position>
+		{
+			private readonly Action<Position> onNext;
+			private readonly Action onCompleted;
+			private readonly Action<Exception> onError;
+
+			public LocationObserver (Action<Position> onNext, Action onCompleted, Action<Exception> onError)
+			{
+				this.onNext = onNext;
+				this.onCompleted = onCompleted;
+				this.onError = onError;
+			}
+
+			public void OnCompleted()
+			{
+				this.onCompleted();
+			}
+
+			public void OnError (Exception error)
+			{
+				this.onError (error);
+			}
+
+			public void OnNext (Position value)
+			{
+				this.onNext (value);
+			}
+		}
 	}
 }
 

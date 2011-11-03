@@ -8,11 +8,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoMobile.Example", "MonoM
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{21B17BB4-06C1-4E6E-BD78-C022CD8F8266}"
 	ProjectSection(SolutionItems) = preProject
+		..\Shared\DelegatedObserver.cs = ..\Shared\DelegatedObserver.cs
 		..\Shared\ExtensionHelper.cs = ..\Shared\ExtensionHelper.cs
 		..\Shared\IDevice.cs = ..\Shared\IDevice.cs
 		..\Shared\IGeolocation.cs = ..\Shared\IGeolocation.cs
 		..\Shared\INotification.cs = ..\Shared\INotification.cs
 		..\Shared\Position.cs = ..\Shared\Position.cs
+		..\Shared\PositionListener.cs = ..\Shared\PositionListener.cs
 	EndProjectSection
 EndProject
 Global
