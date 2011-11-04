@@ -3,8 +3,15 @@ using System.Threading.Tasks;
 
 namespace MonoMobile.Extensions
 {
-    public interface IGeolocation
-    {
+	public interface IGeolocation
+	{
+		// TODO needs some kind of status change
+
+		/// <summary>
+		/// Raised when position information is updated.
+		/// </summary>
+		event EventHandler<PositionEventArgs> PositionChanged;
+
 		/// <summary>
 		/// Gets a value indicating whether this <see cref="MonoMobile.Extensions.IGeolocation"/> supports heading.
 		/// </summary>
@@ -22,74 +29,81 @@ namespace MonoMobile.Extensions
 		bool IsGeolocationAvailable { get; }
 
 		/// <summary>
+		/// Gets or sets the desired accuracy in meters.
+		/// </summary>
+		double DesiredAccuracy { get; set; }
+
+		/// <summary>
+		/// Gets whether the position is currently being listened to.
+		/// </summary>
+		bool IsListening { get; }
+
+		/// <summary>
 		/// Gets a future for the current position.
 		/// </summary>
 		/// <returns>
 		/// A <see cref="Task{TResult}"/> for the current position.
 		/// </returns>
 		/// <remarks>
-		/// If the the underlying OS needs to request location access permissions, it will occur automatically.
+		/// <para>
+		/// If the underlying OS needs to request location access permissions, it will occur automatically.
 		/// If the user has disallowed location access (now or previously), the future will be canceled.
 		/// Any errors currently sets an exception on the future, but this needs to be reviewed as
 		/// not all geolocation errors may be really be exceptional.
+		/// </para>
+		/// <para>
+		/// If this <see cref="IGeolocation"/> currently <see cref="IsListening"/>, the future will be
+		/// set immediately with the last retrieved position.
+		/// </para>
 		/// </remarks>
 		Task<Position> GetCurrentPosition();
 
 		/// <summary>
-		/// Gets a future for the current position.
+		/// Starts listening to position changes with specified thresholds.
 		/// </summary>
-		/// <param name="options">Options for getting the current position, currently ignored.</param>
-		/// <returns>
-		/// A <see cref="Task{TResult}"/> for the current position.
-		/// </returns>
-		/// <exception cref="ArgumentNullException"><paramref name="options"/> is <c>null</c>.</exception>
+		/// <param name="minTime">A hint for the minimum time between position updates in milliseconds.</param>
+		/// <param name="minDistance">A hint for the minimum distance between position updates in meters.</param>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// <para>
+		/// <paramref name="minTime"/> is &lt; 0.
+		/// </para>
+		/// <para>or</para>
+		/// <para>
+		/// <paramref name="minDistance"/> is &lt; 0.
+		/// </para>
+		/// </exception>
+		/// <exception cref="InvalidOperationException">This geolocation already <see cref="IsListening"/>.</exception>
+		/// <seealso cref="StopListening"/>
+		/// <seealso cref="IsListening"/>
 		/// <remarks>
-		/// If the the underlying OS needs to request location access permissions, it will occur automatically.
-		/// If the user has disallowed location access (now or previously), the future will be canceled.
-		/// Any errors currently sets an exception on the future, but this needs to be reviewed as
-		/// not all geolocation errors may be really be exceptional.
+		/// If the underlying OS needs to request location access permissions, it will occur automatically.
 		/// </remarks>
-		Task<Position> GetCurrentPosition (GeolocationOptions options);
+		void StartListening (int minTime, double minDistance);
 
 		/// <summary>
-		/// Gets a <see cref="PositionListener"/>.
+		/// Stops listening to position changes.
 		/// </summary>
-		/// <returns>a <see cref="PositionListener"/>.</returns>
-		PositionListener GetPositionListener();
-
-		/// <summary>
-		/// Gets a <see cref="PositionListener"/> for the given <paramref name="options"/>.
-		/// </summary>
-		/// <param name="options">Options for the listening to the current position.</param>
-		/// <exception cref="ArgumentNullException"><paramref name="options"/> is <c>null</c>.</exception>
-		/// <returns>a <see cref="PositionListener"/>.</returns>
-		PositionListener GetPositionListener (GeolocationOptions options);
+		/// <seealso cref="StartListening"/>
+		void StopListening();
 	}
-    
-    public class GeolocationOptions
-    {
-		/// <summary>
-		/// Gets or sets the update internal in milliseconds.
-		/// </summary>
-		/// <remarks>
-		/// The actual interval may be higher or lower than what's specified here, as
-		/// it may only act as a hint to some implementations for power conservation.
-		/// </remarks>
-		public int UpdateInterval
+
+	public class PositionEventArgs
+		: EventArgs
+	{
+		public PositionEventArgs (Position position)
 		{
-			get;
-			set;
+			if (position == null)
+				throw new ArgumentNullException ("position");
+
+			Position = position;
 		}
 
-		/// <summary>
-		/// Gets or sets the distance interval in meters.
-		/// </summary>
-		public double DistanceInterval
+		public Position Position
 		{
 			get;
-			set;
+			private set;
 		}
-    }
+	}
 	
 	public class GeolocationException
 		: Exception
@@ -105,10 +119,10 @@ namespace MonoMobile.Extensions
 		}
 	}
 
-    public enum PositionErrorCode
-    {
-        PermissionDenied,
-        PositionUnavailable,
-        Timeout
-    }
+	public enum PositionErrorCode
+	{
+		PermissionDenied,
+		PositionUnavailable,
+		Timeout
+	}
 }
