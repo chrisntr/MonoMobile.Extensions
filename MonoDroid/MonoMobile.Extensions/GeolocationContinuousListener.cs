@@ -4,19 +4,10 @@ using Android.OS;
 
 namespace MonoMobile.Extensions
 {
-	public class GeolocationContinuousListener
+	internal class GeolocationContinuousListener
 		: Java.Lang.Object, ILocationListener
 	{
-		public GeolocationContinuousListener (LocationManager locationManager)
-		{
-			PositionListener = new PositionListener (pl => locationManager.RemoveUpdates (this));
-		}
-
-		public PositionListener PositionListener
-		{
-			get;
-			private set;
-		}
+		public event EventHandler<PositionEventArgs> PositionChanged;
 
 		public void OnLocationChanged (Location location)
 		{
@@ -34,12 +25,14 @@ namespace MonoMobile.Extensions
 			p.Latitude = location.Latitude;
 			p.Timestamp = new DateTimeOffset (new DateTime (TimeSpan.TicksPerMillisecond * location.Time, DateTimeKind.Utc));
 
-			PositionListener.OnNext (p);
+			var changed = PositionChanged;
+			if (changed != null)
+				changed (this, new PositionEventArgs (p));
 		}
 
 		public void OnProviderDisabled (string provider)
 		{
-			PositionListener.OnCompleted();
+
 		}
 
 		public void OnProviderEnabled (string provider)
@@ -52,7 +45,7 @@ namespace MonoMobile.Extensions
 			{
 				case Availability.OutOfService:
 				case Availability.TemporarilyUnavailable:
-					PositionListener.OnCompleted();
+					
 					break;
 			}
 		}

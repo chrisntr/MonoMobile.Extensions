@@ -8,29 +8,37 @@ namespace MonoMobile.Extensions
 	public class Geolocation
 		: IGeolocation
 	{
-		private readonly LocationManager statusManager;
-		private readonly Context context;
-		private string headingProvider;
-
-		public Geolocation (Context context)
+		public Geolocation (LocationManager manager)
 		{
-			if (context == null)
-				throw new ArgumentNullException ("context");
+			if (manager == null)
+				throw new ArgumentNullException ("manager");
 
-			this.context = context;
-			this.statusManager = (LocationManager)context.GetSystemService (Context.LocationService);
+			this.manager = manager;
+		}
+
+		public event EventHandler<PositionEventArgs> PositionChanged;
+
+		public bool IsListening
+		{
+			get { return this.listener != null; }
+		}
+
+		public double DesiredAccuracy
+		{
+			get;
+			set;
 		}
 
 		public bool SupportsHeading
 		{
 			get
 			{
-				if (this.headingProvider == null || !this.statusManager.IsProviderEnabled (this.headingProvider))
+				if (this.headingProvider == null || !this.manager.IsProviderEnabled (this.headingProvider))
 				{
 					Criteria c = new Criteria { BearingRequired = true };
-					string providerName = this.statusManager.GetBestProvider (c, enabledOnly: true);
+					string providerName = this.manager.GetBestProvider (c, enabledOnly: true);
 
-					LocationProvider provider = this.statusManager.GetProvider (providerName);
+					LocationProvider provider = this.manager.GetProvider (providerName);
 
 					if (provider.SupportsBearing())
 					{
@@ -50,59 +58,107 @@ namespace MonoMobile.Extensions
 
 		public bool IsGeolocationAvailable
 		{
-			get { return this.statusManager.GetProviders (enabledOnly: true).Count > 0; }
+			get { return this.manager.GetProviders (enabledOnly: true).Count > 0; }
 		}
 
 		public Task<Position> GetCurrentPosition()
 		{
-			return GetCurrentPosition (new GeolocationOptions());
-		}
+			var tcs = new TaskCompletionSource<Position>();
 
-		public Task<Position> GetCurrentPosition (GeolocationOptions options)
-		{
-			var m = (LocationManager)this.context.GetSystemService (Context.LocationService);
-
-			var listener = new GeolocationSingleListener (m);
-
-			string provider = this.headingProvider;
-			if (provider == null)
+			if (!IsListening)
 			{
-			    provider = m.GetBestProvider (new Criteria { BearingRequired = true }, enabledOnly: true);
-			    if (provider == null)
-			    {
-			        var tcs = new TaskCompletionSource<Position>();
-			        tcs.SetCanceled();
-			        return tcs.Task;
-			    }
+				string provider;
+				if (!TryGetProvider (out provider))
+					tcs.SetCanceled();
+				else
+				{
+					var singleListener = new GeolocationSingleListener (this.manager);
+					this.manager.RequestLocationUpdates (provider, 0, 0, singleListener);
+					return singleListener.Task;
+				}
+			}
+			else
+			{
+				lock (this.positionSync)
+				{
+					if (this.lastPosition == null)
+					{
+						EventHandler<PositionEventArgs> gotPosition = null;
+						gotPosition = (s, e) =>
+						{
+							tcs.TrySetResult (e.Position);
+							PositionChanged -= gotPosition;
+						};
+
+						PositionChanged += gotPosition;
+					}
+					else
+						tcs.SetResult (this.lastPosition);
+				}
 			}
 
-			// TODO: Maybe the listener should be handed the options
-			// and handle this itself.
-			m.RequestLocationUpdates (provider, 250, (float)options.DistanceInterval, listener);
-
-			return listener.Task;
+			return tcs.Task;
 		}
 
-		public PositionListener GetPositionListener()
+		public void StartListening (int minTime, double minDistance)
 		{
-			return GetPositionListener (new GeolocationOptions());
+			if (minTime < 0)
+				throw new ArgumentOutOfRangeException ("minTime");
+			if (minDistance < 0)
+				throw new ArgumentOutOfRangeException ("minDistance");
+			if (IsListening)
+				throw new InvalidOperationException ("This geolocation is already listening");
+
+			this.listener = new GeolocationContinuousListener();
+			this.listener.PositionChanged += OnListenerPositionChanged;
+
+			string provider;
+			if (!TryGetProvider (out provider))
+				return;
+
+			this.manager.RequestLocationUpdates (provider, minTime, (float) minDistance, listener);
 		}
 
-		public PositionListener GetPositionListener (GeolocationOptions options)
+		public void StopListening()
 		{
-			var m = (LocationManager)this.context.GetSystemService (Context.LocationService);
+			if (this.listener == null)
+				return;
 
-			var listener = new GeolocationContinuousListener (m);
+			this.listener.PositionChanged -= OnListenerPositionChanged;
+			this.listener = null;
+		}
 
-			string provider = this.headingProvider;
+		private readonly LocationManager manager;
+		private string headingProvider;
+		private GeolocationContinuousListener listener;
+		private readonly object positionSync = new object();
+		private Position lastPosition;
+
+		private void OnListenerPositionChanged (object sender, PositionEventArgs e)
+		{
+			if (!IsListening) // ignore anything that might come in afterwards
+				return;
+
+			lock (this.positionSync)
+			{
+				this.lastPosition = e.Position;
+
+				var changed = PositionChanged;
+				if (changed != null)
+					changed (this, e);
+			}
+		}
+
+		private bool TryGetProvider (out string provider)
+		{
+			provider = this.headingProvider;
 			if (provider == null)
-				provider = m.GetBestProvider (new Criteria { BearingRequired = true }, enabledOnly: true);
+			{
+			    provider = this.manager.GetBestProvider (new Criteria { BearingRequired = true }, enabledOnly: true);
+				return (provider != null);
+			}
 
-			// TODO: Maybe the listener should be handed the options
-			// and handle this itself.
-			m.RequestLocationUpdates (provider, options.UpdateInterval, (float)options.DistanceInterval, listener);
-
-			return listener.PositionListener;
+			return true;
 		}
 	}
 }

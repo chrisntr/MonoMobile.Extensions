@@ -44,8 +44,8 @@ namespace MonoMobile.Extensions
 
 		public void OnProviderDisabled (string provider)
 		{
-			StopListening();
-			this.completionSource.TrySetCanceled();
+			//StopListening();
+			//this.completionSource.TrySetCanceled();
 		}
 
 		public void OnProviderEnabled (string provider)
