@@ -16,8 +16,7 @@ namespace MonoMobile.Example
 	{
         IGeolocation location;
         bool watching = false;
-        PositionListener listener;
-        TextView locationTextView;
+        TextView locationTextView, currentLocationTextView;
         Button watchButton;
 
 		protected override void OnCreate (Bundle bundle)
@@ -27,7 +26,7 @@ namespace MonoMobile.Example
 			// Set our view from the "main" layout resource
 			SetContentView (Resource.Layout.Main);
 
-			location = new Geolocation (this);
+			location = new Geolocation ((LocationManager)this.GetSystemService(LocationService));
 		    //
 			// Get our button from the layout resource,
 			// and attach an event to it
@@ -35,7 +34,8 @@ namespace MonoMobile.Example
             
 		    watchButton = FindViewById<Button>(Resource.Id.WatchButton);
 
-		    locationTextView = FindViewById<TextView>(Resource.Id.LocationTextView);
+			locationTextView = FindViewById<TextView>(Resource.Id.LocationTextView);
+			currentLocationTextView = FindViewById<TextView>(Resource.Id.CurrentLocationTextView);
 
 		    getLocationButton.Click += delegate
 			                    {
@@ -48,27 +48,34 @@ namespace MonoMobile.Example
 
 	    private void GetCurrentPosition()
 	    {
-	    	location.GetCurrentPosition().ContinueWith (t =>
+	    	location.GetCurrentPosition().ContinueWith (t => RunOnUiThread (() =>
 	    	{
-	    		if (t.IsCanceled || t.IsFaulted)
-	    			return;
+	    		string message;
+	    		if (t.IsCanceled)
+	    			message = "Single: last canceled";
+	    		else if (t.IsFaulted)
+	    			message = "Single: last error: " + t.Exception;
+	    		else
+	    			message = "Single: last: " + GetText (t.Result);
 
-	    		CurrentPositionSuccess (t.Result);
-	    	});
+	    		this.currentLocationTextView.Text = message;
+	    	}));
 	    }
 	    
 	    private void ToggleWatch()
 	    {
 	        if (!watching)
-	        {   
-	            listener = location.GetPositionListener();
-	            listener.Subscribe (new LocationObserver (WatchSuccess, ToggleWatch, ex => { }));
+			{
+				location.PositionChanged += OnPostionChanged;
+				location.StartListening (500, 1);
+	            
 	            watchButton.Text = GetString (Resource.String.watchStop);
 	        }
 	        else
 	        {
-	            listener.Dispose();
+				location.PositionChanged -= OnPostionChanged;
 	            watchButton.Text = GetString (Resource.String.watchStart);
+				location.StopListening();
 	        }
 	        watching = !watching;
 	    }
@@ -83,51 +90,26 @@ namespace MonoMobile.Example
 	        Android.Util.Log.Info("MonoMobile.Extensions", "MonoMobile Version: {0}", device.MonoMobileVersion);
 	    }
 
-	    private void CurrentPositionSuccess(Position obj)
-	    {
-	        string message = string.Format("GetCurrentPosition location: {0} {1}-{2} [{3}]",obj.Timestamp, obj.Latitude,
-	                                       obj.Longitude, obj.Accuracy);
-            Android.Util.Log.Info("MonoMobile.Extensions",message);
-	        locationTextView.Text = message;
-	    }
+		private string GetText (Position p)
+		{
+			return String.Format("{0} {1},{2} [{3}]",p.Timestamp, p.Latitude,
+	                                       p.Longitude, p.Accuracy);
+		}
+
+		private void OnPostionChanged (object sender, PositionEventArgs e)
+		{
+			WatchSuccess (e.Position);
+		}
 
 	    private void WatchSuccess(Position obj)
 	    {
-            string message = string.Format("WatchPosition location: {0} {1}-{2} [{3}]",obj.Timestamp, obj.Latitude,
-                                           obj.Longitude, obj.Accuracy);
-            Android.Util.Log.Info("MonoMobile.Extension", message);
-	        locationTextView.Text = message;
+	    	RunOnUiThread (() =>
+	    	{
+	    		string message = GetText (obj);
+	    		Android.Util.Log.Info ("MonoMobile.Extension", message);
+	    		locationTextView.Text = message;
+	    	});
 	    }
-
-		private class LocationObserver
-			: IObserver<Position>
-		{
-			private readonly Action<Position> onNext;
-			private readonly Action onCompleted;
-			private readonly Action<Exception> onError;
-
-			public LocationObserver (Action<Position> onNext, Action onCompleted, Action<Exception> onError)
-			{
-				this.onNext = onNext;
-				this.onCompleted = onCompleted;
-				this.onError = onError;
-			}
-
-			public void OnCompleted()
-			{
-				this.onCompleted();
-			}
-
-			public void OnError (Exception error)
-			{
-				this.onError (error);
-			}
-
-			public void OnNext (Position value)
-			{
-				this.onNext (value);
-			}
-		}
 	}
 }
 
