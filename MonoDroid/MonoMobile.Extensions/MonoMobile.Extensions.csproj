@@ -12,7 +12,10 @@
     <RootNamespace>MonoMobile.Extensions</RootNamespace>
     <AssemblyName>MonoMobile.Extensions</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkVersion>v2.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v2.1</TargetFrameworkVersion>
+    <AndroidSupportedAbis>armeabi</AndroidSupportedAbis>
+    <AndroidStoreUncompressedFileExtensions />
+    <MandroidI18n />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugMonoDroid|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
