@@ -161,14 +161,15 @@ namespace MonoMobile.Extensions
 
 		private bool TryGetProvider (out string provider)
 		{
-			provider = this.headingProvider;
-			if (provider == null)
-			{
-			    provider = this.manager.GetBestProvider (new Criteria { BearingRequired = true }, enabledOnly: true);
-				return (provider != null);
-			}
+			provider = this.manager.GetBestProvider (
+				new Criteria
+				{
+					BearingRequired = true,
+					Accuracy = (DesiredAccuracy <= 100) ? Accuracy.Fine : Accuracy.Coarse
+				},
+				enabledOnly: true);
 
-			return true;
+			return (provider != null);
 		}
 	}
 }
