@@ -8,12 +8,13 @@ namespace MonoMobile.Extensions
 	internal class GeolocationSingleListener
 		: Java.Lang.Object, ILocationListener
 	{
-		public GeolocationSingleListener (LocationManager manager)
+		public GeolocationSingleListener (LocationManager manager, Action<Position> callback)
 		{
 			if (manager == null)
 				throw new ArgumentNullException ("manager");
 
 			this.manager = manager;
+			this.callback = callback;
 		}
 
 		public Task<Position> Task
@@ -39,6 +40,7 @@ namespace MonoMobile.Extensions
 			p.Latitude = location.Latitude;
 			p.Timestamp = new DateTimeOffset (new DateTime (TimeSpan.TicksPerMillisecond * location.Time, DateTimeKind.Utc));
 
+			this.callback (p);
 			this.completionSource.TrySetResult (p);
 		}
 
@@ -67,6 +69,7 @@ namespace MonoMobile.Extensions
 		}
 
 		private readonly LocationManager manager;
+		private readonly Action<Position> callback;
 		private readonly TaskCompletionSource<Position> completionSource = new TaskCompletionSource<Position>();
 
 		private void StopListening()

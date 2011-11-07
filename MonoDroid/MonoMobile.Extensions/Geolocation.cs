@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using Android.Content;
 using Android.Locations;
 
 namespace MonoMobile.Extensions
@@ -63,7 +62,11 @@ namespace MonoMobile.Extensions
 
 		public Task<Position> GetCurrentPosition()
 		{
-			var tcs = new TaskCompletionSource<Position>();
+			var tcs = this.positionRequest;
+			if (tcs != null)
+				return tcs.Task;
+
+			this.positionRequest = tcs = new TaskCompletionSource<Position>();
 
 			if (!IsListening)
 			{
@@ -72,7 +75,7 @@ namespace MonoMobile.Extensions
 					tcs.SetCanceled();
 				else
 				{
-					var singleListener = new GeolocationSingleListener (this.manager);
+					var singleListener = new GeolocationSingleListener (this.manager, p => { this.positionRequest = null; });
 					this.manager.RequestLocationUpdates (provider, 0, 0, singleListener);
 					return singleListener.Task;
 				}
@@ -86,6 +89,7 @@ namespace MonoMobile.Extensions
 						EventHandler<PositionEventArgs> gotPosition = null;
 						gotPosition = (s, e) =>
 						{
+							this.positionRequest = null;
 							tcs.TrySetResult (e.Position);
 							PositionChanged -= gotPosition;
 						};
@@ -93,7 +97,10 @@ namespace MonoMobile.Extensions
 						PositionChanged += gotPosition;
 					}
 					else
+					{
+						this.positionRequest = null;
 						tcs.SetResult (this.lastPosition);
+					}
 				}
 			}
 
@@ -130,9 +137,12 @@ namespace MonoMobile.Extensions
 
 		private readonly LocationManager manager;
 		private string headingProvider;
+
 		private GeolocationContinuousListener listener;
+
 		private readonly object positionSync = new object();
 		private Position lastPosition;
+		private TaskCompletionSource<Position> positionRequest;
 
 		private void OnListenerPositionChanged (object sender, PositionEventArgs e)
 		{
@@ -151,14 +161,15 @@ namespace MonoMobile.Extensions
 
 		private bool TryGetProvider (out string provider)
 		{
-			provider = this.headingProvider;
-			if (provider == null)
-			{
-			    provider = this.manager.GetBestProvider (new Criteria { BearingRequired = true }, enabledOnly: true);
-				return (provider != null);
-			}
+			provider = this.manager.GetBestProvider (
+				new Criteria
+				{
+					BearingRequired = true,
+					Accuracy = (DesiredAccuracy <= 100) ? Accuracy.Fine : Accuracy.Coarse
+				},
+				enabledOnly: true);
 
-			return true;
+			return (provider != null);
 		}
 	}
 }
