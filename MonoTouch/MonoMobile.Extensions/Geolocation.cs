@@ -4,8 +4,31 @@ using System.Threading.Tasks;
 
 namespace MonoMobile.Extensions
 {
-	public class Geolocation : IGeolocation
+	public class Geolocation
+		: IGeolocation
 	{
+		public Geolocation()
+		{
+			this.manager = new CLLocationManager();
+			this.manager.AuthorizationChanged += OnAuthorizationChanged;
+			this.manager.Failed += OnFailed;
+			this.manager.UpdatedLocation += OnUpdatedLocation;
+			this.manager.UpdatedHeading += OnUpdatedHeading;
+		}
+		
+		public event EventHandler<PositionEventArgs> PositionChanged;
+		
+		public double DesiredAccuracy
+		{
+			get;
+			set;
+		}
+
+		public bool IsListening
+		{
+			get { return this.isListening; }
+		}
+		
 		public bool SupportsHeading
 		{
 			get { return CLLocationManager.HeadingAvailable; }
@@ -18,46 +41,118 @@ namespace MonoMobile.Extensions
 
 		public Task<Position> GetCurrentPosition ()
 		{
-			return GetCurrentPosition (new GeolocationOptions());
-		}
-
-		public Task<Position> GetCurrentPosition (GeolocationOptions options)
-		{
 			// TODO: Timeout, prompt reason, should prompting be explicit?
 			// Heading calibration prompt?
-
-			CLLocationManager location = new CLLocationManager();
-
-			var cldelegate = new GeolocationSingleUpdateDelegate (location);
-			location.Delegate = cldelegate;
 			
-			location.DistanceFilter = options.DistanceInterval;
-			location.StartUpdatingLocation();
+			var tcs = new TaskCompletionSource<Position> ();
+
+			if (!IsListening)
+			{
+				var m = new CLLocationManager ();
+				var singleListener = new GeolocationSingleUpdateDelegate (m);
+				m.Delegate = singleListener;
+
+				m.StartUpdatingLocation ();
+				if (SupportsHeading)
+					m.StartUpdatingHeading ();
+
+				return singleListener.Task;
+			}
+			else
+			{
+				if (this.position == null)
+				{
+					EventHandler<PositionEventArgs> gotPosition = null;
+					gotPosition = (s, e) =>
+					{
+						tcs.TrySetResult (e.Position);
+						PositionChanged -= gotPosition;
+					};
+
+					PositionChanged += gotPosition;
+				}
+				else
+					tcs.SetResult (this.position);
+			}
+
+			return tcs.Task;
+		}
+
+		public void StartListening (int minTime, double minDistance)
+		{
+			if (minTime < 0)
+				throw new ArgumentOutOfRangeException ("minTime");
+			if (minDistance < 0)
+				throw new ArgumentOutOfRangeException ("minDistance");
+			if (this.isListening)
+				throw new InvalidOperationException ("Already listening");
+			
+			this.isListening = true;
+			manager.DesiredAccuracy = DesiredAccuracy;
+			manager.DistanceFilter = minDistance;
+			manager.StartUpdatingLocation ();
+			
 			if (CLLocationManager.HeadingAvailable)
-				location.StartUpdatingHeading();
+				manager.StartUpdatingHeading ();
+		}
+
+		public void StopListening ()
+		{
+			if (!this.isListening)
+				return;
+
+			this.isListening = false;
+			if (CLLocationManager.HeadingAvailable)
+				manager.StopUpdatingHeading ();
 			
-			return cldelegate.Task;
+			manager.StopUpdatingLocation ();
 		}
 		
-		public PositionListener GetPositionListener ()
+		private readonly CLLocationManager manager;
+		private bool isListening;
+		private Position position;
+		
+		private void OnUpdatedHeading (object sender, CLHeadingUpdatedEventArgs e)
 		{
-			return GetPositionListener (new GeolocationOptions());
+			Position p = (this.position == null) ? new Position () : new Position (this.position);
+
+			p.Heading = e.NewHeading.TrueHeading;
+
+			this.position = p;
+			
+			OnPositionChanged (new PositionEventArgs (p));
 		}
 
-		public PositionListener GetPositionListener (GeolocationOptions options)
+		private void OnUpdatedLocation (object sender, CLLocationUpdatedEventArgs e)
 		{
-			CLLocationManager location = new CLLocationManager();
+			Position p = (this.position == null) ? new Position () : new Position (this.position);
+
+			p.Altitude = e.NewLocation.Altitude;
+			p.Latitude = e.NewLocation.Coordinate.Latitude;
+			p.Longitude = e.NewLocation.Coordinate.Longitude;
+			p.Speed = e.NewLocation.Speed;
+			p.Timestamp = new DateTimeOffset (e.NewLocation.Timestamp);
+
+			this.position = p;
+
+			OnPositionChanged (new PositionEventArgs (p));
+		}
+
+		void OnFailed (object sender, MonoTouch.Foundation.NSErrorEventArgs e)
+		{
 			
-			var cldelegate = new GeolocationContinuousDelegate (location);
-			location.Delegate = cldelegate;
+		}
+
+		void OnAuthorizationChanged (object sender, CLAuthroziationChangedEventArgs e)
+		{
 			
-			location.DistanceFilter = options.DistanceInterval;
-			
-			location.StartUpdatingLocation();
-			if (CLLocationManager.HeadingAvailable)
-				location.StartUpdatingHeading();
-			
-			return cldelegate.PositionListener;
+		}
+		
+		private void OnPositionChanged (PositionEventArgs e)
+		{
+			var changed = PositionChanged;
+			if (changed != null)
+				changed (this, e);
 		}
 	}
 }
