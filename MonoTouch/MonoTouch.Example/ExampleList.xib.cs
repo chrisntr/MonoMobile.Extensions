@@ -41,6 +41,8 @@ namespace MonoTouch.Example
 		UIButton alertButton, confirmButton, beepButton, vibrateButton, cameraButton,
 			currentLocationButton, listenPositionButton;
 		Geolocation locator;
+
+		bool isListening;
 		
 		public override void ViewDidLoad ()
 		{
@@ -153,21 +155,27 @@ namespace MonoTouch.Example
 			this.View.AddSubview (listenPositionButton);
 		}
 
-		private PositionListener listener;
-		private void ToggleListener()
+		private void ToggleListener ()
 		{
-			if (this.listener == null)
+			if (!this.isListening)
 			{
 				listenPositionButton.SetTitle ("Stop listening", UIControlState.Normal);
-				this.listener = this.locator.GetPositionListener();
-				listener.Subscribe (new LocationObserver (UpdateLocation, () => {}, ex => {}));
+				this.locator.PositionChanged += OnPositionChanged;
+				this.locator.StartListening (500, 1);
+				this.isListening = true;
 			}
 			else
 			{
 				listenPositionButton.SetTitle ("Start listening", UIControlState.Normal);
-				this.listener.Dispose();
-				this.listener = null;
+				this.locator.PositionChanged -= OnPositionChanged;
+				this.locator.StopListening ();
+				this.isListening = false;
 			}
+		}
+
+		void OnPositionChanged (object sender, PositionEventArgs e)
+		{
+			UpdateLocation (e.Position);
 		}
 
 		private void UpdateLocation (Position p)
