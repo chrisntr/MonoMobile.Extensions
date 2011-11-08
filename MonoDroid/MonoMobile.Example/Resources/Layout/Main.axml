@@ -10,6 +10,12 @@
     android:layout_height="wrap_content" 
     android:text="@string/getlocation"
     />
+<Button  
+    android:id="@+id/CancelLocationButton"
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="@string/cancellocation"
+    />
   <Button
     android:id="@+id/WatchButton"
     android:layout_width="fill_parent"

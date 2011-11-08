@@ -4,35 +4,47 @@ using Android.Locations;
 using Android.Widget;
 using Android.OS;
 using MonoMobile.Extensions;
+using System.Threading;
 
 namespace MonoMobile.Example
 {
 	[Activity(Label = "MonoMobile Android Example", MainLauncher = true)]
 	public class Activity1 : Activity
 	{
-		IGeolocation location;
 		bool watching = false;
 		TextView locationTextView, currentLocationTextView;
-		Button watchButton;
+		Button watchButton, cancelLocationButton, getLocationButton;
 
+		private IGeolocation location;
+		private CancellationTokenSource cancelSource;
+		private LocationManager manager;
+		
 		protected override void OnCreate (Bundle bundle)
 		{
 			base.OnCreate (bundle);
 			
 			// Set our view from the "main" layout resource
 			SetContentView (Resource.Layout.Main);
-
-			location = new Geolocation ((LocationManager)this.GetSystemService(LocationService));
-			//
-			// Get our button from the layout resource,
-			// and attach an event to it
-			Button getLocationButton = FindViewById<Button>(Resource.Id.GetLocationButton);
-
+			
+			manager = (LocationManager)this.GetSystemService(LocationService);
+			
+			//this.manager.AddTestProvider ("testGps", false, true, false, false, false, false, false, 0, 10);
+			//this.manager.SetTestProviderEnabled ("testGps", enabled: true);
+			//this.manager.AddTestProvider ("testWifi", true, false, false, false, false, false, false, 0, 100);
+			//this.manager.SetTestProviderEnabled ("testWifi", enabled: true);
+			
+			location = new Geolocation (manager);
+			location.DesiredAccuracy = 40;
+			
 			watchButton = FindViewById<Button>(Resource.Id.WatchButton);
 
 			locationTextView = FindViewById<TextView>(Resource.Id.LocationTextView);
 			currentLocationTextView = FindViewById<TextView>(Resource.Id.CurrentLocationTextView);
+			
+			cancelLocationButton = FindViewById<Button>(Resource.Id.CancelLocationButton);
+			cancelLocationButton.Click += delegate { this.cancelSource.Cancel(); };
 
+			getLocationButton = FindViewById<Button>(Resource.Id.GetLocationButton);
 			getLocationButton.Click += delegate
 								{
 									LogDeviceInfo();
@@ -44,7 +56,10 @@ namespace MonoMobile.Example
 
 		private void GetCurrentPosition()
 		{
-			location.GetCurrentPosition().ContinueWith (t => RunOnUiThread (() =>
+			
+			this.cancelSource = new CancellationTokenSource();
+			location.GetCurrentPosition (30000, cancelSource.Token).ContinueWith (t =>
+				RunOnUiThread (() =>
 			{
 				string message;
 				if (t.IsCanceled)
@@ -55,7 +70,34 @@ namespace MonoMobile.Example
 					message = "Single: last: " + GetText (t.Result);
 
 				this.currentLocationTextView.Text = message;
+				this.cancelSource = null;
 			}));
+			
+//			DateTime n = DateTime.Now;
+//			Timer tt = null;
+//			tt = new Timer (s =>
+//			{
+//				if (DateTime.Now - n > TimeSpan.FromSeconds (20))
+//				{
+//					this.manager.SetTestProviderLocation ("testGps", new Location ("testGps")
+//					{
+//						Latitude = 50,
+//						Longitude = 50,
+//						Accuracy = 10
+//					});
+//					
+//					tt.Dispose();
+//				}
+//				else
+//				{
+//					this.manager.SetTestProviderLocation ("testWifi", new Location ("testWifi")
+//					{
+//						Latitude = 70,
+//						Longitude = 30,
+//						Accuracy = 100
+//					});
+//				}
+//			}, null, 5000, 5000);
 		}
 
 		private void ToggleWatch()
