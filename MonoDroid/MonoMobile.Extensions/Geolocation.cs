@@ -156,14 +156,11 @@ namespace MonoMobile.Extensions
 			if (IsListening)
 				throw new InvalidOperationException ("This geolocation is already listening");
 
-			this.listener = new GeolocationContinuousListener();
+			this.listener = new GeolocationContinuousListener (this.manager, TimeSpan.FromMilliseconds (minTime));
 			this.listener.PositionChanged += OnListenerPositionChanged;
 
-			string provider;
-			if (!TryGetProvider (out provider))
-				return;
-
-			this.manager.RequestLocationUpdates (provider, minTime, (float) minDistance, listener);
+			for (int i = 0; i < this.providers.Count; ++i)
+				this.manager.RequestLocationUpdates (providers[i], minTime, (float)minDistance, listener);
 		}
 
 		public void StopListening()
@@ -172,7 +169,17 @@ namespace MonoMobile.Extensions
 				return;
 
 			this.listener.PositionChanged -= OnListenerPositionChanged;
+
+			for (int i = 0; i < this.providers.Count; ++i)
+				this.manager.RemoveUpdates (this.listener);
+
 			this.listener = null;
+
+			// Cancel a pending request, we're not going to try to
+			// switch over another listener and maintain timeout
+			TaskCompletionSource<Position> r = this.positionRequest;
+			if (r != null)
+				r.TrySetCanceled();
 		}
 
 		private readonly IList<string> providers;

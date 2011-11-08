@@ -7,10 +7,29 @@ namespace MonoMobile.Extensions
 	internal class GeolocationContinuousListener
 		: Java.Lang.Object, ILocationListener
 	{
+		public GeolocationContinuousListener (LocationManager manager, TimeSpan timePeriod)
+		{
+			this.manager = manager;
+			this.timePeriod = timePeriod;
+		}
+		
 		public event EventHandler<PositionEventArgs> PositionChanged;
-
+		
 		public void OnLocationChanged (Location location)
 		{
+			if (this.activeProvider != null && this.manager.IsProviderEnabled (this.activeProvider))
+			{
+				LocationProvider pr = this.manager.GetProvider (location.Provider);
+				if (pr.Accuracy < this.manager.GetProvider (this.activeProvider).Accuracy
+					|| (GetTimeSpan (location.Time) - GetTimeSpan (this.lastLocation.Time)) < timePeriod.Add (timePeriod))
+				{
+					return;
+				}
+			}
+
+			this.activeProvider = location.Provider;
+			this.lastLocation = location;
+
 			var p = new Position();
 			if (location.HasAccuracy)
 				p.Accuracy = location.Accuracy;
@@ -45,9 +64,19 @@ namespace MonoMobile.Extensions
 			{
 				case Availability.OutOfService:
 				case Availability.TemporarilyUnavailable:
-					
 					break;
 			}
+		}
+		
+		private LocationManager manager;
+		
+		private string activeProvider;
+		private Location lastLocation;
+		private TimeSpan timePeriod;
+		
+		private TimeSpan GetTimeSpan (long time)
+		{
+			return new TimeSpan (TimeSpan.TicksPerMillisecond * time);
 		}
 	}
 }
