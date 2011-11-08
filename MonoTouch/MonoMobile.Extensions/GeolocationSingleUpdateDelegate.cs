@@ -59,6 +59,11 @@ namespace MonoMobile.Extensions
 			StopListening();
 		}
 		
+		public override bool ShouldDisplayHeadingCalibration (CLLocationManager manager)
+		{
+			return true;
+		}
+		
 		public override void UpdatedLocation (CLLocationManager manager, CLLocation newLocation, CLLocation oldLocation)
 		{
 			if (newLocation.HorizontalAccuracy < 0)
