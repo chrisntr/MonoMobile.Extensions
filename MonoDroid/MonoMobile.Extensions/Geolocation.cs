@@ -1,6 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using Android.Locations;
+using System.Threading;
+using System.Collections.Generic;
 
 namespace MonoMobile.Extensions
 {
@@ -13,6 +15,7 @@ namespace MonoMobile.Extensions
 				throw new ArgumentNullException ("manager");
 
 			this.manager = manager;
+			this.providers = manager.GetProviders (enabledOnly: false);
 		}
 
 		public event EventHandler<PositionEventArgs> PositionChanged;
@@ -62,6 +65,19 @@ namespace MonoMobile.Extensions
 
 		public Task<Position> GetCurrentPosition()
 		{
+			return GetCurrentPosition (0, CancellationToken.None);
+		}
+		
+		public Task<Position> GetCurrentPosition (int timeout)
+		{
+			return GetCurrentPosition (timeout, CancellationToken.None);
+		}
+		
+		public Task<Position> GetCurrentPosition (int timeout, CancellationToken cancelToken)
+		{
+			if (timeout <= 0)
+				throw new ArgumentOutOfRangeException ("timeout", "timeout must be greater than or equal to 0");
+			
 			var tcs = this.positionRequest;
 			if (tcs != null)
 				return tcs.Task;
@@ -70,22 +86,46 @@ namespace MonoMobile.Extensions
 
 			if (!IsListening)
 			{
-				string provider;
-				if (!TryGetProvider (out provider))
-					tcs.SetCanceled();
-				else
+				GeolocationSingleListener singleListener = null;
+				singleListener = new GeolocationSingleListener ((float)DesiredAccuracy, timeout,
+					() =>
 				{
-					var singleListener = new GeolocationSingleListener (this.manager, p => { this.positionRequest = null; });
-					this.manager.RequestLocationUpdates (provider, 0, 0, singleListener);
-					return singleListener.Task;
+					this.positionRequest = null;
+					for (int i = 0; i < this.providers.Count; ++i)
+						this.manager.RemoveUpdates (singleListener);
+				});
+				
+				if (cancelToken != CancellationToken.None)
+				{
+					cancelToken.Register (() =>
+					{
+						singleListener.Cancel();
+						
+						for (int i = 0; i < this.providers.Count; ++i)
+							this.manager.RemoveUpdates (singleListener);
+					}, true);
 				}
+				
+				for (int i = 0; i < this.providers.Count; ++i)
+					this.manager.RequestLocationUpdates (this.providers[i], 0, 0, singleListener);
+
+				return singleListener.Task;
 			}
 			else
 			{
+				
 				lock (this.positionSync)
 				{
 					if (this.lastPosition == null)
 					{
+						if (cancelToken != CancellationToken.None)
+						{
+							cancelToken.Register (() =>
+							{
+								tcs.TrySetCanceled();
+							});
+						}
+
 						EventHandler<PositionEventArgs> gotPosition = null;
 						gotPosition = (s, e) =>
 						{
@@ -135,6 +175,7 @@ namespace MonoMobile.Extensions
 			this.listener = null;
 		}
 
+		private readonly IList<string> providers;
 		private readonly LocationManager manager;
 		private string headingProvider;
 
