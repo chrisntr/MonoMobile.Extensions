@@ -82,7 +82,10 @@ namespace MonoMobile.Extensions
 			this.haveLocation = true;
 			
 			if (this.haveHeading && this.position.Accuracy <= this.desiredAccuracy)
+			{
 				this.tcs.TrySetResult (new Position (this.position));
+				StopListening();
+			}
 		}
 		
 		public override void UpdatedHeading (CLLocationManager manager, CLHeading newHeading)
@@ -97,7 +100,10 @@ namespace MonoMobile.Extensions
 			this.haveHeading = true;
 			
 			if (this.haveLocation && this.position.Accuracy <= this.desiredAccuracy)
+			{
 				this.tcs.TrySetResult (new Position (this.position));
+				StopListening();
+			}
 		}
 		
 		private bool haveHeading;
