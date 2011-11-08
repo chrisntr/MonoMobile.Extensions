@@ -2,19 +2,20 @@ using System;
 using System.Threading.Tasks;
 using Android.Locations;
 using Android.OS;
+using System.Threading;
 
 namespace MonoMobile.Extensions
 {
 	internal class GeolocationSingleListener
 		: Java.Lang.Object, ILocationListener
 	{
-		public GeolocationSingleListener (LocationManager manager, Action<Position> callback)
+		public GeolocationSingleListener (float desiredAccuracy, int timeout, Action callback)
 		{
-			if (manager == null)
-				throw new ArgumentNullException ("manager");
-
-			this.manager = manager;
+			this.desiredAccuracy = desiredAccuracy;
 			this.callback = callback;
+			
+			if (timeout > 0)
+				this.timer = new Timer (TimesUp, null, timeout, 0);
 		}
 
 		public Task<Position> Task
@@ -24,8 +25,62 @@ namespace MonoMobile.Extensions
 
 		public void OnLocationChanged (Location location)
 		{
-			StopListening();
+			if (location.Accuracy <= this.desiredAccuracy)
+			{
+				Finish (location);
+				return;
+			}
+			
+			lock (this.locationSync)
+			{
+				if (this.bestLocation == null || location.Accuracy <= this.bestLocation.Accuracy)
+					this.bestLocation = location;
+			}
+		}
 
+		public void OnProviderDisabled (string provider)
+		{
+		}
+
+		public void OnProviderEnabled (string provider)
+		{
+		}
+
+		public void OnStatusChanged (string provider, int status, Bundle extras)
+		{
+		}
+		
+		public void Cancel()
+		{
+			this.completionSource.TrySetCanceled();
+		}
+		
+		private readonly object locationSync = new object();
+		private Location bestLocation;
+		
+		private readonly Action callback;
+		private readonly float desiredAccuracy;
+		private readonly Timer timer;
+		private readonly LocationManager manager;
+		private readonly TaskCompletionSource<Position> completionSource = new TaskCompletionSource<Position>();
+		
+		private void TimesUp (object state)
+		{
+			lock (this.locationSync)
+			{
+				if (this.bestLocation == null)
+				{
+					this.completionSource.SetCanceled();
+					if (this.callback == null)
+						this.callback();
+				}
+				else
+					Finish (this.bestLocation);
+			}
+		}
+		
+		private void Finish (Location location)
+		{
 			var p = new Position();
 			if (location.HasAccuracy)
 				p.Accuracy = location.Accuracy;
@@ -39,42 +94,11 @@ namespace MonoMobile.Extensions
 			p.Longitude = location.Longitude;
 			p.Latitude = location.Latitude;
 			p.Timestamp = new DateTimeOffset (new DateTime (TimeSpan.TicksPerMillisecond * location.Time, DateTimeKind.Utc));
+			
+			if (this.callback != null)
+				this.callback();
 
-			this.callback (p);
 			this.completionSource.TrySetResult (p);
-		}
-
-		public void OnProviderDisabled (string provider)
-		{
-			//StopListening();
-			//this.completionSource.TrySetCanceled();
-		}
-
-		public void OnProviderEnabled (string provider)
-		{
-		}
-
-		public void OnStatusChanged (string provider, int status, Bundle extras)
-		{
-			Availability av = (Availability) status;
-
-			switch (av)
-			{
-				case Availability.OutOfService:
-				case Availability.TemporarilyUnavailable:
-					StopListening();
-					this.completionSource.SetCanceled();
-					break;
-			}
-		}
-
-		private readonly LocationManager manager;
-		private readonly Action<Position> callback;
-		private readonly TaskCompletionSource<Position> completionSource = new TaskCompletionSource<Position>();
-
-		private void StopListening()
-		{
-			this.manager.RemoveUpdates (this);
 		}
 	}
 }

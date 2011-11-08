@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace MonoMobile.Extensions
 {
 	public interface IGeolocation
 	{
-		// TODO needs some kind of status change
-
 		/// <summary>
 		/// Raised when position information is updated.
 		/// </summary>
+		/// <seealso cref="Position"/>
 		event EventHandler<PositionEventArgs> PositionChanged;
 
 		/// <summary>
@@ -41,6 +41,35 @@ namespace MonoMobile.Extensions
 		/// <summary>
 		/// Gets a future for the current position.
 		/// </summary>
+		/// <param name="timeout">
+		/// The time before the request should be automatically cancelled in milliseconds. <see cref="Timeout.Infinite"/> for no timeout.
+		/// </param>
+		/// <returns>
+		/// A <see cref="Task{TResult}"/> for the current position.
+		/// </returns>
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="timeout"/> is &lt= 0 and not <see cref="Timeout.Infinite"/>.</exception>
+		/// <remarks>
+		/// <para>
+		/// If the underlying OS needs to request location access permissions, it will occur automatically.
+		/// If the user has disallowed location access (now or previously), the future will be canceled.
+		/// </para>
+		/// <para>
+		/// The first position that is within the <see cref="DesiredAccuracy"/> will be returned. If no
+		/// position matches that accuracy, once <paramref cref="timeout"/> is reached, the most accurate
+		/// position will be returned. If the <paramref name="timeout"/> is reached with no position being
+		/// acquired, the task will be canceled.
+		/// </para>
+		/// <para>
+		/// If this <see cref="IGeolocation"/> currently <see cref="IsListening"/>, the future will be
+		/// set immediately with the last retrieved position.
+		/// </para>
+		/// </remarks>
+		Task<Position> GetCurrentPosition (int timeout);
+		
+		/// <summary>
+		/// Gets a future for the current position.
+		/// </summary>
+		/// <param name="cancelToken">A <see cref="CancellationToken"/> to cancel the position request.</param>
 		/// <returns>
 		/// A <see cref="Task{TResult}"/> for the current position.
 		/// </returns>
@@ -48,15 +77,43 @@ namespace MonoMobile.Extensions
 		/// <para>
 		/// If the underlying OS needs to request location access permissions, it will occur automatically.
 		/// If the user has disallowed location access (now or previously), the future will be canceled.
-		/// Any errors currently sets an exception on the future, but this needs to be reviewed as
-		/// not all geolocation errors may be really be exceptional.
+		/// </para>
+		/// <para>
+		/// The first position that is within the <see cref="DesiredAccuracy"/> will be returned.
 		/// </para>
 		/// <para>
 		/// If this <see cref="IGeolocation"/> currently <see cref="IsListening"/>, the future will be
 		/// set immediately with the last retrieved position.
 		/// </para>
 		/// </remarks>
-		Task<Position> GetCurrentPosition();
+		Task<Position> GetCurrentPosition (CancellationToken cancelToken);
+		
+		/// <summary>
+		/// Gets a future for the current position.
+		/// </summary>
+		/// <param name="timeout">The time before the request should be automatically cancelled in milliseconds</param>
+		/// <param name="cancelToken">A <see cref="CancellationToken"/> to cancel the position request.</param>
+		/// <returns>
+		/// A <see cref="Task{TResult}"/> for the current position.
+		/// </returns>
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="timeout"/> is &lt= 0 and not <see cref="Timeout.Infinite"/>.</exception>
+		/// <remarks>
+		/// <para>
+		/// If the underlying OS needs to request location access permissions, it will occur automatically.
+		/// If the user has disallowed location access (now or previously), the future will be canceled.
+		/// </para>
+		/// <para>
+		/// The first position that is within the <see cref="DesiredAccuracy"/> will be returned. If no
+		/// position matches that accuracy, once <paramref cref="timeout"/> is reached, the most accurate
+		/// position will be returned. If the <paramref name="timeout"/> is reached with no position being acquired, the
+		/// task will be canceled.
+		/// </para>
+		/// <para>
+		/// If this <see cref="IGeolocation"/> currently <see cref="IsListening"/>, the future will be
+		/// set immediately with the last retrieved position.
+		/// </para>
+		/// </remarks>
+		Task<Position> GetCurrentPosition (int timeout, CancellationToken cancelToken);
 
 		/// <summary>
 		/// Starts listening to position changes with specified thresholds.
@@ -84,6 +141,10 @@ namespace MonoMobile.Extensions
 		/// Stops listening to position changes.
 		/// </summary>
 		/// <seealso cref="StartListening"/>
+		/// <remarks>
+		/// If you stop listening before the first position has arrived, and have a pending call to
+		/// <see cref="GetCurrentPosition"/>, it will be canceled.
+		/// </remarks>
 		void StopListening();
 	}
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="getlocation">Get location</string>
+  <string name="cancellocation">Cancel Location</string>
   <string name="watchStart">Start watching</string>
   <string name="watchStop">Stop watching</string>
   <string name="app_name">MonoMobile.Example</string>
