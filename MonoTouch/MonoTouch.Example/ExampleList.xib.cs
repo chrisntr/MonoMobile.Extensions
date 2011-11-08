@@ -5,6 +5,7 @@ using System.Linq;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using MonoMobile.Extensions;
+using System.Threading;
 
 namespace MonoTouch.Example
 {
@@ -37,9 +38,11 @@ namespace MonoTouch.Example
 		
 		#endregion
 		
-		UILabel longitudeText, latitudeText;
+		CancellationTokenSource cancelSource;
+
+		UILabel longitudeText, latitudeText, accuracyText;
 		UIButton alertButton, confirmButton, beepButton, vibrateButton, cameraButton,
-			currentLocationButton, listenPositionButton;
+			currentLocationButton, cancelLocationButton, listenPositionButton;
 		Geolocation locator;
 		
 		UIAlertView currentLocationAlert;
@@ -105,20 +108,25 @@ namespace MonoTouch.Example
 //			this.View.AddSubview(cameraButton);
 
 			locator = new Geolocation();
+			locator.DesiredAccuracy = 50;
+
 			currentLocationButton = UIButton.FromType (UIButtonType.RoundedRect);
 			currentLocationButton.Frame = new System.Drawing.RectangleF (40f, 220f, 200f, 40f);
 			currentLocationButton.Enabled = locator.IsGeolocationAvailable;
 			currentLocationButton.SetTitle ("Get current Location!", UIControlState.Normal);
 			currentLocationButton.TouchUpInside += (s, e) =>
 			{
-				locator.GetCurrentPosition()
+				this.cancelSource = new CancellationTokenSource();
+				locator.GetCurrentPosition (30000, this.cancelSource.Token)
 					.ContinueWith (t =>
 					{
 						InvokeOnMainThread(() =>
 						{
+							this.cancelSource = null;
+
 							if (t.IsCanceled)
 							{
-								currentLocationAlert = new UIAlertView ("Location", "Location services disabled or user denied access", new UIAlertViewDelegate(), "OK");
+								currentLocationAlert = new UIAlertView ("Location", "Future canceled", new UIAlertViewDelegate(), "OK");
 								currentLocationAlert.Show();
 							}
 							else if (t.IsFaulted)
@@ -130,6 +138,7 @@ namespace MonoTouch.Example
 							{
 								currentLocationAlert = new UIAlertView ("Location",
 									"Altitude: " + t.Result.Altitude + Environment.NewLine
+									+ "Accuracy: " + t.Result.Accuracy + Environment.NewLine
 									+ "Latitude: " + t.Result.Latitude + Environment.NewLine
 									+ "Longitude: " + t.Result.Longitude + Environment.NewLine
 									+ "Heading: " + t.Result.Heading, new UIAlertViewDelegate(), "OK");
@@ -140,16 +149,35 @@ namespace MonoTouch.Example
 			};
 			this.View.AddSubview (currentLocationButton);
 			
+			cancelLocationButton = UIButton.FromType (UIButtonType.RoundedRect);
+			cancelLocationButton.Frame = new System.Drawing.RectangleF (40f, 260f, 200f, 40f);
+			cancelLocationButton.Enabled = locator.IsGeolocationAvailable;
+			cancelLocationButton.SetTitle ("Cancel location", UIControlState.Normal);
+			cancelLocationButton.TouchUpInside += (s,e) =>
+			{
+				var c = this.cancelSource;
+				if (c != null)
+					c.Cancel();
+			};
+			this.View.AddSubview (cancelLocationButton);
+			
 			latitudeText = new UILabel();
-			latitudeText.Frame = new System.Drawing.RectangleF (40f, 300f, 200f, 20f);
+			latitudeText.Font = UIFont.FromName ("Courier New", 10);
+			latitudeText.Frame = new System.Drawing.RectangleF (40f, 340f, 200f, 20f);
 			this.View.AddSubview (latitudeText);
 			
 			longitudeText = new UILabel();
-			longitudeText.Frame = new System.Drawing.RectangleF (40f, 320f, 200f, 20f);
+			longitudeText.Font = UIFont.FromName ("Courier New", 10);
+			longitudeText.Frame = new System.Drawing.RectangleF (40f, 360f, 200f, 20f);
 			this.View.AddSubview (longitudeText);
 			
+			accuracyText = new UILabel();
+			accuracyText.Font = UIFont.FromName ("Courier New", 10);
+			accuracyText.Frame = new System.Drawing.RectangleF (40f, 380f, 200f, 20f);
+			this.View.AddSubview (accuracyText);
+			
 			listenPositionButton = UIButton.FromType (UIButtonType.RoundedRect);
-			listenPositionButton.Frame = new System.Drawing.RectangleF (40f, 260f, 200f, 40f);
+			listenPositionButton.Frame = new System.Drawing.RectangleF (40f, 300f, 200f, 40f);
 			listenPositionButton.Enabled = locator.IsGeolocationAvailable;
 			listenPositionButton.SetTitle ("Start listening", UIControlState.Normal);
 			listenPositionButton.TouchUpInside += (s, e) =>
@@ -187,8 +215,9 @@ namespace MonoTouch.Example
 		{
 			InvokeOnMainThread (() =>
 			{
-				latitudeText.Text = "Latitude: " + p.Latitude;
-				longitudeText.Text = "Longitude: " + p.Longitude;
+				latitudeText.Text = String.Format ("{0,-15}{1,-6:N3}", "Latitude:", p.Latitude);
+				longitudeText.Text = String.Format ("{0,-15}{1,-6:N3}", "Longitude:", p.Longitude);
+				accuracyText.Text = String.Format ("{0,-15}{1,-6}", "Accuracy:", p.Accuracy);
 			});
 		}
 
@@ -196,6 +225,7 @@ namespace MonoTouch.Example
 		{
 			currentLocationButton.Enabled = locator.IsGeolocationAvailable;
 			listenPositionButton.Enabled = locator.IsGeolocationAvailable;
+			cancelLocationButton.Enabled = locator.IsGeolocationAvailable;
 		}
 
 		private class LocationObserver
