@@ -41,6 +41,8 @@ namespace MonoTouch.Example
 		UIButton alertButton, confirmButton, beepButton, vibrateButton, cameraButton,
 			currentLocationButton, listenPositionButton;
 		Geolocation locator;
+		
+		UIAlertView currentLocationAlert;
 
 		bool isListening;
 		
@@ -116,19 +118,22 @@ namespace MonoTouch.Example
 						{
 							if (t.IsCanceled)
 							{
-								notification.Alert ("Location services disabled or user denied access", () => {});
+								currentLocationAlert = new UIAlertView ("Location", "Location services disabled or user denied access", new UIAlertViewDelegate(), "OK");
+								currentLocationAlert.Show();
 							}
 							else if (t.IsFaulted)
 							{
-								notification.Alert ("Error: " + t.Exception.InnerExceptions.First ().Message, () => {});
+								currentLocationAlert = new UIAlertView ("Location", "Error: " + t.Exception.InnerExceptions.First ().Message, new UIAlertViewDelegate(), "OK");
+								currentLocationAlert.Show();
 							}
 							else
 							{
-								notification.Alert ("Altitude: " + t.Result.Altitude + Environment.NewLine
+								currentLocationAlert = new UIAlertView ("Location",
+									"Altitude: " + t.Result.Altitude + Environment.NewLine
 									+ "Latitude: " + t.Result.Latitude + Environment.NewLine
 									+ "Longitude: " + t.Result.Longitude + Environment.NewLine
-									+ "Heading: " + t.Result.Heading,
-								() => {}, "Location", "OK");
+									+ "Heading: " + t.Result.Heading, new UIAlertViewDelegate(), "OK");
+								currentLocationAlert.Show();
 							}
 						});
 					});
