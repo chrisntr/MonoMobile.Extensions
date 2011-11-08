@@ -1,6 +1,7 @@
 using System;
 using MonoTouch.CoreLocation;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace MonoMobile.Extensions
 {
@@ -38,18 +39,26 @@ namespace MonoMobile.Extensions
 		{
 			get { return CLLocationManager.LocationServicesEnabled; }
 		}
-
-		public Task<Position> GetCurrentPosition ()
+		
+		public Task<Position> GetCurrentPosition (int timeout)
 		{
-			// TODO: Timeout, prompt reason, should prompting be explicit?
-			// Heading calibration prompt?
-			
-			var tcs = new TaskCompletionSource<Position> ();
+			return GetCurrentPosition (timeout, CancellationToken.None);
+		}
+		
+		public Task<Position> GetCurrentPosition (CancellationToken cancelToken)
+		{
+			return GetCurrentPosition (Timeout.Infinite, cancelToken);
+		}
+
+		public Task<Position> GetCurrentPosition (int timeout, CancellationToken cancelToken)
+		{
+			TaskCompletionSource<Position> tcs;
 
 			if (!IsListening)
 			{
 				var m = new CLLocationManager ();
-				var singleListener = new GeolocationSingleUpdateDelegate (m);
+				tcs = new TaskCompletionSource<Position> (m);
+				var singleListener = new GeolocationSingleUpdateDelegate (m, DesiredAccuracy, timeout, cancelToken);
 				m.Delegate = singleListener;
 
 				m.StartUpdatingLocation ();
@@ -60,6 +69,7 @@ namespace MonoMobile.Extensions
 			}
 			else
 			{
+				tcs = new TaskCompletionSource<Position>();
 				if (this.position == null)
 				{
 					EventHandler<PositionEventArgs> gotPosition = null;
@@ -127,6 +137,7 @@ namespace MonoMobile.Extensions
 		{
 			Position p = (this.position == null) ? new Position () : new Position (this.position);
 
+			p.Accuracy = e.NewLocation.HorizontalAccuracy;
 			p.Altitude = e.NewLocation.Altitude;
 			p.Latitude = e.NewLocation.Coordinate.Latitude;
 			p.Longitude = e.NewLocation.Coordinate.Longitude;

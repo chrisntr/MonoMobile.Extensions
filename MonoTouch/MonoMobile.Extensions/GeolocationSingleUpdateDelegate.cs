@@ -1,16 +1,38 @@
 using System;
 using MonoTouch.CoreLocation;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace MonoMobile.Extensions
 {
 	internal class GeolocationSingleUpdateDelegate
 		: CLLocationManagerDelegate
 	{
-		public GeolocationSingleUpdateDelegate (CLLocationManager manager)
+		public GeolocationSingleUpdateDelegate (CLLocationManager manager, double desiredAccuracy, int timeout, CancellationToken cancelToken)
 		{
-			this.locations = manager;
+			this.manager = manager;
 			this.tcs = new TaskCompletionSource<Position> (manager);
+			this.desiredAccuracy = desiredAccuracy;
+			
+			if (timeout != Timeout.Infinite)
+			{
+				Timer t = null;
+				t = new Timer (s =>
+				{
+					if (this.haveLocation)
+						this.tcs.TrySetResult (new Position (this.position));
+					else
+						this.tcs.TrySetCanceled();
+
+					t.Dispose();
+				}, null, timeout, 0);
+			}
+			
+			cancelToken.Register (() =>
+			{
+				this.tcs.TrySetCanceled();
+				StopListening();
+			});
 		}
 		
 		public Task<Position> Task
@@ -28,49 +50,66 @@ namespace MonoMobile.Extensions
 		public override void Failed (CLLocationManager manager, MonoTouch.Foundation.NSError error)
 		{
 			this.tcs.TrySetCanceled();
-			//this.tcs.TrySetException (new GeolocationException (error.Domain + ": " + (CLError)error.Code));
+			StopListening();
 		}
 		
 		public override void MonitoringFailed (CLLocationManager manager, CLRegion region, MonoTouch.Foundation.NSError error)
 		{
 			this.tcs.TrySetCanceled();
-			//this.tcs.TrySetException (new GeolocationException (error.Domain + ": " + (CLError)error.Code));
+			StopListening();
 		}
 		
 		public override void UpdatedLocation (CLLocationManager manager, CLLocation newLocation, CLLocation oldLocation)
 		{
-			this.locations.StopUpdatingLocation();
+			if (newLocation.HorizontalAccuracy < 0)
+				return;
 			
-			this.position.Altitude = this.locations.Location.Altitude;
-			this.position.Latitude = this.locations.Location.Coordinate.Latitude;
-			this.position.Longitude = this.locations.Location.Coordinate.Longitude;
-			this.position.Speed = this.locations.Location.Speed;
-			this.position.Timestamp = new DateTimeOffset (this.locations.Location.Timestamp);
+			if (this.haveLocation && newLocation.HorizontalAccuracy > this.position.Accuracy)
+				return;
 			
+			this.position.Accuracy = newLocation.HorizontalAccuracy;
+			this.position.Altitude = newLocation.Altitude;
+			this.position.Latitude = newLocation.Coordinate.Latitude;
+			this.position.Longitude = newLocation.Coordinate.Longitude;
+			this.position.Speed = newLocation.Speed;
+			this.position.Timestamp = new DateTimeOffset (newLocation.Timestamp);
+					
 			this.haveLocation = true;
 			
-			if (!CLLocationManager.HeadingAvailable || this.haveHeading)
-				this.tcs.TrySetResult (this.position);
+			if (this.haveHeading && this.position.Accuracy <= this.desiredAccuracy)
+				this.tcs.TrySetResult (new Position (this.position));
 		}
 		
 		public override void UpdatedHeading (CLLocationManager manager, CLHeading newHeading)
 		{
-			this.locations.StopUpdatingHeading();
+			if (newHeading.HeadingAccuracy < 0)
+				return;
+			if (this.bestHeading != null && newHeading.HeadingAccuracy >= this.bestHeading.HeadingAccuracy)
+				return;
 			
+			this.bestHeading = newHeading;
 			this.position.Heading = newHeading.TrueHeading;
-			
 			this.haveHeading = true;
 			
-			if (this.haveLocation)
-				this.tcs.TrySetResult (this.position);
+			if (this.haveLocation && this.position.Accuracy <= this.desiredAccuracy)
+				this.tcs.TrySetResult (new Position (this.position));
 		}
 		
-		private bool haveLocation;
 		private bool haveHeading;
-		
+		private bool haveLocation;
 		private readonly Position position = new Position();
+		private CLHeading bestHeading;
+
+		private readonly double desiredAccuracy;
 		private readonly TaskCompletionSource<Position> tcs;
-		private readonly CLLocationManager locations;
+		private readonly CLLocationManager manager;
+		
+		private void StopListening()
+		{
+			if (CLLocationManager.HeadingAvailable)
+				this.manager.StopUpdatingHeading();
+			
+			this.manager.StopUpdatingLocation();
+		}
 	}
 }
-
