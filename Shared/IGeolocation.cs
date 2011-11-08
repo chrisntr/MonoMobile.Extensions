@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace MonoMobile.Extensions
 {
 	public interface IGeolocation
 	{
-		// TODO needs some kind of status change
-
 		/// <summary>
 		/// Raised when position information is updated.
 		/// </summary>
+		/// <seealso cref="Position"/>
 		event EventHandler<PositionEventArgs> PositionChanged;
 
 		/// <summary>
