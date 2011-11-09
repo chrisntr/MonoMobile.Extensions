@@ -56,7 +56,6 @@ namespace MonoMobile.Example
 
 		private void GetCurrentPosition()
 		{
-			
 			this.cancelSource = new CancellationTokenSource();
 			location.GetCurrentPosition (30000, cancelSource.Token).ContinueWith (t =>
 				RunOnUiThread (() =>
@@ -105,7 +104,7 @@ namespace MonoMobile.Example
 			if (!watching)
 			{
 				location.PositionChanged += OnPostionChanged;
-				location.StartListening (500, 1);
+				location.StartListening (5000, 1);
 				
 				watchButton.Text = GetString (Resource.String.watchStop);
 			}

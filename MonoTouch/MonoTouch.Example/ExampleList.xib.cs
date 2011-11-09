@@ -162,17 +162,17 @@ namespace MonoTouch.Example
 			this.View.AddSubview (cancelLocationButton);
 			
 			latitudeText = new UILabel();
-			latitudeText.Font = UIFont.FromName ("Courier New", 10);
+			latitudeText.Font = UIFont.FromName ("Courier New", 12);
 			latitudeText.Frame = new System.Drawing.RectangleF (40f, 340f, 200f, 20f);
 			this.View.AddSubview (latitudeText);
 			
 			longitudeText = new UILabel();
-			longitudeText.Font = UIFont.FromName ("Courier New", 10);
+			longitudeText.Font = UIFont.FromName ("Courier New", 12);
 			longitudeText.Frame = new System.Drawing.RectangleF (40f, 360f, 200f, 20f);
 			this.View.AddSubview (longitudeText);
 			
 			accuracyText = new UILabel();
-			accuracyText.Font = UIFont.FromName ("Courier New", 10);
+			accuracyText.Font = UIFont.FromName ("Courier New", 12);
 			accuracyText.Frame = new System.Drawing.RectangleF (40f, 380f, 200f, 20f);
 			this.View.AddSubview (accuracyText);
 			
