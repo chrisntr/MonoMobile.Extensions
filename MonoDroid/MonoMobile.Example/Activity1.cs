@@ -107,6 +107,34 @@ namespace MonoMobile.Example
 				location.StartListening (5000, 1);
 				
 				watchButton.Text = GetString (Resource.String.watchStop);
+							
+//				Random r = new Random();
+//				DateTime n = DateTime.Now;
+//				Timer tt = null;
+//				tt = new Timer (s =>
+//				{
+//					TimeSpan runtime = DateTime.Now - n;
+//					if (runtime > TimeSpan.FromSeconds (20) && runtime < TimeSpan.FromSeconds (40))
+//					{
+//						this.manager.SetTestProviderLocation ("testGps", new Location ("testGps")
+//						{
+//							Latitude = r.Next(10, 100),
+//							Longitude = r.Next (10, 100),
+//							Accuracy = 10,
+//							Time = (long)(DateTime.Now - new DateTime (1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds
+//						});
+//						
+//						//tt.Dispose();
+//					}
+//					
+//					this.manager.SetTestProviderLocation ("testWifi", new Location ("testWifi")
+//					{
+//						Latitude = r.Next (10, 100),
+//						Longitude = r.Next (10, 100),
+//						Accuracy = r.Next (60, 100),
+//						Time = (long)(DateTime.Now - new DateTime (1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds
+//					});
+//				}, null, 5000, 5000);
 			}
 			else
 			{
