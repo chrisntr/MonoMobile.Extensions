@@ -63,9 +63,9 @@ namespace MonoMobile.Extensions
 			get { return this.manager.GetProviders (enabledOnly: true).Count > 0; }
 		}
 
-		public Task<Position> GetCurrentPosition()
+		public Task<Position> GetCurrentPosition (CancellationToken cancelToken)
 		{
-			return GetCurrentPosition (0, CancellationToken.None);
+			return GetCurrentPosition (0, cancelToken);
 		}
 		
 		public Task<Position> GetCurrentPosition (int timeout)

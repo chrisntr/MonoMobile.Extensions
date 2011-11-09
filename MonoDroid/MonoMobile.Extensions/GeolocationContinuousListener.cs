@@ -17,17 +17,23 @@ namespace MonoMobile.Extensions
 		
 		public void OnLocationChanged (Location location)
 		{
-			if (this.activeProvider != null && this.manager.IsProviderEnabled (this.activeProvider))
+			if (location.Provider != this.activeProvider)
 			{
-				LocationProvider pr = this.manager.GetProvider (location.Provider);
-				if (pr.Accuracy < this.manager.GetProvider (this.activeProvider).Accuracy
-					|| (GetTimeSpan (location.Time) - GetTimeSpan (this.lastLocation.Time)) < timePeriod.Add (timePeriod))
+				if (this.activeProvider != null && this.manager.IsProviderEnabled (this.activeProvider))
 				{
-					return;
+					LocationProvider pr = this.manager.GetProvider (location.Provider);
+					TimeSpan lapsed = GetTimeSpan (location.Time) - GetTimeSpan (this.lastLocation.Time);
+					
+					if (pr.Accuracy > this.manager.GetProvider (this.activeProvider).Accuracy
+						&& lapsed < timePeriod.Add (timePeriod))
+					{
+						return;
+					}
 				}
+	
+				this.activeProvider = location.Provider;
 			}
 
-			this.activeProvider = location.Provider;
 			this.lastLocation = location;
 
 			var p = new Position();
