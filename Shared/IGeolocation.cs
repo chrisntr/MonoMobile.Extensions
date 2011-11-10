@@ -85,9 +85,6 @@ namespace MonoMobile.Extensions
 		/// If this <see cref="IGeolocation"/> currently <see cref="IsListening"/>, the future will be
 		/// set immediately with the last retrieved position.
 		/// </para>
-		/// <para>
-		/// If a <see cref="PositionError"/> occurs, listening will be halted automatically.
-		/// </para>
 		/// </remarks>
 		Task<Position> GetCurrentPosition (int timeout);
 		
@@ -109,9 +106,6 @@ namespace MonoMobile.Extensions
 		/// <para>
 		/// If this <see cref="IGeolocation"/> currently <see cref="IsListening"/>, the future will be
 		/// set immediately with the last retrieved position.
-		/// </para>
-		/// <para>
-		/// If a <see cref="PositionError"/> occurs, listening will be halted automatically.
 		/// </para>
 		/// </remarks>
 		Task<Position> GetCurrentPosition (CancellationToken cancelToken);
@@ -139,9 +133,6 @@ namespace MonoMobile.Extensions
 		/// <para>
 		/// If this <see cref="IGeolocation"/> currently <see cref="IsListening"/>, the future will be
 		/// set immediately with the last retrieved position.
-		/// </para>
-		/// <para>
-		/// If a <see cref="PositionError"/> occurs, listening will be halted automatically.
 		/// </para>
 		/// </remarks>
 		Task<Position> GetCurrentPosition (int timeout, CancellationToken cancelToken);
