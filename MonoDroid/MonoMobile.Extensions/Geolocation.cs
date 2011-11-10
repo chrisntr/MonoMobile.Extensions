@@ -85,7 +85,7 @@ namespace MonoMobile.Extensions
 		
 		public Task<Position> GetCurrentPosition (int timeout, CancellationToken cancelToken)
 		{
-			if (timeout <= 0)
+			if (timeout <= 0 && timeout != Timeout.Infinite)
 				throw new ArgumentOutOfRangeException ("timeout", "timeout must be greater than or equal to 0");
 			
 			var tcs = this.positionRequest;

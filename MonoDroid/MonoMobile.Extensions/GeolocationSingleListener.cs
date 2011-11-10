@@ -14,7 +14,7 @@ namespace MonoMobile.Extensions
 			this.desiredAccuracy = desiredAccuracy;
 			this.callback = callback;
 			
-			if (timeout > 0)
+			if (timeout != Timeout.Infinite)
 				this.timer = new Timer (TimesUp, null, timeout, 0);
 		}
 
