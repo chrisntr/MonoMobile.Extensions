@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
-using MonoMobile.Extensions;
+using Xamarin.Geolocation;
 using System.Threading;
 
 namespace MonoTouch.Example
@@ -42,7 +42,7 @@ namespace MonoTouch.Example
 
 		UILabel longitudeText, latitudeText, accuracyText;
 		UIButton currentLocationButton, cancelLocationButton, listenPositionButton;
-		Geolocation locator;
+		Geolocator locator;
 		
 		UIAlertView currentLocationAlert;
 
@@ -52,7 +52,7 @@ namespace MonoTouch.Example
 		{
 			base.ViewDidLoad ();
 
-			locator = new Geolocation();
+			locator = new Geolocator();
 			locator.DesiredAccuracy = 50;
 
 			currentLocationButton = UIButton.FromType (UIButtonType.RoundedRect);
