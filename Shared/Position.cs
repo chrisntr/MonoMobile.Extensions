@@ -20,7 +20,6 @@ namespace MonoMobile.Extensions
 			Speed = position.Speed;
 		}
 
-		// TODO: Do the setters really need to be public?
 		public DateTimeOffset Timestamp
 		{
 			get;
@@ -44,19 +43,31 @@ namespace MonoMobile.Extensions
 			get;
 			set;
 		}
-
+		
+		/// <summary>
+		/// Gets or sets the altitude in meters relative to sea level.
+		/// </summary>
 		public double Altitude
 		{
 			get;
 			set;
 		}
-
+		
+		/// <summary>
+		/// Gets or sets the potential position error radius in meters.
+		/// </summary>
 		public double Accuracy
 		{
 			get;
 			set;
 		}
-
+		
+		/// <summary>
+		/// Gets or sets the potential altitude error range in meters.
+		/// </summary>
+		/// <remarks>
+		/// Not supported on Android, will always read 0.
+		/// </remarks>
 		public double AltitudeAccuracy
 		{
 			get;
@@ -72,6 +83,9 @@ namespace MonoMobile.Extensions
 			set;
 		}
 
+		/// <summary>
+		/// Gets or sets the speed in meters per second.
+		/// </summary>
 		public double Speed
 		{
 			get;
