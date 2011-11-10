@@ -6,9 +6,9 @@ using MonoTouch.Foundation;
 
 namespace Xamarin.Geolocation
 {
-	public class Geolocation
+	public class Geolocator
 	{
-		public Geolocation()
+		public Geolocator()
 		{
 			this.manager = GetManager();
 			this.manager.AuthorizationChanged += OnAuthorizationChanged;

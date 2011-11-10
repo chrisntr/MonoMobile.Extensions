@@ -65,10 +65,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Compile Include="Geolocation.cs" />
     <Compile Include="GeolocationSingleUpdateDelegate.cs" />
     <Compile Include="..\..\Shared\Position.cs">
       <Link>Position.cs</Link>
     </Compile>
+    <Compile Include="Geolocator.cs" />
   </ItemGroup>
 </Project>
