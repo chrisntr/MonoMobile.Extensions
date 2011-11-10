@@ -166,8 +166,8 @@ namespace MonoMobile.Example
 
 		private string GetText (Position p)
 		{
-			return String.Format("{0} {1},{2} [{3}]",p.Timestamp, p.Latitude,
-										   p.Longitude, p.Accuracy);
+			return String.Format("{0} ({3}) {1},{2} {4}d",p.Timestamp, p.Latitude,
+										   p.Longitude, p.Accuracy, p.Heading);
 		}
 
 		private void OnPostionChanged (object sender, PositionEventArgs e)
