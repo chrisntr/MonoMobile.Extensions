@@ -70,5 +70,9 @@
       <Link>Position.cs</Link>
     </Compile>
     <Compile Include="Geolocator.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
 </Project>

@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Xamarin Inc")]
 [assembly: AssemblyProduct("Xamarin.Mobile")]
-[assembly: AssemblyCopyright("Copyright © Xamarin Inc 2011")]
+[assembly: AssemblyCopyright("Copyright Â© Xamarin Inc 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
