@@ -17,6 +17,7 @@ namespace MonoMobile.Extensions
 			this.manager.UpdatedHeading += OnUpdatedHeading;
 		}
 		
+		public event EventHandler<PositionErrorEventArgs> PositionError;
 		public event EventHandler<PositionEventArgs> PositionChanged;
 		
 		public double DesiredAccuracy
@@ -124,6 +125,9 @@ namespace MonoMobile.Extensions
 		
 		private void OnUpdatedHeading (object sender, CLHeadingUpdatedEventArgs e)
 		{
+			if (e.NewHeading.TrueHeading == -1)
+				return;
+
 			Position p = (this.position == null) ? new Position () : new Position (this.position);
 
 			p.Heading = e.NewHeading.TrueHeading;
@@ -136,27 +140,40 @@ namespace MonoMobile.Extensions
 		private void OnUpdatedLocation (object sender, CLLocationUpdatedEventArgs e)
 		{
 			Position p = (this.position == null) ? new Position () : new Position (this.position);
-
-			p.Accuracy = e.NewLocation.HorizontalAccuracy;
-			p.Altitude = e.NewLocation.Altitude;
-			p.Latitude = e.NewLocation.Coordinate.Latitude;
-			p.Longitude = e.NewLocation.Coordinate.Longitude;
-			p.Speed = e.NewLocation.Speed;
+			
+			if (e.NewLocation.HorizontalAccuracy > -1)
+			{
+				p.Accuracy = e.NewLocation.HorizontalAccuracy;
+				p.Latitude = e.NewLocation.Coordinate.Latitude;
+				p.Longitude = e.NewLocation.Coordinate.Longitude;
+			}
+			
+			if (e.NewLocation.VerticalAccuracy > -1)
+			{
+				p.Altitude = e.NewLocation.Altitude;
+				p.AltitudeAccuracy = e.NewLocation.VerticalAccuracy;
+			}
+			
+			if (e.NewLocation.Speed > -1)
+				p.Speed = e.NewLocation.Speed;
+			
 			p.Timestamp = new DateTimeOffset (e.NewLocation.Timestamp);
 
 			this.position = p;
 
 			OnPositionChanged (new PositionEventArgs (p));
 		}
-
-		void OnFailed (object sender, MonoTouch.Foundation.NSErrorEventArgs e)
+		
+		private void OnFailed (object sender, MonoTouch.Foundation.NSErrorEventArgs e)
 		{
-			
+			if ((CLError)e.Error.Code == CLError.Network)
+				OnPositionError (new PositionErrorEventArgs (PositionErrorCode.PositionUnavailable));
 		}
 
-		void OnAuthorizationChanged (object sender, CLAuthroziationChangedEventArgs e)
+		private void OnAuthorizationChanged (object sender, CLAuthroziationChangedEventArgs e)
 		{
-			
+			if (e.Status == CLAuthorizationStatus.Denied || e.Status == CLAuthorizationStatus.Restricted)
+				OnPositionError (new PositionErrorEventArgs (PositionErrorCode.Unauthorized));
 		}
 		
 		private void OnPositionChanged (PositionEventArgs e)
@@ -164,6 +181,15 @@ namespace MonoMobile.Extensions
 			var changed = PositionChanged;
 			if (changed != null)
 				changed (this, e);
+		}
+		
+		private void OnPositionError (PositionErrorEventArgs e)
+		{
+			StopListening();
+			
+			var error = PositionError;
+			if (error != null)
+				error (this, e);
 		}
 	}
 }
