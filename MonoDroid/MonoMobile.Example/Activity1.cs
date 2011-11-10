@@ -145,6 +145,15 @@ namespace MonoMobile.Example
 			watching = !watching;
 		}
 
+		void OnPositionError (object sender, PositionErrorEventArgs e)
+		{
+			RunOnUiThread (() =>
+			{
+				Android.Util.Log.Error ("MonoMobile.Extension", e.Error.ToString());
+				locationTextView.Text = "Error: " + e.Error;
+			});
+		}
+
 		private void LogDeviceInfo()
 		{
 			var device = new MonoMobile.Extensions.Device(this);
@@ -163,14 +172,9 @@ namespace MonoMobile.Example
 
 		private void OnPostionChanged (object sender, PositionEventArgs e)
 		{
-			WatchSuccess (e.Position);
-		}
-
-		private void WatchSuccess(Position obj)
-		{
-			RunOnUiThread (() =>
+			RunOnUiThread(() =>
 			{
-				string message = GetText (obj);
+				string message = GetText (e.Position);
 				Android.Util.Log.Info ("MonoMobile.Extension", message);
 				locationTextView.Text = message;
 			});
