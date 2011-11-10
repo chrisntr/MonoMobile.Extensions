@@ -4,11 +4,11 @@ namespace Xamarin.Geolocation
 {
 	public class Position
 	{
-		internal Position()
+		public Position()
 		{
 		}
 
-		internal Position (Position position)
+		public Position (Position position)
 		{
 			Timestamp = position.Timestamp;
 			Latitude = position.Latitude;
