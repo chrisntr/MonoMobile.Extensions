@@ -59,6 +59,9 @@ namespace Xamarin.Geolocation
 
 		public Task<Position> GetCurrentPosition (int timeout, CancellationToken cancelToken)
 		{
+			if (timeout <= 0 && timeout != Timeout.Infinite)
+				throw new ArgumentOutOfRangeException ("timeout", "Timeout must be positive or Timeout.Infinite");
+
 			TaskCompletionSource<Position> tcs;
 
 			if (!IsListening)
