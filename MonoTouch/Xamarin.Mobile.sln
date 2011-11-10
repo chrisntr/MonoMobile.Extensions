@@ -1,4 +1,4 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{21B17BB4-06C1-4E6E-BD78-C022CD8F8266}"
@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{21B17B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MonoTouch", "MonoTouch", "{8A4D3352-DBA8-4BE4-B66C-2BF4A538C725}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoMobile.Extensions", "MonoMobile.Extensions\MonoMobile.Extensions.csproj", "{87C4E91E-8215-46E6-BC21-41650EEB8C92}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Mobile", "MonoMobile.Extensions\Xamarin.Mobile.csproj", "{87C4E91E-8215-46E6-BC21-41650EEB8C92}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoTouch.Example", "MonoTouch.Example\MonoTouch.Example.csproj", "{EA8AD2F7-5BF5-4442-8607-3DD30E0641EB}"
 EndProject

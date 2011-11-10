@@ -89,12 +89,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Content Include="beep.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MonoMobile.Extensions\MonoMobile.Extensions.csproj">
+    <ProjectReference Include="..\MonoMobile.Extensions\Xamarin.Mobile.csproj">
       <Project>{87C4E91E-8215-46E6-BC21-41650EEB8C92}</Project>
-      <Name>MonoMobile.Extensions</Name>
+      <Name>Xamarin.Mobile</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
