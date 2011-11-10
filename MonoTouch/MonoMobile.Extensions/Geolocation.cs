@@ -2,6 +2,7 @@ using System;
 using MonoTouch.CoreLocation;
 using System.Threading.Tasks;
 using System.Threading;
+using MonoTouch.Foundation;
 
 namespace MonoMobile.Extensions
 {
@@ -10,7 +11,7 @@ namespace MonoMobile.Extensions
 	{
 		public Geolocation()
 		{
-			this.manager = new CLLocationManager();
+			this.manager = GetManager();
 			this.manager.AuthorizationChanged += OnAuthorizationChanged;
 			this.manager.Failed += OnFailed;
 			this.manager.UpdatedLocation += OnUpdatedLocation;
@@ -57,7 +58,8 @@ namespace MonoMobile.Extensions
 
 			if (!IsListening)
 			{
-				var m = new CLLocationManager ();
+				var m = GetManager();
+
 				tcs = new TaskCompletionSource<Position> (m);
 				var singleListener = new GeolocationSingleUpdateDelegate (m, DesiredAccuracy, timeout, cancelToken);
 				m.Delegate = singleListener;
@@ -122,6 +124,13 @@ namespace MonoMobile.Extensions
 		private readonly CLLocationManager manager;
 		private bool isListening;
 		private Position position;
+
+		private CLLocationManager GetManager()
+		{
+			CLLocationManager m = null;
+			new NSObject().InvokeOnMainThread (() => m = new CLLocationManager());
+			return m;
+		}
 		
 		private void OnUpdatedHeading (object sender, CLHeadingUpdatedEventArgs e)
 		{
