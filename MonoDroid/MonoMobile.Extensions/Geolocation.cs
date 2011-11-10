@@ -36,26 +36,27 @@ namespace MonoMobile.Extensions
 		{
 			get
 			{
-				if (this.headingProvider == null || !this.manager.IsProviderEnabled (this.headingProvider))
-				{
-					Criteria c = new Criteria { BearingRequired = true };
-					string providerName = this.manager.GetBestProvider (c, enabledOnly: false);
-
-					LocationProvider provider = this.manager.GetProvider (providerName);
-
-					if (provider.SupportsBearing())
-					{
-						this.headingProvider = providerName;
-						return true;
-					}
-					else
-					{
-						this.headingProvider = null;
-						return false;
-					}
-				}
-				else
-					return true;
+				return false;
+//				if (this.headingProvider == null || !this.manager.IsProviderEnabled (this.headingProvider))
+//				{
+//					Criteria c = new Criteria { BearingRequired = true };
+//					string providerName = this.manager.GetBestProvider (c, enabledOnly: false);
+//
+//					LocationProvider provider = this.manager.GetProvider (providerName);
+//
+//					if (provider.SupportsBearing())
+//					{
+//						this.headingProvider = providerName;
+//						return true;
+//					}
+//					else
+//					{
+//						this.headingProvider = null;
+//						return false;
+//					}
+//				}
+//				else
+//					return true;
 			}
 		}
 
