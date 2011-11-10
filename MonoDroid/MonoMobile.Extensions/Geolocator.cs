@@ -87,11 +87,7 @@ namespace Xamarin.Geolocation
 			if (timeout <= 0 && timeout != Timeout.Infinite)
 				throw new ArgumentOutOfRangeException ("timeout", "timeout must be greater than or equal to 0");
 			
-			var tcs = this.positionRequest;
-			if (tcs != null)
-				return tcs.Task;
-
-			this.positionRequest = tcs = new TaskCompletionSource<Position>();
+			var tcs = new TaskCompletionSource<Position>();
 
 			if (!IsListening)
 			{
@@ -99,7 +95,6 @@ namespace Xamarin.Geolocation
 				singleListener = new GeolocationSingleListener ((float)DesiredAccuracy, timeout,
 					() =>
 				{
-					this.positionRequest = null;
 					for (int i = 0; i < this.providers.Count; ++i)
 						this.manager.RemoveUpdates (singleListener);
 				});
@@ -108,8 +103,6 @@ namespace Xamarin.Geolocation
 				{
 					cancelToken.Register (() =>
 					{
-						this.positionRequest = null;
-						
 						singleListener.Cancel();
 						
 						for (int i = 0; i < this.providers.Count; ++i)
@@ -130,7 +123,6 @@ namespace Xamarin.Geolocation
 					
 					if (enabled == 0)
 					{
-						this.positionRequest = null;
 						for (int i = 0; i < this.providers.Count; ++i)
 							this.manager.RemoveUpdates (singleListener);
 						
@@ -164,7 +156,6 @@ namespace Xamarin.Geolocation
 						EventHandler<PositionEventArgs> gotPosition = null;
 						gotPosition = (s, e) =>
 						{
-							this.positionRequest = null;
 							tcs.TrySetResult (e.Position);
 							PositionChanged -= gotPosition;
 						};
@@ -173,7 +164,6 @@ namespace Xamarin.Geolocation
 					}
 					else
 					{
-						this.positionRequest = null;
 						tcs.SetResult (this.lastPosition);
 					}
 				}
@@ -211,12 +201,6 @@ namespace Xamarin.Geolocation
 				this.manager.RemoveUpdates (this.listener);
 
 			this.listener = null;
-
-			// Cancel a pending request, we're not going to try to
-			// switch over another listener and maintain timeout
-			TaskCompletionSource<Position> r = this.positionRequest;
-			if (r != null)
-				r.TrySetCanceled();
 		}
 
 		private readonly IList<string> providers;
@@ -227,7 +211,6 @@ namespace Xamarin.Geolocation
 
 		private readonly object positionSync = new object();
 		private Position lastPosition;
-		private TaskCompletionSource<Position> positionRequest;
 
 		private void OnListenerPositionChanged (object sender, PositionEventArgs e)
 		{
