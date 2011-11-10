@@ -41,6 +41,14 @@ namespace MonoMobile.Extensions
 		/// <c>true</c> if geolocation services are available; otherwise, <c>false</c>.
 		/// </value>
 		bool IsGeolocationAvailable { get; }
+		
+		/// <summary>
+		/// Gets a value indicating whether geolocation is available and enabled.
+		/// </summary>
+		/// <value>
+		/// <c>true</c> if geolocation is available and enabled; otherwise, <c>false</c>.
+		/// </value>
+		bool IsGeolocationEnabled { get; }
 
 		/// <summary>
 		/// Gets or sets the desired accuracy in meters.
