@@ -26,13 +26,6 @@ namespace MonoTouch.Example
 			// If you have defined a view, add it here:
 			// window.AddSubview (navigationController.View);
 			
-			var device = new Device();
-			Console.WriteLine ("Device Name: {0}", device.Name);
-			Console.WriteLine ("Device Platform: {0}", device.Platform);
-			Console.WriteLine ("Device UUID: {0}", device.UUID);
-			Console.WriteLine ("Device Version: {0}", device.Version);
-			Console.WriteLine ("MonoMobile Version: {0}", device.MonoMobileVersion);
-			
 			exampleList = new ExampleList();
 			
 			window.AddSubview(exampleList.View);

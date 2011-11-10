@@ -41,8 +41,7 @@ namespace MonoTouch.Example
 		CancellationTokenSource cancelSource;
 
 		UILabel longitudeText, latitudeText, accuracyText;
-		UIButton alertButton, confirmButton, beepButton, vibrateButton, cameraButton,
-			currentLocationButton, cancelLocationButton, listenPositionButton;
+		UIButton currentLocationButton, cancelLocationButton, listenPositionButton;
 		Geolocation locator;
 		
 		UIAlertView currentLocationAlert;
@@ -52,60 +51,6 @@ namespace MonoTouch.Example
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-			
-//			var notification = new Notification();
-//			alertButton = UIButton.FromType(UIButtonType.RoundedRect);
-//			alertButton.Frame = new System.Drawing.RectangleF(40f, 20f, 200f, 40f);
-//			alertButton.SetTitle("Alert button", UIControlState.Normal);
-//			alertButton.TouchUpInside += (s, e) => {
-//				notification.Alert("My Message", () => {
-//					Console.WriteLine ("Dismissed");
-//				}, "Title", "OK");
-//			};
-//			this.View.AddSubview(alertButton);
-//			
-//			confirmButton = UIButton.FromType(UIButtonType.RoundedRect);
-//			confirmButton.Frame = new System.Drawing.RectangleF(40f, 60f, 200f, 40f);
-//			confirmButton.SetTitle("Confirm button", UIControlState.Normal);
-//			confirmButton.TouchUpInside += (s, e) => {
-//				notification.Confirm("My Message", (i) => {
-//					Console.WriteLine ("Button {0} pressed", i);	
-//				}, "Alert!", "One, Two, Cancelled");
-//			};
-//			this.View.AddSubview(confirmButton);
-//			
-//			beepButton = UIButton.FromType(UIButtonType.RoundedRect);
-//			beepButton.Frame = new System.Drawing.RectangleF(40f, 100f, 200f, 40f);
-//			beepButton.SetTitle("Beep!", UIControlState.Normal);
-//			beepButton.TouchUpInside += (s, e) => {
-//				// Beep overload just calls beep anyway due to iPhone limitation.
-//				// Make sure there's a beep.wav set as content in the root of the app.
-//				notification.Beep();
-//			};
-//			this.View.AddSubview(beepButton);
-//			
-//			
-//			vibrateButton = UIButton.FromType(UIButtonType.RoundedRect);
-//			vibrateButton.Frame = new System.Drawing.RectangleF(40f, 140f, 200f, 40f);
-//			vibrateButton.SetTitle("Vibrate!", UIControlState.Normal);
-//			vibrateButton.TouchUpInside += (s, e) => {
-//				// Vibrate overload just calls vibrate anyway due to iPhone limitation.
-//				notification.Vibrate();
-//			};
-//			this.View.AddSubview(vibrateButton);
-//			
-//			var camera = new Camera(this);
-//			cameraButton = UIButton.FromType(UIButtonType.RoundedRect);
-//			cameraButton.Frame = new System.Drawing.RectangleF(40f, 180f, 200f, 40f);
-//			cameraButton.SetTitle("Get Picture!", UIControlState.Normal);
-//			cameraButton.TouchUpInside += (s, e) => {
-//				// Vibrate overload just calls vibrate anyway due to iPhone limitation.
-//				camera.GetPicture(new Camera.CameraOptions() { SourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum }, 
-//					(p) => { Console.WriteLine ("Got picture as {0}", p);},
-//					() => { Console.WriteLine ("Cancelled"); }
-//				);
-//			};
-//			this.View.AddSubview(cameraButton);
 
 			locator = new Geolocation();
 			locator.DesiredAccuracy = 50;
@@ -117,7 +62,7 @@ namespace MonoTouch.Example
 			currentLocationButton.TouchUpInside += (s, e) =>
 			{
 				this.cancelSource = new CancellationTokenSource();
-				locator.GetCurrentPosition (30000, this.cancelSource.Token)
+				locator.GetCurrentPosition (5000, this.cancelSource.Token)
 					.ContinueWith (t =>
 					{
 						InvokeOnMainThread(() =>
@@ -208,16 +153,11 @@ namespace MonoTouch.Example
 
 		void OnPositionChanged (object sender, PositionEventArgs e)
 		{
-			UpdateLocation (e.Position);
-		}
-
-		private void UpdateLocation (Position p)
-		{
 			InvokeOnMainThread (() =>
 			{
-				latitudeText.Text = String.Format ("{0,-15}{1,-6:N3}", "Latitude:", p.Latitude);
-				longitudeText.Text = String.Format ("{0,-15}{1,-6:N3}", "Longitude:", p.Longitude);
-				accuracyText.Text = String.Format ("{0,-15}{1,-6}", "Accuracy:", p.Accuracy);
+				latitudeText.Text = String.Format ("{0,-15}{1,-6:N3}", "Latitude:", e.Position.Latitude);
+				longitudeText.Text = String.Format ("{0,-15}{1,-6:N3}", "Longitude:", e.Position.Longitude);
+				accuracyText.Text = String.Format ("{0,-15}{1,-6}", "Accuracy:", e.Position.Accuracy);
 			});
 		}
 
@@ -227,36 +167,5 @@ namespace MonoTouch.Example
 			listenPositionButton.Enabled = locator.IsGeolocationAvailable;
 			cancelLocationButton.Enabled = locator.IsGeolocationAvailable;
 		}
-
-		private class LocationObserver
-			: IObserver<Position>
-		{
-			private readonly Action<Position> onNext;
-			private readonly Action onCompleted;
-			private readonly Action<Exception> onError;
-
-			public LocationObserver (Action<Position> onNext, Action onCompleted, Action<Exception> onError)
-			{
-				this.onNext = onNext;
-				this.onCompleted = onCompleted;
-				this.onError = onError;
-			}
-
-			public void OnCompleted()
-			{
-				this.onCompleted();
-			}
-
-			public void OnError (Exception error)
-			{
-				this.onError(error);
-			}
-
-			public void OnNext (Position value)
-			{
-				this.onNext (value);
-			}
-		}
 	}
 }
-
