@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace Xamarin.Geolocation
 {
-	public interface IGeolocation
+	public interface IGeolocator
 	{
 		/// <summary>
 		/// Raised when there is an error retrieving position information.
@@ -35,7 +35,7 @@ namespace Xamarin.Geolocation
 		bool SupportsHeading { get; }
 
 		/// <summary>
-		/// Gets a value indicating whether geolocation services are available.
+		/// Gets a value indicating whether geolocation services are available on the device.
 		/// </summary>
 		/// <value>
 		/// <c>true</c> if geolocation services are available; otherwise, <c>false</c>.
