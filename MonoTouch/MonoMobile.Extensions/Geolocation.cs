@@ -39,6 +39,11 @@ namespace MonoMobile.Extensions
 
 		public bool IsGeolocationAvailable
 		{
+			get { return true; } // all devices support at least wifi geolocation
+		}
+
+		public bool IsGeolocationEnabled
+		{
 			get { return CLLocationManager.LocationServicesEnabled; }
 		}
 		
