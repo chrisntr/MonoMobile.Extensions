@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using MonoTouch.Foundation;
 
-namespace MonoMobile.Extensions
+namespace Xamarin.Geolocation
 {
 	public class Geolocation
 		: IGeolocation

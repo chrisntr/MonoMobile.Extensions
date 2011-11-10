@@ -3,7 +3,7 @@ using MonoTouch.CoreLocation;
 using System.Threading.Tasks;
 using System.Threading;
 
-namespace MonoMobile.Extensions
+namespace Xamarin.Geolocation
 {
 	internal class GeolocationSingleUpdateDelegate
 		: CLLocationManagerDelegate
