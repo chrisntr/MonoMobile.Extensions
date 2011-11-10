@@ -65,7 +65,12 @@ namespace MonoMobile.Extensions
 
 		public bool IsGeolocationAvailable
 		{
-			get { return this.manager.GetProviders (enabledOnly: true).Count > 0; }
+			get { return this.providers.Count > 0; }
+		}
+		
+		public bool IsGeolocationEnabled
+		{
+			get { return this.providers.Where (p => this.manager.IsProviderEnabled (p)).Any(); }
 		}
 
 		public Task<Position> GetCurrentPosition (CancellationToken cancelToken)
