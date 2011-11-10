@@ -59,12 +59,6 @@ namespace MonoMobile.Extensions
 			StopListening();
 		}
 		
-		public override void MonitoringFailed (CLLocationManager manager, CLRegion region, MonoTouch.Foundation.NSError error)
-		{
-			this.tcs.TrySetCanceled();
-			StopListening();
-		}
-		
 		public override bool ShouldDisplayHeadingCalibration (CLLocationManager manager)
 		{
 			return true;
