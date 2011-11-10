@@ -22,7 +22,7 @@ namespace MonoMobile.Example
 		protected override void OnCreate (Bundle bundle)
 		{
 			base.OnCreate (bundle);
-			
+
 			// Set our view from the "main" layout resource
 			SetContentView (Resource.Layout.Main);
 			
@@ -30,7 +30,7 @@ namespace MonoMobile.Example
 			
 			location = new Geolocator (manager);
 			location.DesiredAccuracy = 40;
-			
+
 			watchButton = FindViewById<Button>(Resource.Id.WatchButton);
 
 			locationTextView = FindViewById<TextView>(Resource.Id.LocationTextView);
@@ -40,11 +40,7 @@ namespace MonoMobile.Example
 			cancelLocationButton.Click += delegate { this.cancelSource.Cancel(); };
 
 			getLocationButton = FindViewById<Button>(Resource.Id.GetLocationButton);
-			getLocationButton.Click += delegate
-								{
-									LogDeviceInfo();
-									GetCurrentPosition();
-								};
+			getLocationButton.Click += delegate { GetCurrentPosition(); };
 
 			watchButton.Click += delegate { ToggleWatch(); };
 		}
@@ -66,32 +62,6 @@ namespace MonoMobile.Example
 				this.currentLocationTextView.Text = message;
 				this.cancelSource = null;
 			}));
-			
-//			DateTime n = DateTime.Now;
-//			Timer tt = null;
-//			tt = new Timer (s =>
-//			{
-//				if (DateTime.Now - n > TimeSpan.FromSeconds (20))
-//				{
-//					this.manager.SetTestProviderLocation ("testGps", new Location ("testGps")
-//					{
-//						Latitude = 50,
-//						Longitude = 50,
-//						Accuracy = 10
-//					});
-//					
-//					tt.Dispose();
-//				}
-//				else
-//				{
-//					this.manager.SetTestProviderLocation ("testWifi", new Location ("testWifi")
-//					{
-//						Latitude = 70,
-//						Longitude = 30,
-//						Accuracy = 100
-//					});
-//				}
-//			}, null, 5000, 5000);
 		}
 
 		private void ToggleWatch()
@@ -99,37 +69,10 @@ namespace MonoMobile.Example
 			if (!watching)
 			{
 				location.PositionChanged += OnPostionChanged;
+				location.PositionError += OnPositionError;
 				location.StartListening (5000, 1);
 				
 				watchButton.Text = GetString (Resource.String.watchStop);
-							
-//				Random r = new Random();
-//				DateTime n = DateTime.Now;
-//				Timer tt = null;
-//				tt = new Timer (s =>
-//				{
-//					TimeSpan runtime = DateTime.Now - n;
-//					if (runtime > TimeSpan.FromSeconds (20) && runtime < TimeSpan.FromSeconds (40))
-//					{
-//						this.manager.SetTestProviderLocation ("testGps", new Location ("testGps")
-//						{
-//							Latitude = r.Next(10, 100),
-//							Longitude = r.Next (10, 100),
-//							Accuracy = 10,
-//							Time = (long)(DateTime.Now - new DateTime (1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds
-//						});
-//						
-//						//tt.Dispose();
-//					}
-//					
-//					this.manager.SetTestProviderLocation ("testWifi", new Location ("testWifi")
-//					{
-//						Latitude = r.Next (10, 100),
-//						Longitude = r.Next (10, 100),
-//						Accuracy = r.Next (60, 100),
-//						Time = (long)(DateTime.Now - new DateTime (1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds
-//					});
-//				}, null, 5000, 5000);
 			}
 			else
 			{
@@ -147,16 +90,6 @@ namespace MonoMobile.Example
 				Android.Util.Log.Error ("MonoMobile.Extension", e.Error.ToString());
 				locationTextView.Text = "Error: " + e.Error;
 			});
-		}
-
-		private void LogDeviceInfo()
-		{
-			var device = new MonoMobile.Extensions.Device(this);
-			Android.Util.Log.Info("MonoMobile.Extensions", "Device Name: {0}", device.Name);
-			Android.Util.Log.Info("MonoMobile.Extensions", "Device Platform: {0}", device.Platform);
-			Android.Util.Log.Info("MonoMobile.Extensions", "Device UUID: {0}", device.UUID);
-			Android.Util.Log.Info("MonoMobile.Extensions", "Device Version: {0}", device.Version);
-			Android.Util.Log.Info("MonoMobile.Extensions", "MonoMobile Version: {0}", device.MonoMobileVersion);
 		}
 
 		private string GetText (Position p)
