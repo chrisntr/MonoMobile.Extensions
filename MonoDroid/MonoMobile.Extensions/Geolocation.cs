@@ -3,6 +3,9 @@ using System.Threading.Tasks;
 using Android.Locations;
 using System.Threading;
 using System.Collections.Generic;
+using Android.App;
+using Android.OS;
+using System.Linq;
 
 namespace MonoMobile.Extensions
 {
@@ -101,6 +104,8 @@ namespace MonoMobile.Extensions
 				{
 					cancelToken.Register (() =>
 					{
+						this.positionRequest = null;
+						
 						singleListener.Cancel();
 						
 						for (int i = 0; i < this.providers.Count; ++i)
@@ -108,8 +113,32 @@ namespace MonoMobile.Extensions
 					}, true);
 				}
 				
-				for (int i = 0; i < this.providers.Count; ++i)
-					this.manager.RequestLocationUpdates (this.providers[i], 0, 0, singleListener);
+				try
+				{
+					int enabled = 0;
+					for (int i = 0; i < this.providers.Count; ++i)
+					{
+						if (this.manager.IsProviderEnabled (this.providers[i]))
+							enabled++;
+						
+						this.manager.RequestLocationUpdates (this.providers[i], 0, 0, singleListener, Looper.MyLooper() ?? Looper.MainLooper);
+					}
+					
+					if (enabled == 0)
+					{
+						this.positionRequest = null;
+						for (int i = 0; i < this.providers.Count; ++i)
+							this.manager.RemoveUpdates (singleListener);
+						
+						tcs.SetCanceled();
+						return tcs.Task;
+					}
+				}
+				catch (Java.Lang.SecurityException ex)
+				{
+					tcs.SetCanceled();
+					return tcs.Task;
+				}
 
 				return singleListener.Task;
 			}
@@ -163,7 +192,7 @@ namespace MonoMobile.Extensions
 			this.listener.PositionError += OnListenerPositionError;
 
 			for (int i = 0; i < this.providers.Count; ++i)
-				this.manager.RequestLocationUpdates (providers[i], minTime, (float)minDistance, listener);
+				this.manager.RequestLocationUpdates (providers[i], minTime, (float)minDistance, listener, Looper.MyLooper() ?? Looper.MainLooper);
 		}
 
 		public void StopListening()
