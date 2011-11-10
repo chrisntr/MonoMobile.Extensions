@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">DebugMonoDroid</Configuration>
@@ -10,7 +10,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MonoMobile.Extensions</RootNamespace>
-    <AssemblyName>MonoMobile.Extensions</AssemblyName>
+    <AssemblyName>Xamarin.Mobile</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkVersion>v2.1</TargetFrameworkVersion>
     <AndroidSupportedAbis>armeabi</AndroidSupportedAbis>
@@ -26,6 +26,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <MonoDroidLinkMode>None</MonoDroidLinkMode>
+    <AndroidLinkMode>None</AndroidLinkMode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseMonoDroid|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -35,15 +36,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseWindowsPhone|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+    <AndroidLinkMode>SdkOnly</AndroidLinkMode>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
@@ -54,33 +47,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\Shared\DelegatedObserver.cs">
-      <Link>DelegatedObserver.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Shared\ExtensionHelper.cs">
-      <Link>ExtensionHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Shared\IDevice.cs">
-      <Link>IDevice.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Shared\IGeolocation.cs">
-      <Link>IGeolocation.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Shared\INotification.cs">
-      <Link>INotification.cs</Link>
-    </Compile>
     <Compile Include="..\..\Shared\Position.cs">
       <Link>Position.cs</Link>
     </Compile>
-    <Compile Include="..\..\Shared\PositionListener.cs">
-      <Link>PositionListener.cs</Link>
-    </Compile>
-    <Compile Include="Geolocation.cs" />
     <Compile Include="GeolocationContinuousListener.cs" />
     <Compile Include="GeolocationSingleListener.cs" />
-    <Compile Include="Notification.cs" />
-    <Compile Include="Device.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Geolocator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

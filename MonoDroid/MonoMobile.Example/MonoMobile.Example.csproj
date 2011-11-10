@@ -71,9 +71,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\MonoMobile.Extensions\MonoMobile.Extensions.csproj">
+    <ProjectReference Include="..\MonoMobile.Extensions\Xamarin.Mobile.csproj">
       <Project>{32DFF77E-AE38-48D6-B067-CF555798EA32}</Project>
-      <Name>MonoMobile.Extensions</Name>
+      <Name>Xamarin.Mobile</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
