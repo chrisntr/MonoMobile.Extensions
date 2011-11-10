@@ -41,7 +41,9 @@
         <ReturnType>System.Double</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+            Gets or sets the desired accuracy in meters.
+            </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -80,10 +82,26 @@
         <Parameter Name="cancelToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="cancelToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="cancelToken">A <see cref="T:System.Threading.CancellationToken" /> to cancel the position request.</param>
+        <summary>
+            Gets a future for the current position.
+            </summary>
+        <returns>
+            A <see cref="!:Task{TResult}" /> for the current position.
+            </returns>
+        <remarks>
+          <para>
+            If the underlying OS needs to request location access permissions, it will occur automatically.
+            If the user has disallowed location access (now or previously), the future will be canceled.
+            </para>
+          <para>
+            The first position that is within the <see cref="P:Xamarin.Geolocation.Geolocator.DesiredAccuracy" /> will be returned.
+            </para>
+          <para>
+            If this <see cref="!:IGeolocation" /> currently <see cref="P:Xamarin.Geolocation.Geolocator.IsListening" />, the future will be
+            set immediately with the last retrieved position.
+            </para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="GetCurrentPosition">
@@ -119,8 +137,12 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>
+            Gets a value indicating whether geolocation services are available on the device.
+            </summary>
+        <value>
+          <c>true</c> if geolocation services are available; otherwise, <c>false</c>.
+            </value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -135,8 +157,12 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>
+            Gets a value indicating whether geolocation is available and enabled.
+            </summary>
+        <value>
+          <c>true</c> if geolocation is available and enabled; otherwise, <c>false</c>.
+            </value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -151,7 +177,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+            Gets whether the position is currently being listened to.
+            </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -167,8 +195,11 @@
         <ReturnType>System.EventHandler&lt;Xamarin.Geolocation.PositionEventArgs&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+            Raised when position information is updated.
+            </summary>
         <remarks>To be added.</remarks>
+        <altmember cref="T:Xamarin.Geolocation.Position" />
       </Docs>
     </Member>
     <Member MemberName="PositionError">
@@ -182,8 +213,18 @@
         <ReturnType>System.EventHandler&lt;Xamarin.Geolocation.PositionErrorEventArgs&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>
+            Raised when there is an error retrieving position information.
+            </summary>
+        <remarks>
+          <para>
+            Temporary errors will not be reported.
+            </para>
+          <para>
+            If an error occurs, listening will be stopped automatically.
+            </para>
+        </remarks>
+        <altmember cref="T:Xamarin.Geolocation.PositionErrorCode" />
       </Docs>
     </Member>
     <Member MemberName="StartListening">
@@ -201,10 +242,31 @@
         <Parameter Name="minDistance" Type="System.Double" />
       </Parameters>
       <Docs>
-        <param name="minTime">To be added.</param>
-        <param name="minDistance">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="minTime">A hint for the minimum time between position updates in milliseconds.</param>
+        <param name="minDistance">A hint for the minimum distance between position updates in meters.</param>
+        <summary>
+            Starts listening to position changes with specified thresholds.
+            </summary>
+        <remarks>
+          <para>
+            If the underlying OS needs to request location access permissions, it will occur automatically.
+            </para>
+          <para>
+            If a <see cref="E:Xamarin.Geolocation.Geolocator.PositionError" /> occurs, listening will be halted automatically.
+            </para>
+        </remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <para>
+            <paramref name="minTime" /> is &lt; 0.
+            </para>
+          <para>or</para>
+          <para>
+            <paramref name="minDistance" /> is &lt; 0.
+            </para>
+        </exception>
+        <exception cref="T:System.InvalidOperationException">This geolocation already <see cref="P:Xamarin.Geolocation.Geolocator.IsListening" />.</exception>
+        <altmember cref="M:Xamarin.Geolocation.Geolocator.StopListening" />
+        <altmember cref="P:Xamarin.Geolocation.Geolocator.IsListening" />
       </Docs>
     </Member>
     <Member MemberName="StopListening">
@@ -219,8 +281,14 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>
+            Stops listening to position changes.
+            </summary>
+        <remarks>
+            If you stop listening before the first position has arrived, and have a pending call to
+            <see cref="M:Xamarin.Geolocation.Geolocator.GetCurrentPosition(System.Int32)" />, it will be canceled.
+            </remarks>
+        <altmember cref="M:Xamarin.Geolocation.Geolocator.StartListening(System.Int32,System.Double)" />
       </Docs>
     </Member>
     <Member MemberName="SupportsHeading">
@@ -234,8 +302,12 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>
+            Gets a value indicating whether this <see cref="!:MonoMobile.Extensions.IGeolocation" /> supports heading.
+            </summary>
+        <value>
+          <c>true</c> if supports heading; otherwise, <c>false</c>.
+            </value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

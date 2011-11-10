@@ -24,7 +24,9 @@
         <ReturnType>Xamarin.Geolocation.PositionErrorCode</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+            The provider was unable to retrieve any position data.
+            </summary>
       </Docs>
     </Member>
     <Member MemberName="Unauthorized">
@@ -38,7 +40,9 @@
         <ReturnType>Xamarin.Geolocation.PositionErrorCode</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+            The app is not, or no longer, authorized to receive location data.
+            </summary>
       </Docs>
     </Member>
   </Members>
