@@ -7,6 +7,11 @@ namespace MonoMobile.Extensions
 	public interface IGeolocation
 	{
 		/// <summary>
+		/// Raised when position information becomes unavailable.
+		/// </summary>
+		event EventHandler<PositionErrorEventArgs> PositionError;
+		
+		/// <summary>
 		/// Raised when position information is updated.
 		/// </summary>
 		/// <seealso cref="Position"/>
@@ -179,11 +184,24 @@ namespace MonoMobile.Extensions
 		{
 		}
 	}
+	
+	public class PositionErrorEventArgs
+		: EventArgs
+	{
+		public PositionErrorEventArgs (PositionErrorCode error)
+		{
+			Error = error;
+		}
+		
+		public PositionErrorCode Error
+		{
+			get;
+			private set;
+		}
+	}
 
 	public enum PositionErrorCode
 	{
-		PermissionDenied,
-		PositionUnavailable,
-		Timeout
+		PositionUnavailable
 	}
 }
