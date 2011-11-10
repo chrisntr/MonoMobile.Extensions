@@ -18,6 +18,7 @@ namespace MonoMobile.Extensions
 			this.providers = manager.GetProviders (enabledOnly: false);
 		}
 
+		public event EventHandler<PositionErrorEventArgs> PositionError;
 		public event EventHandler<PositionEventArgs> PositionChanged;
 
 		public bool IsListening
@@ -38,7 +39,7 @@ namespace MonoMobile.Extensions
 				if (this.headingProvider == null || !this.manager.IsProviderEnabled (this.headingProvider))
 				{
 					Criteria c = new Criteria { BearingRequired = true };
-					string providerName = this.manager.GetBestProvider (c, enabledOnly: true);
+					string providerName = this.manager.GetBestProvider (c, enabledOnly: false);
 
 					LocationProvider provider = this.manager.GetProvider (providerName);
 
@@ -156,8 +157,9 @@ namespace MonoMobile.Extensions
 			if (IsListening)
 				throw new InvalidOperationException ("This geolocation is already listening");
 
-			this.listener = new GeolocationContinuousListener (this.manager, TimeSpan.FromMilliseconds (minTime));
+			this.listener = new GeolocationContinuousListener (this.manager, TimeSpan.FromMilliseconds (minTime), this.providers);
 			this.listener.PositionChanged += OnListenerPositionChanged;
+			this.listener.PositionError += OnListenerPositionError;
 
 			for (int i = 0; i < this.providers.Count; ++i)
 				this.manager.RequestLocationUpdates (providers[i], minTime, (float)minDistance, listener);
@@ -169,6 +171,7 @@ namespace MonoMobile.Extensions
 				return;
 
 			this.listener.PositionChanged -= OnListenerPositionChanged;
+			this.listener.PositionError -= OnListenerPositionError;
 
 			for (int i = 0; i < this.providers.Count; ++i)
 				this.manager.RemoveUpdates (this.listener);
@@ -206,18 +209,14 @@ namespace MonoMobile.Extensions
 					changed (this, e);
 			}
 		}
-
-		private bool TryGetProvider (out string provider)
+		
+		private void OnListenerPositionError (object sender, PositionErrorEventArgs e)
 		{
-			provider = this.manager.GetBestProvider (
-				new Criteria
-				{
-					BearingRequired = true,
-					Accuracy = (DesiredAccuracy <= 100) ? Accuracy.Fine : Accuracy.Coarse
-				},
-				enabledOnly: true);
+			StopListening();
 
-			return (provider != null);
+			var error = PositionError;
+			if (error != null)
+				error (this, e);
 		}
 	}
 }

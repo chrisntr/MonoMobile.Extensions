@@ -1,18 +1,27 @@
 using System;
 using Android.Locations;
 using Android.OS;
+using System.Collections.Generic;
 
 namespace MonoMobile.Extensions
 {
 	internal class GeolocationContinuousListener
 		: Java.Lang.Object, ILocationListener
 	{
-		public GeolocationContinuousListener (LocationManager manager, TimeSpan timePeriod)
+		public GeolocationContinuousListener (LocationManager manager, TimeSpan timePeriod, IList<string> providers)
 		{
 			this.manager = manager;
 			this.timePeriod = timePeriod;
+			this.providers = providers;
+			
+			foreach (string p in providers)
+			{
+				if (manager.IsProviderEnabled (p))
+					this.activeProviders.Add (p);
+			}
 		}
 		
+		public event EventHandler<PositionErrorEventArgs> PositionError;
 		public event EventHandler<PositionEventArgs> PositionChanged;
 		
 		public void OnLocationChanged (Location location)
@@ -57,24 +66,36 @@ namespace MonoMobile.Extensions
 
 		public void OnProviderDisabled (string provider)
 		{
-
+			lock (this.activeProviders)
+			{
+				if (this.activeProviders.Remove (provider) && this.activeProviders.Count == 0)
+					OnPositionError (new PositionErrorEventArgs (PositionErrorCode.PositionUnavailable));
+			}
 		}
 
 		public void OnProviderEnabled (string provider)
 		{
+			lock (this.activeProviders)
+				this.activeProviders.Add (provider);	
 		}
 
 		public void OnStatusChanged (string provider, int status, Bundle extras)
 		{
 			switch ((Availability)status)
 			{
+				case Availability.Available:
+					OnProviderEnabled (provider);
+					break;
+				
 				case Availability.OutOfService:
-				case Availability.TemporarilyUnavailable:
+					OnProviderDisabled (provider);
 					break;
 			}
 		}
 		
 		private LocationManager manager;
+		private IList<string> providers;
+		private HashSet<string> activeProviders = new HashSet<string>();
 		
 		private string activeProvider;
 		private Location lastLocation;
@@ -83,6 +104,13 @@ namespace MonoMobile.Extensions
 		private TimeSpan GetTimeSpan (long time)
 		{
 			return new TimeSpan (TimeSpan.TicksPerMillisecond * time);
+		}
+		
+		private void OnPositionError (PositionErrorEventArgs e)
+		{
+			var error = PositionError;
+			if (error != null)
+				error (this, e);
 		}
 	}
 }

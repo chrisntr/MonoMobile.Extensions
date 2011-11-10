@@ -48,6 +48,13 @@ namespace MonoMobile.Extensions
 
 		public void OnStatusChanged (string provider, int status, Bundle extras)
 		{
+			switch ((Availability)status)
+			{
+				case Availability.OutOfService:
+				case Availability.TemporarilyUnavailable:
+					this.completionSource.TrySetCanceled();
+					break;
+			}
 		}
 		
 		public void Cancel()
