@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System.Threading;
 
-namespace MonoMobile.Extensions
+namespace Xamarin.Geolocation
 {
 	public interface IGeolocation
 	{
@@ -173,65 +173,5 @@ namespace MonoMobile.Extensions
 		/// <see cref="GetCurrentPosition"/>, it will be canceled.
 		/// </remarks>
 		void StopListening();
-	}
-
-	public class PositionEventArgs
-		: EventArgs
-	{
-		public PositionEventArgs (Position position)
-		{
-			if (position == null)
-				throw new ArgumentNullException ("position");
-
-			Position = position;
-		}
-
-		public Position Position
-		{
-			get;
-			private set;
-		}
-	}
-	
-	public class GeolocationException
-		: Exception
-	{
-		public GeolocationException()
-			: base()
-		{
-		}
-		
-		public GeolocationException (string message)
-			: base (message)
-		{
-		}
-	}
-	
-	public class PositionErrorEventArgs
-		: EventArgs
-	{
-		public PositionErrorEventArgs (PositionErrorCode error)
-		{
-			Error = error;
-		}
-		
-		public PositionErrorCode Error
-		{
-			get;
-			private set;
-		}
-	}
-
-	public enum PositionErrorCode
-	{
-		/// <summary>
-		/// The provider was unable to retrieve any position data.
-		/// </summary>
-		PositionUnavailable,
-		
-		/// <summary>
-		/// The app is not, or no longer, authorized to receive location data.
-		/// </summary>
-		Unauthorized
 	}
 }
