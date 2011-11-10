@@ -22,7 +22,10 @@ namespace MonoMobile.Extensions
 					if (this.haveLocation)
 						this.tcs.TrySetResult (new Position (this.position));
 					else
+					{
 						this.tcs.TrySetCanceled();
+						StopListening();
+					}
 
 					t.Dispose();
 				}, null, timeout, 0);
@@ -44,7 +47,10 @@ namespace MonoMobile.Extensions
 		{
 			// BUG: If user has services disables, but goes and reenables them fromt he prompt, this still cancels
 			if (status == CLAuthorizationStatus.Denied || status == CLAuthorizationStatus.Restricted)
+			{
 				this.tcs.TrySetCanceled();
+				StopListening();
+			}
 		}
 		
 		public override void Failed (CLLocationManager manager, MonoTouch.Foundation.NSError error)
