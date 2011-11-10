@@ -7,8 +7,17 @@ namespace MonoMobile.Extensions
 	public interface IGeolocation
 	{
 		/// <summary>
-		/// Raised when position information becomes unavailable.
+		/// Raised when there is an error retrieving position information.
 		/// </summary>
+		/// <remarks>
+		/// <para>
+		/// Temporary errors will not be reported.
+		/// </para>
+		/// <para>
+		/// If an error occurs, listening will be stopped automatically.
+		/// </para>
+		/// </remarks>
+		/// <seealso cref="PositionErrorCode"/>
 		event EventHandler<PositionErrorEventArgs> PositionError;
 		
 		/// <summary>
@@ -68,6 +77,9 @@ namespace MonoMobile.Extensions
 		/// If this <see cref="IGeolocation"/> currently <see cref="IsListening"/>, the future will be
 		/// set immediately with the last retrieved position.
 		/// </para>
+		/// <para>
+		/// If a <see cref="PositionError"/> occurs, listening will be halted automatically.
+		/// </para>
 		/// </remarks>
 		Task<Position> GetCurrentPosition (int timeout);
 		
@@ -89,6 +101,9 @@ namespace MonoMobile.Extensions
 		/// <para>
 		/// If this <see cref="IGeolocation"/> currently <see cref="IsListening"/>, the future will be
 		/// set immediately with the last retrieved position.
+		/// </para>
+		/// <para>
+		/// If a <see cref="PositionError"/> occurs, listening will be halted automatically.
 		/// </para>
 		/// </remarks>
 		Task<Position> GetCurrentPosition (CancellationToken cancelToken);
@@ -117,6 +132,9 @@ namespace MonoMobile.Extensions
 		/// If this <see cref="IGeolocation"/> currently <see cref="IsListening"/>, the future will be
 		/// set immediately with the last retrieved position.
 		/// </para>
+		/// <para>
+		/// If a <see cref="PositionError"/> occurs, listening will be halted automatically.
+		/// </para>
 		/// </remarks>
 		Task<Position> GetCurrentPosition (int timeout, CancellationToken cancelToken);
 
@@ -138,7 +156,12 @@ namespace MonoMobile.Extensions
 		/// <seealso cref="StopListening"/>
 		/// <seealso cref="IsListening"/>
 		/// <remarks>
+		/// <para>
 		/// If the underlying OS needs to request location access permissions, it will occur automatically.
+		/// </para>
+		/// <para>
+		/// If a <see cref="PositionError"/> occurs, listening will be halted automatically.
+		/// </para>
 		/// </remarks>
 		void StartListening (int minTime, double minDistance);
 
@@ -202,6 +225,14 @@ namespace MonoMobile.Extensions
 
 	public enum PositionErrorCode
 	{
-		PositionUnavailable
+		/// <summary>
+		/// The provider was unable to retrieve any position data.
+		/// </summary>
+		PositionUnavailable,
+		
+		/// <summary>
+		/// The app is not, or no longer, authorized to receive location data.
+		/// </summary>
+		Unauthorized
 	}
 }
