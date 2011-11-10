@@ -65,9 +65,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Compile Include="..\..\Shared\IGeolocation.cs">
-      <Link>IGeolocation.cs</Link>
-    </Compile>
     <Compile Include="Geolocation.cs" />
     <Compile Include="GeolocationSingleUpdateDelegate.cs" />
     <Compile Include="..\..\Shared\Position.cs">
