@@ -3,7 +3,7 @@ using Android.Locations;
 using Android.OS;
 using System.Collections.Generic;
 
-namespace MonoMobile.Extensions
+namespace Xamarin.Geolocation
 {
 	internal class GeolocationContinuousListener
 		: Java.Lang.Object, ILocationListener

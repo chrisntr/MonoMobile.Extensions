@@ -4,7 +4,7 @@ using Android.Locations;
 using Android.OS;
 using System.Threading;
 
-namespace MonoMobile.Extensions
+namespace Xamarin.Geolocation
 {
 	internal class GeolocationSingleListener
 		: Java.Lang.Object, ILocationListener

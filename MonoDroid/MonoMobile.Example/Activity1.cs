@@ -3,7 +3,7 @@ using Android.App;
 using Android.Locations;
 using Android.Widget;
 using Android.OS;
-using MonoMobile.Extensions;
+using Xamarin.Geolocation;
 using System.Threading;
 
 namespace MonoMobile.Example
@@ -15,7 +15,7 @@ namespace MonoMobile.Example
 		TextView locationTextView, currentLocationTextView;
 		Button watchButton, cancelLocationButton, getLocationButton;
 
-		private IGeolocation location;
+		private Geolocator location;
 		private CancellationTokenSource cancelSource;
 		private LocationManager manager;
 		
@@ -28,12 +28,7 @@ namespace MonoMobile.Example
 			
 			manager = (LocationManager)this.GetSystemService(LocationService);
 			
-			//this.manager.AddTestProvider ("testGps", false, true, false, false, false, false, false, 0, 10);
-			//this.manager.SetTestProviderEnabled ("testGps", enabled: true);
-			//this.manager.AddTestProvider ("testWifi", true, false, false, false, false, false, false, 0, 100);
-			//this.manager.SetTestProviderEnabled ("testWifi", enabled: true);
-			
-			location = new Geolocation (manager);
+			location = new Geolocator (manager);
 			location.DesiredAccuracy = 40;
 			
 			watchButton = FindViewById<Button>(Resource.Id.WatchButton);

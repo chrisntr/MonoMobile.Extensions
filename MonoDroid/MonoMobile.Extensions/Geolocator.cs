@@ -7,12 +7,11 @@ using Android.App;
 using Android.OS;
 using System.Linq;
 
-namespace MonoMobile.Extensions
+namespace Xamarin.Geolocation
 {
-	public class Geolocation
-		: IGeolocation
+	public class Geolocator
 	{
-		public Geolocation (LocationManager manager)
+		public Geolocator (LocationManager manager)
 		{
 			if (manager == null)
 				throw new ArgumentNullException ("manager");
