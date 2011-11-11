@@ -119,28 +119,34 @@ namespace Xamarin.Geolocation
 		{
 		}
 
-		public GeolocationException (string message)
-			: base (message)
-		{
-		}
-	}
-
-	public class PositionErrorEventArgs
-		: EventArgs
-	{
-		public PositionErrorEventArgs (PositionErrorCode error)
+		public GeolocationException (GeolocationError error)
 		{
 			Error = error;
 		}
-
-		public PositionErrorCode Error
+		
+		public GeolocationError Error
 		{
 			get;
 			private set;
 		}
 	}
 
-	public enum PositionErrorCode
+	public class PositionErrorEventArgs
+		: EventArgs
+	{
+		public PositionErrorEventArgs (GeolocationError error)
+		{
+			Error = error;
+		}
+
+		public GeolocationError Error
+		{
+			get;
+			private set;
+		}
+	}
+
+	public enum GeolocationError
 	{
 		/// <summary>
 		/// The provider was unable to retrieve any position data.

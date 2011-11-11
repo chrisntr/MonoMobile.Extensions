@@ -69,7 +69,7 @@ namespace Xamarin.Geolocation
 			lock (this.activeProviders)
 			{
 				if (this.activeProviders.Remove (provider) && this.activeProviders.Count == 0)
-					OnPositionError (new PositionErrorEventArgs (PositionErrorCode.PositionUnavailable));
+					OnPositionError (new PositionErrorEventArgs (GeolocationError.PositionUnavailable));
 			}
 		}
 
