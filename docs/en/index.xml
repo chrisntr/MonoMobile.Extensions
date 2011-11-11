@@ -36,7 +36,7 @@
     </Assembly>
   </Assemblies>
   <Remarks>To be added.</Remarks>
-  <Copyright>To be added.</Copyright>
+  <Copyright>Copyright Xamarin Inc 2011</Copyright>
   <Types>
     <Namespace Name="Xamarin.Geolocation">
       <Type Name="GeolocationException" Kind="Class" />

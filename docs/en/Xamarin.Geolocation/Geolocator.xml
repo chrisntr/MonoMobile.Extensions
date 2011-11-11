@@ -3,7 +3,7 @@
   <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit Geolocator extends System.Object" />
   <AssemblyInfo>
     <AssemblyName>Xamarin.Mobile</AssemblyName>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <AssemblyVersion>0.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -19,7 +19,7 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class Android.Locations.LocationManager manager) cil managed" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="manager" Type="Android.Locations.LocationManager" />
@@ -35,7 +35,7 @@
       <MemberSignature Language="ILAsm" Value=".property instance float64 DesiredAccuracy" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Double</ReturnType>
@@ -53,7 +53,7 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;class Xamarin.Geolocation.Position&gt; GetCurrentPosition(int32 timeout) cil managed" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task&lt;Xamarin.Geolocation.Position&gt;</ReturnType>
@@ -73,7 +73,7 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;class Xamarin.Geolocation.Position&gt; GetCurrentPosition(valuetype System.Threading.CancellationToken cancelToken) cil managed" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task&lt;Xamarin.Geolocation.Position&gt;</ReturnType>
@@ -109,7 +109,7 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;class Xamarin.Geolocation.Position&gt; GetCurrentPosition(int32 timeout, valuetype System.Threading.CancellationToken cancelToken) cil managed" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task&lt;Xamarin.Geolocation.Position&gt;</ReturnType>
@@ -131,7 +131,7 @@
       <MemberSignature Language="ILAsm" Value=".property instance bool IsGeolocationAvailable" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -151,7 +151,7 @@
       <MemberSignature Language="ILAsm" Value=".property instance bool IsGeolocationEnabled" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -171,7 +171,7 @@
       <MemberSignature Language="ILAsm" Value=".property instance bool IsListening" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -189,7 +189,7 @@
       <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;class Xamarin.Geolocation.PositionEventArgs&gt; PositionChanged" />
       <MemberType>Event</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.EventHandler&lt;Xamarin.Geolocation.PositionEventArgs&gt;</ReturnType>
@@ -207,15 +207,13 @@
       <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;class Xamarin.Geolocation.PositionErrorEventArgs&gt; PositionError" />
       <MemberType>Event</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.EventHandler&lt;Xamarin.Geolocation.PositionErrorEventArgs&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>
-            Raised when there is an error retrieving position information.
-            </summary>
+        <summary>Raised when there is an error retrieving position information.</summary>
         <remarks>
           <para>
             Temporary errors will not be reported.
@@ -232,7 +230,7 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void StartListening(int32 minTime, float64 minDistance) cil managed" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -274,20 +272,15 @@
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void StopListening() cil managed" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>
-            Stops listening to position changes.
-            </summary>
-        <remarks>
-            If you stop listening before the first position has arrived, and have a pending call to
-            <see cref="M:Xamarin.Geolocation.Geolocator.GetCurrentPosition(System.Int32)" />, it will be canceled.
-            </remarks>
+        <summary>Stops listening to position changes.</summary>
+        <remarks>To be added.</remarks>
         <altmember cref="M:Xamarin.Geolocation.Geolocator.StartListening(System.Int32,System.Double)" />
       </Docs>
     </Member>
@@ -296,7 +289,7 @@
       <MemberSignature Language="ILAsm" Value=".property instance bool SupportsHeading" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
