@@ -45,18 +45,22 @@ namespace Xamarin.Geolocation
 		
 		public override void AuthorizationChanged (CLLocationManager manager, CLAuthorizationStatus status)
 		{
-			// BUG: If user has services disables, but goes and reenables them fromt he prompt, this still cancels
+			// If user has services disabled, we're just going to throw an exception for consistency.
 			if (status == CLAuthorizationStatus.Denied || status == CLAuthorizationStatus.Restricted)
 			{
-				this.tcs.TrySetCanceled();
+				this.tcs.TrySetException (new GeolocationException (PositionErrorCode.Unauthorized));
 				StopListening();
 			}
 		}
 		
 		public override void Failed (CLLocationManager manager, MonoTouch.Foundation.NSError error)
 		{
-			this.tcs.TrySetCanceled();
-			StopListening();
+			switch ((CLError)error.Code)
+			{
+				case CLError.Network:
+					this.tcs.SetException (new GeolocationException (PositionErrorCode.PositionUnavailable));
+					break;
+			}
 		}
 		
 		public override bool ShouldDisplayHeadingCalibration (CLLocationManager manager)

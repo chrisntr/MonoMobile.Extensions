@@ -194,6 +194,15 @@ namespace Xamarin.Geolocation
 				tcs = new TaskCompletionSource<Position>();
 				if (this.position == null)
 				{
+					EventHandler<PositionErrorEventArgs> gotError = null;
+					gotError = (s,e) =>
+					{
+						tcs.TrySetException (new GeolocationException (e.ErrorCode));
+						PositionError -= gotError;
+					};
+					
+					PositionError += gotError;
+					
 					EventHandler<PositionEventArgs> gotPosition = null;
 					gotPosition = (s, e) =>
 					{
@@ -268,9 +277,10 @@ namespace Xamarin.Geolocation
 
 			this.isListening = false;
 			if (CLLocationManager.HeadingAvailable)
-				manager.StopUpdatingHeading ();
-			
-			manager.StopUpdatingLocation ();
+				this.manager.StopUpdatingHeading ();
+
+			this.manager.StopUpdatingLocation ();
+			this.position = null;
 		}
 		
 		private readonly CLLocationManager manager;
