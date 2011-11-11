@@ -3,17 +3,20 @@ using System.Threading.Tasks;
 using Android.Locations;
 using Android.OS;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace Xamarin.Geolocation
 {
 	internal class GeolocationSingleListener
 		: Java.Lang.Object, ILocationListener
 	{
-		public GeolocationSingleListener (float desiredAccuracy, int timeout, Action callback)
+		public GeolocationSingleListener (float desiredAccuracy, int timeout, IEnumerable<string> activeProviders, Action callback)
 		{
 			this.desiredAccuracy = desiredAccuracy;
 			this.callback = callback;
-			
+
+			this.activeProviders = new HashSet<string> (activeProviders);
+
 			if (timeout != Timeout.Infinite)
 				this.timer = new Timer (TimesUp, null, timeout, 0);
 		}
@@ -40,22 +43,33 @@ namespace Xamarin.Geolocation
 
 		public void OnProviderDisabled (string provider)
 		{
+			lock (this.activeProviders)
+			{
+				if (this.activeProviders.Remove (provider) && this.activeProviders.Count == 0)
+					this.completionSource.TrySetException (new GeolocationException (GeolocationError.PositionUnavailable));
+			}
 		}
 
 		public void OnProviderEnabled (string provider)
 		{
+			lock (this.activeProviders)
+				this.activeProviders.Add (provider);	
 		}
 
 		public void OnStatusChanged (string provider, int status, Bundle extras)
 		{
 			switch ((Availability)status)
 			{
+				case Availability.Available:
+					OnProviderEnabled (provider);
+					break;
+				
 				case Availability.OutOfService:
-					this.completionSource.TrySetException (new GeolocationException (GeolocationError.PositionUnavailable));
+					OnProviderDisabled (provider);
 					break;
 			}
 		}
-		
+
 		public void Cancel()
 		{
 			this.completionSource.TrySetCanceled();
@@ -68,6 +82,7 @@ namespace Xamarin.Geolocation
 		private readonly float desiredAccuracy;
 		private readonly Timer timer;
 		private readonly TaskCompletionSource<Position> completionSource = new TaskCompletionSource<Position>();
+		private HashSet<string> activeProviders = new HashSet<string>();
 		
 		private void TimesUp (object state)
 		{

@@ -92,7 +92,7 @@ namespace Xamarin.Geolocation
 			if (!IsListening)
 			{
 				GeolocationSingleListener singleListener = null;
-				singleListener = new GeolocationSingleListener ((float)DesiredAccuracy, timeout,
+				singleListener = new GeolocationSingleListener ((float)DesiredAccuracy, timeout, this.providers.Where (p => this.manager.IsProviderEnabled (p)),
 					() =>
 				{
 					for (int i = 0; i < this.providers.Count; ++i)
