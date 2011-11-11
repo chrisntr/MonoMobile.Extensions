@@ -112,13 +112,15 @@ namespace Xamarin.Geolocation
 				
 				try
 				{
+					Looper looper = Looper.MyLooper() ?? Looper.MainLooper;
+
 					int enabled = 0;
 					for (int i = 0; i < this.providers.Count; ++i)
 					{
 						if (this.manager.IsProviderEnabled (this.providers[i]))
 							enabled++;
 						
-						this.manager.RequestLocationUpdates (this.providers[i], 0, 0, singleListener, Looper.MyLooper() ?? Looper.MainLooper);
+						this.manager.RequestLocationUpdates (this.providers[i], 0, 0, singleListener, looper);
 					}
 					
 					if (enabled == 0)
@@ -185,8 +187,9 @@ namespace Xamarin.Geolocation
 			this.listener.PositionChanged += OnListenerPositionChanged;
 			this.listener.PositionError += OnListenerPositionError;
 
+			Looper looper = Looper.MyLooper() ?? Looper.MainLooper;
 			for (int i = 0; i < this.providers.Count; ++i)
-				this.manager.RequestLocationUpdates (providers[i], minTime, (float)minDistance, listener, Looper.MyLooper() ?? Looper.MainLooper);
+				this.manager.RequestLocationUpdates (providers[i], minTime, (float)minDistance, listener, looper);
 		}
 
 		public void StopListening()
