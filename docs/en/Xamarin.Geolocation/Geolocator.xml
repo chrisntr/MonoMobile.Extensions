@@ -10,7 +10,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>A class providing the ability to get or listen to the device's current geo-location.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -25,9 +25,9 @@
         <Parameter Name="manager" Type="Android.Locations.LocationManager" />
       </Parameters>
       <Docs>
-        <param name="manager">To be added.</param>
+        <param name="manager">The <see cref="T:Android.Locations.LocationManager" /> to use for geolocation.</param>
         <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>This constructor is available for Android.</remarks>
       </Docs>
     </Member>
     <Member MemberName="DesiredAccuracy">
@@ -172,7 +172,6 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>0.0.0.0</AssemblyVersion>
-        
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>

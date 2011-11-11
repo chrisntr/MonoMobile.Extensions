@@ -4,13 +4,12 @@
   <AssemblyInfo>
     <AssemblyName>Xamarin.Mobile</AssemblyName>
     <AssemblyVersion>0.0.0.0</AssemblyVersion>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Enum</BaseTypeName>
   </Base>
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Specifies what type of error occured.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -20,13 +19,12 @@
       <MemberType>Field</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>0.0.0.0</AssemblyVersion>
-        <AssemblyVersion>1.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>Xamarin.Geolocation.GeolocationError</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The provider was unable to retrieve any position data.</summary>
       </Docs>
     </Member>
     <Member MemberName="Unauthorized">
@@ -35,13 +33,12 @@
       <MemberType>Field</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>0.0.0.0</AssemblyVersion>
-        <AssemblyVersion>1.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>Xamarin.Geolocation.GeolocationError</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The app is not, or no longer, authorized to receive location data.</summary>
       </Docs>
     </Member>
   </Members>
