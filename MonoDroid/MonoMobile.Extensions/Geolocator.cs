@@ -128,13 +128,13 @@ namespace Xamarin.Geolocation
 						for (int i = 0; i < this.providers.Count; ++i)
 							this.manager.RemoveUpdates (singleListener);
 						
-						tcs.SetCanceled();
+						tcs.SetException (new GeolocationException (GeolocationError.PositionUnavailable));
 						return tcs.Task;
 					}
 				}
 				catch (Java.Lang.SecurityException ex)
 				{
-					tcs.SetCanceled();
+					tcs.SetException (new GeolocationException (GeolocationError.Unauthorized));
 					return tcs.Task;
 				}
 

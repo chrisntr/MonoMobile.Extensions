@@ -51,8 +51,7 @@ namespace Xamarin.Geolocation
 			switch ((Availability)status)
 			{
 				case Availability.OutOfService:
-				case Availability.TemporarilyUnavailable:
-					this.completionSource.TrySetCanceled();
+					this.completionSource.TrySetException (new GeolocationException (GeolocationError.PositionUnavailable));
 					break;
 			}
 		}
@@ -68,7 +67,6 @@ namespace Xamarin.Geolocation
 		private readonly Action callback;
 		private readonly float desiredAccuracy;
 		private readonly Timer timer;
-		private readonly LocationManager manager;
 		private readonly TaskCompletionSource<Position> completionSource = new TaskCompletionSource<Position>();
 		
 		private void TimesUp (object state)
