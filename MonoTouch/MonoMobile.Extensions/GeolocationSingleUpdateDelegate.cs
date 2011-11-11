@@ -42,7 +42,7 @@ namespace Xamarin.Geolocation
 		{
 			get { return this.tcs.Task; }
 		}
-		
+
 		public override void AuthorizationChanged (CLLocationManager manager, CLAuthorizationStatus status)
 		{
 			// If user has services disabled, we're just going to throw an exception for consistency.
@@ -52,7 +52,7 @@ namespace Xamarin.Geolocation
 				StopListening();
 			}
 		}
-		
+
 		public override void Failed (CLLocationManager manager, MonoTouch.Foundation.NSError error)
 		{
 			switch ((CLError)error.Code)
@@ -62,27 +62,27 @@ namespace Xamarin.Geolocation
 					break;
 			}
 		}
-		
+
 		public override bool ShouldDisplayHeadingCalibration (CLLocationManager manager)
 		{
 			return true;
 		}
-		
+
 		public override void UpdatedLocation (CLLocationManager manager, CLLocation newLocation, CLLocation oldLocation)
 		{
 			if (newLocation.HorizontalAccuracy < 0)
 				return;
-			
+
 			if (this.haveLocation && newLocation.HorizontalAccuracy > this.position.Accuracy)
 				return;
-			
+
 			this.position.Accuracy = newLocation.HorizontalAccuracy;
 			this.position.Altitude = newLocation.Altitude;
 			this.position.Latitude = newLocation.Coordinate.Latitude;
 			this.position.Longitude = newLocation.Coordinate.Longitude;
 			this.position.Speed = newLocation.Speed;
 			this.position.Timestamp = new DateTimeOffset (newLocation.Timestamp);
-					
+
 			this.haveLocation = true;
 			
 			if (this.haveHeading && this.position.Accuracy <= this.desiredAccuracy)

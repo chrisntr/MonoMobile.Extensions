@@ -252,14 +252,14 @@ namespace Xamarin.Geolocation
 				throw new ArgumentOutOfRangeException ("minDistance");
 			if (this.isListening)
 				throw new InvalidOperationException ("Already listening");
-			
+
 			this.isListening = true;
-			manager.DesiredAccuracy = DesiredAccuracy;
-			manager.DistanceFilter = minDistance;
-			manager.StartUpdatingLocation ();
-			
+			this.manager.DesiredAccuracy = DesiredAccuracy;
+			this.manager.DistanceFilter = minDistance;
+			this.manager.StartUpdatingLocation ();
+
 			if (CLLocationManager.HeadingAvailable)
-				manager.StartUpdatingHeading ();
+				this.manager.StartUpdatingHeading ();
 		}
 
 		/// <summary>
@@ -282,7 +282,7 @@ namespace Xamarin.Geolocation
 			this.manager.StopUpdatingLocation ();
 			this.position = null;
 		}
-		
+
 		private readonly CLLocationManager manager;
 		private bool isListening;
 		private Position position;
