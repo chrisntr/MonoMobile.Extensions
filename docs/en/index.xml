@@ -1,6 +1,6 @@
 <Overview>
   <Assemblies>
-    <Assembly Name="Xamarin.Mobile" Version="1.0.0.0">
+    <Assembly Name="Xamarin.Mobile" Version="0.0.0.0">
       <Attributes>
         <Attribute>
           <AttributeName>System.Reflection.AssemblyCompany("Xamarin Inc")</AttributeName>
@@ -15,7 +15,7 @@
           <AttributeName>System.Reflection.AssemblyDescription("")</AttributeName>
         </Attribute>
         <Attribute>
-          <AttributeName>System.Reflection.AssemblyFileVersion("1.0.0.0")</AttributeName>
+          <AttributeName>System.Reflection.AssemblyFileVersion("0.0.0.0")</AttributeName>
         </Attribute>
         <Attribute>
           <AttributeName>System.Reflection.AssemblyProduct("Xamarin.Mobile")</AttributeName>
@@ -39,10 +39,10 @@
   <Copyright>Copyright Xamarin Inc 2011</Copyright>
   <Types>
     <Namespace Name="Xamarin.Geolocation">
+      <Type Name="GeolocationError" Kind="Enumeration" />
       <Type Name="GeolocationException" Kind="Class" />
       <Type Name="Geolocator" Kind="Class" />
       <Type Name="Position" Kind="Class" />
-      <Type Name="PositionErrorCode" Kind="Enumeration" />
       <Type Name="PositionErrorEventArgs" Kind="Class" />
       <Type Name="PositionEventArgs" Kind="Class" />
     </Namespace>

@@ -4,6 +4,7 @@
   <AssemblyInfo>
     <AssemblyName>Xamarin.Mobile</AssemblyName>
     <AssemblyVersion>0.0.0.0</AssemblyVersion>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.EventArgs</BaseTypeName>
@@ -20,12 +21,13 @@
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>0.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="position" Type="Xamarin.Geolocation.Position" />
       </Parameters>
       <Docs>
-        <param name="position">A <see cref="T:Xamarin.Geolocation.Position" /> </param>
+        <param name="position">A <see cref="T:Xamarin.Geolocation.Position" /></param>
         <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Geolocation.PositionEventArgs" /> class by specifying the <see cref="T:Xamarin.Geolocation.Position" />.</summary>
         <remarks>To be added.</remarks>
       </Docs>
@@ -36,13 +38,14 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>0.0.0.0</AssemblyVersion>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>Xamarin.Geolocation.Position</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>Gets the <see cref="T:Xamarin.Geolocation.Position" /> for the event.</summary>
-        <value>A <see cref="T:Xamarin.Geolocation.Position" /> 	</value>
+        <value>A <see cref="T:Xamarin.Geolocation.Position" /></value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
