@@ -48,7 +48,7 @@ namespace MonoMobile.Example
 		private void GetCurrentPosition()
 		{
 			this.cancelSource = new CancellationTokenSource();
-			location.GetCurrentPosition (30000, cancelSource.Token).ContinueWith (t =>
+			location.GetPositionAsync (30000, cancelSource.Token).ContinueWith (t =>
 				RunOnUiThread (() =>
 			{
 				string message;

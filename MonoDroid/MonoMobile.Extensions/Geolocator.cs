@@ -72,17 +72,17 @@ namespace Xamarin.Geolocation
 			get { return this.providers.Where (p => this.manager.IsProviderEnabled (p)).Any(); }
 		}
 
-		public Task<Position> GetCurrentPosition (CancellationToken cancelToken)
+		public Task<Position> GetPositionAsync (CancellationToken cancelToken)
 		{
-			return GetCurrentPosition (0, cancelToken);
+			return GetPositionAsync (0, cancelToken);
 		}
 		
-		public Task<Position> GetCurrentPosition (int timeout)
+		public Task<Position> GetPositionAsync (int timeout)
 		{
-			return GetCurrentPosition (timeout, CancellationToken.None);
+			return GetPositionAsync (timeout, CancellationToken.None);
 		}
 		
-		public Task<Position> GetCurrentPosition (int timeout, CancellationToken cancelToken)
+		public Task<Position> GetPositionAsync (int timeout, CancellationToken cancelToken)
 		{
 			if (timeout <= 0 && timeout != Timeout.Infinite)
 				throw new ArgumentOutOfRangeException ("timeout", "timeout must be greater than or equal to 0");

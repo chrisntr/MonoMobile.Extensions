@@ -62,7 +62,7 @@ namespace MonoTouch.Example
 			currentLocationButton.TouchUpInside += (s, e) =>
 			{
 				this.cancelSource = new CancellationTokenSource();
-				locator.GetCurrentPosition (5000, this.cancelSource.Token)
+				locator.GetPositionAsync (5000, this.cancelSource.Token)
 					.ContinueWith (t =>
 					{
 						InvokeOnMainThread(() =>

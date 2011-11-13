@@ -47,17 +47,17 @@ namespace Xamarin.Geolocation
 			get { return CLLocationManager.LocationServicesEnabled; }
 		}
 
-		public Task<Position> GetCurrentPosition (int timeout)
+		public Task<Position> GetPositionAsync (int timeout)
 		{
-			return GetCurrentPosition (timeout, CancellationToken.None);
+			return GetPositionAsync (timeout, CancellationToken.None);
 		}
 
-		public Task<Position> GetCurrentPosition (CancellationToken cancelToken)
+		public Task<Position> GetPositionAsync (CancellationToken cancelToken)
 		{
-			return GetCurrentPosition (Timeout.Infinite, cancelToken);
+			return GetPositionAsync (Timeout.Infinite, cancelToken);
 		}
 
-		public Task<Position> GetCurrentPosition (int timeout, CancellationToken cancelToken)
+		public Task<Position> GetPositionAsync (int timeout, CancellationToken cancelToken)
 		{
 			if (timeout <= 0 && timeout != Timeout.Infinite)
 				throw new ArgumentOutOfRangeException ("timeout", "Timeout must be positive or Timeout.Infinite");
