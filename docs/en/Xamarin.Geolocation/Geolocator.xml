@@ -14,6 +14,18 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
+	<Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Geolocator ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>This constructor is only available for iOS.</remarks>
+      </Docs>
+    </Member>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public Geolocator (Android.Locations.LocationManager manager);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class Android.Locations.LocationManager manager) cil managed" />
@@ -27,7 +39,7 @@
       <Docs>
         <param name="manager">The <see cref="T:Android.Locations.LocationManager" /> to use for geolocation.</param>
         <summary>To be added.</summary>
-        <remarks>This constructor is available for Android.</remarks>
+        <remarks>This constructor is only available for Android.</remarks>
       </Docs>
     </Member>
     <Member MemberName="DesiredAccuracy">
@@ -41,16 +53,20 @@
         <ReturnType>System.Double</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>
-            Gets or sets the desired accuracy in meters.
-            </summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets the desired accuracy in meters.</summary>
+        <value>Desired accuracy in meters.</value>
+        <remarks>
+			<para>This is only a hint to the underlying platform, you may receive location updates with lower accuracy.</para>
+			<para>
+				Changes to this while the geolocator <see cref="P:Xamarin.Geolocation.Geolocator.IsListening" /> will have no effect until the next time
+				<see cref="M:Xamarin.Geolocation.Geolocator.StartListening" /> is called.
+			</para>
+		</remarks>
       </Docs>
     </Member>
-    <Member MemberName="GetCurrentPosition">
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;Xamarin.Geolocation.Position&gt; GetCurrentPosition (int timeout);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;class Xamarin.Geolocation.Position&gt; GetCurrentPosition(int32 timeout) cil managed" />
+    <Member MemberName="GetPositionAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;Xamarin.Geolocation.Position&gt; GetPositionAsync (int timeout);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;class Xamarin.Geolocation.Position&gt; GetPositionAsync(int32 timeout) cil managed" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>0.0.0.0</AssemblyVersion>
@@ -62,15 +78,28 @@
         <Parameter Name="timeout" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="timeout">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="timeout">The amount of time in milliseconds to wait for <see cref="P:DesiredAccuracy" /> before returning a best guess or cancelling.</param>
+        <summary>Requests the device's current location and returns a future to it.</summary>
+        <returns>A <see cref="T:System.Threading.Tasks.Task{TResult}" /> for the current <see cref="T:Xamarin.Geolocation.Position" />.</returns>
+        <remarks>
+		  <para>
+				The task will be set with the first <see cref="T:Xamarin.Geolocation.Position" /> with a <see cref="P:Xamarin.Geolocation.Position.Accuracy" />
+				greater than or equal to <see cref="P:Xamarin.Geolocation.Geolocator.DesiredAccuracy" />. If a position with the desired accuracy can not be
+				obtained within <paramref name="timeout" />, the most accurate position found will be used. If no position could be found at all within
+				<paramref name="timeout" />, the task will be canceled.
+		  </para>
+          <para>
+				If the underlying platform needs to request location access permissions, it will be performed automatically.
+				If all location services are disabled or a fatal error occurs, the future will contain <see cref="T:Xamarin.Geolocation.GeolocationException" />
+				with <see cref="P:Xamarin.Geolocation.GeolocationException.Error" /> of GeolocationError.PositionUnavailable. If the user has denied location
+				access to the app (iOS), or the app didn't specify location acccess in its manifest (Android), the error will be GelocationError.Unauthorized.
+		  </para>
+        </remarks>
       </Docs>
     </Member>
-    <Member MemberName="GetCurrentPosition">
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;Xamarin.Geolocation.Position&gt; GetCurrentPosition (System.Threading.CancellationToken cancelToken);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;class Xamarin.Geolocation.Position&gt; GetCurrentPosition(valuetype System.Threading.CancellationToken cancelToken) cil managed" />
+    <Member MemberName="GetPositionAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;Xamarin.Geolocation.Position&gt; GetPositionAsync (System.Threading.CancellationToken cancelToken);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;class Xamarin.Geolocation.Position&gt; GetPositionAsync(valuetype System.Threading.CancellationToken cancelToken) cil managed" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>0.0.0.0</AssemblyVersion>
@@ -83,30 +112,25 @@
       </Parameters>
       <Docs>
         <param name="cancelToken">A <see cref="T:System.Threading.CancellationToken" /> to cancel the position request.</param>
-        <summary>
-            Gets a future for the current position.
-            </summary>
-        <returns>
-            A <see cref="!:Task{TResult}" /> for the current position.
-            </returns>
+        <summary>Requests the device's current location and returns a future to it.</summary>
+        <returns>A <see cref="T:System.Threading.Tasks.Task{TResult}" /> for the current <see cref="T:Xamarin.Geolocation.Position" />.</returns>
         <remarks>
+		  <para>
+				The task will be set with the first <see cref="T:Xamarin.Geolocation.Position" /> with a <see cref="P:Xamarin.Geolocation.Position.Accuracy" />
+				greater than or equal to <see cref="P:Xamarin.Geolocation.Geolocator.DesiredAccuracy" />.
+		  </para>
           <para>
-            If the underlying OS needs to request location access permissions, it will occur automatically.
-            If the user has disallowed location access (now or previously), the future will be canceled.
-            </para>
-          <para>
-            The first position that is within the <see cref="P:Xamarin.Geolocation.Geolocator.DesiredAccuracy" /> will be returned.
-            </para>
-          <para>
-            If this <see cref="!:IGeolocation" /> currently <see cref="P:Xamarin.Geolocation.Geolocator.IsListening" />, the future will be
-            set immediately with the last retrieved position.
-            </para>
+				If the underlying platform needs to request location access permissions, it will be performed automatically.
+				If all location services are disabled or a fatal error occurs, the future will contain <see cref="T:Xamarin.Geolocation.GeolocationException" />
+				with <see cref="P:Xamarin.Geolocation.GeolocationException.Error" /> of GeolocationError.PositionUnavailable. If the user has denied location
+				access to the app (iOS), or the app didn't specify location acccess in its manifest (Android), the error will be GelocationError.Unauthorized.
+		  </para>
         </remarks>
       </Docs>
     </Member>
-    <Member MemberName="GetCurrentPosition">
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;Xamarin.Geolocation.Position&gt; GetCurrentPosition (int timeout, System.Threading.CancellationToken cancelToken);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;class Xamarin.Geolocation.Position&gt; GetCurrentPosition(int32 timeout, valuetype System.Threading.CancellationToken cancelToken) cil managed" />
+    <Member MemberName="GetPositionAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;Xamarin.Geolocation.Position&gt; GetPositionAsync (int timeout, System.Threading.CancellationToken cancelToken);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;class Xamarin.Geolocation.Position&gt; GetPositionAsync(int32 timeout, valuetype System.Threading.CancellationToken cancelToken) cil managed" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>0.0.0.0</AssemblyVersion>
@@ -119,11 +143,24 @@
         <Parameter Name="cancelToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="timeout">To be added.</param>
-        <param name="cancelToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="timeout">The amount of time in milliseconds to wait for <see cref="P:DesiredAccuracy" /> before returning a best guess or cancelling.</param>
+		<param name="cancelToken">A <see cref="T:System.Threading.CancellationToken" /> to cancel the position request.</param>
+        <summary>Requests the device's current location and returns a future to it.</summary>
+        <returns>A <see cref="T:System.Threading.Tasks.Task{TResult}" /> for the current <see cref="T:Xamarin.Geolocation.Position" />.</returns>
+        <remarks>
+		  <para>
+				The task will be set with the first <see cref="T:Xamarin.Geolocation.Position" /> with a <see cref="P:Xamarin.Geolocation.Position.Accuracy" />
+				greater than or equal to <see cref="P:Xamarin.Geolocation.Geolocator.DesiredAccuracy" />. If a position with the desired accuracy can not be
+				obtained within <paramref name="timeout" />, the most accurate position found will be used. If no position could be found at all within
+				<paramref name="timeout" />, the task will be canceled.
+		  </para>
+          <para>
+				If the underlying platform needs to request location access permissions, it will be performed automatically.
+				If all location services are disabled or a fatal error occurs, the future will contain <see cref="T:Xamarin.Geolocation.GeolocationException" />
+				with <see cref="P:Xamarin.Geolocation.GeolocationException.Error" /> of GeolocationError.PositionUnavailable. If the user has denied location
+				access to the app (iOS), or the app didn't specify location acccess in its manifest (Android), the error will be GelocationError.Unauthorized.
+		  </para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="IsGeolocationAvailable">
@@ -139,11 +176,17 @@
       <Docs>
         <summary>
             Gets a value indicating whether geolocation services are available on the device.
-            </summary>
+        </summary>
         <value>
           <c>true</c> if geolocation services are available; otherwise, <c>false</c>.
-            </value>
-        <remarks>To be added.</remarks>
+        </value>
+        <remarks>
+			<para>
+				Use this to determine whether the device supports geolocation. On Android, this will also
+				be false if the manifest has not requested any location permissions.
+			</para>
+		</remarks>
+		<altmember cref="P:Xamarin.Geolocation.Geolocator.IsGeolocationEnabled" />
       </Docs>
     </Member>
     <Member MemberName="IsGeolocationEnabled">
@@ -159,11 +202,22 @@
       <Docs>
         <summary>
             Gets a value indicating whether geolocation is available and enabled.
-            </summary>
+        </summary>
         <value>
           <c>true</c> if geolocation is available and enabled; otherwise, <c>false</c>.
-            </value>
-        <remarks>To be added.</remarks>
+        </value>
+        <remarks>
+			<para>
+				Use this to determine whether geolocation is enabled by the user or not. It will also
+				return false if geolocation is unavailable, so use it conjunction with <see cref="P:Xamarin.Geolocation.Geolocator.IsGeolocationAvailable" />
+				if you wish to prompt the user about enabling geolocation services.
+			</para>
+			<para>
+				On iOS, this will be false if location services are disabled or explicitly turned off for this app.
+				On Android, this will be false if both wifi and gps location services are disabled (and passive is unavailable).
+			</para>
+		</remarks>
+		<altmember cref="P:Xamarin.Geolocation.Geolocator.IsGeolocationAvailable" />
       </Docs>
     </Member>
     <Member MemberName="IsListening">
@@ -177,10 +231,8 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>
-            Gets whether the position is currently being listened to.
-            </summary>
-        <value>To be added.</value>
+        <summary>Gets whether the position is currently being listened to.</summary>
+        <value><c>true</c> if this geolocator is currently listening to position updates; otherwise, <c>false</c>.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -195,10 +247,17 @@
         <ReturnType>System.EventHandler&lt;Xamarin.Geolocation.PositionEventArgs&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>
-            Raised when position information is updated.
-            </summary>
-        <remarks>To be added.</remarks>
+        <summary>Raised when position information is updated.</summary>
+        <remarks>
+			<para>
+				This event will fire even when the contained <see cref="T:Xamarin.Geolocation.Position" /> is below <see cref="P:Xamarin.Geolocation.Geolocator.DesiredAccuracy" />.
+			</para>
+			<para>
+				The various implementations will do their best to provide the most accurate <see cref="T:Xamarin.Geolocation.Position" /> up to <see cref="P:Xamarin.Geolocation.Geolocator.DesiredAccuracy" />.
+				In order to receive initial updates more quickly, you may receive less accurate updates to begin with. You may also begin receiving more accurate updates than you require,
+				as <see cref="P:Xamarin.Geolocation.Geolocator.DesiredAccuracy" /> is only a hint and can not definitively set what accuracy level you receive.
+			</para>
+		</remarks>
         <altmember cref="T:Xamarin.Geolocation.Position" />
       </Docs>
     </Member>
@@ -217,10 +276,10 @@
         <remarks>
           <para>
             Temporary errors will not be reported.
-            </para>
+          </para>
           <para>
             If an error occurs, listening will be stopped automatically.
-            </para>
+          </para>
         </remarks>
         <altmember cref="T:Xamarin.Geolocation.PositionErrorCode" />
       </Docs>
@@ -242,27 +301,30 @@
       <Docs>
         <param name="minTime">A hint for the minimum time between position updates in milliseconds.</param>
         <param name="minDistance">A hint for the minimum distance between position updates in meters.</param>
-        <summary>
-            Starts listening to position changes with specified thresholds.
-            </summary>
+        <summary>Starts listening to position changes with specified thresholds.</summary>
         <remarks>
           <para>
             If the underlying OS needs to request location access permissions, it will occur automatically.
-            </para>
+          </para>
           <para>
             If a <see cref="E:Xamarin.Geolocation.Geolocator.PositionError" /> occurs, listening will be halted automatically.
-            </para>
+          </para>
+		  <para>
+			The various implementations will do their best to provide the most accurate <see cref="T:Xamarin.Geolocation.Position" /> up to <see cref="P:Xamarin.Geolocation.Geolocator.DesiredAccuracy" />.
+			In order to receive initial updates more quickly, you may receive less accurate updates to begin with. You may also begin receiving more accurate updates than you require,
+			as <see cref="P:Xamarin.Geolocation.Geolocator.DesiredAccuracy" /> is only a hint and can not definitively set what accuracy level you receive.
+		  </para>
         </remarks>
         <exception cref="T:System.ArgumentOutOfRangeException">
           <para>
             <paramref name="minTime" /> is &lt; 0.
-            </para>
+          </para>
           <para>or</para>
           <para>
             <paramref name="minDistance" /> is &lt; 0.
-            </para>
+          </para>
         </exception>
-        <exception cref="T:System.InvalidOperationException">This geolocation already <see cref="P:Xamarin.Geolocation.Geolocator.IsListening" />.</exception>
+        <exception cref="T:System.InvalidOperationException">This geolocator already <see cref="P:Xamarin.Geolocation.Geolocator.IsListening" />.</exception>
         <altmember cref="M:Xamarin.Geolocation.Geolocator.StopListening" />
         <altmember cref="P:Xamarin.Geolocation.Geolocator.IsListening" />
       </Docs>
@@ -295,12 +357,10 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>
-            Gets a value indicating whether this <see cref="!:MonoMobile.Extensions.IGeolocation" /> supports heading.
-            </summary>
+        <summary>Gets a value indicating whether this <see cref="T:Xamarin.Geolocation.Geolocator" /> supports heading.</summary>
         <value>
           <c>true</c> if supports heading; otherwise, <c>false</c>.
-            </value>
+        </value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

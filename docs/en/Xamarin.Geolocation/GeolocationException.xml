@@ -15,19 +15,6 @@
   </Docs>
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public GeolocationException ();" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
-      <MemberType>Constructor</MemberType>
-      <AssemblyInfo>
-        <AssemblyVersion>0.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public GeolocationException (Xamarin.Geolocation.GeolocationError error);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(valuetype Xamarin.Geolocation.GeolocationError error) cil managed" />
       <MemberType>Constructor</MemberType>
@@ -38,7 +25,7 @@
         <Parameter Name="error" Type="Xamarin.Geolocation.GeolocationError" />
       </Parameters>
       <Docs>
-        <param name="error">To be added.</param>
+        <param name="error">The type of error that occured.</param>
         <summary>To be added.</summary>
         <remarks>To be added.</remarks>
       </Docs>
