@@ -114,11 +114,6 @@ namespace Xamarin.Geolocation
 	public class GeolocationException
 		: Exception
 	{
-		public GeolocationException()
-			: base()
-		{
-		}
-
 		public GeolocationException (GeolocationError error)
 		{
 			Error = error;
