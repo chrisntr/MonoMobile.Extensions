@@ -22,11 +22,9 @@ namespace Xamarin.Geolocation
 					if (this.haveLocation)
 						this.tcs.TrySetResult (new Position (this.position));
 					else
-					{
 						this.tcs.TrySetCanceled();
-						StopListening();
-					}
-
+						
+					StopListening();
 					t.Dispose();
 				}, null, timeout, 0);
 			}
@@ -59,6 +57,7 @@ namespace Xamarin.Geolocation
 			{
 				case CLError.Network:
 					this.tcs.SetException (new GeolocationException (GeolocationError.PositionUnavailable));
+					StopListening();
 					break;
 			}
 		}
