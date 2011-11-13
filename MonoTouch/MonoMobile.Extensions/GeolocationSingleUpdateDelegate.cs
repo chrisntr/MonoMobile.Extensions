@@ -48,7 +48,7 @@ namespace Xamarin.Geolocation
 			// If user has services disabled, we're just going to throw an exception for consistency.
 			if (status == CLAuthorizationStatus.Denied || status == CLAuthorizationStatus.Restricted)
 			{
-				this.tcs.TrySetException (new GeolocationException (PositionErrorCode.Unauthorized));
+				this.tcs.TrySetException (new GeolocationException (GeolocationError.Unauthorized));
 				StopListening();
 			}
 		}
@@ -58,7 +58,7 @@ namespace Xamarin.Geolocation
 			switch ((CLError)error.Code)
 			{
 				case CLError.Network:
-					this.tcs.SetException (new GeolocationException (PositionErrorCode.PositionUnavailable));
+					this.tcs.SetException (new GeolocationException (GeolocationError.PositionUnavailable));
 					break;
 			}
 		}

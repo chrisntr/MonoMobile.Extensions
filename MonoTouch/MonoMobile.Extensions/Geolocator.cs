@@ -85,7 +85,7 @@ namespace Xamarin.Geolocation
 					EventHandler<PositionErrorEventArgs> gotError = null;
 					gotError = (s,e) =>
 					{
-						tcs.TrySetException (new GeolocationException (e.ErrorCode));
+						tcs.TrySetException (new GeolocationException (e.Error));
 						PositionError -= gotError;
 					};
 					
@@ -193,13 +193,13 @@ namespace Xamarin.Geolocation
 		private void OnFailed (object sender, MonoTouch.Foundation.NSErrorEventArgs e)
 		{
 			if ((CLError)e.Error.Code == CLError.Network)
-				OnPositionError (new PositionErrorEventArgs (PositionErrorCode.PositionUnavailable));
+				OnPositionError (new PositionErrorEventArgs (GeolocationError.PositionUnavailable));
 		}
 
 		private void OnAuthorizationChanged (object sender, CLAuthroziationChangedEventArgs e)
 		{
 			if (e.Status == CLAuthorizationStatus.Denied || e.Status == CLAuthorizationStatus.Restricted)
-				OnPositionError (new PositionErrorEventArgs (PositionErrorCode.Unauthorized));
+				OnPositionError (new PositionErrorEventArgs (GeolocationError.Unauthorized));
 		}
 		
 		private void OnPositionChanged (PositionEventArgs e)
