@@ -5,7 +5,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MonoTouch", "MonoTouch", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Mobile", "MonoMobile.Extensions\Xamarin.Mobile.csproj", "{87C4E91E-8215-46E6-BC21-41650EEB8C92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoTouch.Example", "MonoTouch.Example\MonoTouch.Example.csproj", "{EA8AD2F7-5BF5-4442-8607-3DD30E0641EB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeolocationSample", "Samples\Geolocation\GeolocationSample.csproj", "{B110CA48-4524-4E13-B4E1-B4A4C54EC875}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,21 +23,21 @@ Global
 		{87C4E91E-8215-46E6-BC21-41650EEB8C92}.Release|iPhone.Build.0 = Release|iPhone
 		{87C4E91E-8215-46E6-BC21-41650EEB8C92}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
 		{87C4E91E-8215-46E6-BC21-41650EEB8C92}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
-		{EA8AD2F7-5BF5-4442-8607-3DD30E0641EB}.Debug|iPhone.ActiveCfg = Debug|iPhone
-		{EA8AD2F7-5BF5-4442-8607-3DD30E0641EB}.Debug|iPhone.Build.0 = Debug|iPhone
-		{EA8AD2F7-5BF5-4442-8607-3DD30E0641EB}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
-		{EA8AD2F7-5BF5-4442-8607-3DD30E0641EB}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
-		{EA8AD2F7-5BF5-4442-8607-3DD30E0641EB}.Release|iPhone.ActiveCfg = Release|iPhone
-		{EA8AD2F7-5BF5-4442-8607-3DD30E0641EB}.Release|iPhone.Build.0 = Release|iPhone
-		{EA8AD2F7-5BF5-4442-8607-3DD30E0641EB}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
-		{EA8AD2F7-5BF5-4442-8607-3DD30E0641EB}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{B110CA48-4524-4E13-B4E1-B4A4C54EC875}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{B110CA48-4524-4E13-B4E1-B4A4C54EC875}.Debug|iPhone.Build.0 = Debug|iPhone
+		{B110CA48-4524-4E13-B4E1-B4A4C54EC875}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{B110CA48-4524-4E13-B4E1-B4A4C54EC875}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{B110CA48-4524-4E13-B4E1-B4A4C54EC875}.Release|iPhone.ActiveCfg = Release|iPhone
+		{B110CA48-4524-4E13-B4E1-B4A4C54EC875}.Release|iPhone.Build.0 = Release|iPhone
+		{B110CA48-4524-4E13-B4E1-B4A4C54EC875}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{B110CA48-4524-4E13-B4E1-B4A4C54EC875}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{87C4E91E-8215-46E6-BC21-41650EEB8C92} = {8A4D3352-DBA8-4BE4-B66C-2BF4A538C725}
-		{EA8AD2F7-5BF5-4442-8607-3DD30E0641EB} = {8A4D3352-DBA8-4BE4-B66C-2BF4A538C725}
+		{B110CA48-4524-4E13-B4E1-B4A4C54EC875} = {8A4D3352-DBA8-4BE4-B66C-2BF4A538C725}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = MonoTouch.Example\MonoTouch.Example.csproj
+		StartupItem = Samples\Geolocation\GeolocationSample.csproj
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
