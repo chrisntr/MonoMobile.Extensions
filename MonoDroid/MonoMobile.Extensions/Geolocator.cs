@@ -6,17 +6,18 @@ using System.Collections.Generic;
 using Android.App;
 using Android.OS;
 using System.Linq;
+using Android.Content;
 
 namespace Xamarin.Geolocation
 {
 	public class Geolocator
 	{
-		public Geolocator (LocationManager manager)
+		public Geolocator (Context context)
 		{
-			if (manager == null)
-				throw new ArgumentNullException ("manager");
+			if (context == null)
+				throw new ArgumentNullException ("context");
 
-			this.manager = manager;
+			this.manager = (LocationManager)context.GetSystemService (Context.LocationService);
 			this.providers = manager.GetProviders (enabledOnly: false);
 		}
 
