@@ -1,0 +1,313 @@
+<doc>
+    <assembly>
+        <name>Xamarin.Mobile</name>
+    </assembly>
+    <members>
+        <member name="T:Xamarin.Geolocation.GeolocationError">
+            <summary>Specifies what type of error occured.</summary>
+            <remarks>To be added.</remarks>
+        </member>
+        <member name="F:Xamarin.Geolocation.GeolocationError.PositionUnavailable">
+            <summary>The provider was unable to retrieve any position data.</summary>
+        </member>
+        <member name="F:Xamarin.Geolocation.GeolocationError.Unauthorized">
+            <summary>The app is not, or no longer, authorized to receive location data.</summary>
+        </member>
+        <member name="T:Xamarin.Geolocation.GeolocationException">
+            <summary>To be added.</summary>
+            <remarks>To be added.</remarks>
+        </member>
+        <member name="C:Xamarin.Geolocation.GeolocationException(Xamarin.Geolocation.GeolocationError)">
+            <param name="error">The type of error that occured.</param>
+            <summary>To be added.</summary>
+            <remarks>To be added.</remarks>
+        </member>
+        <member name="P:Xamarin.Geolocation.GeolocationException.Error">
+            <summary>Gets the error that occured.</summary>
+            <value>To be added.</value>
+            <remarks>To be added.</remarks>
+        </member>
+        <member name="T:Xamarin.Geolocation.Geolocator">
+            <summary>A class providing the ability to get or listen to the device's current geo-location.</summary>
+            <remarks>To be added.</remarks>
+        </member>
+        <member name="C:Xamarin.Geolocation.Geolocator(Android.Content.Context)">
+            <param name="context">The context from which to get the location service.</param>
+            <summary>Creates and initializes a new instance of the <see cref="T:Xamarin.Geolocation.Geolocator" /> class with a <see cref="T:Android.Content.Context" /> (Android only).</summary>
+            <remarks>Android only.</remarks>
+        </member>
+        <member name="P:Xamarin.Geolocation.Geolocator.DesiredAccuracy">
+            <summary>Gets or sets the desired accuracy in meters.</summary>
+            <value>Desired accuracy in meters.</value>
+            <remarks>
+                <para>This is only a hint to the underlying platform, you may receive location updates with lower accuracy.</para>
+                <para>
+				Changes to this while the geolocator <see cref="P:Xamarin.Geolocation.Geolocator.IsListening" /> will have no effect until the next time
+				<see cref="M:Xamarin.Geolocation.Geolocator.StartListening" /> is called.
+			</para>
+            </remarks>
+        </member>
+        <member name="M:Xamarin.Geolocation.Geolocator.GetPositionAsync(System.Int32)">
+            <param name="timeout">The amount of time in milliseconds to wait for <see cref="P:DesiredAccuracy" /> before returning a best guess or cancelling.</param>
+            <summary>Requests the device's current location and returns a future to it.</summary>
+            <returns>A <see cref="T:System.Threading.Tasks.Task{TResult}" /> for the current <see cref="T:Xamarin.Geolocation.Position" />.</returns>
+            <remarks>
+                <para>
+				The task will be set with the first <see cref="T:Xamarin.Geolocation.Position" /> with a <see cref="P:Xamarin.Geolocation.Position.Accuracy" />
+				greater than or equal to <see cref="P:Xamarin.Geolocation.Geolocator.DesiredAccuracy" />. If a position with the desired accuracy can not be
+				obtained within <paramref name="timeout" />, the most accurate position found will be used. If no position could be found at all within
+				<paramref name="timeout" />, the task will be canceled.
+		  </para>
+                <para>
+				If the underlying platform needs to request location access permissions, it will be performed automatically.
+				If all location services are disabled or a fatal error occurs, the future will contain <see cref="T:Xamarin.Geolocation.GeolocationException" />
+				with <see cref="P:Xamarin.Geolocation.GeolocationException.Error" /> of GeolocationError.PositionUnavailable. If the user has denied location
+				access to the app (iOS), or the app didn't specify location acccess in its manifest (Android), the error will be GelocationError.Unauthorized.
+		  </para>
+            </remarks>
+        </member>
+        <member name="M:Xamarin.Geolocation.Geolocator.GetPositionAsync(System.Threading.CancellationToken)">
+            <param name="cancelToken">A <see cref="T:System.Threading.CancellationToken" /> to cancel the position request.</param>
+            <summary>Requests the device's current location and returns a future to it.</summary>
+            <returns>A <see cref="T:System.Threading.Tasks.Task{TResult}" /> for the current <see cref="T:Xamarin.Geolocation.Position" />.</returns>
+            <remarks>
+                <para>
+				The task will be set with the first <see cref="T:Xamarin.Geolocation.Position" /> with a <see cref="P:Xamarin.Geolocation.Position.Accuracy" />
+				greater than or equal to <see cref="P:Xamarin.Geolocation.Geolocator.DesiredAccuracy" />.
+		  </para>
+                <para>
+				If the underlying platform needs to request location access permissions, it will be performed automatically.
+				If all location services are disabled or a fatal error occurs, the future will contain <see cref="T:Xamarin.Geolocation.GeolocationException" />
+				with <see cref="P:Xamarin.Geolocation.GeolocationException.Error" /> of GeolocationError.PositionUnavailable. If the user has denied location
+				access to the app (iOS), or the app didn't specify location acccess in its manifest (Android), the error will be GelocationError.Unauthorized.
+		  </para>
+            </remarks>
+        </member>
+        <member name="M:Xamarin.Geolocation.Geolocator.GetPositionAsync(System.Int32,System.Threading.CancellationToken)">
+            <param name="timeout">The amount of time in milliseconds to wait for <see cref="P:DesiredAccuracy" /> before returning a best guess or cancelling.</param>
+            <param name="cancelToken">A <see cref="T:System.Threading.CancellationToken" /> to cancel the position request.</param>
+            <summary>Requests the device's current location and returns a future to it.</summary>
+            <returns>A <see cref="T:System.Threading.Tasks.Task{TResult}" /> for the current <see cref="T:Xamarin.Geolocation.Position" />.</returns>
+            <remarks>
+                <para>
+				The task will be set with the first <see cref="T:Xamarin.Geolocation.Position" /> with a <see cref="P:Xamarin.Geolocation.Position.Accuracy" />
+				greater than or equal to <see cref="P:Xamarin.Geolocation.Geolocator.DesiredAccuracy" />. If a position with the desired accuracy can not be
+				obtained within <paramref name="timeout" />, the most accurate position found will be used. If no position could be found at all within
+				<paramref name="timeout" />, the task will be canceled.
+		  </para>
+                <para>
+				If the underlying platform needs to request location access permissions, it will be performed automatically.
+				If all location services are disabled or a fatal error occurs, the future will contain <see cref="T:Xamarin.Geolocation.GeolocationException" />
+				with <see cref="P:Xamarin.Geolocation.GeolocationException.Error" /> of GeolocationError.PositionUnavailable. If the user has denied location
+				access to the app (iOS), or the app didn't specify location acccess in its manifest (Android), the error will be GelocationError.Unauthorized.
+		  </para>
+            </remarks>
+        </member>
+        <member name="P:Xamarin.Geolocation.Geolocator.IsGeolocationAvailable">
+            <summary>
+            Gets a value indicating whether geolocation services are available on the device.
+        </summary>
+            <value>
+                <c>true</c> if geolocation services are available; otherwise, <c>false</c>.
+        </value>
+            <remarks>
+                <para>
+				Use this to determine whether the device supports geolocation. On Android, this will also
+				be false if the manifest has not requested any location permissions.
+			</para>
+            </remarks>
+            <altmember cref="P:Xamarin.Geolocation.Geolocator.IsGeolocationEnabled" />
+        </member>
+        <member name="P:Xamarin.Geolocation.Geolocator.IsGeolocationEnabled">
+            <summary>
+            Gets a value indicating whether geolocation is available and enabled.
+        </summary>
+            <value>
+                <c>true</c> if geolocation is available and enabled; otherwise, <c>false</c>.
+        </value>
+            <remarks>
+                <para>
+				Use this to determine whether geolocation is enabled by the user or not. It will also
+				return false if geolocation is unavailable, so use it conjunction with <see cref="P:Xamarin.Geolocation.Geolocator.IsGeolocationAvailable" />
+				if you wish to prompt the user about enabling geolocation services.
+			</para>
+                <para>
+				On iOS, this will be false if location services are disabled or explicitly turned off for this app.
+				On Android, this will be false if both wifi and gps location services are disabled (and passive is unavailable).
+			</para>
+            </remarks>
+            <altmember cref="P:Xamarin.Geolocation.Geolocator.IsGeolocationAvailable" />
+        </member>
+        <member name="P:Xamarin.Geolocation.Geolocator.IsListening">
+            <summary>Gets whether the position is currently being listened to.</summary>
+            <value>
+                <c>true</c> if this geolocator is currently listening to position updates; otherwise, <c>false</c>.</value>
+            <remarks>To be added.</remarks>
+        </member>
+        <member name="E:Xamarin.Geolocation.Geolocator.PositionChanged">
+            <summary>Raised when position information is updated.</summary>
+            <remarks>
+                <para>
+				This event will fire even when the contained <see cref="T:Xamarin.Geolocation.Position" /> is below <see cref="P:Xamarin.Geolocation.Geolocator.DesiredAccuracy" />.
+			</para>
+                <para>
+				The various implementations will do their best to provide the most accurate <see cref="T:Xamarin.Geolocation.Position" /> up to <see cref="P:Xamarin.Geolocation.Geolocator.DesiredAccuracy" />.
+				In order to receive initial updates more quickly, you may receive less accurate updates to begin with. You may also begin receiving more accurate updates than you require,
+				as <see cref="P:Xamarin.Geolocation.Geolocator.DesiredAccuracy" /> is only a hint and can not definitively set what accuracy level you receive.
+			</para>
+            </remarks>
+            <altmember cref="T:Xamarin.Geolocation.Position" />
+        </member>
+        <member name="E:Xamarin.Geolocation.Geolocator.PositionError">
+            <summary>Raised when there is an error retrieving position information.</summary>
+            <remarks>
+                <para>
+            Temporary errors will not be reported.
+          </para>
+                <para>
+            If an error occurs, listening will be stopped automatically.
+          </para>
+            </remarks>
+            <altmember cref="T:Xamarin.Geolocation.PositionErrorCode" />
+        </member>
+        <member name="M:Xamarin.Geolocation.Geolocator.StartListening(System.Int32,System.Double)">
+            <param name="minTime">A hint for the minimum time between position updates in milliseconds.</param>
+            <param name="minDistance">A hint for the minimum distance between position updates in meters.</param>
+            <summary>Starts listening to position changes with specified thresholds.</summary>
+            <remarks>
+                <para>
+            If the underlying OS needs to request location access permissions, it will occur automatically.
+          </para>
+                <para>
+            If a <see cref="E:Xamarin.Geolocation.Geolocator.PositionError" /> occurs, listening will be halted automatically.
+          </para>
+                <para>
+			The various implementations will do their best to provide the most accurate <see cref="T:Xamarin.Geolocation.Position" /> up to <see cref="P:Xamarin.Geolocation.Geolocator.DesiredAccuracy" />.
+			In order to receive initial updates more quickly, you may receive less accurate updates to begin with. You may also begin receiving more accurate updates than you require,
+			as <see cref="P:Xamarin.Geolocation.Geolocator.DesiredAccuracy" /> is only a hint and can not definitively set what accuracy level you receive.
+		  </para>
+            </remarks>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+                <para>
+                    <paramref name="minTime" /> is &lt; 0.
+          </para>
+                <para>or</para>
+                <para>
+                    <paramref name="minDistance" /> is &lt; 0.
+          </para>
+            </exception>
+            <exception cref="T:System.InvalidOperationException">This geolocator already <see cref="P:Xamarin.Geolocation.Geolocator.IsListening" />.</exception>
+            <altmember cref="M:Xamarin.Geolocation.Geolocator.StopListening" />
+            <altmember cref="P:Xamarin.Geolocation.Geolocator.IsListening" />
+        </member>
+        <member name="M:Xamarin.Geolocation.Geolocator.StopListening">
+            <summary>Stops listening to position changes.</summary>
+            <remarks>To be added.</remarks>
+            <altmember cref="M:Xamarin.Geolocation.Geolocator.StartListening(System.Int32,System.Double)" />
+        </member>
+        <member name="P:Xamarin.Geolocation.Geolocator.SupportsHeading">
+            <summary>Gets a value indicating whether this <see cref="T:Xamarin.Geolocation.Geolocator" /> supports heading.</summary>
+            <value>
+                <c>true</c> if supports heading; otherwise, <c>false</c>.
+        </value>
+            <remarks>To be added.</remarks>
+        </member>
+        <member name="T:Xamarin.Geolocation.Position">
+            <summary>To be added.</summary>
+            <remarks>To be added.</remarks>
+        </member>
+        <member name="C:Xamarin.Geolocation.Position">
+            <summary>To be added.</summary>
+            <remarks>To be added.</remarks>
+        </member>
+        <member name="C:Xamarin.Geolocation.Position(Xamarin.Geolocation.Position)">
+            <param name="position">To be added.</param>
+            <summary>To be added.</summary>
+            <remarks>To be added.</remarks>
+        </member>
+        <member name="P:Xamarin.Geolocation.Position.Accuracy">
+            <summary>
+            Gets or sets the potential position error radius in meters.
+            </summary>
+            <value>To be added.</value>
+            <remarks>To be added.</remarks>
+        </member>
+        <member name="P:Xamarin.Geolocation.Position.Altitude">
+            <summary>
+            Gets or sets the altitude in meters relative to sea level.
+            </summary>
+            <value>To be added.</value>
+            <remarks>To be added.</remarks>
+        </member>
+        <member name="P:Xamarin.Geolocation.Position.AltitudeAccuracy">
+            <summary>
+            Gets or sets the potential altitude error range in meters.
+            </summary>
+            <value>To be added.</value>
+            <remarks>
+            Not supported on Android, will always read 0.
+            </remarks>
+        </member>
+        <member name="P:Xamarin.Geolocation.Position.Heading">
+            <summary>
+            Gets or sets the heading in degrees relative to true North.
+            </summary>
+            <value>To be added.</value>
+            <remarks>To be added.</remarks>
+        </member>
+        <member name="P:Xamarin.Geolocation.Position.Latitude">
+            <summary>
+            Gets or sets the latitude.
+            </summary>
+            <value>To be added.</value>
+            <remarks>To be added.</remarks>
+        </member>
+        <member name="P:Xamarin.Geolocation.Position.Longitude">
+            <summary>
+            Gets or sets the longitude.
+            </summary>
+            <value>To be added.</value>
+            <remarks>To be added.</remarks>
+        </member>
+        <member name="P:Xamarin.Geolocation.Position.Speed">
+            <summary>
+            Gets or sets the speed in meters per second.
+            </summary>
+            <value>To be added.</value>
+            <remarks>To be added.</remarks>
+        </member>
+        <member name="P:Xamarin.Geolocation.Position.Timestamp">
+            <summary>Gets or sets the timestamp of the position.</summary>
+            <value>A <see cref="T:System.DateTimeOffset" /> representing the timestmap of the position.</value>
+            <remarks>To be added.</remarks>
+        </member>
+        <member name="T:Xamarin.Geolocation.PositionErrorEventArgs">
+            <summary>To be added.</summary>
+            <remarks>To be added.</remarks>
+        </member>
+        <member name="C:Xamarin.Geolocation.PositionErrorEventArgs(Xamarin.Geolocation.GeolocationError)">
+            <param name="error">The type of error that occured.</param>
+            <summary>To be added.</summary>
+            <remarks>To be added.</remarks>
+        </member>
+        <member name="P:Xamarin.Geolocation.PositionErrorEventArgs.Error">
+            <summary>Gets the type of error that occured.</summary>
+            <value>To be added.</value>
+            <remarks>To be added.</remarks>
+        </member>
+        <member name="T:Xamarin.Geolocation.PositionEventArgs">
+            <summary>Provides data for the <see cref="T:Xamarin.Geolocation.Geolocator.PositionChanged" /> event.</summary>
+            <remarks>To be added.</remarks>
+        </member>
+        <member name="C:Xamarin.Geolocation.PositionEventArgs(Xamarin.Geolocation.Position)">
+            <param name="position">A <see cref="T:Xamarin.Geolocation.Position" /></param>
+            <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Geolocation.PositionEventArgs" /> class by specifying the <see cref="T:Xamarin.Geolocation.Position" />.</summary>
+            <remarks>To be added.</remarks>
+        </member>
+        <member name="P:Xamarin.Geolocation.PositionEventArgs.Position">
+            <summary>Gets the <see cref="T:Xamarin.Geolocation.Position" /> for the event.</summary>
+            <value>To be added.</value>
+            <remarks>To be added.</remarks>
+        </member>
+    </members>
+</doc>
