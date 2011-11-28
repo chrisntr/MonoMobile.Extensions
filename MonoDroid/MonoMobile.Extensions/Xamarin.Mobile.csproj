@@ -51,6 +51,12 @@
     <Compile Include="..\..\Shared\Position.cs">
       <Link>Geolocation\Position.cs</Link>
     </Compile>
+    <Compile Include="Contacts\Account.cs" />
+    <Compile Include="Contacts\AddressBook.cs" />
+    <Compile Include="Contacts\Contact.cs" />
+    <Compile Include="Contacts\Email.cs" />
+    <Compile Include="Contacts\MetaContact.cs" />
+    <Compile Include="Contacts\Phone.cs" />
     <Compile Include="Geolocation\GeolocationContinuousListener.cs" />
     <Compile Include="Geolocation\GeolocationSingleListener.cs" />
     <Compile Include="Geolocation\Geolocator.cs" />
