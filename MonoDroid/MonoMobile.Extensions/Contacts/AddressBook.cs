@@ -100,7 +100,8 @@ namespace Xamarin.Contacts
 		//    if (!String.IsNullOrWhiteSpace (contact.Id))
 		//        throw new ArgumentException ("Contact is not a persisted instance", "contact");
 
-		//    this.content.Delete (ContactsContract.Data.ContentUri, ContactsContract.ContactsColumns.LookupKey + " = ?", new[] { contact.Id });
+		//    // TODO: Does this cascade?
+		//    this.content.Delete (ContactsContract.RawContacts.ContentUri, ContactsContract.RawContactsColumns.ContactId + " = ?", new[] { contact.Id });
 		//}
 
 		IEnumerator IEnumerable.GetEnumerator()
