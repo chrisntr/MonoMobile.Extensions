@@ -7,6 +7,8 @@ namespace Xamarin.Contacts
 		HomeFax,
 		Work,
 		WorkFax,
+		Pager,
+		Mobile,
 		Other,
 	}
 

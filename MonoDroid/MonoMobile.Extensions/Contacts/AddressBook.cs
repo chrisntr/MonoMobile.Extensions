@@ -260,13 +260,17 @@ namespace Xamarin.Contacts
 					return PhoneType.Custom;
 				case PhoneDataKind.Home:
 					return PhoneType.Home;
+				case PhoneDataKind.Mobile:
+					return PhoneType.Mobile;
 				case PhoneDataKind.FaxHome:
 					return PhoneType.HomeFax;
 				case PhoneDataKind.Work:
 					return PhoneType.Work;
 				case PhoneDataKind.FaxWork:
 					return PhoneType.WorkFax;
-
+				case PhoneDataKind.Pager:
+				case PhoneDataKind.WorkPager:
+					return PhoneType.Pager;
 				default:
 					return PhoneType.Other;
 			}
