@@ -10,7 +10,7 @@ using Android.Provider;
 
 namespace Xamarin.Contacts
 {
-	/* TODODODODO
+	/* TODO
 	 * SecurityException bubbling
 	 */
 
@@ -79,6 +79,8 @@ namespace Xamarin.Contacts
 		//        throw new ArgumentNullException ("contact");
 		//    if (String.IsNullOrWhiteSpace (contact.Id))
 		//        throw new ArgumentException ("Contact is not existing");
+
+		//    throw new NotImplementedException();
 
 		//    return Load (contact.Id);
 		//}
