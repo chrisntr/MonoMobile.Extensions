@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Mobile", "MonoMobil
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeolocationSample", "Samples\Geolocation\GeolocationSample.csproj", "{B110CA48-4524-4E13-B4E1-B4A4C54EC875}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactsSample", "Samples\ContactsSample\ContactsSample.csproj", "{0F36CBF1-1358-4FD3-8631-2775881B2635}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|iPhoneSimulator = Debug|iPhoneSimulator
@@ -15,6 +17,14 @@ Global
 		Release|iPhone = Release|iPhone
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0F36CBF1-1358-4FD3-8631-2775881B2635}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{0F36CBF1-1358-4FD3-8631-2775881B2635}.Debug|iPhone.Build.0 = Debug|iPhone
+		{0F36CBF1-1358-4FD3-8631-2775881B2635}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{0F36CBF1-1358-4FD3-8631-2775881B2635}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{0F36CBF1-1358-4FD3-8631-2775881B2635}.Release|iPhone.ActiveCfg = Release|iPhone
+		{0F36CBF1-1358-4FD3-8631-2775881B2635}.Release|iPhone.Build.0 = Release|iPhone
+		{0F36CBF1-1358-4FD3-8631-2775881B2635}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{0F36CBF1-1358-4FD3-8631-2775881B2635}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 		{87C4E91E-8215-46E6-BC21-41650EEB8C92}.Debug|iPhone.ActiveCfg = Debug|iPhone
 		{87C4E91E-8215-46E6-BC21-41650EEB8C92}.Debug|iPhone.Build.0 = Debug|iPhone
 		{87C4E91E-8215-46E6-BC21-41650EEB8C92}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
@@ -35,6 +45,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{87C4E91E-8215-46E6-BC21-41650EEB8C92} = {8A4D3352-DBA8-4BE4-B66C-2BF4A538C725}
 		{B110CA48-4524-4E13-B4E1-B4A4C54EC875} = {8A4D3352-DBA8-4BE4-B66C-2BF4A538C725}
+		{0F36CBF1-1358-4FD3-8631-2775881B2635} = {8A4D3352-DBA8-4BE4-B66C-2BF4A538C725}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Samples\Geolocation\GeolocationSample.csproj
