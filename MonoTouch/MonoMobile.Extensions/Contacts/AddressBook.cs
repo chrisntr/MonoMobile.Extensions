@@ -71,9 +71,19 @@ namespace Xamarin.Contacts
 			
 			contact.Notes = (person.Note != null) ? new [] { person.Note } : new string[0];
 
-			// TODO: Fill Label
-			contact.Emails = person.GetEmails().Select (e => new Email { Address = e.Value, Type = EmailType.Other }).ToArray();
-			contact.Phones = person.GetPhones().Select (p => new Phone { Number = p.Value, Type = GetPhoneType (p) }).ToArray();
+			contact.Emails = person.GetEmails().Select (e => new Email
+			{
+				Address = e.Value,
+				Type = EmailType.Other,
+				Label = ABAddressBook.LocalizedLabel (ABLabel.Other)
+			}).ToArray();
+			
+			contact.Phones = person.GetPhones().Select (p => new Phone
+			{
+				Number = p.Value,
+				Type = GetPhoneType (p),
+				Label = ABAddressBook.LocalizedLabel (p.Label)
+			}).ToArray();
 			
 			return contact;
 		}
