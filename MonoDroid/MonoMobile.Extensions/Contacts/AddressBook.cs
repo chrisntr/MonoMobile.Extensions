@@ -28,7 +28,7 @@ namespace Xamarin.Contacts
 
 		public bool IsReadOnly
 		{
-			get { return false; }
+			get { return true; }
 		}
 
 		public IEnumerator<Contact> GetEnumerator()
