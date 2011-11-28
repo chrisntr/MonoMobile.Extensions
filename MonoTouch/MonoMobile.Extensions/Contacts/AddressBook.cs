@@ -31,7 +31,18 @@ namespace Xamarin.Contacts
 		
 		public Contact Load (string id)
 		{
-			throw new NotImplementedException();
+			if (String.IsNullOrWhiteSpace (id))
+				throw new ArgumentNullException ("id");
+			
+			int rowId;
+			if (!Int32.TryParse (id, out rowId))
+				throw new ArgumentException ("Not a valid contact ID", "id");
+			
+			ABPerson person = this.addressBook.GetPerson (rowId);
+			if (person == null)
+				return null;
+			
+			return GetContact (person);
 		}
 		
 		Type IQueryable.ElementType
