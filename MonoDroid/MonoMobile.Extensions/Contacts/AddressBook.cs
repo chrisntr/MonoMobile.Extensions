@@ -53,7 +53,7 @@ namespace Xamarin.Contacts
 			ICursor c = null;
 			try
 			{
-				c = this.content.Query (ContactsContract.Contacts.ContentUri, null, ContactsContract.ContactsColumns.LookupKey + " = ?", new[] { id }, null);
+				c = this.content.Query (ContactsContract.RawContacts.ContentUri, null, ContactsContract.RawContactsColumns.ContactId + " = ?", new[] { id }, null);
 				return (c.MoveToNext() ? GetContact (c) : null);
 			}
 			finally
