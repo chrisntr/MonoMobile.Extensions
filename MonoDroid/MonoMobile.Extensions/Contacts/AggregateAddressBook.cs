@@ -11,7 +11,7 @@ using Android.Provider;
 namespace Xamarin.Contacts
 {
 	public class AggregateAddressBook
-		: IOrderedQueryable<Contact>
+		: IQueryable<Contact>
 	{
 		public AggregateAddressBook (Context context)
 		{
