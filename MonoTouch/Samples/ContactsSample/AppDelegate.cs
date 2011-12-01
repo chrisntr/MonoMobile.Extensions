@@ -14,7 +14,7 @@ namespace ContactsSample
 	{
 		// class-level declarations
 		UIWindow window;
-		ContactsSampleViewController viewController;
+		MainView viewController;
 
 		//
 		// This method is invoked when the application has loaded and is ready to run. In this 
@@ -27,7 +27,7 @@ namespace ContactsSample
 		{
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
 			
-			viewController = new ContactsSampleViewController ();
+			viewController = new MainView ();
 			window.RootViewController = viewController;
 			window.MakeKeyAndVisible ();
 			
