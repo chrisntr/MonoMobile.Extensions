@@ -79,9 +79,9 @@ namespace Xamarin.Geolocation
 				this.activeProviders.Add (provider);	
 		}
 
-		public void OnStatusChanged (string provider, int status, Bundle extras)
+		public void OnStatusChanged (string provider, Availability status, Bundle extras)
 		{
-			switch ((Availability)status)
+			switch (status)
 			{
 				case Availability.Available:
 					OnProviderEnabled (provider);

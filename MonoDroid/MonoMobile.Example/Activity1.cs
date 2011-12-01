@@ -25,10 +25,8 @@ namespace MonoMobile.Example
 
 			// Set our view from the "main" layout resource
 			SetContentView (Resource.Layout.Main);
-			
-			manager = (LocationManager)this.GetSystemService(LocationService);
-			
-			location = new Geolocator (manager);
+
+			location = new Geolocator (this);
 			location.DesiredAccuracy = 40;
 
 			watchButton = FindViewById<Button>(Resource.Id.WatchButton);
