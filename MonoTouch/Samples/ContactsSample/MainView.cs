@@ -30,7 +30,7 @@ namespace ContactsSample
 			var addressBook = new AddressBook();
 			foreach (Contact contact in addressBook)
 			{
-				list.Add(contact.FirstName + " " + contact.LastName);
+				list.Add(contact.DisplayName);
 			}
 			
 			//
