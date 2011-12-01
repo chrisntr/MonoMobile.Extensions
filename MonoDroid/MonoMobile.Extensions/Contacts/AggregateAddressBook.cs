@@ -12,6 +12,9 @@ namespace Xamarin.Contacts
 	{
 		public AggregateAddressBook (Context context)
 		{
+			if (context == null)
+				throw new ArgumentNullException ("context");
+
 			this.provider = new ContactQueryProvider (false, context.ContentResolver, context.Resources);
 		}
 
