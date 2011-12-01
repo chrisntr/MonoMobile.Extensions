@@ -24,6 +24,7 @@ namespace Xamarin.Contacts
 
 			this.content = context.ContentResolver;
 			this.resources = context.Resources;
+			this.rawContactsProvider = new ContactQueryProvider (true, context.ContentResolver, context.Resources);
 		}
 
 		public bool IsReadOnly
@@ -33,7 +34,7 @@ namespace Xamarin.Contacts
 
 		public IEnumerator<Contact> GetEnumerator()
 		{
-			return GetContacts().GetEnumerator();
+			return ContactHelper.GetContacts (true, this.content, this.resources).GetEnumerator();
 		}
 
 		/// <summary>
@@ -54,7 +55,7 @@ namespace Xamarin.Contacts
 			try
 			{
 				c = this.content.Query (ContactsContract.RawContacts.ContentUri, null, ContactsContract.RawContactsColumns.ContactId + " = ?", new[] { id }, null);
-				return (c.MoveToNext() ? GetContact (c) : null);
+				return (c.MoveToNext() ? ContactHelper.GetContact (true, this.content, this.resources, c) : null);
 			}
 			finally
 			{
@@ -116,169 +117,16 @@ namespace Xamarin.Contacts
 
 		Expression IQueryable.Expression
 		{
-			get { return GetContacts().AsQueryable().Expression; }
+			get { return Expression.Constant (this); }
 		}
 
 		IQueryProvider IQueryable.Provider
 		{
-			get { return GetContacts().AsQueryable().Provider; }
+			get { return this.rawContactsProvider; }
 		}
 
+		private readonly IQueryProvider rawContactsProvider;
 		private readonly ContentResolver content;
 		private readonly Resources resources;
-
-		private IEnumerable<Contact> GetContacts()
-		{
-			ICursor c = null;
-
-			try
-			{
-				c = this.content.Query (ContactsContract.RawContacts.ContentUri, null, null, null, null);
-				while (c.MoveToNext())
-					yield return GetContact (c);
-			}
-			finally
-			{
-				if (c != null)
-					c.Deactivate();
-			}
-		}
-
-		private Contact GetContact (ICursor cursor)
-		{
-			//string id = cursor.GetString (cursor.GetColumnIndex (ContactsContract.ContactsColumns.LookupKey));
-			string id = cursor.GetString (cursor.GetColumnIndex (ContactsContract.RawContactsColumns.ContactId));
-			Contact contact = new Contact (id);
-			contact.DisplayName = GetString (cursor, ContactsContract.ContactsColumns.DisplayName);
-			FillContactExtras (id, contact);
-
-			return contact;
-		}
-
-		private void FillContactExtras (string recordId, Contact contact)
-		{
-			ICursor c = null;
-
-			List<Phone> phones = new List<Phone>();
-			List<Email> emails = new List<Email>();
-			List<string> notes = new List<string>();
-
-			try
-			{
-				c = this.content.Query (ContactsContract.Data.ContentUri, null, ContactsContract.DataColumns.RawContactId + " = ?",
-				                        new[] { recordId }, null);
-				while (c.MoveToNext())
-				{
-					string dataType = c.GetString (c.GetColumnIndex (ContactsContract.DataColumns.Mimetype));
-					switch (dataType)
-					{
-						case ContactsContract.CommonDataKinds.Nickname.ContentItemType:
-							contact.Nickname = c.GetString (c.GetColumnIndex (ContactsContract.CommonDataKinds.Nickname.Name));
-							break;
-
-						case ContactsContract.CommonDataKinds.StructuredName.ContentItemType:
-							contact.Prefix = GetString (c, ContactsContract.CommonDataKinds.StructuredName.Prefix);
-							contact.FirstName = GetString (c, ContactsContract.CommonDataKinds.StructuredName.GivenName);
-							contact.MiddleName = GetString (c, ContactsContract.CommonDataKinds.StructuredName.MiddleName);
-							contact.LastName = GetString (c, ContactsContract.CommonDataKinds.StructuredName.FamilyName);
-							contact.Suffix = GetString (c, ContactsContract.CommonDataKinds.StructuredName.Suffix);
-							break;
-
-						case ContactsContract.CommonDataKinds.Phone.ContentItemType:
-							Phone p = new Phone();
-
-							PhoneDataKind pkind = (PhoneDataKind) c.GetInt (c.GetColumnIndex (ContactsContract.CommonDataKinds.CommonColumns.Type));
-							p.Type = GetPhoneType (pkind);
-							if (p.Type == PhoneType.Custom)
-								p.CustomLabel = GetString (c, ContactsContract.CommonDataKinds.CommonColumns.Label);
-
-							p.Label = (p.Type != PhoneType.Custom)
-							          	? ContactsContract.CommonDataKinds.Phone.GetTypeLabel (this.resources, pkind, p.CustomLabel)
-							          	: p.CustomLabel;
-
-							p.Number = GetString (c, ContactsContract.CommonDataKinds.Phone.Number);
-
-							phones.Add (p);
-							break;
-
-						case ContactsContract.CommonDataKinds.Email.ContentItemType:
-							Email e = new Email();
-
-							EmailDataKind ekind = (EmailDataKind) c.GetInt (c.GetColumnIndex (ContactsContract.CommonDataKinds.CommonColumns.Type));
-							e.Type = GetEmailType (ekind);
-							if (e.Type == EmailType.Custom)
-								e.CustomLabel = GetString (c, ContactsContract.CommonDataKinds.CommonColumns.Label);
-
-							e.Label = (e.Type != EmailType.Custom)
-							          	? ContactsContract.CommonDataKinds.Email.GetTypeLabel (this.resources, ekind, e.CustomLabel)
-							          	: e.CustomLabel;
-
-							e.Address = GetString (c, ContactsContract.DataColumns.Data1);
-
-							emails.Add (e);
-							break;
-
-						case ContactsContract.CommonDataKinds.Note.ContentItemType:
-							notes.Add (GetString (c, ContactsContract.CommonDataKinds.Note.NoteColumnId));
-							break;
-					}
-				}
-
-				contact.Phones = phones;
-				contact.Emails = emails;
-				contact.Notes = notes;
-			}
-			finally
-			{
-				if (c != null)
-					c.Deactivate();
-			}
-		}
-
-		private static EmailType GetEmailType (EmailDataKind emailKind)
-		{
-			switch (emailKind)
-			{
-				case 0:
-					return EmailType.Custom;
-				case EmailDataKind.Home:
-					return EmailType.Home;
-				case EmailDataKind.Mobile:
-					return EmailType.Mobile;
-				case EmailDataKind.Work:
-					return EmailType.Work;
-				default:
-					return EmailType.Other;
-			}
-		}
-
-		private static PhoneType GetPhoneType (PhoneDataKind phoneKind)
-		{
-			switch (phoneKind)
-			{
-				case 0:
-					return PhoneType.Custom;
-				case PhoneDataKind.Home:
-					return PhoneType.Home;
-				case PhoneDataKind.Mobile:
-					return PhoneType.Mobile;
-				case PhoneDataKind.FaxHome:
-					return PhoneType.HomeFax;
-				case PhoneDataKind.Work:
-					return PhoneType.Work;
-				case PhoneDataKind.FaxWork:
-					return PhoneType.WorkFax;
-				case PhoneDataKind.Pager:
-				case PhoneDataKind.WorkPager:
-					return PhoneType.Pager;
-				default:
-					return PhoneType.Other;
-			}
-		}
-
-		private static string GetString (ICursor c, string colName)
-		{
-			return c.GetString (c.GetColumnIndex (colName));
-		}
 	}
 }
