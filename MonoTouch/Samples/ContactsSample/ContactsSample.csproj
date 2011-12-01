@@ -65,13 +65,13 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="ContactsSampleViewController.cs" />
-    <Compile Include="ContactsSampleViewController.designer.cs">
-      <DependentUpon>ContactsSampleViewController.cs</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <InterfaceDefinition Include="ContactsSampleViewController.xib" />
+    <Compile Include="MainView.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\MonoMobile.Extensions\Xamarin.Mobile.csproj">
+      <Project>{87C4E91E-8215-46E6-BC21-41650EEB8C92}</Project>
+      <Name>Xamarin.Mobile</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
