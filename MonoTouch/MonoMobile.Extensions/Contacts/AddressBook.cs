@@ -72,6 +72,7 @@ namespace Xamarin.Contacts
 		{
 			Contact contact = new Contact (person.Id.ToString())
 			{
+				DisplayName = person.ToString(),
 				Prefix = person.Prefix,
 				FirstName = person.FirstName,
 				MiddleName = person.MiddleName,
