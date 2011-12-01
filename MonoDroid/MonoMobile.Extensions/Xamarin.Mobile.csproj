@@ -56,7 +56,14 @@
     <Compile Include="..\..\Shared\Position.cs">
       <Link>Geolocation\Position.cs</Link>
     </Compile>
+    <Compile Include="..\..\Shared\Query.cs">
+      <Link>Query.cs</Link>
+    </Compile>
     <Compile Include="Contacts\AddressBook.cs" />
+    <Compile Include="Contacts\AggregateAddressBook.cs" />
+    <Compile Include="Contacts\AndroidContactExtensions.cs" />
+    <Compile Include="Contacts\ContactQueryProvider.cs" />
+    <Compile Include="Contacts\ContactHelper.cs" />
     <Compile Include="Geolocation\GeolocationContinuousListener.cs" />
     <Compile Include="Geolocation\GeolocationSingleListener.cs" />
     <Compile Include="Geolocation\Geolocator.cs" />
