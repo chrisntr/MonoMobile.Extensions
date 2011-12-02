@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Xamarin.Contacts
 {
-	public class Contact
+	public partial class Contact
 	{
 		public Contact()
 		{

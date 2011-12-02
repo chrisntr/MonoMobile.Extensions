@@ -26,7 +26,7 @@ namespace Xamarin.Contacts
 			finally
 			{
 				if (c != null)
-					c.Deactivate();
+					c.Close();
 			}
 		}
 
@@ -123,7 +123,7 @@ namespace Xamarin.Contacts
 			finally
 			{
 				if (c != null)
-					c.Deactivate();
+					c.Close();
 			}
 		}
 
