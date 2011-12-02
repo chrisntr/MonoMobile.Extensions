@@ -75,9 +75,6 @@
     <Compile Include="..\..\Shared\Contacts\Account.cs">
       <Link>Contacts\Account.cs</Link>
     </Compile>
-    <Compile Include="..\..\Shared\Contacts\Contact.cs">
-      <Link>Contacts\Contact.cs</Link>
-    </Compile>
     <Compile Include="..\..\Shared\Contacts\Email.cs">
       <Link>Contacts\Email.cs</Link>
     </Compile>
@@ -93,6 +90,7 @@
     <Compile Include="Contacts\AggregateAddressBook.cs" />
     <Compile Include="Contacts\ContactQueryProvider.cs" />
     <Compile Include="Contacts\ContactHelper.cs" />
+    <Compile Include="Contacts\Contact.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
