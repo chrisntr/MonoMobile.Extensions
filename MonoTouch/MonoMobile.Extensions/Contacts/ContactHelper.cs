@@ -8,7 +8,7 @@ namespace Xamarin.Contacts
 	{
 		internal static Contact GetContact (ABPerson person)
 		{
-			Contact contact = new Contact (person.Id.ToString())
+			Contact contact = new Contact (person)
 			{
 				DisplayName = person.ToString(),
 				Prefix = person.Prefix,

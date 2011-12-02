@@ -1,4 +1,7 @@
 using System.Collections.Generic;
+using MonoTouch.AddressBook;
+using MonoTouch.Foundation;
+using MonoTouch.UIKit;
 
 namespace Xamarin.Contacts
 {
@@ -8,9 +11,10 @@ namespace Xamarin.Contacts
 		{
 		}
 
-		internal Contact (string id)
+		internal Contact (ABPerson person)
 		{
-			Id = id;
+			Id = person.Id.ToString();
+			this.person = person;
 		}
 
 		public string Id
@@ -77,6 +81,37 @@ namespace Xamarin.Contacts
 		{
 			get;
 			internal set;
+		}
+		
+		public UIImage PhotoThumbnail
+		{
+			get
+			{
+				LoadThumbnail();
+				return this.thumbnail;
+			}
+		}
+
+		private readonly ABPerson person;
+
+		private bool thumbnailLoaded;
+		private UIImage thumbnail;
+
+		private void LoadThumbnail()
+		{
+			if (this.thumbnailLoaded)
+				return;
+
+			this.thumbnailLoaded = false;
+
+			if (!this.person.HasImage)
+				return;
+
+			using (NSData imageData = this.person.Image)
+			{
+				if (imageData != null)
+					this.thumbnail = new UIImage (imageData);
+			}
 		}
 	}
 }
