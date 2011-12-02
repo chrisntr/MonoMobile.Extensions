@@ -100,34 +100,34 @@ namespace Xamarin.Contacts
 			}
 		}
 
-		public Bitmap Photo
-		{
-			get
-			{
-				LoadPhoto();
+		//public Bitmap Photo
+		//{
+		//    get
+		//    {
+		//        LoadPhoto();
 
-				return this.photo;
-			}
-		}
+		//        return this.photo;
+		//    }
+		//}
 
 		private readonly ContentResolver content;
 		internal bool isAggregate;
 
-		private bool photoLoaded;
-		private Bitmap photo;
+		//private bool photoLoaded;
+		//private Bitmap photo;
 
 		private bool thubnailLoaded;
 		private Bitmap thumbnail;
 
-		private void LoadPhoto()
-		{
-			if (this.photoLoaded)
-				return;
+		//private void LoadPhoto()
+		//{
+		//    if (this.photoLoaded)
+		//        return;
 
-			this.photoLoaded = true;
+		//    this.photoLoaded = true;
 
-			throw new NotImplementedException();
-		}
+		//    throw new NotImplementedException();
+		//}
 
 		private void LoadThumbnail()
 		{
