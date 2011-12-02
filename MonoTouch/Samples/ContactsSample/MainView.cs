@@ -6,23 +6,22 @@ using System.Text;
 using System.Linq;
 using System.Collections.Generic;
 using MonoTouch.Foundation;
+using System.Globalization;
 
 namespace ContactsSample
 {
 	public class MainView : UIViewController
 	{
 		UITableView tableView;
-		List<string> list;
-		
-		public MainView ()
-		{
-		}
+		List<Contact> list;
 		
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
 			
-			list = new List<string>();
+			this.Title = "Contacts";
+			
+			list = new List<Contact>();
             
 			//
 			// grab the contacts and put them into a list
@@ -30,7 +29,7 @@ namespace ContactsSample
 			var addressBook = new AddressBook();
 			foreach (Contact contact in addressBook)
 			{
-				list.Add(contact.DisplayName);
+				list.Add(contact);
 			}
 			
 			//
@@ -38,6 +37,7 @@ namespace ContactsSample
 			//
 			tableView = new UITableView()
             {
+				Delegate = new TableViewDelegate(this),
                 DataSource = new TableViewDataSource(list),
                 AutoresizingMask =
                     UIViewAutoresizing.FlexibleHeight|
@@ -54,6 +54,22 @@ namespace ContactsSample
             this.View.AddSubview(tableView);
 		}
 		
+		private class TableViewDelegate : UITableViewDelegate
+		{
+			private MainView parent;
+
+            public TableViewDelegate (MainView mainView)
+            {
+                parent = mainView;
+            }
+			
+			public override void RowSelected (UITableView tableView, NSIndexPath indexPath)
+			{
+				DetailContactView detailView = new DetailContactView(parent.list[indexPath.Row]);
+				parent.NavigationController.PushViewController(detailView, true);
+			}	
+		}
+		
 		//
 		// simple table view data source impl
 		//
@@ -61,9 +77,9 @@ namespace ContactsSample
         {
             static NSString cellIdentifier =
                 new NSString ("contactIdentifier");
-            private List<string> list;
+            private List<Contact> list;
 
-            public TableViewDataSource (List<string> list)
+            public TableViewDataSource (List<Contact> list)
             {
                 this.list = list;
             }
@@ -82,10 +98,16 @@ namespace ContactsSample
                 if (cell == null)
                 {
                     cell = new UITableViewCell (
-                        UITableViewCellStyle.Default,
+                        UITableViewCellStyle.Subtitle,
                         cellIdentifier);
                 }
-                cell.TextLabel.Text = list[indexPath.Row];
+                cell.TextLabel.Text = list[indexPath.Row].DisplayName;
+				Email firstEmail = list[indexPath.Row].Emails.FirstOrDefault();
+				if(firstEmail != null)
+				{
+					cell.DetailTextLabel.Text = String.Format("{0}: {1}", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(firstEmail.Label), firstEmail.Address);
+				}
+				
                 return cell;
             }
         }
