@@ -24,8 +24,11 @@ namespace Xamarin.Contacts
 			IQueryable<Contact> q = GetContacts().AsQueryable();
 
 			expression = ReplaceQueryable (expression, q);
-
-			return q.Provider.CreateQuery (expression);
+			
+			if (expression.Type.IsGenericType && expression.Type.GetGenericTypeDefinition() == typeof(IOrderedQueryable<>))
+				return q.Provider.CreateQuery (expression);
+			else
+				return q.Provider.Execute (expression);
 		}
 
 		IQueryable<TElement> IQueryProvider.CreateQuery<TElement> (Expression expression)
