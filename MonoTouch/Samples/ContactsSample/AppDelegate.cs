@@ -15,7 +15,8 @@ namespace ContactsSample
 		// class-level declarations
 		UIWindow window;
 		MainView viewController;
-
+		UINavigationController navController;
+		
 		//
 		// This method is invoked when the application has loaded and is ready to run. In this 
 		// method you should instantiate the window, load the UI into it and then make the window
@@ -26,9 +27,12 @@ namespace ContactsSample
 		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
 		{
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
+		
+			navController = new UINavigationController();
 			
 			viewController = new MainView ();
-			window.RootViewController = viewController;
+			navController.PushViewController(viewController, false);
+			window.RootViewController = navController;
 			window.MakeKeyAndVisible ();
 			
 			return true;
