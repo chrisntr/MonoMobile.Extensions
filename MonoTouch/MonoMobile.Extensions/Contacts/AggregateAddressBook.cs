@@ -6,25 +6,20 @@ using System.Collections.Generic;
 
 namespace Xamarin.Contacts
 {
-	public class AddressBook
+	public class AggregateAddressBook
 		: IQueryable<Contact>
 	{
-		public AddressBook()
+		public AggregateAddressBook ()
 		{
 			this.addressBook = new ABAddressBook();
 			this.provider = new ContactQueryProvider (this.addressBook);
 		}
-		
-		public bool IsReadOnly
-		{
-			get { return true; }
-		}
-		
-		public IEnumerator<Contact> GetEnumerator()
+
+		public IEnumerator<Contact> GetEnumerator ()
 		{
 			return this.addressBook.GetPeople().Select (ContactHelper.GetContact).GetEnumerator();
 		}
-
+		
 		public Contact Load (string id)
 		{
 			if (String.IsNullOrWhiteSpace (id))
@@ -42,9 +37,9 @@ namespace Xamarin.Contacts
 		}
 		
 		private readonly ABAddressBook addressBook;
-		private readonly IQueryProvider provider;
-		
-		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+		private readonly ContactQueryProvider provider;
+
+		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator ()
 		{
 			return GetEnumerator();
 		}
@@ -53,12 +48,12 @@ namespace Xamarin.Contacts
 		{
 			get { return typeof(Contact); }
 		}
-		
+
 		Expression IQueryable.Expression
 		{
 			get { return Expression.Constant (this); }
 		}
-		
+
 		IQueryProvider IQueryable.Provider
 		{
 			get { return this.provider; }
