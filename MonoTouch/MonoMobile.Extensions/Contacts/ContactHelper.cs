@@ -24,8 +24,8 @@ namespace Xamarin.Contacts
 			contact.Emails = person.GetEmails().Select (e => new Email
 			{
 				Address = e.Value,
-				Type = EmailType.Other,
-				Label = ABAddressBook.LocalizedLabel (ABLabel.Other)
+				Type = GetEmailType (e),
+				Label = (e.Label != null) ? ABAddressBook.LocalizedLabel (e.Label) : ABAddressBook.LocalizedLabel (ABLabel.Other)
 			}).ToArray();
 			
 			contact.Phones = person.GetPhones().Select (p => new Phone
@@ -36,6 +36,16 @@ namespace Xamarin.Contacts
 			}).ToArray();
 			
 			return contact;
+		}
+		
+		internal static EmailType GetEmailType (ABMultiValueEntry<string> email)
+		{
+			if (email.Label == ABLabel.Home)
+				return EmailType.Home;
+			if (email.Label == ABLabel.Work)
+				return EmailType.Work;
+
+			return EmailType.Other;
 		}
 		
 		internal static PhoneType GetPhoneType (ABMultiValueEntry<string> phone)
