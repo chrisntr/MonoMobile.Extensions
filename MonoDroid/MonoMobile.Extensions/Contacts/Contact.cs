@@ -148,7 +148,7 @@ namespace Xamarin.Contacts
 
 				while (c.MoveToNext())
 				{
-					byte[] tdata = c.GetBlob (c.GetColumnIndex (ContactsContract.DataColumns.Data15));
+					byte[] tdata = c.GetBlob (c.GetColumnIndex (ContactsContract.CommonDataKinds.Photo.PhotoColumnId));
 					if (tdata != null)
 					{
 						this.thumbnail = BitmapFactory.DecodeByteArray (tdata, 0, tdata.Length);
