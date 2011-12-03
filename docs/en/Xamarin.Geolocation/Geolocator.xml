@@ -80,7 +80,7 @@
         <Parameter Name="timeout" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="timeout">The amount of time in milliseconds to wait for <see cref="P:DesiredAccuracy" /> before returning a best guess or cancelling.</param>
+        <param name="timeout">The amount of time in milliseconds to wait for <see cref="P:Xamarin.Geolocation.Geolocator.DesiredAccuracy" /> before returning a best guess or cancelling.</param>
         <summary>Requests the device's current location and returns a future to it.</summary>
         <returns>A <see cref="T:System.Threading.Tasks.Task{TResult}" /> for the current <see cref="T:Xamarin.Geolocation.Position" />.</returns>
         <remarks>
@@ -145,7 +145,7 @@
         <Parameter Name="cancelToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="timeout">The amount of time in milliseconds to wait for <see cref="P:DesiredAccuracy" /> before returning a best guess or cancelling.</param>
+        <param name="timeout">The amount of time in milliseconds to wait for <see cref="P:Xamarin.Geolocation.Geolocator.DesiredAccuracy" /> before returning a best guess or cancelling.</param>
         <param name="cancelToken">A <see cref="T:System.Threading.CancellationToken" /> to cancel the position request.</param>
         <summary>Requests the device's current location and returns a future to it.</summary>
         <returns>A <see cref="T:System.Threading.Tasks.Task{TResult}" /> for the current <see cref="T:Xamarin.Geolocation.Position" />.</returns>
@@ -275,16 +275,12 @@
         <ReturnType>System.EventHandler&lt;Xamarin.Geolocation.PositionErrorEventArgs&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Raised when there is an error retrieving position information.</summary>
+        <summary>Raised when there is an error retrieving position information while listening.</summary>
         <remarks>
-          <para>
-            Temporary errors will not be reported.
-          </para>
-          <para>
-            If an error occurs, listening will be stopped automatically.
-          </para>
+		  <para>Errors are raised only when listening (<see cref="M:Xamarin.Geolocation.Geolocator.StartListening" />). Temporary errors will not be reported.</para>
+          <para>If an error occurs, listening will be stopped automatically.</para>
         </remarks>
-        <altmember cref="T:Xamarin.Geolocation.PositionErrorCode" />
+        <altmember cref="T:Xamarin.Geolocation.GeolocationError" />
       </Docs>
     </Member>
     <Member MemberName="StartListening">
