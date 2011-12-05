@@ -48,7 +48,7 @@ Global
 		{0F36CBF1-1358-4FD3-8631-2775881B2635} = {8A4D3352-DBA8-4BE4-B66C-2BF4A538C725}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Samples\Geolocation\GeolocationSample.csproj
+		StartupItem = Samples\ContactsSample\ContactsSample.csproj
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
