@@ -5,12 +5,8 @@ using MonoTouch.UIKit;
 
 namespace Xamarin.Contacts
 {
-	public partial class Contact
+	public class Contact
 	{
-		public Contact()
-		{
-		}
-
 		internal Contact (ABPerson person)
 		{
 			Id = person.Id.ToString();
