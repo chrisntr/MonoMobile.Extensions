@@ -10,7 +10,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Represents an obtained location at a specific time.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -23,8 +23,7 @@
       </AssemblyInfo>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Geolocation.Position" /> class.</summary>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -38,9 +37,8 @@
         <Parameter Name="position" Type="Xamarin.Geolocation.Position" />
       </Parameters>
       <Docs>
-        <param name="position">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="position">The position to copy from.</param>
+        <summary>Constructs and copies a new instance of the <see cref="T:Xamarin.Geolocation.Position" /> class from the given <paramref name="position" />.</summary>
       </Docs>
     </Member>
     <Member MemberName="Accuracy">
@@ -54,11 +52,9 @@
         <ReturnType>System.Double</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>
-            Gets or sets the potential position error radius in meters.
-            </summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets the potential position error radius in meters.</summary>
+        <value>The potential position error radius in meters of the <see cref="M:Xamarin.Geolocation.Position.Longitude" /> and <see cref="M:Xamarin.Geolocation.Position.Latitude" /> members.</value>
+        <remarks>This may be higher or lower than the <see cref="M:Xamarin.Geolcation.Geolocator.DesiredAccuracy" />.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Altitude">
@@ -72,10 +68,8 @@
         <ReturnType>System.Double</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>
-            Gets or sets the altitude in meters relative to sea level.
-            </summary>
-        <value>To be added.</value>
+        <summary>Gets or sets the altitude in meters relative to sea level.</summary>
+        <value>The altitude in meters, relative to seal level.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -90,13 +84,9 @@
         <ReturnType>System.Double</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>
-            Gets or sets the potential altitude error range in meters.
-            </summary>
-        <value>To be added.</value>
-        <remarks>
-            Not supported on Android, will always read 0.
-            </remarks>
+        <summary>Gets or sets the potential altitude error range in meters.</summary>
+        <value>The potential error, in meters, of the <see cref="M:Xamarin.Geolocation.Position.Altitude" /> member.</value>
+        <remarks>Not currently supported on Android, will always read 0.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Heading">
@@ -110,11 +100,9 @@
         <ReturnType>System.Double</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>
-            Gets or sets the heading in degrees relative to true North.
-            </summary>
+        <summary>Gets or sets the heading in degrees relative to true North.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>Use <see cref="M:Xamarin.Geolocation.Geolocator.SupportsHeading" /> to determine whether this property will contain a value.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Latitude">
@@ -128,11 +116,8 @@
         <ReturnType>System.Double</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>
-            Gets or sets the latitude.
-            </summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets the latitude.</summary>
+        <value>The latitude.</value>
       </Docs>
     </Member>
     <Member MemberName="Longitude">
@@ -146,11 +131,8 @@
         <ReturnType>System.Double</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>
-            Gets or sets the longitude.
-            </summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets the longitude.</summary>
+        <value>The longitude.</value>
       </Docs>
     </Member>
     <Member MemberName="Speed">
@@ -164,11 +146,9 @@
         <ReturnType>System.Double</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>
-            Gets or sets the speed in meters per second.
-            </summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets the speed in meters per second.</summary>
+        <value>The speed of the device, in meters per second, when the position was recorded.</value>
+        <remarks>This value is only for the speed at the instant the position was recorded, as such it may vary wildly.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Timestamp">
@@ -184,7 +164,6 @@
       <Docs>
         <summary>Gets or sets the timestamp of the position.</summary>
         <value>A <see cref="T:System.DateTimeOffset" /> representing the timestmap of the position.</value>
-        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>
