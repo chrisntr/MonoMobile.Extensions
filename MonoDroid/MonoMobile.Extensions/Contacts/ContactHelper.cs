@@ -36,9 +36,8 @@ namespace Xamarin.Contacts
 							? cursor.GetString (cursor.GetColumnIndex (ContactsContract.RawContactsColumns.ContactId))
 							: cursor.GetString (cursor.GetColumnIndex (ContactsContract.ContactsColumns.LookupKey));
 
-			Contact contact = new Contact (id, content);
+			Contact contact = new Contact (id, !rawContact, content);
 			contact.DisplayName = GetString (cursor, ContactsContract.ContactsColumns.DisplayName);
-			contact.isAggregate = !rawContact;
 
 			FillContactExtras (rawContact, content, resources, id, contact);
 

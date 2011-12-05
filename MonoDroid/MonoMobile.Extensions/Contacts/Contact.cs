@@ -1,14 +1,8 @@
-using System;
 using System.Collections.Generic;
-using System.IO;
 using Android.Content;
-using Android.Content.Res;
 using Android.Database;
 using Android.Graphics;
-using Android.Net;
 using Android.Provider;
-using Java.IO;
-using Uri = Android.Net.Uri;
 
 namespace Xamarin.Contacts
 {
@@ -18,13 +12,20 @@ namespace Xamarin.Contacts
 		{
 		}
 
-		internal Contact (string id, ContentResolver content)
+		internal Contact (string id, bool isAggregate, ContentResolver content)
 		{
 			this.content = content;
+			IsAggregate = isAggregate;
 			Id = id;
 		}
 
 		public string Id
+		{
+			get;
+			private set;
+		}
+
+		public bool IsAggregate
 		{
 			get;
 			private set;
@@ -111,7 +112,6 @@ namespace Xamarin.Contacts
 		//}
 
 		private readonly ContentResolver content;
-		internal bool isAggregate;
 
 		//private bool photoLoaded;
 		//private Bitmap photo;
@@ -136,7 +136,7 @@ namespace Xamarin.Contacts
 
 			this.thubnailLoaded = true;
 
-			string lookupColumn = (this.isAggregate)
+			string lookupColumn = (IsAggregate)
 			                      	? ContactsContract.ContactsColumns.LookupKey
 			                      	: ContactsContract.RawContactsColumns.ContactId;
 

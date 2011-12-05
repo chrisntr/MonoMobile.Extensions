@@ -12,6 +12,7 @@ namespace Xamarin.Contacts
 {
 	/* TODO
 	 * SecurityException bubbling
+	 * Validate contact IDs?
 	 */
 
 	public class AddressBook
@@ -24,12 +25,18 @@ namespace Xamarin.Contacts
 
 			this.content = context.ContentResolver;
 			this.resources = context.Resources;
-			this.rawContactsProvider = new ContactQueryProvider (true, context.ContentResolver, context.Resources);
+			this.rawContactsProvider = new ContactQueryProvider (context.ContentResolver, context.Resources);
 		}
 
 		public bool IsReadOnly
 		{
 			get { return true; }
+		}
+
+		public bool PreferContactAggregation
+		{
+			get { return !this.rawContactsProvider.UseRawContacts; }
+			set { this.rawContactsProvider.UseRawContacts = !value; }
 		}
 
 		public IEnumerator<Contact> GetEnumerator()
@@ -51,11 +58,23 @@ namespace Xamarin.Contacts
 			if (id.Trim() == String.Empty)
 				throw new ArgumentException ("Invalid ID", "id");
 
+			Android.Net.Uri curi; string column;
+			if (PreferContactAggregation)
+			{
+				curi = ContactsContract.Contacts.ContentUri;
+				column = ContactsContract.ContactsColumns.LookupKey;
+			}
+			else
+			{
+				curi = ContactsContract.RawContacts.ContentUri;
+				column = ContactsContract.RawContactsColumns.ContactId;
+			}
+
 			ICursor c = null;
 			try
 			{
-				c = this.content.Query (ContactsContract.RawContacts.ContentUri, null, ContactsContract.RawContactsColumns.ContactId + " = ?", new[] { id }, null);
-				return (c.MoveToNext() ? ContactHelper.GetContact (true, this.content, this.resources, c) : null);
+				c = this.content.Query (curi, null, column + " = ?", new[] { id }, null);
+				return (c.MoveToNext() ? ContactHelper.GetContact (PreferContactAggregation, this.content, this.resources, c) : null);
 			}
 			finally
 			{
@@ -125,7 +144,7 @@ namespace Xamarin.Contacts
 			get { return this.rawContactsProvider; }
 		}
 
-		private readonly IQueryProvider rawContactsProvider;
+		private readonly ContactQueryProvider rawContactsProvider;
 		private readonly ContentResolver content;
 		private readonly Resources resources;
 	}

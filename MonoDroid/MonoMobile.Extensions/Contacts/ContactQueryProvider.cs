@@ -4,23 +4,24 @@ using System.Linq;
 using System.Linq.Expressions;
 using Android.Content;
 using Android.Content.Res;
-using Android.Database;
-using Android.Provider;
-using Uri = Android.Net.Uri;
 
 namespace Xamarin.Contacts
 {
 	internal class ContactQueryProvider
 		: IQueryProvider
 	{
-		internal ContactQueryProvider (bool rawContacts, ContentResolver content, Resources resources)
+		internal ContactQueryProvider (ContentResolver content, Resources resources)
 		{
-			this.rawContacts = rawContacts;
 			this.content = content;
 			this.resources = resources;
 		}
 
-		private readonly bool rawContacts;
+		public bool UseRawContacts
+		{
+			get;
+			set;
+		}
+
 		protected readonly ContentResolver content;
 		protected readonly Resources resources;
 
@@ -53,7 +54,7 @@ namespace Xamarin.Contacts
 
 		private IEnumerable<Contact> GetContacts ()
 		{
-			return ContactHelper.GetContacts (this.rawContacts, this.content, this.resources);
+			return ContactHelper.GetContacts (UseRawContacts, this.content, this.resources);
 		}
 
 		private Expression ReplaceQueryable (Expression expression, object value)
