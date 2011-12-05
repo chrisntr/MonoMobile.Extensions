@@ -57,7 +57,6 @@
       <Link>Query.cs</Link>
     </Compile>
     <Compile Include="Contacts\AddressBook.cs" />
-    <Compile Include="Contacts\AggregateAddressBook.cs" />
     <Compile Include="Contacts\AndroidContactExtensions.cs" />
     <Compile Include="Contacts\Contact.cs" />
     <Compile Include="Contacts\ContactQueryProvider.cs" />

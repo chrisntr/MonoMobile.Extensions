@@ -22,8 +22,8 @@ namespace ContactsSample
 			// Set our view from the "main" layout resource
 			SetContentView(Resource.Layout.Main);
 
-			var book = new AggregateAddressBook (this);
-			
+			var book = new AddressBook (this);
+
 			StringBuilder builder = new StringBuilder();
 			foreach (Contact contact in book.Where (c => c.Phones.Any() || c.Emails.Any()).OrderBy (c => c.LastName))
 			{
