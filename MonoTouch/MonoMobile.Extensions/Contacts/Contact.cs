@@ -23,6 +23,12 @@ namespace Xamarin.Contacts
 			private set;
 		}
 
+		public bool IsAggregate
+		{
+			get;
+			private set;
+		}
+
 		public string DisplayName
 		{
 			get;

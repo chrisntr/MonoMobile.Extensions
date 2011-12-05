@@ -19,7 +19,13 @@ namespace Xamarin.Contacts
 		{
 			get { return true; }
 		}
-		
+
+		public bool PreferContactAggregation
+		{
+			get;
+			set;
+		}
+
 		public IEnumerator<Contact> GetEnumerator()
 		{
 			return this.addressBook.GetPeople().Select (ContactHelper.GetContact).GetEnumerator();
