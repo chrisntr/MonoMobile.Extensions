@@ -84,6 +84,9 @@
     <Compile Include="Contacts\ContactQueryProvider.cs" />
     <Compile Include="Contacts\ContactHelper.cs" />
     <Compile Include="Contacts\Contact.cs" />
+    <Compile Include="..\..\Shared\Contacts\Organization.cs">
+      <Link>Contacts\Organization.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

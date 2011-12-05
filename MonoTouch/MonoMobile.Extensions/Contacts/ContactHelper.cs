@@ -35,6 +35,23 @@ namespace Xamarin.Contacts
 				Label = ABAddressBook.LocalizedLabel (p.Label)
 			}).ToArray();
 			
+			Organization[] orgs;
+			if (person.Organization != null)
+			{
+				orgs = new Organization[1];
+				orgs[0] = new Organization
+				{
+					Name = person.Organization,
+					ContactTitle = person.JobTitle,
+					Type = OrganizationType.Work,
+					Label = ABAddressBook.LocalizedLabel (ABLabel.Work)
+				};
+			}
+			else
+				orgs = new Organization[0];
+			
+			contact.Organizations = orgs;
+			
 			return contact;
 		}
 		

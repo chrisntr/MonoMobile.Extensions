@@ -67,6 +67,12 @@ namespace Xamarin.Contacts
 			internal set;
 		}
 
+		public IEnumerable<Organization> Organizations
+		{
+			get;
+			internal set;
+		}
+
 		public IEnumerable<string> Notes
 		{
 			get;
