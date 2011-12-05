@@ -14,6 +14,10 @@ namespace Xamarin.Contacts
 
 	public class Phone
 	{
+		internal Phone()
+		{
+		}
+
 		public PhoneType Type
 		{
 			get;

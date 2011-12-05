@@ -14,6 +14,10 @@ namespace Xamarin.Contacts
 
 	public class Email
 	{
+		internal Email()
+		{
+		}
+
 		public EmailType Type
 		{
 			get;
