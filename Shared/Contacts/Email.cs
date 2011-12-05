@@ -7,7 +7,6 @@ namespace Xamarin.Contacts
 	{
 		Custom,
 		Home,
-		Mobile,
 		Work,
 		Other
 	}
