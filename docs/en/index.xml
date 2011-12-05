@@ -38,6 +38,14 @@
   <Remarks>To be added.</Remarks>
   <Copyright>Copyright Xamarin Inc 2011</Copyright>
   <Types>
+    <Namespace Name="Xamarin.Contacts">
+      <Type Name="AddressBook" Kind="Class" />
+      <Type Name="Contact" Kind="Class" />
+      <Type Name="Email" Kind="Class" />
+      <Type Name="EmailType" Kind="Enumeration" />
+      <Type Name="Phone" Kind="Class" />
+      <Type Name="PhoneType" Kind="Enumeration" />
+    </Namespace>
     <Namespace Name="Xamarin.Geolocation">
       <Type Name="GeolocationError" Kind="Enumeration" />
       <Type Name="GeolocationException" Kind="Class" />
