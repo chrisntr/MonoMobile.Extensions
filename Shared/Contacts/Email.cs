@@ -5,7 +5,6 @@ namespace Xamarin.Contacts
 {
 	public enum EmailType
 	{
-		Custom,
 		Home,
 		Work,
 		Other
@@ -24,12 +23,6 @@ namespace Xamarin.Contacts
 		}
 
 		public string Label
-		{
-			get;
-			internal set;
-		}
-
-		public string CustomLabel
 		{
 			get;
 			internal set;

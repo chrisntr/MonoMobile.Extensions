@@ -2,7 +2,6 @@ namespace Xamarin.Contacts
 {
 	public enum PhoneType
 	{
-		Custom,
 		Home,
 		HomeFax,
 		Work,
@@ -25,12 +24,6 @@ namespace Xamarin.Contacts
 		}
 
 		public string Label
-		{
-			get;
-			internal set;
-		}
-
-		public string CustomLabel
 		{
 			get;
 			internal set;

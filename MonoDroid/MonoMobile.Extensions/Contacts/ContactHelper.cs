@@ -44,17 +44,18 @@ namespace Xamarin.Contacts
 			return contact;
 		}
 
-		public static void FillContactExtras (bool rawContact, ContentResolver content, Resources resources, string recordId, Contact contact)
+		internal static void FillContactExtras (bool rawContact, ContentResolver content, Resources resources, string recordId, Contact contact)
 		{
 			ICursor c = null;
 
 			List<Phone> phones = new List<Phone>();
 			List<Email> emails = new List<Email>();
 			List<string> notes = new List<string>();
+			List<Organization> organizations = new List<Organization>();
 
 			string column = (rawContact)
-			                	? ContactsContract.RawContactsColumns.ContactId
-			                	: ContactsContract.ContactsColumns.LookupKey;
+								? ContactsContract.RawContactsColumns.ContactId
+								: ContactsContract.ContactsColumns.LookupKey;
 
 			try
 			{
@@ -78,34 +79,22 @@ namespace Xamarin.Contacts
 
 						case ContactsContract.CommonDataKinds.Phone.ContentItemType:
 							Phone p = new Phone();
-
-							PhoneDataKind pkind = (PhoneDataKind) c.GetInt (c.GetColumnIndex (ContactsContract.CommonDataKinds.CommonColumns.Type));
-							p.Type = pkind.ToPhoneType();
-							if (p.Type == PhoneType.Custom)
-								p.CustomLabel = GetString (c, ContactsContract.CommonDataKinds.CommonColumns.Label);
-
-							p.Label = (p.Type != PhoneType.Custom)
-							          	? ContactsContract.CommonDataKinds.Phone.GetTypeLabel (resources, pkind, p.CustomLabel)
-							          	: p.CustomLabel;
-
 							p.Number = GetString (c, ContactsContract.CommonDataKinds.Phone.Number);
+
+							PhoneDataKind pkind = (PhoneDataKind)c.GetInt (c.GetColumnIndex (ContactsContract.CommonDataKinds.CommonColumns.Type));
+							p.Type = pkind.ToPhoneType();
+							p.Label = ContactsContract.CommonDataKinds.Phone.GetTypeLabel (resources, pkind, GetString (c, ContactsContract.CommonDataKinds.CommonColumns.Label));
 
 							phones.Add (p);
 							break;
 
 						case ContactsContract.CommonDataKinds.Email.ContentItemType:
 							Email e = new Email();
-
-							EmailDataKind ekind = (EmailDataKind) c.GetInt (c.GetColumnIndex (ContactsContract.CommonDataKinds.CommonColumns.Type));
-							e.Type = ekind.ToEmailType();
-							if (e.Type == EmailType.Custom)
-								e.CustomLabel = GetString (c, ContactsContract.CommonDataKinds.CommonColumns.Label);
-
-							e.Label = (e.Type != EmailType.Custom)
-							          	? ContactsContract.CommonDataKinds.Email.GetTypeLabel (resources, ekind, e.CustomLabel)
-							          	: e.CustomLabel;
-
 							e.Address = GetString (c, ContactsContract.DataColumns.Data1);
+
+							EmailDataKind ekind = (EmailDataKind)c.GetInt (c.GetColumnIndex (ContactsContract.CommonDataKinds.CommonColumns.Type));
+							e.Type = ekind.ToEmailType();
+							e.Label = ContactsContract.CommonDataKinds.Email.GetTypeLabel (resources, ekind, GetString (c, ContactsContract.CommonDataKinds.CommonColumns.Label));
 
 							emails.Add (e);
 							break;
@@ -113,12 +102,26 @@ namespace Xamarin.Contacts
 						case ContactsContract.CommonDataKinds.Note.ContentItemType:
 							notes.Add (GetString (c, ContactsContract.CommonDataKinds.Note.NoteColumnId));
 							break;
+
+						case ContactsContract.CommonDataKinds.Organization.ContentItemType:
+							Organization o = new Organization();
+							o.Name = c.GetString (ContactsContract.CommonDataKinds.Organization.Company);
+							o.ContactTitle = c.GetString (ContactsContract.CommonDataKinds.Organization.Title);
+							
+							OrganizationDataKind d = (OrganizationDataKind)c.GetInt (c.GetColumnIndex (ContactsContract.CommonDataKinds.CommonColumns.Type));
+							o.Type = d.ToOrganizationType();
+							o.Label = ContactsContract.CommonDataKinds.Organization.GetTypeLabel (resources, d, GetString (c, ContactsContract.CommonDataKinds.CommonColumns.Label));
+
+							organizations.Add (o);
+
+							break;
 					}
 				}
 
 				contact.Phones = phones;
 				contact.Emails = emails;
 				contact.Notes = notes;
+				contact.Organizations = organizations;
 			}
 			finally
 			{
@@ -130,6 +133,53 @@ namespace Xamarin.Contacts
 		internal static string GetString (this ICursor c, string colName)
 		{
 			return c.GetString (c.GetColumnIndex (colName));
+		}
+
+		internal static EmailType ToEmailType (this EmailDataKind emailKind)
+		{
+			switch (emailKind)
+			{
+				case EmailDataKind.Home:
+					return EmailType.Home;
+				case EmailDataKind.Work:
+					return EmailType.Work;
+				default:
+					return EmailType.Other;
+			}
+		}
+
+		internal static PhoneType ToPhoneType (this PhoneDataKind phoneKind)
+		{
+			switch (phoneKind)
+			{
+				case PhoneDataKind.Home:
+					return PhoneType.Home;
+				case PhoneDataKind.Mobile:
+					return PhoneType.Mobile;
+				case PhoneDataKind.FaxHome:
+					return PhoneType.HomeFax;
+				case PhoneDataKind.Work:
+					return PhoneType.Work;
+				case PhoneDataKind.FaxWork:
+					return PhoneType.WorkFax;
+				case PhoneDataKind.Pager:
+				case PhoneDataKind.WorkPager:
+					return PhoneType.Pager;
+				default:
+					return PhoneType.Other;
+			}
+		}
+
+		internal static OrganizationType ToOrganizationType (this OrganizationDataKind organizationKind)
+		{
+			switch (organizationKind)
+			{
+				case OrganizationDataKind.Work:
+					return OrganizationType.Work;
+
+				default:
+					return OrganizationType.Other;
+			}
 		}
 	}
 }
