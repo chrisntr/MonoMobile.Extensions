@@ -40,6 +40,11 @@ namespace ContactsSample
 				sb.AppendLine(String.Format("{0}: {1}", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(email.Label), email.Address));
 			}
 			
+			foreach(var organization in contact.Organizations)
+			{
+				sb.AppendLine(String.Format("{0} ({1}): {2}", organization.Name, CultureInfo.CurrentCulture.TextInfo.ToTitleCase(organization.Label), organization.ContactTitle));
+			}
+			
 			outputLabel.Text = sb.ToString();
 		}
 	}
