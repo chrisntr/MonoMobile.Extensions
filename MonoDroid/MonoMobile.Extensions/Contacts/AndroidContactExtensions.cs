@@ -15,8 +15,6 @@ namespace Xamarin.Contacts
 					return EmailType.Custom;
 				case EmailDataKind.Home:
 					return EmailType.Home;
-				case EmailDataKind.Mobile:
-					return EmailType.Mobile;
 				case EmailDataKind.Work:
 					return EmailType.Work;
 				default:
