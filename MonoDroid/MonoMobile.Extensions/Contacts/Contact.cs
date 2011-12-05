@@ -8,10 +8,6 @@ namespace Xamarin.Contacts
 {
 	public class Contact
 	{
-		public Contact()
-		{
-		}
-
 		internal Contact (string id, bool isAggregate, ContentResolver content)
 		{
 			this.content = content;
