@@ -9,7 +9,7 @@ namespace Xamarin.Contacts
 {
 	internal static class ContactHelper
 	{
-		public static IEnumerable<Contact> GetContacts (bool rawContacts, ContentResolver content, Resources resources)
+		internal static IEnumerable<Contact> GetContacts (bool rawContacts, ContentResolver content, Resources resources)
 		{
 			ICursor c = null;
 
@@ -30,7 +30,7 @@ namespace Xamarin.Contacts
 			}
 		}
 
-		public static Contact GetContact (bool rawContact, ContentResolver content, Resources resources, ICursor cursor)
+		internal static Contact GetContact (bool rawContact, ContentResolver content, Resources resources, ICursor cursor)
 		{
 			string id = (rawContact)
 							? cursor.GetString (cursor.GetColumnIndex (ContactsContract.RawContactsColumns.ContactId))
@@ -127,7 +127,7 @@ namespace Xamarin.Contacts
 			}
 		}
 
-		public static string GetString (this ICursor c, string colName)
+		internal static string GetString (this ICursor c, string colName)
 		{
 			return c.GetString (c.GetColumnIndex (colName));
 		}
