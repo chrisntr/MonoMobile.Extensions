@@ -10,8 +10,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>Provides data for the <see cref="T:Xamarin.Geolocation.Geolocator.PositionChanged" /> event.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Provides data for <see cref="M:Xamarin.Geolocation.Geolocator.PositionChanged" /> events.</summary>
   </Docs>
   <Members>
     <Member MemberName=".ctor">

@@ -10,8 +10,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Provides data for <see cref="M:Xamarin.Geolocation.Geolocator.PositionError" /> events.</summary>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -26,8 +25,7 @@
       </Parameters>
       <Docs>
         <param name="error">The type of error that occured.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Geolocation.PositionErrorEventArgs" /> class.</summary>
       </Docs>
     </Member>
     <Member MemberName="Error">
@@ -42,8 +40,7 @@
       </ReturnValue>
       <Docs>
         <summary>Gets the type of error that occured.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <value>The type of error that occured.</value>
       </Docs>
     </Member>
   </Members>

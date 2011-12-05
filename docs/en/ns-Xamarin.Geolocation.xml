@@ -1,6 +1,5 @@
 <Namespace Name="Xamarin.Geolocation">
   <Docs>
     <summary>The Xamarin.Geolocation namespace contains types related to obtaining a user's location.</summary>
-    <remarks>To be added.</remarks>
   </Docs>
 </Namespace>
