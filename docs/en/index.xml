@@ -39,12 +39,20 @@
   <Copyright>Copyright Xamarin Inc 2011</Copyright>
   <Types>
     <Namespace Name="Xamarin.Contacts">
+      <Type Name="Address" Kind="Class" />
       <Type Name="AddressBook" Kind="Class" />
+      <Type Name="AddressType" Kind="Enumeration" />
       <Type Name="Contact" Kind="Class" />
       <Type Name="Email" Kind="Class" />
       <Type Name="EmailType" Kind="Enumeration" />
+      <Type Name="InstantMessagingAccount" Kind="Class" />
+      <Type Name="InstantMessagingService" Kind="Enumeration" />
+      <Type Name="Note" Kind="Class" />
+      <Type Name="Organization" Kind="Class" />
+      <Type Name="OrganizationType" Kind="Enumeration" />
       <Type Name="Phone" Kind="Class" />
       <Type Name="PhoneType" Kind="Enumeration" />
+      <Type Name="Website" Kind="Class" />
     </Namespace>
     <Namespace Name="Xamarin.Geolocation">
       <Type Name="GeolocationError" Kind="Enumeration" />
