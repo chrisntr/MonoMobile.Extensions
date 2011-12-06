@@ -123,6 +123,9 @@ namespace Xamarin.Contacts
 		private bool thumbnailLoaded;
 		private UIImage thumbnail;
 
+		[DllImport ("/System/Library/Frameworks/AddressBook.framework/AddressBook")]
+		private static extern IntPtr ABPersonCopyImageDataWithFormat (IntPtr handle, ABPersonImageFormat format);
+
 		private void LoadThumbnail()
 		{
 			if (this.thumbnailLoaded)
@@ -133,11 +136,9 @@ namespace Xamarin.Contacts
 			if (!this.person.HasImage)
 				return;
 
-			using (NSData imageData = this.person.Image)
-			{
-				if (imageData != null)
-					this.thumbnail = new UIImage (imageData);
-			}
+			NSData imageData = new NSData (ABPersonCopyImageDataWithFormat (person.Handle, ABPersonImageFormat.Thumbnail));
+			if (imageData != null)
+				this.thumbnail = new UIImage (imageData);
 		}
 	}
 }
