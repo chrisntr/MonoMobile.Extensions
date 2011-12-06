@@ -90,6 +90,9 @@
     <Compile Include="..\..\Shared\Contacts\InstantMessangingAccount.cs">
       <Link>Contacts\InstantMessangingAccount.cs</Link>
     </Compile>
+    <Compile Include="..\..\Shared\Contacts\Address.cs">
+      <Link>Contacts\Address.cs</Link>
+    </Compile>
     <Compile Include="..\..\Shared\Contacts\Note.cs">
       <Link>Contacts\Note.cs</Link>
     </Compile>

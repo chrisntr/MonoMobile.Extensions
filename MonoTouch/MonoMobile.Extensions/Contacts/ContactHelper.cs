@@ -61,6 +61,17 @@ namespace Xamarin.Contacts
 				Account = (NSString)ima.Value[ABPersonInstantMessageKey.Username]
 			}).ToArray();
 
+			contact.Addresses = person.GetAddresses().Select (a => new Address()
+			{
+				Type = GetAddressType (a.Label),
+				Label = GetLabel (a.Label),
+				StreetAddress = (NSString)a.Value[ABPersonAddressKey.Street],
+				City = (NSString)a.Value[ABPersonAddressKey.City],
+				Region = (NSString)a.Value[ABPersonAddressKey.State],
+				Country = (NSString)a.Value[ABPersonAddressKey.Country],
+				PostalCode = (NSString)a.Value[ABPersonAddressKey.Zip]
+			}).ToArray();
+
 			return contact;
 		}
 
@@ -113,6 +124,15 @@ namespace Xamarin.Contacts
 			return InstantMessagingService.Other;
 		}
 		
+		internal static AddressType GetAddressType (string label)
+		{
+			if (label == ABLabel.Home)
+				return AddressType.Home;
+			if (label == ABLabel.Work)
+				return AddressType.Work;
+			
+			return AddressType.Other;
+		}
 	}
 }
 

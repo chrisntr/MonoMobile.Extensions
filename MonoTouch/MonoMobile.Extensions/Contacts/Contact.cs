@@ -67,6 +67,12 @@ namespace Xamarin.Contacts
 			internal set;
 		}
 
+		public IEnumerable<Address> Addresses
+		{
+			get;
+			internal set;
+		}
+
 		public IEnumerable<InstantMessagingAccount> InstantMessagingAccounts
 		{
 			get;
