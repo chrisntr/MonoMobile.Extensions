@@ -320,15 +320,15 @@ namespace Xamarin.Contacts
 			switch (protocolKind)
 			{
 				case IMProtocolDataKind.Aim:
-					return InstantMessagingService.AIM;
+					return InstantMessagingService.Aim;
 				case IMProtocolDataKind.Msn:
-					return InstantMessagingService.MSN;
+					return InstantMessagingService.Msn;
 				case IMProtocolDataKind.Yahoo:
 					return InstantMessagingService.Yahoo;
 				case IMProtocolDataKind.Jabber:
 					return InstantMessagingService.Jabber;
 				case IMProtocolDataKind.Icq:
-					return InstantMessagingService.ICQ;
+					return InstantMessagingService.Icq;
 				default:
 					return InstantMessagingService.Other;
 			}

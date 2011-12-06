@@ -9,10 +9,10 @@ namespace Xamarin.Contacts
 
 	public enum InstantMessagingService
 	{
-		AIM,
-		MSN,
+		Aim,
+		Msn,
 		Yahoo,
-		ICQ,
+		Icq,
 		Jabber,
 		Other
 	}
