@@ -1,6 +1,6 @@
-<Type Name="Email" FullName="Xamarin.Contacts.Email">
-  <TypeSignature Language="C#" Value="public class Email" />
-  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit Email extends System.Object" />
+<Type Name="Organization" FullName="Xamarin.Contacts.Organization">
+  <TypeSignature Language="C#" Value="public class Organization" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit Organization extends System.Object" />
   <AssemblyInfo>
     <AssemblyName>Xamarin.Mobile</AssemblyName>
     <AssemblyVersion>0.0.0.0</AssemblyVersion>
@@ -14,9 +14,9 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
-    <Member MemberName="Address">
-      <MemberSignature Language="C#" Value="public string Address { get; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance string Address" />
+    <Member MemberName="ContactTitle">
+      <MemberSignature Language="C#" Value="public string ContactTitle { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string ContactTitle" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>0.0.0.0</AssemblyVersion>
@@ -46,15 +46,31 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="Type">
-      <MemberSignature Language="C#" Value="public Xamarin.Contacts.EmailType Type { get; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance valuetype Xamarin.Contacts.EmailType Type" />
+    <Member MemberName="Name">
+      <MemberSignature Language="C#" Value="public string Name { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string Name" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>0.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
-        <ReturnType>Xamarin.Contacts.EmailType</ReturnType>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Type">
+      <MemberSignature Language="C#" Value="public Xamarin.Contacts.OrganizationType Type { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Xamarin.Contacts.OrganizationType Type" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Contacts.OrganizationType</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>

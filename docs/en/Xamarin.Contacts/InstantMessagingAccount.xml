@@ -1,6 +1,6 @@
-<Type Name="Email" FullName="Xamarin.Contacts.Email">
-  <TypeSignature Language="C#" Value="public class Email" />
-  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit Email extends System.Object" />
+<Type Name="InstantMessagingAccount" FullName="Xamarin.Contacts.InstantMessagingAccount">
+  <TypeSignature Language="C#" Value="public class InstantMessagingAccount" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit InstantMessagingAccount extends System.Object" />
   <AssemblyInfo>
     <AssemblyName>Xamarin.Mobile</AssemblyName>
     <AssemblyVersion>0.0.0.0</AssemblyVersion>
@@ -14,9 +14,9 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
-    <Member MemberName="Address">
-      <MemberSignature Language="C#" Value="public string Address { get; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance string Address" />
+    <Member MemberName="Account">
+      <MemberSignature Language="C#" Value="public string Account { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string Account" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>0.0.0.0</AssemblyVersion>
@@ -30,15 +30,15 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="Label">
-      <MemberSignature Language="C#" Value="public string Label { get; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance string Label" />
+    <Member MemberName="Service">
+      <MemberSignature Language="C#" Value="public Xamarin.Contacts.InstantMessagingService Service { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Xamarin.Contacts.InstantMessagingService Service" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>0.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
-        <ReturnType>System.String</ReturnType>
+        <ReturnType>Xamarin.Contacts.InstantMessagingService</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>
@@ -46,15 +46,15 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="Type">
-      <MemberSignature Language="C#" Value="public Xamarin.Contacts.EmailType Type { get; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance valuetype Xamarin.Contacts.EmailType Type" />
+    <Member MemberName="ServiceLabel">
+      <MemberSignature Language="C#" Value="public string ServiceLabel { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string ServiceLabel" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>0.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
-        <ReturnType>Xamarin.Contacts.EmailType</ReturnType>
+        <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>
