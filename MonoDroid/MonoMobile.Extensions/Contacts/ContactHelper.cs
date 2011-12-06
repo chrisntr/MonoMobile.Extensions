@@ -10,6 +10,7 @@ using StructuredPostal = Android.Provider.ContactsContract.CommonDataKinds.Struc
 using CommonColumns = Android.Provider.ContactsContract.CommonDataKinds.CommonColumns;
 using Uri = Android.Net.Uri;
 using InstantMessaging = Android.Provider.ContactsContract.CommonDataKinds.Im;
+using OrganizationData = Android.Provider.ContactsContract.CommonDataKinds.Organization;
 
 namespace Xamarin.Contacts
 {
@@ -202,13 +203,13 @@ namespace Xamarin.Contacts
 		private static Organization GetOrganization (ICursor c, Resources resources)
 		{
 			Organization o = new Organization();
-			o.Name = c.GetString (ContactsContract.CommonDataKinds.Organization.Company);
-			o.ContactTitle = c.GetString (ContactsContract.CommonDataKinds.Organization.Title);
+			o.Name = c.GetString (OrganizationData.Company);
+			o.ContactTitle = c.GetString (OrganizationData.Title);
 
 			OrganizationDataKind d = (OrganizationDataKind) c.GetInt (c.GetColumnIndex (CommonColumns.Type));
 			o.Type = d.ToOrganizationType();
 			o.Label = (d != OrganizationDataKind.Custom)
-						? ContactsContract.CommonDataKinds.Organization.GetTypeLabel (resources, d, String.Empty)
+						? OrganizationData.GetTypeLabel (resources, d, String.Empty)
 						: c.GetString (CommonColumns.Label);
 
 			return o;
