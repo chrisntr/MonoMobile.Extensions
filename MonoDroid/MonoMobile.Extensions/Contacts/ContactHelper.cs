@@ -1,9 +1,13 @@
+using System;
 using System.Collections.Generic;
 using Android.Content;
 using Android.Content.Res;
 using Android.Database;
-using Android.Net;
 using Android.Provider;
+
+using StructuredName = Android.Provider.ContactsContract.CommonDataKinds.StructuredName;
+using CommonColumns = Android.Provider.ContactsContract.CommonDataKinds.CommonColumns;
+using Uri = Android.Net.Uri;
 
 namespace Xamarin.Contacts
 {
@@ -69,32 +73,32 @@ namespace Xamarin.Contacts
 							contact.Nickname = c.GetString (c.GetColumnIndex (ContactsContract.CommonDataKinds.Nickname.Name));
 							break;
 
-						case ContactsContract.CommonDataKinds.StructuredName.ContentItemType:
-							contact.Prefix = GetString (c, ContactsContract.CommonDataKinds.StructuredName.Prefix);
-							contact.FirstName = GetString (c, ContactsContract.CommonDataKinds.StructuredName.GivenName);
-							contact.MiddleName = GetString (c, ContactsContract.CommonDataKinds.StructuredName.MiddleName);
-							contact.LastName = GetString (c, ContactsContract.CommonDataKinds.StructuredName.FamilyName);
-							contact.Suffix = GetString (c, ContactsContract.CommonDataKinds.StructuredName.Suffix);
+						case StructuredName.ContentItemType:
+							contact.Prefix = c.GetString (StructuredName.Prefix);
+							contact.FirstName = c.GetString (StructuredName.GivenName);
+							contact.MiddleName = c.GetString (StructuredName.MiddleName);
+							contact.LastName = c.GetString (StructuredName.FamilyName);
+							contact.Suffix = c.GetString (StructuredName.Suffix);
 							break;
 
 						case ContactsContract.CommonDataKinds.Phone.ContentItemType:
 							Phone p = new Phone();
 							p.Number = GetString (c, ContactsContract.CommonDataKinds.Phone.Number);
 
-							PhoneDataKind pkind = (PhoneDataKind)c.GetInt (c.GetColumnIndex (ContactsContract.CommonDataKinds.CommonColumns.Type));
+							PhoneDataKind pkind = (PhoneDataKind)c.GetInt (c.GetColumnIndex (CommonColumns.Type));
 							p.Type = pkind.ToPhoneType();
-							p.Label = ContactsContract.CommonDataKinds.Phone.GetTypeLabel (resources, pkind, GetString (c, ContactsContract.CommonDataKinds.CommonColumns.Label));
+							p.Label = ContactsContract.CommonDataKinds.Phone.GetTypeLabel (resources, pkind, c.GetString (CommonColumns.Label));
 
 							phones.Add (p);
 							break;
 
 						case ContactsContract.CommonDataKinds.Email.ContentItemType:
 							Email e = new Email();
-							e.Address = GetString (c, ContactsContract.DataColumns.Data1);
+							e.Address = c.GetString (ContactsContract.DataColumns.Data1);
 
-							EmailDataKind ekind = (EmailDataKind)c.GetInt (c.GetColumnIndex (ContactsContract.CommonDataKinds.CommonColumns.Type));
+							EmailDataKind ekind = (EmailDataKind)c.GetInt (c.GetColumnIndex (CommonColumns.Type));
 							e.Type = ekind.ToEmailType();
-							e.Label = ContactsContract.CommonDataKinds.Email.GetTypeLabel (resources, ekind, GetString (c, ContactsContract.CommonDataKinds.CommonColumns.Label));
+							e.Label = ContactsContract.CommonDataKinds.Email.GetTypeLabel (resources, ekind, c.GetString (CommonColumns.Label));
 
 							emails.Add (e);
 							break;
