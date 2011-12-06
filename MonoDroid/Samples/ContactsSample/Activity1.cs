@@ -94,8 +94,8 @@ namespace ContactsSample
 				{
 					builder.AppendLine();
 					builder.AppendLine ("Notes:");
-					foreach (string n in contact.Notes)
-						builder.AppendLine (" - " + n);
+					foreach (Note note in contact.Notes)
+						builder.AppendLine (" - " + note.Contents);
 				}
 
 				builder.AppendLine();

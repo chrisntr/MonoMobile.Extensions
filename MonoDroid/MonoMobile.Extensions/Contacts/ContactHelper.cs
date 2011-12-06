@@ -60,7 +60,7 @@ namespace Xamarin.Contacts
 			List<Address> addresses = new List<Address>();
 			List<Phone> phones = new List<Phone>();
 			List<Email> emails = new List<Email>();
-			List<string> notes = new List<string>();
+			List<Note> notes = new List<Note>();
 			List<Organization> organizations = new List<Organization>();
 			List<Website> websites = new List<Website>();
 
@@ -97,7 +97,7 @@ namespace Xamarin.Contacts
 							break;
 
 						case ContactsContract.CommonDataKinds.Note.ContentItemType:
-							notes.Add (GetString (c, ContactsContract.CommonDataKinds.Note.NoteColumnId));
+							notes.Add (new Note { Contents = GetString (c, ContactsContract.CommonDataKinds.Note.NoteColumnId) });
 							break;
 
 						case ContactsContract.CommonDataKinds.Organization.ContentItemType:

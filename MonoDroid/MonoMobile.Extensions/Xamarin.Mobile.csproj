@@ -47,6 +47,9 @@
     <Compile Include="..\..\Shared\Contacts\InstantMessangingAccount.cs">
       <Link>Contacts\InstantMessangingAccount.cs</Link>
     </Compile>
+    <Compile Include="..\..\Shared\Contacts\Note.cs">
+      <Link>Contacts\Note.cs</Link>
+    </Compile>
     <Compile Include="..\..\Shared\Contacts\Organization.cs">
       <Link>Contacts\Organization.cs</Link>
     </Compile>
