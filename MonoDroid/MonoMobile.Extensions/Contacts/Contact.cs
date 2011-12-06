@@ -81,6 +81,12 @@ namespace Xamarin.Contacts
 			internal set;
 		}
 
+		public IEnumerable<Website> Websites
+		{
+			get;
+			internal set;
+		}
+
 		public IEnumerable<Organization> Organizations
 		{
 			get;

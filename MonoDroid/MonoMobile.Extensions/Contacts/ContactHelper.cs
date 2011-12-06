@@ -11,6 +11,7 @@ using CommonColumns = Android.Provider.ContactsContract.CommonDataKinds.CommonCo
 using Uri = Android.Net.Uri;
 using InstantMessaging = Android.Provider.ContactsContract.CommonDataKinds.Im;
 using OrganizationData = Android.Provider.ContactsContract.CommonDataKinds.Organization;
+using WebsiteData = Android.Provider.ContactsContract.CommonDataKinds.Website;
 
 namespace Xamarin.Contacts
 {
@@ -61,6 +62,7 @@ namespace Xamarin.Contacts
 			List<Email> emails = new List<Email>();
 			List<string> notes = new List<string>();
 			List<Organization> organizations = new List<Organization>();
+			List<Website> websites = new List<Website>();
 
 			string column = (rawContact)
 								? ContactsContract.RawContactsColumns.ContactId
@@ -109,6 +111,10 @@ namespace Xamarin.Contacts
 						case InstantMessaging.ContentItemType:
 							imAccounts.Add (GetImAccount (c, resources));
 							break;
+
+						case WebsiteData.ContentItemType:
+							websites.Add (GetWebsite (c, resources));
+							break;
 					}
 				}
 
@@ -118,6 +124,7 @@ namespace Xamarin.Contacts
 				contact.Organizations = organizations;
 				contact.Addresses = addresses;
 				contact.InstantMessagingAccounts = imAccounts;
+				contact.Websites = websites;
 			}
 			finally
 			{
@@ -214,6 +221,34 @@ namespace Xamarin.Contacts
 
 			return o;
 		}
+
+		private static Website GetWebsite (ICursor c, Resources resources)
+		{
+			Website w = new Website();
+			w.Address = c.GetString (WebsiteData.Url);
+
+			//WebsiteDataKind kind = (WebsiteDataKind)c.GetInt (c.GetColumnIndex (CommonColumns.Type));
+			//w.Type = kind.ToWebsiteType();
+			//w.Label = (kind != WebsiteDataKind.Custom)
+			//            ? resources.GetString ((int) kind)
+			//            : c.GetString (CommonColumns.Label);
+
+			return w;
+		}
+
+		//internal static WebsiteType ToWebsiteType (this WebsiteDataKind websiteKind)
+		//{
+		//    switch (websiteKind)
+		//    {
+		//        case WebsiteDataKind.Work:
+		//            return WebsiteType.Work;
+		//        case WebsiteDataKind.Home:
+		//            return WebsiteType.Home;
+
+		//        default:
+		//            return WebsiteType.Other;
+		//    }
+		//}
 
 		internal static string GetString (this ICursor c, string colName)
 		{

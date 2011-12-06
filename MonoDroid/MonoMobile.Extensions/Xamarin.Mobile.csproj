@@ -53,6 +53,9 @@
     <Compile Include="..\..\Shared\Contacts\Phone.cs">
       <Link>Contacts\Phone.cs</Link>
     </Compile>
+    <Compile Include="..\..\Shared\Contacts\Website.cs">
+      <Link>Contacts\Website.cs</Link>
+    </Compile>
     <Compile Include="..\..\Shared\Position.cs">
       <Link>Geolocation\Position.cs</Link>
     </Compile>
