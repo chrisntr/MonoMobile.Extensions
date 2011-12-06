@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using Android.App;
 using Android.Database;
 using Android.Net;
@@ -27,28 +28,67 @@ namespace ContactsSample
 			StringBuilder builder = new StringBuilder();
 			foreach (Contact contact in book.Where (c => c.Phones.Any() || c.Emails.Any()).OrderBy (c => c.LastName))
 			{
-				builder.AppendLine ("Display name: " + contact.DisplayName);
-				builder.AppendLine ("Nickname: " + contact.Nickname);
-				builder.AppendLine ("Prefix: " + contact.Prefix);
-				builder.AppendLine ("First name: " + contact.FirstName);
-				builder.AppendLine ("Middle name: " + contact.MiddleName);
-				builder.AppendLine ("Last name: " + contact.LastName);
-				builder.AppendLine ("Suffix:" + contact.Suffix);
+				builder.AppendLine (contact.DisplayName);
 
-				builder.AppendLine();
-				builder.AppendLine ("Phones:");
-				foreach (Phone p in contact.Phones)
-					builder.AppendLine (p.Label + ": " + p.Number);
+				if (contact.Organizations.Any())
+				{
+					builder.AppendLine();
+					builder.AppendLine ("Organizations:");
+					foreach (Organization o in contact.Organizations)
+					{
+						builder.Append (o.Label + ": " + o.Name);
+						if (o.ContactTitle != null)
+							builder.Append (", " + o.ContactTitle);
 
-				builder.AppendLine();
-				builder.AppendLine ("Emails:");
-				foreach (Email e in contact.Emails)
-					builder.AppendLine (e.Label + ": " + e.Address);
+						builder.AppendLine();
+					}
+				}
 
-				builder.AppendLine();
-				builder.AppendLine ("Notes:");
-				foreach (string n in contact.Notes)
-					builder.AppendLine (" - " + n);
+				if (contact.Phones.Any())
+				{
+					builder.AppendLine();
+					builder.AppendLine ("Phones:");
+					foreach (Phone p in contact.Phones)
+						builder.AppendLine (p.Label + ": " + p.Number);
+				}
+
+				if (contact.Emails.Any())
+				{
+					builder.AppendLine();
+					builder.AppendLine ("Emails:");
+					foreach (Email e in contact.Emails)
+						builder.AppendLine (e.Label + ": " + e.Address);
+				}
+
+				if (contact.Addresses.Any())
+				{
+					builder.AppendLine();
+					builder.AppendLine ("Addresses:");
+					foreach (Address a in contact.Addresses)
+					{
+						builder.AppendLine();
+						builder.AppendLine (a.Label + ":");
+						builder.AppendLine (a.StreetAddress);
+						builder.AppendLine (String.Format ("{0}, {1} {2}", a.City, a.Region, a.PostalCode));
+						builder.AppendLine (a.Country);
+					}
+				}
+
+				if (contact.InstantMessagingAccounts.Any())
+				{
+					builder.AppendLine();
+					builder.AppendLine ("Instant Messaging Accounts:");
+					foreach (InstantMessagingAccount imAccount in contact.InstantMessagingAccounts)
+						builder.AppendLine (String.Format ("{0}: {1}", imAccount.ServiceLabel, imAccount.Account));
+				}
+
+				if (contact.Notes.Any())
+				{
+					builder.AppendLine();
+					builder.AppendLine ("Notes:");
+					foreach (string n in contact.Notes)
+						builder.AppendLine (" - " + n);
+				}
 
 				builder.AppendLine();
 			}
