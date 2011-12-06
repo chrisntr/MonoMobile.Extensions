@@ -131,7 +131,7 @@ namespace Xamarin.Contacts
 			if (this.thumbnailLoaded)
 				return;
 
-			this.thumbnailLoaded = false;
+			this.thumbnailLoaded = true;
 
 			if (!this.person.HasImage)
 				return;
