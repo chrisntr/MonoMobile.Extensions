@@ -86,25 +86,11 @@ namespace Xamarin.Contacts
 							break;
 
 						case ContactsContract.CommonDataKinds.Phone.ContentItemType:
-							Phone p = new Phone();
-							p.Number = GetString (c, ContactsContract.CommonDataKinds.Phone.Number);
-
-							PhoneDataKind pkind = (PhoneDataKind)c.GetInt (c.GetColumnIndex (CommonColumns.Type));
-							p.Type = pkind.ToPhoneType();
-							p.Label = ContactsContract.CommonDataKinds.Phone.GetTypeLabel (resources, pkind, c.GetString (CommonColumns.Label));
-
-							phones.Add (p);
+							phones.Add (GetPhone (c, resources));
 							break;
 
 						case ContactsContract.CommonDataKinds.Email.ContentItemType:
-							Email e = new Email();
-							e.Address = c.GetString (ContactsContract.DataColumns.Data1);
-
-							EmailDataKind ekind = (EmailDataKind)c.GetInt (c.GetColumnIndex (CommonColumns.Type));
-							e.Type = ekind.ToEmailType();
-							e.Label = ContactsContract.CommonDataKinds.Email.GetTypeLabel (resources, ekind, c.GetString (CommonColumns.Label));
-
-							emails.Add (e);
+							emails.Add (GetEmail (c, resources));
 							break;
 
 						case ContactsContract.CommonDataKinds.Note.ContentItemType:
