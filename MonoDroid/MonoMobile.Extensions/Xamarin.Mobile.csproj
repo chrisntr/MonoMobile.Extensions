@@ -38,6 +38,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Shared\Contacts\Address.cs">
+      <Link>Contacts\Address.cs</Link>
+    </Compile>
     <Compile Include="..\..\Shared\Contacts\Email.cs">
       <Link>Contacts\Email.cs</Link>
     </Compile>

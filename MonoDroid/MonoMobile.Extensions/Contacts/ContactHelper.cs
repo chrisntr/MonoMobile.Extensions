@@ -6,6 +6,7 @@ using Android.Database;
 using Android.Provider;
 
 using StructuredName = Android.Provider.ContactsContract.CommonDataKinds.StructuredName;
+using StructuredPostal = Android.Provider.ContactsContract.CommonDataKinds.StructuredPostal;
 using CommonColumns = Android.Provider.ContactsContract.CommonDataKinds.CommonColumns;
 using Uri = Android.Net.Uri;
 
@@ -52,6 +53,7 @@ namespace Xamarin.Contacts
 		{
 			ICursor c = null;
 
+			List<Address> addresses = new List<Address>();
 			List<Phone> phones = new List<Phone>();
 			List<Email> emails = new List<Email>();
 			List<string> notes = new List<string>();
@@ -116,7 +118,9 @@ namespace Xamarin.Contacts
 							o.Type = d.ToOrganizationType();
 							o.Label = ContactsContract.CommonDataKinds.Organization.GetTypeLabel (resources, d, GetString (c, ContactsContract.CommonDataKinds.CommonColumns.Label));
 
-							organizations.Add (o);
+						case StructuredPostal.ContentItemType:
+							addresses.Add (GetAddress (c, resources));
+							break;
 
 							break;
 					}
@@ -126,6 +130,7 @@ namespace Xamarin.Contacts
 				contact.Emails = emails;
 				contact.Notes = notes;
 				contact.Organizations = organizations;
+				contact.Addresses = addresses;
 			}
 			finally
 			{
@@ -134,9 +139,94 @@ namespace Xamarin.Contacts
 			}
 		}
 
+
+		private static Address GetAddress (ICursor c, Resources resources)
+		{
+			Address a = new Address();
+			a.Country = c.GetString (StructuredPostal.Country);
+			a.Region = c.GetString (StructuredPostal.Region);
+			a.City = c.GetString (StructuredPostal.City);
+			a.PostalCode = c.GetString (StructuredPostal.Postcode);
+
+			AddressDataKind kind = (AddressDataKind) c.GetInt (c.GetColumnIndex (CommonColumns.Type));
+			a.Type = kind.ToAddressType();
+			a.Label = (kind != AddressDataKind.Custom)
+						? StructuredPostal.GetTypeLabel (resources, kind, String.Empty)
+						: c.GetString (CommonColumns.Label);
+
+			string street = c.GetString (StructuredPostal.Street);
+			string pobox = c.GetString (StructuredPostal.Pobox);
+			if (street != null)
+				a.StreetAddress = street;
+			if (pobox != null)
+			{
+				if (street != null)
+					a.StreetAddress += Environment.NewLine;
+
+				a.StreetAddress += pobox;
+			}
+			return a;
+		}
+
+		private static Phone GetPhone (ICursor c, Resources resources)
+		{
+			Phone p = new Phone();
+			p.Number = GetString (c, ContactsContract.CommonDataKinds.Phone.Number);
+
+			PhoneDataKind pkind = (PhoneDataKind) c.GetInt (c.GetColumnIndex (CommonColumns.Type));
+			p.Type = pkind.ToPhoneType();
+			p.Label = (pkind != PhoneDataKind.Custom)
+						? ContactsContract.CommonDataKinds.Phone.GetTypeLabel (resources, pkind, String.Empty)
+						: c.GetString (CommonColumns.Label);
+
+			return p;
+		}
+
+		private static Email GetEmail (ICursor c, Resources resources)
+		{
+			Email e = new Email();
+			e.Address = c.GetString (ContactsContract.DataColumns.Data1);
+
+			EmailDataKind ekind = (EmailDataKind) c.GetInt (c.GetColumnIndex (CommonColumns.Type));
+			e.Type = ekind.ToEmailType();
+			e.Label = (ekind != EmailDataKind.Custom)
+						? ContactsContract.CommonDataKinds.Email.GetTypeLabel (resources, ekind, String.Empty)
+						: c.GetString (CommonColumns.Label);
+
+			return e;
+		}
+
+		private static Organization GetOrganization (ICursor c, Resources resources)
+		{
+			Organization o = new Organization();
+			o.Name = c.GetString (ContactsContract.CommonDataKinds.Organization.Company);
+			o.ContactTitle = c.GetString (ContactsContract.CommonDataKinds.Organization.Title);
+
+			OrganizationDataKind d = (OrganizationDataKind) c.GetInt (c.GetColumnIndex (CommonColumns.Type));
+			o.Type = d.ToOrganizationType();
+			o.Label = (d != OrganizationDataKind.Custom)
+						? ContactsContract.CommonDataKinds.Organization.GetTypeLabel (resources, d, String.Empty)
+						: c.GetString (CommonColumns.Label);
+
+			return o;
+		}
+
 		internal static string GetString (this ICursor c, string colName)
 		{
 			return c.GetString (c.GetColumnIndex (colName));
+		}
+
+		internal static AddressType ToAddressType (this AddressDataKind addressKind)
+		{
+			switch (addressKind)
+			{
+				case AddressDataKind.Home:
+					return AddressType.Home;
+				case AddressDataKind.Work:
+					return AddressType.Work;
+				default:
+					return AddressType.Other;
+			}
 		}
 
 		internal static EmailType ToEmailType (this EmailDataKind emailKind)
