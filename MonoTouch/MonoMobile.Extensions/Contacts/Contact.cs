@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using MonoTouch.AddressBook;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
+using System;
+using System.Runtime.InteropServices;
 
 namespace Xamarin.Contacts
 {
