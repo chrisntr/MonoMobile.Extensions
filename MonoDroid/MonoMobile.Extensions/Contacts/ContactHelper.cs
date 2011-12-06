@@ -9,6 +9,7 @@ using StructuredName = Android.Provider.ContactsContract.CommonDataKinds.Structu
 using StructuredPostal = Android.Provider.ContactsContract.CommonDataKinds.StructuredPostal;
 using CommonColumns = Android.Provider.ContactsContract.CommonDataKinds.CommonColumns;
 using Uri = Android.Net.Uri;
+using InstantMessaging = Android.Provider.ContactsContract.CommonDataKinds.Im;
 
 namespace Xamarin.Contacts
 {
@@ -53,6 +54,7 @@ namespace Xamarin.Contacts
 		{
 			ICursor c = null;
 
+			List<InstantMessagingAccount> imAccounts = new List<InstantMessagingAccount>();
 			List<Address> addresses = new List<Address>();
 			List<Phone> phones = new List<Phone>();
 			List<Email> emails = new List<Email>();
@@ -110,18 +112,15 @@ namespace Xamarin.Contacts
 							break;
 
 						case ContactsContract.CommonDataKinds.Organization.ContentItemType:
-							Organization o = new Organization();
-							o.Name = c.GetString (ContactsContract.CommonDataKinds.Organization.Company);
-							o.ContactTitle = c.GetString (ContactsContract.CommonDataKinds.Organization.Title);
-							
-							OrganizationDataKind d = (OrganizationDataKind)c.GetInt (c.GetColumnIndex (ContactsContract.CommonDataKinds.CommonColumns.Type));
-							o.Type = d.ToOrganizationType();
-							o.Label = ContactsContract.CommonDataKinds.Organization.GetTypeLabel (resources, d, GetString (c, ContactsContract.CommonDataKinds.CommonColumns.Label));
+							organizations.Add (GetOrganization (c, resources));
+							break;
 
 						case StructuredPostal.ContentItemType:
 							addresses.Add (GetAddress (c, resources));
 							break;
 
+						case InstantMessaging.ContentItemType:
+							imAccounts.Add (GetImAccount (c, resources));
 							break;
 					}
 				}
@@ -131,6 +130,7 @@ namespace Xamarin.Contacts
 				contact.Notes = notes;
 				contact.Organizations = organizations;
 				contact.Addresses = addresses;
+				contact.InstantMessagingAccounts = imAccounts;
 			}
 			finally
 			{
@@ -139,6 +139,23 @@ namespace Xamarin.Contacts
 			}
 		}
 
+		private static InstantMessagingAccount GetImAccount (ICursor c, Resources resources)
+		{
+			InstantMessagingAccount ima = new InstantMessagingAccount();
+			ima.Account = c.GetString (CommonColumns.Data);
+
+			IMTypeDataKind imKind = (IMTypeDataKind) c.GetInt (c.GetColumnIndex (CommonColumns.Type));
+			//ima.Type = imKind.ToInstantMessagingType();
+			//ima.Label = InstantMessaging.GetTypeLabel (resources, imKind, c.GetString (CommonColumns.Label));
+
+			IMProtocolDataKind serviceKind = (IMProtocolDataKind) c.GetInt (c.GetColumnIndex (InstantMessaging.Protocol));
+			ima.Service = serviceKind.ToInstantMessagingService();
+			ima.ServiceLabel = (serviceKind != IMProtocolDataKind.Custom)
+								? InstantMessaging.GetProtocolLabel (resources, serviceKind, String.Empty)
+								: c.GetString (InstantMessaging.CustomProtocol);
+
+			return ima;
+		}
 
 		private static Address GetAddress (ICursor c, Resources resources)
 		{
@@ -275,5 +292,37 @@ namespace Xamarin.Contacts
 					return OrganizationType.Other;
 			}
 		}
+
+		internal static InstantMessagingService ToInstantMessagingService (this IMProtocolDataKind protocolKind)
+		{
+			switch (protocolKind)
+			{
+				case IMProtocolDataKind.Aim:
+					return InstantMessagingService.AIM;
+				case IMProtocolDataKind.Msn:
+					return InstantMessagingService.MSN;
+				case IMProtocolDataKind.Yahoo:
+					return InstantMessagingService.Yahoo;
+				case IMProtocolDataKind.Jabber:
+					return InstantMessagingService.Jabber;
+				case IMProtocolDataKind.Icq:
+					return InstantMessagingService.ICQ;
+				default:
+					return InstantMessagingService.Other;
+			}
+		}
+
+		//internal static InstantMessagingType ToInstantMessagingType (this IMTypeDataKind imKind)
+		//{
+		//    switch (imKind)
+		//    {
+		//        case IMTypeDataKind.Home:
+		//            return InstantMessagingType.Home;
+		//        case IMTypeDataKind.Work:
+		//            return InstantMessagingType.Work;
+		//        default:
+		//            return InstantMessagingType.Other;
+		//    }
+		//}
 	}
 }
