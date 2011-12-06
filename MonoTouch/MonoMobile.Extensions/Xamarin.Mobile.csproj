@@ -96,6 +96,9 @@
     <Compile Include="..\..\Shared\Contacts\Note.cs">
       <Link>Contacts\Note.cs</Link>
     </Compile>
+    <Compile Include="..\..\Shared\Contacts\Website.cs">
+      <Link>Contacts\Website.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

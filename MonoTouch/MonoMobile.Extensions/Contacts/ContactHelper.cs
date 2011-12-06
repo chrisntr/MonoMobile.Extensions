@@ -71,6 +71,11 @@ namespace Xamarin.Contacts
 				Country = (NSString)a.Value[ABPersonAddressKey.Country],
 				PostalCode = (NSString)a.Value[ABPersonAddressKey.Zip]
 			}).ToArray();
+			
+			contact.Websites = person.GetUrls().Select (url => new Website
+			{
+				Address = url.Value
+			});
 
 			return contact;
 		}
