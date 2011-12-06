@@ -32,17 +32,17 @@ namespace ContactsSample
 			
 			foreach(var phone in contact.Phones)
 			{
-				sb.AppendLine(String.Format("{0}: {1}", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(phone.Label), phone.Number));
+				sb.AppendLine(String.Format("{0}: {1}", phone.Label, phone.Number));
 			}
 			
 			foreach(var email in contact.Emails)
 			{
-				sb.AppendLine(String.Format("{0}: {1}", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(email.Label), email.Address));
+				sb.AppendLine(String.Format("{0}: {1}", email.Label, email.Address));
 			}
 			
 			foreach(var organization in contact.Organizations)
 			{
-				sb.AppendLine(String.Format("{0} ({1}): {2}", organization.Name, CultureInfo.CurrentCulture.TextInfo.ToTitleCase(organization.Label), organization.ContactTitle));
+				sb.AppendLine(String.Format("{0} ({1}): {2}", organization.Name, organization.Label, organization.ContactTitle));
 			}
 			
 			outputLabel.Text = sb.ToString();

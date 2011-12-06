@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
 using MonoTouch.AddressBook;
+using MonoTouch.Foundation;
+using System.Globalization;
 
 namespace Xamarin.Contacts
 {
@@ -24,15 +26,15 @@ namespace Xamarin.Contacts
 			contact.Emails = person.GetEmails().Select (e => new Email
 			{
 				Address = e.Value,
-				Type = GetEmailType (e),
-				Label = (e.Label != null) ? ABAddressBook.LocalizedLabel (e.Label) : ABAddressBook.LocalizedLabel (ABLabel.Other)
+				Type = GetEmailType (e.Label),
+				Label = (e.Label != null) ? GetLabel (e.Label) : GetLabel (ABLabel.Other)
 			}).ToArray();
 			
 			contact.Phones = person.GetPhones().Select (p => new Phone
 			{
 				Number = p.Value,
-				Type = GetPhoneType (p),
-				Label = ABAddressBook.LocalizedLabel (p.Label)
+				Type = GetPhoneType (p.Label),
+				Label = GetLabel (p.Label)
 			}).ToArray();
 			
 			Organization[] orgs;
@@ -44,7 +46,7 @@ namespace Xamarin.Contacts
 					Name = person.Organization,
 					ContactTitle = person.JobTitle,
 					Type = OrganizationType.Work,
-					Label = ABAddressBook.LocalizedLabel (ABLabel.Work)
+					Label = GetLabel (ABLabel.Work)
 				};
 			}
 			else
@@ -54,30 +56,35 @@ namespace Xamarin.Contacts
 			
 			return contact;
 		}
-		
-		internal static EmailType GetEmailType (ABMultiValueEntry<string> email)
+
+		internal static string GetLabel (NSString label)
 		{
-			if (email.Label == ABLabel.Home)
+			return CultureInfo.CurrentCulture.TextInfo.ToTitleCase (ABAddressBook.LocalizedLabel (label));
+		}
+
+		internal static EmailType GetEmailType (string label)
+		{
+			if (label == ABLabel.Home)
 				return EmailType.Home;
-			if (email.Label == ABLabel.Work)
+			if (label == ABLabel.Work)
 				return EmailType.Work;
 
 			return EmailType.Other;
 		}
 		
-		internal static PhoneType GetPhoneType (ABMultiValueEntry<string> phone)
+		internal static PhoneType GetPhoneType (string label)
 		{
-			if (phone.Label == ABLabel.Home)
+			if (label == ABLabel.Home)
 				return PhoneType.Home;
-			if (phone.Label == ABLabel.Work)
+			if (label == ABLabel.Work)
 				return PhoneType.Work;
-			if (phone.Label == ABPersonPhoneLabel.Mobile || phone.Label == ABPersonPhoneLabel.iPhone)
+			if (label == ABPersonPhoneLabel.Mobile || label == ABPersonPhoneLabel.iPhone)
 				return PhoneType.Mobile;
-			if (phone.Label == ABPersonPhoneLabel.Pager)
+			if (label == ABPersonPhoneLabel.Pager)
 				return PhoneType.Pager;
-			if (phone.Label == ABPersonPhoneLabel.HomeFax)
+			if (label == ABPersonPhoneLabel.HomeFax)
 				return PhoneType.HomeFax;
-			if (phone.Label == ABPersonPhoneLabel.WorkFax)
+			if (label == ABPersonPhoneLabel.WorkFax)
 				return PhoneType.WorkFax;
 			
 			return PhoneType.Other;
