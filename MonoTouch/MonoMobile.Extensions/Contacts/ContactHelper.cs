@@ -51,9 +51,16 @@ namespace Xamarin.Contacts
 			}
 			else
 				orgs = new Organization[0];
-			
+
 			contact.Organizations = orgs;
-			
+
+			contact.InstantMessagingAccounts = person.GetInstantMessages().Select (ima => new InstantMessagingAccount()
+			{
+				Service = GetImService ((NSString)ima.Value[ABPersonInstantMessageKey.Service]),
+				ServiceLabel = (NSString)ima.Value[ABPersonInstantMessageKey.Service],
+				Account = (NSString)ima.Value[ABPersonInstantMessageKey.Username]
+			}).ToArray();
+
 			return contact;
 		}
 
@@ -89,6 +96,23 @@ namespace Xamarin.Contacts
 			
 			return PhoneType.Other;
 		}
+		
+		internal static InstantMessagingService GetImService (string service)
+		{
+			if (service == ABPersonInstantMessageService.Aim)
+				return InstantMessagingService.Aim;
+			if (service == ABPersonInstantMessageService.Icq)
+				return InstantMessagingService.Icq;
+			if (service == ABPersonInstantMessageService.Jabber)
+				return InstantMessagingService.Jabber;
+			if (service == ABPersonInstantMessageService.Msn)
+				return InstantMessagingService.Msn;
+			if (service == ABPersonInstantMessageService.Yahoo)
+				return InstantMessagingService.Yahoo;
+			
+			return InstantMessagingService.Other;
+		}
+		
 	}
 }
 
