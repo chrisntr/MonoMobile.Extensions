@@ -74,6 +74,14 @@ namespace ContactsSample
 					}
 				}
 
+				if (contact.Websites.Any())
+				{
+					builder.AppendLine();
+					builder.AppendLine ("Websites:");
+					foreach (Website website in contact.Websites)
+						builder.AppendLine (String.Format ("{0}", website.Address));
+				}
+
 				if (contact.InstantMessagingAccounts.Any())
 				{
 					builder.AppendLine();
