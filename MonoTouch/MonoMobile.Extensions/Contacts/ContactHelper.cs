@@ -19,7 +19,7 @@ namespace Xamarin.Contacts
 				Nickname = person.Nickname
 			};
 			
-			contact.Notes = (person.Note != null) ? new [] { person.Note } : new string[0];
+			contact.Notes = (person.Note != null) ? new [] { new Note { Contents = person.Note } } : new Note[0];
 
 			contact.Emails = person.GetEmails().Select (e => new Email
 			{

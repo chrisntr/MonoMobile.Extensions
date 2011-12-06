@@ -73,7 +73,7 @@ namespace Xamarin.Contacts
 			internal set;
 		}
 
-		public IEnumerable<string> Notes
+		public IEnumerable<Note> Notes
 		{
 			get;
 			internal set;
