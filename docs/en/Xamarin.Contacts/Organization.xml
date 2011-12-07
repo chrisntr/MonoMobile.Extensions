@@ -14,8 +14,21 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Organization ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
     <Member MemberName="ContactTitle">
-      <MemberSignature Language="C#" Value="public string ContactTitle { get; }" />
+      <MemberSignature Language="C#" Value="public string ContactTitle { get; set; }" />
       <MemberSignature Language="ILAsm" Value=".property instance string ContactTitle" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
@@ -31,7 +44,7 @@
       </Docs>
     </Member>
     <Member MemberName="Label">
-      <MemberSignature Language="C#" Value="public string Label { get; }" />
+      <MemberSignature Language="C#" Value="public string Label { get; set; }" />
       <MemberSignature Language="ILAsm" Value=".property instance string Label" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
@@ -47,7 +60,7 @@
       </Docs>
     </Member>
     <Member MemberName="Name">
-      <MemberSignature Language="C#" Value="public string Name { get; }" />
+      <MemberSignature Language="C#" Value="public string Name { get; set; }" />
       <MemberSignature Language="ILAsm" Value=".property instance string Name" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
@@ -63,7 +76,7 @@
       </Docs>
     </Member>
     <Member MemberName="Type">
-      <MemberSignature Language="C#" Value="public Xamarin.Contacts.OrganizationType Type { get; }" />
+      <MemberSignature Language="C#" Value="public Xamarin.Contacts.OrganizationType Type { get; set; }" />
       <MemberSignature Language="ILAsm" Value=".property instance valuetype Xamarin.Contacts.OrganizationType Type" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>

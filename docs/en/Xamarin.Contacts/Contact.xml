@@ -14,8 +14,21 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Contact ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
     <Member MemberName="Addresses">
-      <MemberSignature Language="C#" Value="public System.Collections.Generic.IEnumerable&lt;Xamarin.Contacts.Address&gt; Addresses { get; }" />
+      <MemberSignature Language="C#" Value="public System.Collections.Generic.IEnumerable&lt;Xamarin.Contacts.Address&gt; Addresses { get; set; }" />
       <MemberSignature Language="ILAsm" Value=".property instance class System.Collections.Generic.IEnumerable`1&lt;class Xamarin.Contacts.Address&gt; Addresses" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
@@ -31,7 +44,7 @@
       </Docs>
     </Member>
     <Member MemberName="DisplayName">
-      <MemberSignature Language="C#" Value="public string DisplayName { get; }" />
+      <MemberSignature Language="C#" Value="public string DisplayName { get; set; }" />
       <MemberSignature Language="ILAsm" Value=".property instance string DisplayName" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
@@ -47,7 +60,7 @@
       </Docs>
     </Member>
     <Member MemberName="Emails">
-      <MemberSignature Language="C#" Value="public System.Collections.Generic.IEnumerable&lt;Xamarin.Contacts.Email&gt; Emails { get; }" />
+      <MemberSignature Language="C#" Value="public System.Collections.Generic.IEnumerable&lt;Xamarin.Contacts.Email&gt; Emails { get; set; }" />
       <MemberSignature Language="ILAsm" Value=".property instance class System.Collections.Generic.IEnumerable`1&lt;class Xamarin.Contacts.Email&gt; Emails" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
@@ -63,7 +76,7 @@
       </Docs>
     </Member>
     <Member MemberName="FirstName">
-      <MemberSignature Language="C#" Value="public string FirstName { get; }" />
+      <MemberSignature Language="C#" Value="public string FirstName { get; set; }" />
       <MemberSignature Language="ILAsm" Value=".property instance string FirstName" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
@@ -95,7 +108,7 @@
       </Docs>
     </Member>
     <Member MemberName="InstantMessagingAccounts">
-      <MemberSignature Language="C#" Value="public System.Collections.Generic.IEnumerable&lt;Xamarin.Contacts.InstantMessagingAccount&gt; InstantMessagingAccounts { get; }" />
+      <MemberSignature Language="C#" Value="public System.Collections.Generic.IEnumerable&lt;Xamarin.Contacts.InstantMessagingAccount&gt; InstantMessagingAccounts { get; set; }" />
       <MemberSignature Language="ILAsm" Value=".property instance class System.Collections.Generic.IEnumerable`1&lt;class Xamarin.Contacts.InstantMessagingAccount&gt; InstantMessagingAccounts" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
@@ -127,7 +140,7 @@
       </Docs>
     </Member>
     <Member MemberName="LastName">
-      <MemberSignature Language="C#" Value="public string LastName { get; }" />
+      <MemberSignature Language="C#" Value="public string LastName { get; set; }" />
       <MemberSignature Language="ILAsm" Value=".property instance string LastName" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
@@ -143,7 +156,7 @@
       </Docs>
     </Member>
     <Member MemberName="MiddleName">
-      <MemberSignature Language="C#" Value="public string MiddleName { get; }" />
+      <MemberSignature Language="C#" Value="public string MiddleName { get; set; }" />
       <MemberSignature Language="ILAsm" Value=".property instance string MiddleName" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
@@ -159,7 +172,7 @@
       </Docs>
     </Member>
     <Member MemberName="Nickname">
-      <MemberSignature Language="C#" Value="public string Nickname { get; }" />
+      <MemberSignature Language="C#" Value="public string Nickname { get; set; }" />
       <MemberSignature Language="ILAsm" Value=".property instance string Nickname" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
@@ -175,7 +188,7 @@
       </Docs>
     </Member>
     <Member MemberName="Notes">
-      <MemberSignature Language="C#" Value="public System.Collections.Generic.IEnumerable&lt;Xamarin.Contacts.Note&gt; Notes { get; }" />
+      <MemberSignature Language="C#" Value="public System.Collections.Generic.IEnumerable&lt;Xamarin.Contacts.Note&gt; Notes { get; set; }" />
       <MemberSignature Language="ILAsm" Value=".property instance class System.Collections.Generic.IEnumerable`1&lt;class Xamarin.Contacts.Note&gt; Notes" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
@@ -191,7 +204,7 @@
       </Docs>
     </Member>
     <Member MemberName="Organizations">
-      <MemberSignature Language="C#" Value="public System.Collections.Generic.IEnumerable&lt;Xamarin.Contacts.Organization&gt; Organizations { get; }" />
+      <MemberSignature Language="C#" Value="public System.Collections.Generic.IEnumerable&lt;Xamarin.Contacts.Organization&gt; Organizations { get; set; }" />
       <MemberSignature Language="ILAsm" Value=".property instance class System.Collections.Generic.IEnumerable`1&lt;class Xamarin.Contacts.Organization&gt; Organizations" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
@@ -207,7 +220,7 @@
       </Docs>
     </Member>
     <Member MemberName="Phones">
-      <MemberSignature Language="C#" Value="public System.Collections.Generic.IEnumerable&lt;Xamarin.Contacts.Phone&gt; Phones { get; }" />
+      <MemberSignature Language="C#" Value="public System.Collections.Generic.IEnumerable&lt;Xamarin.Contacts.Phone&gt; Phones { get; set; }" />
       <MemberSignature Language="ILAsm" Value=".property instance class System.Collections.Generic.IEnumerable`1&lt;class Xamarin.Contacts.Phone&gt; Phones" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
@@ -239,7 +252,7 @@
       </Docs>
     </Member>
     <Member MemberName="Prefix">
-      <MemberSignature Language="C#" Value="public string Prefix { get; }" />
+      <MemberSignature Language="C#" Value="public string Prefix { get; set; }" />
       <MemberSignature Language="ILAsm" Value=".property instance string Prefix" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
@@ -255,7 +268,7 @@
       </Docs>
     </Member>
     <Member MemberName="Suffix">
-      <MemberSignature Language="C#" Value="public string Suffix { get; }" />
+      <MemberSignature Language="C#" Value="public string Suffix { get; set; }" />
       <MemberSignature Language="ILAsm" Value=".property instance string Suffix" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
@@ -271,7 +284,7 @@
       </Docs>
     </Member>
     <Member MemberName="Websites">
-      <MemberSignature Language="C#" Value="public System.Collections.Generic.IEnumerable&lt;Xamarin.Contacts.Website&gt; Websites { get; }" />
+      <MemberSignature Language="C#" Value="public System.Collections.Generic.IEnumerable&lt;Xamarin.Contacts.Website&gt; Websites { get; set; }" />
       <MemberSignature Language="ILAsm" Value=".property instance class System.Collections.Generic.IEnumerable`1&lt;class Xamarin.Contacts.Website&gt; Websites" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>

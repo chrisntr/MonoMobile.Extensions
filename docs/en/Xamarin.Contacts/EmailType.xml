@@ -10,12 +10,12 @@
   </Base>
   <Docs>
     <summary>Represents a type of <see cref="T:Xamarin.Contacts.Email" />.</summary>
-	<remarks>
-		<para>
+    <remarks>
+      <para>
 			Only the email types supported by both iOS and Android are present. The types that are not present on all platforms
 			are represented by <see cref="M:Xamarin.Contacts.EmailType.Other" />.
 		</para>
-	</remarks>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName="Home">
