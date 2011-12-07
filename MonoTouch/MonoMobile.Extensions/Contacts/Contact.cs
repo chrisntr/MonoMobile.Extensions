@@ -9,6 +9,10 @@ namespace Xamarin.Contacts
 {
 	public class Contact
 	{
+		public Contact()
+		{
+		}
+		
 		internal Contact (ABPerson person)
 		{
 			Id = person.Id.ToString();
@@ -30,85 +34,85 @@ namespace Xamarin.Contacts
 		public string DisplayName
 		{
 			get;
-			internal set;
+			set;
 		}
 
 		public string Prefix
 		{
 			get;
-			internal set;
+			set;
 		}
 
 		public string FirstName
 		{
 			get;
-			internal set;
+			set;
 		}
 
 		public string MiddleName
 		{
 			get;
-			internal set;
+			set;
 		}
 
 		public string LastName
 		{
 			get;
-			internal set;
+			set;
 		}
 
 		public string Nickname
 		{
 			get;
-			internal set;
+			set;
 		}
 
 		public string Suffix
 		{
 			get;
-			internal set;
+			set;
 		}
 
 		public IEnumerable<Address> Addresses
 		{
 			get;
-			internal set;
+			set;
 		}
 
 		public IEnumerable<InstantMessagingAccount> InstantMessagingAccounts
 		{
 			get;
-			internal set;
+			set;
 		}
 		
 		public IEnumerable<Website> Websites
 		{
 			get;
-			internal set;
+			set;
 		}
 
 		public IEnumerable<Organization> Organizations
 		{
 			get;
-			internal set;
+			set;
 		}
 
 		public IEnumerable<Note> Notes
 		{
 			get;
-			internal set;
+			set;
 		}
 
 		public IEnumerable<Email> Emails
 		{
 			get;
-			internal set;
+			set;
 		}
 
 		public IEnumerable<Phone> Phones
 		{
 			get;
-			internal set;
+			set;
 		}
 		
 		public UIImage PhotoThumbnail
@@ -130,7 +134,7 @@ namespace Xamarin.Contacts
 
 		private void LoadThumbnail()
 		{
-			if (this.thumbnailLoaded)
+			if (this.thumbnailLoaded || this.person == null)
 				return;
 
 			this.thumbnailLoaded = true;
