@@ -19,20 +19,16 @@ namespace Xamarin.Contacts
 
 	public class InstantMessagingAccount
 	{
-		internal InstantMessagingAccount()
-		{
-		}
-
 		public InstantMessagingService Service
 		{
 			get;
-			internal set;
+			set;
 		}
 
 		public string ServiceLabel
 		{
 			get;
-			internal set;
+			set;
 		}
 
 		//public InstantMessagingType Type
@@ -50,7 +46,7 @@ namespace Xamarin.Contacts
 		public string Account
 		{
 			get;
-			internal set;
+			set;
 		}
 	}
 }

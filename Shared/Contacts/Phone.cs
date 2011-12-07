@@ -13,26 +13,22 @@ namespace Xamarin.Contacts
 
 	public class Phone
 	{
-		internal Phone()
-		{
-		}
-
 		public PhoneType Type
 		{
 			get;
-			internal set;
+			set;
 		}
 
 		public string Label
 		{
 			get;
-			internal set;
+			set;
 		}
 
 		public string Number
 		{
 			get;
-			internal set;
+			set;
 		}
 	}
 }

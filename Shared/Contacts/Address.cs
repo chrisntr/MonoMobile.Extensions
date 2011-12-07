@@ -9,50 +9,46 @@ namespace Xamarin.Contacts
 
 	public class Address
 	{
-		internal Address()
-		{
-		}
-
 		public AddressType Type
 		{
 			get;
-			internal set;
+			set;
 		}
 
 		public string Label
 		{
 			get;
-			internal set;
+			set;
 		}
 
 		public string StreetAddress
 		{
 			get;
-			internal set;
+			set;
 		}
 
 		public string City
 		{
 			get;
-			internal set;
+			set;
 		}
 
 		public string Region
 		{
 			get;
-			internal set;
+			set;
 		}
 
 		public string Country
 		{
 			get;
-			internal set;
+			set;
 		}
 
 		public string PostalCode
 		{
 			get;
-			internal set;
+			set;
 		}
 	}
 }

@@ -8,32 +8,28 @@ namespace Xamarin.Contacts
 
 	public class Organization
 	{
-		internal Organization()
-		{
-		}
-
 		public OrganizationType Type
 		{
 			get;
-			internal set;
+			set;
 		}
 
 		public string Label
 		{
 			get;
-			internal set;
+			set;
 		}
 
 		public string Name
 		{
 			get;
-			internal set;
+			set;
 		}
 
 		public string ContactTitle
 		{
 			get;
-			internal set;
+			set;
 		}
 	}
 }

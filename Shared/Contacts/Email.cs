@@ -12,26 +12,22 @@ namespace Xamarin.Contacts
 
 	public class Email
 	{
-		internal Email()
-		{
-		}
-
 		public EmailType Type
 		{
 			get;
-			internal set;
+			set;
 		}
 
 		public string Label
 		{
 			get;
-			internal set;
+			set;
 		}
 
 		public string Address
 		{
 			get;
-			internal set;
+			set;
 		}
 
 		//public string Address

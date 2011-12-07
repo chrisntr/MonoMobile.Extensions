@@ -9,10 +9,6 @@ namespace Xamarin.Contacts
 
 	public class Website
 	{
-		internal Website()
-		{
-		}
-
 		//public WebsiteType Type
 		//{
 		//    get;
@@ -28,7 +24,7 @@ namespace Xamarin.Contacts
 		public string Address
 		{
 			get;
-			internal set;
+			set;
 		}
 	}
 }
