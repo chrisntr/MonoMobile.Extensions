@@ -9,8 +9,13 @@
     <BaseTypeName>System.Enum</BaseTypeName>
   </Base>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents a type of <see cref="T:Xamarin.Contacts.Email" />.</summary>
+	<remarks>
+		<para>
+			Only the email types supported by both iOS and Android are present. The types that are not present on all platforms
+			are represented by <see cref="M:Xamarin.Contacts.EmailType.Other" />.
+		</para>
+	</remarks>
   </Docs>
   <Members>
     <Member MemberName="Home">
@@ -24,7 +29,7 @@
         <ReturnType>Xamarin.Contacts.EmailType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>A home email address.</summary>
       </Docs>
     </Member>
     <Member MemberName="Other">
@@ -38,7 +43,7 @@
         <ReturnType>Xamarin.Contacts.EmailType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>An other/unknown email address.</summary>
       </Docs>
     </Member>
     <Member MemberName="Work">
@@ -52,7 +57,7 @@
         <ReturnType>Xamarin.Contacts.EmailType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>A work email address.</summary>
       </Docs>
     </Member>
   </Members>

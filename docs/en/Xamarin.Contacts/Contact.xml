@@ -10,7 +10,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Represents an individual or aggregate contact in the user's address book.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>

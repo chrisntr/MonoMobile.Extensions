@@ -1,6 +1,6 @@
 <Namespace Name="Xamarin.Contacts">
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>The Xamarin.Contacts namespaces contains types related to a user's list of contacts.</summary>
+    <remarks />
   </Docs>
 </Namespace>
