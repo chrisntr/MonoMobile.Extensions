@@ -20,6 +20,16 @@ namespace Xamarin.Contacts
 			get { return true; }
 		}
 
+		public bool SingleContactsSupported
+		{
+			get { return true; }
+		}
+
+		public bool AggregateContactsSupported
+		{
+			get { return false; }
+		}
+
 		public bool PreferContactAggregation
 		{
 			get;
