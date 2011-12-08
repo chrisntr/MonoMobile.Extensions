@@ -33,6 +33,16 @@ namespace Xamarin.Contacts
 			get { return true; }
 		}
 
+		public bool SingleContactsSupported
+		{
+			get { return true; }
+		}
+
+		public bool AggregateContactsSupported
+		{
+			get { return true; }
+		}
+
 		public bool PreferContactAggregation
 		{
 			get { return !this.rawContactsProvider.UseRawContacts; }
