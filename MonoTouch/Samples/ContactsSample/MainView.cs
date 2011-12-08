@@ -65,13 +65,17 @@ namespace ContactsSample
 			
 			public override void RowSelected (UITableView tableView, NSIndexPath indexPath)
 			{
+				//
+				// called when a specific row is selected, so
+				// push a detail view to show the complete contact
+				//
 				DetailContactView detailView = new DetailContactView(parent.list[indexPath.Row]);
 				parent.NavigationController.PushViewController(detailView, true);
 			}	
 		}
 		
 		//
-		// simple table view data source impl
+		// simple table view data source using the List<Contact> as the datasource
 		//
 		private class TableViewDataSource : UITableViewDataSource
         {

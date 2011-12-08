@@ -34,22 +34,11 @@ namespace ContactsSample
 			}
 		}
 		
-		public partial class Id
-		{
-			
-			// aapt resource value: 0x7f050000
-			public const int contacts = 2131034112;
-			
-			private Id()
-			{
-			}
-		}
-		
 		public partial class Layout
 		{
 			
 			// aapt resource value: 0x7f030000
-			public const int Main = 2130903040;
+			public const int list_item = 2130903040;
 			
 			private Layout()
 			{

@@ -7,6 +7,9 @@ using System.Drawing;
 
 namespace ContactsSample
 {
+	/// <summary>
+	/// Detail contact view. This view displays the details of a contact.
+	/// </summary>
 	public class DetailContactView : UIViewController
 	{
 		Contact contact;
@@ -25,14 +28,26 @@ namespace ContactsSample
 			
 			View.BackgroundColor = UIColor.White;
 			
+			//
+			// position and display the contact thumbnail image
+			//
 			contactImage = new UIImageView(new RectangleF(210, 5, 60, 60));
 			this.View.AddSubview(contactImage);
 			contactImage.Image = contact.PhotoThumbnail;
 			
+			//
+			// position and display the contact Display name
+			//
 			nameLabel = new UILabel(new RectangleF(5, 5, 200, 30));
 			this.View.AddSubview(nameLabel);
 			nameLabel.Text = contact.DisplayName;
 			
+			//
+			// position and display the first phone number in the contact object
+			//
+			// A more complete implementation may display all the phone numbers in 
+			// a table, or query for a specific type of phone number
+			//
 			phoneLabel = new UILabel(new RectangleF(5, 40, 200, 30));
 			this.View.AddSubview(phoneLabel);
 			
@@ -45,6 +60,12 @@ namespace ContactsSample
 			
 			phoneLabel.Text = phoneString;
 			
+			//
+			// position and display the first email in the contact object
+			//
+			// A more complete implementation may display all the email addresses in 
+			// a table, or query for a specific type of email
+			//
 			emailLabel = new UILabel(new RectangleF(5, 80, 200, 30));
 			this.View.AddSubview(emailLabel);
 			
