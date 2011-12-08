@@ -9,8 +9,13 @@
     <BaseTypeName>System.Enum</BaseTypeName>
   </Base>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents the service that an <see href="T:Xamarin.Contacts.InstantMessagingAccount" /> is with.</summary>
+	<remarks>
+		<para>
+			Only the services supported by both iOS and Android are present. The services that are not present on all platforms
+			are represented by <see cref="F:Xamarin.Contacts.InstantMessagingService.Other" />.
+		</para>
+	</remarks>
   </Docs>
   <Members>
     <Member MemberName="Aim">
@@ -24,7 +29,7 @@
         <ReturnType>Xamarin.Contacts.InstantMessagingService</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>AOL Instant Messanger</summary>
       </Docs>
     </Member>
     <Member MemberName="Icq">
@@ -38,7 +43,7 @@
         <ReturnType>Xamarin.Contacts.InstantMessagingService</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>ICQ</summary>
       </Docs>
     </Member>
     <Member MemberName="Jabber">
@@ -52,7 +57,7 @@
         <ReturnType>Xamarin.Contacts.InstantMessagingService</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Jabber</summary>
       </Docs>
     </Member>
     <Member MemberName="Msn">
@@ -66,7 +71,7 @@
         <ReturnType>Xamarin.Contacts.InstantMessagingService</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>MSN</summary>
       </Docs>
     </Member>
     <Member MemberName="Other">
@@ -80,7 +85,7 @@
         <ReturnType>Xamarin.Contacts.InstantMessagingService</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>An other/unknown instant messaing service.</summary>
       </Docs>
     </Member>
     <Member MemberName="Yahoo">
@@ -94,7 +99,7 @@
         <ReturnType>Xamarin.Contacts.InstantMessagingService</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Yahoo Instant Messanger</summary>
       </Docs>
     </Member>
   </Members>

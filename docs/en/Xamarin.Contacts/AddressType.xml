@@ -13,7 +13,7 @@
     <remarks>
       <para>
 			Only the address types supported by both iOS and Android are present. The types that are not present on all platforms
-			are represented by <see cref="M:Xamarin.Contacts.AddressType.Other" />.
+			are represented by <see cref="F:Xamarin.Contacts.AddressType.Other" />.
 		</para>
     </remarks>
   </Docs>

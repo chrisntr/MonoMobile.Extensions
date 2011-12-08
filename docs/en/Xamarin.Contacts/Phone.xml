@@ -10,8 +10,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents a phone belonging to a <see href="T:Xamarin.Contacts.Contract"/>.</summary>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -23,8 +22,9 @@
       </AssemblyInfo>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>
+			Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.Phone" /> class.
+		</summary>
       </Docs>
     </Member>
     <Member MemberName="Label">
@@ -38,9 +38,14 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets the label for this phone.</summary>
+        <value>The phone's label.</value>
+		<remarks>
+			<para>
+				For phone types built into the underlying OS, this contains a localized version of the label. If the type is custom, it will contain
+				the custom label. In situations where types/labels are not supported, it will be <c>null</c>.
+			</para>
+		</remarks>
       </Docs>
     </Member>
     <Member MemberName="Number">
@@ -54,9 +59,8 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets the number for this phone.</summary>
+        <value>The phone's number.</value>
       </Docs>
     </Member>
     <Member MemberName="Type">
@@ -70,9 +74,8 @@
         <ReturnType>Xamarin.Contacts.PhoneType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets the phone's type.</summary>
+        <value>The type of phone.</value>
       </Docs>
     </Member>
   </Members>

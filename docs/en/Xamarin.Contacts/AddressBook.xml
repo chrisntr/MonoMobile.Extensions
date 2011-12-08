@@ -18,7 +18,17 @@
   </Interfaces>
   <Docs>
     <summary>Represents the address book of the user.</summary>
-    <remarks>To be added.</remarks>
+    <remarks>
+		<para></para>
+	</remarks>
+	<example>
+		<para>
+			This example shows how you can retrieve all contacts with the first name of
+			"Eric" and has a phone listed. Then it iterates through the contacts, making
+			a list of each person and their phones.
+		</para>
+		<code language="C#" source="CodeSamples.cs#AddressBook" />
+	</example>
   </Docs>
   <Members>
 	<Member MemberName=".ctor">
@@ -62,11 +72,48 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Returns an enumerator that iterates through the <see href="T:Xamarin.Contacts.AddressBook" />.</summary>
+        <returns>An enumerator for the <see href="T:Xamarin.Contacts.AddressBook" />.</returns>
       </Docs>
     </Member>
+	<Member MemberName="SingleContactsSupported">
+		<MemberSignature Language="C#" Value="public bool SingleContactsSupported { get; }" />
+		<MemberSignature Language="ILAsm" Value=".property instance bool SingleContactsSupported" />
+		<MemberType>Property</MemberType>
+		<AssemblyInfo>
+			<AssemblyVersion>0.0.0.0</AssemblyVersion>
+		</AssemblyInfo>
+		<ReturnValue>
+			<ReturnType>System.Boolean</ReturnType>
+		</ReturnValue>
+		<Docs>
+			<summary>Gets whether individual, non-aggregated contacts are supported.</summary>
+			<value><c>true</c> if non-aggregated contacts are supported, <c>false</c> otherwise.</value>
+			<remarks>
+				<para>This will return <c>true</c> on iOS and Android, <c>false</c> on Windows Phone.</para>
+			</remarks>
+		</Docs>
+	</Member>
+	<Member MemberName="AggregateContactsSupported">
+		<MemberSignature Language="C#" Value="public bool AggregateContactsSupported { get; }" />
+		<MemberSignature Language="ILAsm" Value=".property instance bool AggregateContactsSupported" />
+		<MemberType>Property</MemberType>
+		<AssemblyInfo>
+			<AssemblyVersion>0.0.0.0</AssemblyVersion>
+		</AssemblyInfo>
+		<ReturnValue>
+			<ReturnType>System.Boolean</ReturnType>
+		</ReturnValue>
+		<Docs>
+			<summary>Gets whether aggregated contacts are supported.</summary>
+			<value>
+				<c>true</c> if aggregated contacts are supported, <c>false</c> otherwise.
+			</value>
+			<remarks>
+				<para>This will return <c>true</c> on Android and Windows Phone, <c>false</c> on iOS.</para>
+			</remarks>
+		</Docs>
+	</Member>
     <Member MemberName="IsReadOnly">
       <MemberSignature Language="C#" Value="public bool IsReadOnly { get; }" />
       <MemberSignature Language="ILAsm" Value=".property instance bool IsReadOnly" />
@@ -78,9 +125,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets whether this address book is read-only.</summary>
+        <value><c>true</c> if this address book is read-only, <c>false</c> otherwise.</value>
+        <remarks>Currently this will always return <c>true</c>.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Load">
@@ -97,10 +144,24 @@
         <Parameter Name="id" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="id">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+		<altmember cref="P:Xamarin.Contacts.Contact.Id" />
+		<altmember cref="P:Xamarin.Contacts.Contact.IsAggregate" />
+		<altmember cref="P:Xamarin.Contacts.AddressBook.PreferContactAggregation" />
+        <param name="id">The <see href="P:Xamarin.Contacts.Contact.Id" /> of the contact to load.</param>
+        <summary>Attempts to load a contact for the specified <paramref name="id" />.</summary>
+        <returns>The <see cref="T:Xamarin.Contacts.Contact" /> if found, <c>null</c> otherwise.</returns>
+		<exception cref="T:System.ArgumentNullException"><paramref name="id"/> is <c>null</c>.</exception>
+		<exception cref="T:System.ArgumentException"><paramref name="id"/> is empty.</exception>
+        <remarks>
+			<para>
+				If <see cref="P:Xamarin.Contacts.AddressBook.PreferContactAggregation" /> and
+				<see cref="P:Xamarin.Contacts.AddressBook.AggregateContactsSupported" /> are <c>true</c>,
+				this will attempt to load the contact using <paramref name="id" /> as an aggregate ID.
+				You can use <see cref="P:Xamarin.Contacts.Contact.IsAggregate" /> to determine whether the
+				<see cref="P:Xamarin.Contacts.Contact.Id" /> is an aggregate ID or not when you originally
+				obtained the contact.
+			</para>
+		</remarks>
       </Docs>
     </Member>
     <Member MemberName="PreferContactAggregation">
@@ -114,9 +175,17 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+		<altmember cref="P:Xamarin.Contacts.AddressBook.AggregateContactsSupported" />
+		<altmember cref="P:Xamarin.Contacts.AddressBook.SingleContactsSupported" />
+        <summary>Gets or sets whether to prefer contact aggregation.</summary>
+        <value>Whether or not to prefer contact aggregation, <c>false</c> by default.</value>
+        <remarks>
+			<para>
+				Currently, only Android and Windows Phone support contact aggregation.
+				As this may change in the future, you can use <see cref="P:Xamarin.Contacts.AddressBook.AggregateContactsSupported" />
+				to determine whether this will actually enable contact aggregation or not.
+			</para>
+		</remarks>
       </Docs>
     </Member>
     <Member MemberName="System.Collections.IEnumerable.GetEnumerator">

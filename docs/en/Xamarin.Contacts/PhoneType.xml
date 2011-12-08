@@ -13,7 +13,7 @@
     <remarks>
       <para>
 			Only the phone types supported by both iOS and Android are present. The types that are not present on all platforms
-			are represented by <see cref="M:Xamarin.Contacts.PhoneType.Other" />.
+			are represented by <see cref="F:Xamarin.Contacts.PhoneType.Other" />.
 		</para>
     </remarks>
   </Docs>

@@ -10,8 +10,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents a website belonging to a <see href="Xamarin.Contacts.Contact" />.</summary>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -23,8 +22,7 @@
       </AssemblyInfo>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.Website" /> class.</summary>
       </Docs>
     </Member>
     <Member MemberName="Address">
@@ -38,9 +36,8 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets the website's address.</summary>
+        <value>The website address.</value>
       </Docs>
     </Member>
   </Members>

@@ -10,8 +10,9 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>
+		Represents an organization that a <see href="T:Xamarin.Contacts.Contact" /> belongs to.
+	</summary>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -23,8 +24,9 @@
       </AssemblyInfo>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>
+			Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.Organization" /> class.
+		</summary>
       </Docs>
     </Member>
     <Member MemberName="ContactTitle">
@@ -38,9 +40,8 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets the contact's title at this organization.</summary>
+        <value>The contact's title at this organization, or <c>null</c> if not set.</value>
       </Docs>
     </Member>
     <Member MemberName="Label">
@@ -54,9 +55,14 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets the label for this organization.</summary>
+        <value>The label for this organization, or <c>null</c> if not set.</value>
+		<remarks>
+			<para>
+				For organization types built into the underlying OS, this contains a localized version of the label. If the type is custom, it will contain
+				the custom label. In situations where types/labels are not supported, it will be <c>null</c>.
+			</para>
+		</remarks>
       </Docs>
     </Member>
     <Member MemberName="Name">
@@ -70,9 +76,8 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets the name of the organization.</summary>
+        <value>The name of the organization.</value>
       </Docs>
     </Member>
     <Member MemberName="Type">
@@ -86,9 +91,8 @@
         <ReturnType>Xamarin.Contacts.OrganizationType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets the type of relationship the contact has with this organization.</summary>
+        <value>The type of relationship the contact has with this organization.</value>
       </Docs>
     </Member>
   </Members>
