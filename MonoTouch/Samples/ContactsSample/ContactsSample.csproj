@@ -58,6 +58,9 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
+    <Reference Include="Xamarin.Mobile">
+      <HintPath>..\Xamarin.Mobile.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -69,10 +72,4 @@
     <Compile Include="DetailContactView.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <ProjectReference Include="..\..\MonoMobile.Extensions\Xamarin.Mobile.csproj">
-      <Project>{87C4E91E-8215-46E6-BC21-41650EEB8C92}</Project>
-      <Name>Xamarin.Mobile</Name>
-    </ProjectReference>
-  </ItemGroup>
 </Project>
