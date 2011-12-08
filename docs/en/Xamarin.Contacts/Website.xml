@@ -10,7 +10,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>Represents a website belonging to a <see href="Xamarin.Contacts.Contact" />.</summary>
+    <summary>Represents a website belonging to a <see cref="T:Xamarin.Contacts.Contact" />.</summary>
   </Docs>
   <Members>
     <Member MemberName=".ctor">

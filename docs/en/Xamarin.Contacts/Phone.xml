@@ -10,7 +10,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>Represents a phone belonging to a <see href="T:Xamarin.Contacts.Contract"/>.</summary>
+    <summary>Represents a phone belonging to a <see cref="T:Xamarin.Contacts.Contact"/>.</summary>
   </Docs>
   <Members>
     <Member MemberName=".ctor">

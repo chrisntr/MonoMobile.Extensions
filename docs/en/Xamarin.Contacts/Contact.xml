@@ -12,7 +12,6 @@
   <Docs>
 	<altmember cref="T:Xamarin.Contacts.Contact" />
     <summary>Represents an individual or aggregate contact in the user's address book.</summary>
-    <remarks>To be added.</remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -112,7 +111,7 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-		<altmember cref="IsAggregate" />
+		<altmember cref="P:Xamarin.Contacts.Contact.IsAggregate" />
         <summary>Gets the identifier for this contact.</summary>
         <value>The identifier for the contact, or <c>null</c> if not set.</value>
         <remarks>
@@ -241,7 +240,7 @@
       </ReturnValue>
       <Docs>
         <summary>Gets or sets an enumeration of organizations the contact is a part of.</summary>
-        <value>An enumeration of organizations the contact ise a part of, empty if none.</value>
+        <value>An enumeration of organizations the contact is a part of, empty if none.</value>
 		<exception cref="T:System.ArgumentNullException"><paramref name="value" /> is <c>null</c>.</exception>
       </Docs>
     </Member>

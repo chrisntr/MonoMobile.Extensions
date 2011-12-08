@@ -11,7 +11,7 @@
   <Interfaces />
   <Docs>
     <summary>
-		Represents an organization that a <see href="T:Xamarin.Contacts.Contact" /> belongs to.
+		Represents an organization that a <see cref="T:Xamarin.Contacts.Contact" /> belongs to.
 	</summary>
   </Docs>
   <Members>
