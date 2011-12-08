@@ -73,46 +73,53 @@ namespace Xamarin.Contacts
 			set;
 		}
 
+		internal List<Address> addresses = new List<Address>();
 		public IEnumerable<Address> Addresses
 		{
-			get;
-			set;
+			get { return this.addresses; }
+			set { this.addresses = new List<Address> (value); }
 		}
 
+		internal List<InstantMessagingAccount> instantMessagingAccounts = new List<InstantMessagingAccount>();
 		public IEnumerable<InstantMessagingAccount> InstantMessagingAccounts
 		{
-			get;
-			set;
+			get { return this.instantMessagingAccounts; }
+			set { this.instantMessagingAccounts = new List<InstantMessagingAccount> (value); }
 		}
 
+		internal List<Website> websites = new List<Website>();
 		public IEnumerable<Website> Websites
 		{
-			get;
-			set;
+			get { return this.websites; }
+			set { this.websites = new List<Website> (value); }
 		}
 
+		internal List<Organization> organizations = new List<Organization>();
 		public IEnumerable<Organization> Organizations
 		{
-			get;
-			set;
+			get { return this.organizations; }
+			set { this.organizations = new List<Organization> (value); }
 		}
 
+		internal List<Note> notes = new List<Note>();
 		public IEnumerable<Note> Notes
 		{
-			get;
-			set;
+			get { return this.notes; }
+			set { this.notes = new List<Note> (value); }
 		}
 
+		internal List<Email> emails = new List<Email>();
 		public IEnumerable<Email> Emails
 		{
-			get;
-			set;
+			get { return this.emails; }
+			set { this.emails = new List<Email> (value); }
 		}
 
+		internal List<Phone> phones = new List<Phone>();
 		public IEnumerable<Phone> Phones
 		{
-			get;
-			set;
+			get { return this.phones; }
+			set { this.phones = new List<Phone> (value); }
 		}
 
 		public Bitmap PhotoThumbnail

@@ -56,14 +56,6 @@ namespace Xamarin.Contacts
 		{
 			ICursor c = null;
 
-			List<InstantMessagingAccount> imAccounts = new List<InstantMessagingAccount>();
-			List<Address> addresses = new List<Address>();
-			List<Phone> phones = new List<Phone>();
-			List<Email> emails = new List<Email>();
-			List<Note> notes = new List<Note>();
-			List<Organization> organizations = new List<Organization>();
-			List<Website> websites = new List<Website>();
-
 			string column = (rawContact)
 								? ContactsContract.RawContactsColumns.ContactId
 								: ContactsContract.ContactsColumns.LookupKey;
@@ -89,42 +81,34 @@ namespace Xamarin.Contacts
 							break;
 
 						case ContactsContract.CommonDataKinds.Phone.ContentItemType:
-							phones.Add (GetPhone (c, resources));
+							contact.phones.Add (GetPhone (c, resources));
 							break;
 
 						case ContactsContract.CommonDataKinds.Email.ContentItemType:
-							emails.Add (GetEmail (c, resources));
+							contact.emails.Add (GetEmail (c, resources));
 							break;
 
 						case ContactsContract.CommonDataKinds.Note.ContentItemType:
-							notes.Add (new Note { Contents = GetString (c, ContactsContract.CommonDataKinds.Note.NoteColumnId) });
+							contact.notes.Add (new Note { Contents = GetString (c, ContactsContract.CommonDataKinds.Note.NoteColumnId) });
 							break;
 
 						case ContactsContract.CommonDataKinds.Organization.ContentItemType:
-							organizations.Add (GetOrganization (c, resources));
+							contact.organizations.Add (GetOrganization (c, resources));
 							break;
 
 						case StructuredPostal.ContentItemType:
-							addresses.Add (GetAddress (c, resources));
+							contact.addresses.Add (GetAddress (c, resources));
 							break;
 
 						case InstantMessaging.ContentItemType:
-							imAccounts.Add (GetImAccount (c, resources));
+							contact.instantMessagingAccounts.Add (GetImAccount (c, resources));
 							break;
 
 						case WebsiteData.ContentItemType:
-							websites.Add (GetWebsite (c, resources));
+							contact.websites.Add (GetWebsite (c, resources));
 							break;
 					}
 				}
-
-				contact.Phones = phones;
-				contact.Emails = emails;
-				contact.Notes = notes;
-				contact.Organizations = organizations;
-				contact.Addresses = addresses;
-				contact.InstantMessagingAccounts = imAccounts;
-				contact.Websites = websites;
 			}
 			finally
 			{
