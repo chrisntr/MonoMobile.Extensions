@@ -28,14 +28,14 @@ namespace Xamarin.Contacts
 				Address = e.Value,
 				Type = GetEmailType (e.Label),
 				Label = (e.Label != null) ? GetLabel (e.Label) : GetLabel (ABLabel.Other)
-			}).ToArray();
+			});
 			
 			contact.Phones = person.GetPhones().Select (p => new Phone
 			{
 				Number = p.Value,
 				Type = GetPhoneType (p.Label),
 				Label = GetLabel (p.Label)
-			}).ToArray();
+			});
 			
 			Organization[] orgs;
 			if (person.Organization != null)
@@ -59,7 +59,7 @@ namespace Xamarin.Contacts
 				Service = GetImService ((NSString)ima.Value[ABPersonInstantMessageKey.Service]),
 				ServiceLabel = (NSString)ima.Value[ABPersonInstantMessageKey.Service],
 				Account = (NSString)ima.Value[ABPersonInstantMessageKey.Username]
-			}).ToArray();
+			});
 
 			contact.Addresses = person.GetAddresses().Select (a => new Address()
 			{
@@ -70,7 +70,7 @@ namespace Xamarin.Contacts
 				Region = (NSString)a.Value[ABPersonAddressKey.State],
 				Country = (NSString)a.Value[ABPersonAddressKey.Country],
 				PostalCode = (NSString)a.Value[ABPersonAddressKey.Zip]
-			}).ToArray();
+			});
 			
 			contact.Websites = person.GetUrls().Select (url => new Website
 			{
