@@ -1,0 +1,106 @@
+<Type Name="InstantMessagingService" FullName="Xamarin.Contacts.InstantMessagingService">
+  <TypeSignature Language="C#" Value="public enum InstantMessagingService" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed InstantMessagingService extends System.Enum" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.Mobile</AssemblyName>
+    <AssemblyVersion>0.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Docs>
+    <summary>Represents the service that an <see href="T:Xamarin.Contacts.InstantMessagingAccount" /> is with.</summary>
+	<remarks>
+		<para>
+			Only the services supported by both iOS and Android are present. The services that are not present on all platforms
+			are represented by <see cref="F:Xamarin.Contacts.InstantMessagingService.Other" />.
+		</para>
+	</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="Aim">
+      <MemberSignature Language="C#" Value="Aim" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Contacts.InstantMessagingService Aim = int32(0)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Contacts.InstantMessagingService</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>AOL Instant Messanger</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Icq">
+      <MemberSignature Language="C#" Value="Icq" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Contacts.InstantMessagingService Icq = int32(3)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Contacts.InstantMessagingService</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>ICQ</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Jabber">
+      <MemberSignature Language="C#" Value="Jabber" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Contacts.InstantMessagingService Jabber = int32(4)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Contacts.InstantMessagingService</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Jabber</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Msn">
+      <MemberSignature Language="C#" Value="Msn" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Contacts.InstantMessagingService Msn = int32(1)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Contacts.InstantMessagingService</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>MSN</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Other">
+      <MemberSignature Language="C#" Value="Other" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Contacts.InstantMessagingService Other = int32(5)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Contacts.InstantMessagingService</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>An other/unknown instant messaing service.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Yahoo">
+      <MemberSignature Language="C#" Value="Yahoo" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Contacts.InstantMessagingService Yahoo = int32(2)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Contacts.InstantMessagingService</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Yahoo Instant Messanger</summary>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

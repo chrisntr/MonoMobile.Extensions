@@ -1,0 +1,254 @@
+<Type Name="AddressBook" FullName="Xamarin.Contacts.AddressBook">
+  <TypeSignature Language="C#" Value="public class AddressBook : System.Collections.Generic.IEnumerable&lt;Xamarin.Contacts.Contact&gt;, System.Linq.IQueryable&lt;Xamarin.Contacts.Contact&gt;" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit AddressBook extends System.Object implements class System.Collections.Generic.IEnumerable`1&lt;class Xamarin.Contacts.Contact&gt;, class System.Collections.IEnumerable, class System.Linq.IQueryable, class System.Linq.IQueryable`1&lt;class Xamarin.Contacts.Contact&gt;" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.Mobile</AssemblyName>
+    <AssemblyVersion>0.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces>
+    <Interface>
+      <InterfaceName>System.Collections.Generic.IEnumerable&lt;Xamarin.Contacts.Contact&gt;</InterfaceName>
+    </Interface>
+    <Interface>
+      <InterfaceName>System.Linq.IQueryable&lt;Xamarin.Contacts.Contact&gt;</InterfaceName>
+    </Interface>
+  </Interfaces>
+  <Docs>
+    <summary>Represents the address book of the user.</summary>
+	<example>
+		<para>
+			This example shows how you can retrieve all contacts with the first name of
+			"Eric" and has a phone listed. Then it iterates through the contacts, making
+			a list of each person and their phones.
+		</para>
+		<code language="C#" source="CodeSamples.cs#AddressBook" />
+	</example>
+  </Docs>
+  <Members>
+	<Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public AddressBook ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+	  <Parameters />
+      <Docs>
+        <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.AddressBook" /> class.</summary>
+        <remarks>Available only on iOS.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public AddressBook (Android.Content.Context context);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class Android.Content.Context context) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="context" Type="Android.Content.Context" />
+      </Parameters>
+      <Docs>
+        <param name="context">To be added.</param>
+        <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.AddressBook" /> class. .</summary>
+        <remarks>Available only on Android.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetEnumerator">
+      <MemberSignature Language="C#" Value="public System.Collections.Generic.IEnumerator&lt;Xamarin.Contacts.Contact&gt; GetEnumerator ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Collections.Generic.IEnumerator`1&lt;class Xamarin.Contacts.Contact&gt; GetEnumerator() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Collections.Generic.IEnumerator&lt;Xamarin.Contacts.Contact&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Returns an enumerator that iterates through the <see href="T:Xamarin.Contacts.AddressBook" />.</summary>
+        <returns>An enumerator for the <see href="T:Xamarin.Contacts.AddressBook" />.</returns>
+      </Docs>
+    </Member>
+	<Member MemberName="SingleContactsSupported">
+		<MemberSignature Language="C#" Value="public bool SingleContactsSupported { get; }" />
+		<MemberSignature Language="ILAsm" Value=".property instance bool SingleContactsSupported" />
+		<MemberType>Property</MemberType>
+		<AssemblyInfo>
+			<AssemblyVersion>0.0.0.0</AssemblyVersion>
+		</AssemblyInfo>
+		<ReturnValue>
+			<ReturnType>System.Boolean</ReturnType>
+		</ReturnValue>
+		<Docs>
+			<summary>Gets whether individual, non-aggregated contacts are supported.</summary>
+			<value><c>true</c> if non-aggregated contacts are supported, <c>false</c> otherwise.</value>
+			<remarks>
+				<para>This will return <c>true</c> on iOS and Android, <c>false</c> on Windows Phone.</para>
+			</remarks>
+		</Docs>
+	</Member>
+	<Member MemberName="AggregateContactsSupported">
+		<MemberSignature Language="C#" Value="public bool AggregateContactsSupported { get; }" />
+		<MemberSignature Language="ILAsm" Value=".property instance bool AggregateContactsSupported" />
+		<MemberType>Property</MemberType>
+		<AssemblyInfo>
+			<AssemblyVersion>0.0.0.0</AssemblyVersion>
+		</AssemblyInfo>
+		<ReturnValue>
+			<ReturnType>System.Boolean</ReturnType>
+		</ReturnValue>
+		<Docs>
+			<summary>Gets whether aggregated contacts are supported.</summary>
+			<value>
+				<c>true</c> if aggregated contacts are supported, <c>false</c> otherwise.
+			</value>
+			<remarks>
+				<para>This will return <c>true</c> on Android and Windows Phone, <c>false</c> on iOS.</para>
+			</remarks>
+		</Docs>
+	</Member>
+    <Member MemberName="IsReadOnly">
+      <MemberSignature Language="C#" Value="public bool IsReadOnly { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool IsReadOnly" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets whether this address book is read-only.</summary>
+        <value><c>true</c> if this address book is read-only, <c>false</c> otherwise.</value>
+        <remarks>Currently this will always return <c>true</c>.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Load">
+      <MemberSignature Language="C#" Value="public Xamarin.Contacts.Contact Load (string id);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Xamarin.Contacts.Contact Load(string id) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Contacts.Contact</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="id" Type="System.String" />
+      </Parameters>
+      <Docs>
+		<altmember cref="P:Xamarin.Contacts.Contact.Id" />
+		<altmember cref="P:Xamarin.Contacts.Contact.IsAggregate" />
+		<altmember cref="P:Xamarin.Contacts.AddressBook.PreferContactAggregation" />
+        <param name="id">The <see href="P:Xamarin.Contacts.Contact.Id" /> of the contact to load.</param>
+        <summary>Attempts to load a contact for the specified <paramref name="id" />.</summary>
+        <returns>The <see cref="T:Xamarin.Contacts.Contact" /> if found, <c>null</c> otherwise.</returns>
+		<exception cref="T:System.ArgumentNullException"><paramref name="id"/> is <c>null</c>.</exception>
+		<exception cref="T:System.ArgumentException"><paramref name="id"/> is empty.</exception>
+        <remarks>
+			<para>
+				If <see cref="P:Xamarin.Contacts.AddressBook.PreferContactAggregation" /> and
+				<see cref="P:Xamarin.Contacts.AddressBook.AggregateContactsSupported" /> are <c>true</c>,
+				this will attempt to load the contact using <paramref name="id" /> as an aggregate ID.
+				You can use <see cref="P:Xamarin.Contacts.Contact.IsAggregate" /> to determine whether the
+				<see cref="P:Xamarin.Contacts.Contact.Id" /> is an aggregate ID or not when you originally
+				obtained the contact.
+			</para>
+		</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PreferContactAggregation">
+      <MemberSignature Language="C#" Value="public bool PreferContactAggregation { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool PreferContactAggregation" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+		<altmember cref="P:Xamarin.Contacts.AddressBook.AggregateContactsSupported" />
+		<altmember cref="P:Xamarin.Contacts.AddressBook.SingleContactsSupported" />
+        <summary>Gets or sets whether to prefer contact aggregation.</summary>
+        <value>Whether or not to prefer contact aggregation, <c>false</c> by default.</value>
+        <remarks>
+			<para>
+				Currently, only Android and Windows Phone support contact aggregation.
+				As this may change in the future, you can use <see cref="P:Xamarin.Contacts.AddressBook.AggregateContactsSupported" />
+				to determine whether this will actually enable contact aggregation or not.
+			</para>
+		</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="System.Collections.IEnumerable.GetEnumerator">
+      <MemberSignature Language="C#" Value="System.Collections.IEnumerator IEnumerable.GetEnumerator ();" />
+      <MemberSignature Language="ILAsm" Value=".method hidebysig newslot virtual instance class System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Collections.IEnumerator</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="System.Linq.IQueryable.ElementType">
+      <MemberSignature Language="C#" Value="Type System.Linq.IQueryable.ElementType { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Type System.Linq.IQueryable.ElementType" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Type</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="System.Linq.IQueryable.Expression">
+      <MemberSignature Language="C#" Value="System.Linq.Expressions.Expression System.Linq.IQueryable.Expression { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Linq.Expressions.Expression System.Linq.IQueryable.Expression" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Linq.Expressions.Expression</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="System.Linq.IQueryable.Provider">
+      <MemberSignature Language="C#" Value="System.Linq.IQueryProvider System.Linq.IQueryable.Provider { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Linq.IQueryProvider System.Linq.IQueryable.Provider" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Linq.IQueryProvider</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

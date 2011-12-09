@@ -1,0 +1,82 @@
+<Type Name="Phone" FullName="Xamarin.Contacts.Phone">
+  <TypeSignature Language="C#" Value="public class Phone" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit Phone extends System.Object" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.Mobile</AssemblyName>
+    <AssemblyVersion>0.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>Represents a phone belonging to a <see cref="T:Xamarin.Contacts.Contact"/>.</summary>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Phone ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>
+			Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.Phone" /> class.
+		</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Label">
+      <MemberSignature Language="C#" Value="public string Label { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string Label" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets or sets the label for this phone.</summary>
+        <value>The phone's label.</value>
+		<remarks>
+			<para>
+				For phone types built into the underlying OS, this contains a localized version of the label. If the type is custom, it will contain
+				the custom label. In situations where types/labels are not supported, it will be <c>null</c>.
+			</para>
+		</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Number">
+      <MemberSignature Language="C#" Value="public string Number { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string Number" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets or sets the number for this phone.</summary>
+        <value>The phone's number.</value>
+      </Docs>
+    </Member>
+    <Member MemberName="Type">
+      <MemberSignature Language="C#" Value="public Xamarin.Contacts.PhoneType Type { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Xamarin.Contacts.PhoneType Type" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Contacts.PhoneType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets or sets the phone's type.</summary>
+        <value>The type of phone.</value>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

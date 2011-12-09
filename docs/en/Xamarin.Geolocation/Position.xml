@@ -54,7 +54,7 @@
       <Docs>
         <summary>Gets or sets the potential position error radius in meters.</summary>
         <value>The potential position error radius in meters of the <see cref="M:Xamarin.Geolocation.Position.Longitude" /> and <see cref="M:Xamarin.Geolocation.Position.Latitude" /> members.</value>
-        <remarks>This may be higher or lower than the <see cref="M:Xamarin.Geolcation.Geolocator.DesiredAccuracy" />.</remarks>
+        <remarks>This may be higher or lower than the <see cref="M:Xamarin.Geolocation.Geolocator.DesiredAccuracy" />.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Altitude">
