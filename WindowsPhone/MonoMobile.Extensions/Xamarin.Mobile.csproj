@@ -9,11 +9,11 @@
     <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MonoMobile.Extensions</RootNamespace>
-    <AssemblyName>MonoMobile.Extensions</AssemblyName>
+    <RootNamespace>Xamarin</RootNamespace>
+    <AssemblyName>Xamarin.Mobile</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
-    <TargetFrameworkProfile>WindowsPhone</TargetFrameworkProfile>
+    <TargetFrameworkProfile>WindowsPhone71</TargetFrameworkProfile>
     <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
     <SilverlightApplication>false</SilverlightApplication>
     <ValidateXaml>true</ValidateXaml>
@@ -50,19 +50,6 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\Shared\ExtensionHelper.cs">
-      <Link>ExtensionHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Shared\IDevice.cs">
-      <Link>IDevice.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Shared\IGeolocation.cs">
-      <Link>IGeolocation.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Shared\INotification.cs">
-      <Link>INotification.cs</Link>
-    </Compile>
-    <Compile Include="Geolocation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
