@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Mobile", "MonoDroid
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Mobile", "WindowsPhone\Xamarin.Mobile\Xamarin.Mobile.csproj", "{075AA9A6-A76F-482D-B504-BA0A224B0480}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaPickerSample", "WindowsPhone\Samples\MediaPickerSample\MediaPickerSample.csproj", "{B945D6E7-2A66-446A-A8DB-1673D90D74B0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,12 @@ Global
 		{075AA9A6-A76F-482D-B504-BA0A224B0480}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{075AA9A6-A76F-482D-B504-BA0A224B0480}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{075AA9A6-A76F-482D-B504-BA0A224B0480}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B945D6E7-2A66-446A-A8DB-1673D90D74B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B945D6E7-2A66-446A-A8DB-1673D90D74B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B945D6E7-2A66-446A-A8DB-1673D90D74B0}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{B945D6E7-2A66-446A-A8DB-1673D90D74B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B945D6E7-2A66-446A-A8DB-1673D90D74B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B945D6E7-2A66-446A-A8DB-1673D90D74B0}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,5 +52,6 @@ Global
 		{82254F3E-647E-4F4A-AA4F-008A614C4B02} = {993BFD96-8874-4DE7-806A-0C1C4C2A2BAC}
 		{32DFF77E-AE38-48D6-B067-CF555798EA32} = {993BFD96-8874-4DE7-806A-0C1C4C2A2BAC}
 		{075AA9A6-A76F-482D-B504-BA0A224B0480} = {75F60B02-3B8C-44D6-8930-57D840BB91F0}
+		{B945D6E7-2A66-446A-A8DB-1673D90D74B0} = {75F60B02-3B8C-44D6-8930-57D840BB91F0}
 	EndGlobalSection
 EndGlobal
