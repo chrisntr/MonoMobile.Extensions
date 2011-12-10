@@ -41,7 +41,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AsyncCtpLibrary_Phone">
+      <HintPath>..\..\..\..\..\Microsoft Visual Studio Async CTP\Samples\AsyncCtpLibrary_Phone.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Devices.Sensors" />
+    <Reference Include="Microsoft.Phone" />
     <Reference Include="System.Device" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
@@ -50,6 +54,16 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Shared\Media\Media.cs">
+      <Link>Media\Media.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\Media\Photo.cs">
+      <Link>Media\Photo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\Media\Video.cs">
+      <Link>Media\Video.cs</Link>
+    </Compile>
+    <Compile Include="Media\MediaPicker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
