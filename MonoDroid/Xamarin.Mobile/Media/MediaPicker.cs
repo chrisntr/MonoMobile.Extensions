@@ -14,6 +14,20 @@ namespace Xamarin.Media
 
 		public Task<Photo> PickPhotoAsync()
 		{
+			return PickMediaAsync<Photo> ("image/*");
+		}
+
+		public Task<Video> PickVideoAsync()
+		{
+			return PickMediaAsync<Video> ("video/*");
+		}
+
+		private readonly Context context;
+		private int requestId;
+
+		private Task<T> PickMediaAsync<T> (string type)
+			where T : Media
+		{
 			int id = this.requestId;
 			if (this.requestId == Int32.MaxValue)
 				this.requestId = 0;
@@ -21,11 +35,11 @@ namespace Xamarin.Media
 				this.requestId++;
 
 			Intent pickerIntent = new Intent (this.context, typeof (MediaPickerActivity));
-			pickerIntent.PutExtra ("type", "image/*");
+			pickerIntent.PutExtra ("type", type);
 			pickerIntent.PutExtra ("id", id);
 			this.context.StartActivity (pickerIntent);
 
-			var tcs = new TaskCompletionSource<Photo> (id);
+			var tcs = new TaskCompletionSource<T> (id);
 			EventHandler<MediaPickedEventArgs> handler = null;
 			handler = (s, e) =>
 			{
@@ -39,20 +53,12 @@ namespace Xamarin.Media
 				else if (e.IsCanceled)
 					tcs.SetCanceled();
 				else
-					tcs.SetResult ((Photo)e.Media);
+					tcs.SetResult ((T)e.Media);
 			};
 
 			MediaPickerActivity.MediaPicked += handler;
 
 			return tcs.Task;
 		}
-
-		public Task<Video> PickVideoAsync()
-		{
-			throw new NotImplementedException();
-		}
-
-		private readonly Context context;
-		private int requestId;
 	}
 }
