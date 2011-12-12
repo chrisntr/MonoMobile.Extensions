@@ -8,26 +8,30 @@ namespace MediaPickerSample
 	[Activity(Label = "MediaPickerSample", MainLauncher = true, Icon = "@drawable/icon")]
 	public class Activity1 : Activity
 	{
-		int count = 1;
-
 		protected override void OnCreate(Bundle bundle)
 		{
-			base.OnCreate(bundle);
+			base.OnCreate (bundle);
+			SetContentView (Resource.Layout.Main);
 
-			// Set our view from the "main" layout resource
-			SetContentView(Resource.Layout.Main);
+			Button videoButton = FindViewById<Button> (Resource.Id.videoButton);
+			videoButton.Click += delegate
+			{
+				var picker = new MediaPicker (this);
+				picker.PickVideoAsync()
+					.ContinueWith (t => RunOnUiThread (() =>
+					{
+						videoButton.Text = t.Result.FilePath;
+					}));
+			};
 
-			// Get our button from the layout resource,
-			// and attach an event to it
-			Button button = FindViewById<Button>(Resource.Id.MyButton);
-
-			button.Click += delegate
+			Button photoButton = FindViewById<Button> (Resource.Id.photoButton);
+			photoButton.Click += delegate
 			{
 				var picker = new MediaPicker (this);
 				picker.PickPhotoAsync()
 					.ContinueWith (t => RunOnUiThread (() =>
 					{
-						button.Text = t.Result.FilePath;
+						photoButton.Text = t.Result.FilePath;
 					}));
 			};
 		}
