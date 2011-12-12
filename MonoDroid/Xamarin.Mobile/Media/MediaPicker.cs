@@ -12,6 +12,22 @@ namespace Xamarin.Media
 			this.context = context;
 		}
 
+		public bool ShowCamera
+		{
+			get;
+			set;
+		}
+
+		public bool PhotosSupported
+		{
+			get { return true; }
+		}
+
+		public bool VideosSupported
+		{
+			get { return true; }
+		}
+
 		public Task<Photo> PickPhotoAsync()
 		{
 			return PickMediaAsync<Photo> ("image/*");
