@@ -67,6 +67,15 @@
     <Compile Include="..\..\Shared\Contacts\Website.cs">
       <Link>Contacts\Website.cs</Link>
     </Compile>
+    <Compile Include="..\..\Shared\Media\Media.cs">
+      <Link>Media\Media.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\Media\Photo.cs">
+      <Link>Media\Photo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\Media\Video.cs">
+      <Link>Media\Video.cs</Link>
+    </Compile>
     <Compile Include="..\..\Shared\Position.cs">
       <Link>Geolocation\Position.cs</Link>
     </Compile>
@@ -80,6 +89,8 @@
     <Compile Include="Geolocation\GeolocationContinuousListener.cs" />
     <Compile Include="Geolocation\GeolocationSingleListener.cs" />
     <Compile Include="Geolocation\Geolocator.cs" />
+    <Compile Include="Media\MediaPicker.cs" />
+    <Compile Include="Media\MediaPickerActivity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
