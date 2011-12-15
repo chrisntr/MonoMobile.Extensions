@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using Android.App;
+using Android.Content;
 using Android.Database;
 using Android.Net;
 using Android.OS;
@@ -13,7 +14,7 @@ using System.Collections.Generic;
 namespace ContactsSample
 {
 	[Activity(Label = "ContactsSample", MainLauncher = true, Icon = "@drawable/icon")]
-	public class Activity1 : ListActivity
+	public class MainActivity : ListActivity
 	{
 		List<String> contacts = new List<String>();
 
@@ -41,12 +42,22 @@ namespace ContactsSample
 
 		    ListView.TextFilterEnabled = true;
 		
-		    ListView.ItemClick += delegate (object sender, ItemEventArgs args) {
+			ListView.ItemClick += delegate (object sender, ItemEventArgs args) {
 		        //
-				// When clicked, show a toast with the display name
-		        // Alternatively, you could start a new activity to display more contact details
+				// When clicked, start a new activity to display more contact details
 				//
-				Toast.MakeText (Application, ((TextView)args.View).Text, ToastLength.Short).Show ();
+				String displayName = ((TextView)args.View).Text;
+				//String mobilePhone = ((TextView)args.View).Text;
+				
+				Intent showContactDetails = new Intent(this, typeof(ContactActivity));
+				showContactDetails.PutExtra("displayName", displayName);
+				//showContactDetails.PutExtra("mobilePhone", mobilePhone);
+				StartActivity(showContactDetails);
+				
+				//
+				// alternatively, show a toast
+				//
+				//Toast.MakeText (Application, ((TextView)args.View).Text, ToastLength.Short).Show ();
 		    };
 		}
 	}

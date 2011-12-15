@@ -34,11 +34,28 @@ namespace ContactsSample
 			}
 		}
 		
+		public partial class Id
+		{
+			
+			// aapt resource value: 0x7f050000
+			public const int full_name = 2131034112;
+			
+			// aapt resource value: 0x7f050001
+			public const int mobile_phone = 2131034113;
+			
+			private Id()
+			{
+			}
+		}
+		
 		public partial class Layout
 		{
 			
 			// aapt resource value: 0x7f030000
-			public const int list_item = 2130903040;
+			public const int contact_view = 2130903040;
+			
+			// aapt resource value: 0x7f030001
+			public const int list_item = 2130903041;
 			
 			private Layout()
 			{
