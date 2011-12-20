@@ -1,7 +1,10 @@
 using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Android.Content;
+using Android.OS;
+using Android.Provider;
 
 namespace Xamarin.Media
 {
@@ -10,12 +13,6 @@ namespace Xamarin.Media
 		public MediaPicker (Context context)
 		{
 			this.context = context;
-		}
-
-		public bool ShowCamera
-		{
-			get;
-			set;
 		}
 
 		public bool PhotosSupported
@@ -28,21 +25,48 @@ namespace Xamarin.Media
 			get { return true; }
 		}
 
-		public Task<Photo> PickPhotoAsync()
+		public Task<MediaFile> PickPhotoAsync()
 		{
-			return PickMediaAsync<Photo> ("image/*");
+			return TakeMediaAsync ("image/*", Intent.ActionPick, null);
 		}
 
-		public Task<Video> PickVideoAsync()
+		public Task<MediaFile> TakePhotoAsync (StoreMediaOptions options)
 		{
-			return PickMediaAsync<Video> ("video/*");
+			VerifyOptions (options);
+
+			return TakeMediaAsync ("image/*", MediaStore.ActionImageCapture, options);
+		}
+
+		public Task<MediaFile> PickVideoAsync()
+		{
+			return TakeMediaAsync ("video/*", Intent.ActionPick, null);
+		}
+
+		public Task<MediaFile> TakeVideoAsync (StoreVideoOptions options)
+		{
+			VerifyOptions (options);
+
+			return TakeMediaAsync ("video/*", MediaStore.ActionVideoCapture, options);
 		}
 
 		private readonly Context context;
 		private int requestId;
+		private TaskCompletionSource<MediaFile> completionSource;
 
-		private Task<T> PickMediaAsync<T> (string type)
-			where T : Media
+		private void VerifyOptions (StoreMediaOptions options)
+		{
+			if (options == null)
+				throw new ArgumentNullException ("options");
+			if (options.Location == MediaFileStoreLocation.Local)
+			{
+				//if (String.IsNullOrWhiteSpace (options.Directory))
+				//	throw new ArgumentNullException ("options", "For local storage, options.Directory must be set");
+				if (Path.IsPathRooted (options.Directory))
+					throw new ArgumentException ("options.Directory must be a relative path", "options");
+			}
+		}
+
+		private Task<MediaFile> TakeMediaAsync (string type, string action, StoreMediaOptions options)
 		{
 			int id = this.requestId;
 			if (this.requestId == Int32.MaxValue)
@@ -50,12 +74,34 @@ namespace Xamarin.Media
 			else
 				this.requestId++;
 
+			var ntcs = new TaskCompletionSource<MediaFile> (id);
+			var tcs = Interlocked.CompareExchange (ref this.completionSource, ntcs, null);
+			if (tcs != null)
+				throw new InvalidOperationException ("Only one operation can be active at a time");
+
 			Intent pickerIntent = new Intent (this.context, typeof (MediaPickerActivity));
-			pickerIntent.PutExtra ("type", type);
-			pickerIntent.PutExtra ("id", id);
+			pickerIntent.PutExtra (MediaPickerActivity.ExtraType, type);
+			pickerIntent.PutExtra (MediaPickerActivity.ExtraId, id);
+			pickerIntent.PutExtra (MediaPickerActivity.ExtraAction, action);
+
+			if (options != null)
+			{
+				pickerIntent.PutExtra (MediaPickerActivity.ExtraLocation, options.Location.ToString());
+				pickerIntent.PutExtra (MediaPickerActivity.ExtraPath, options.Directory);
+				pickerIntent.PutExtra (MediaStore.Images.ImageColumns.Title, options.Name);
+				if (options.Description != null)
+					pickerIntent.PutExtra (MediaStore.Images.ImageColumns.Description, options.Description);
+			}
+
+			var vidOptions = (options as StoreVideoOptions);
+			if (vidOptions != null)
+			{
+				pickerIntent.PutExtra (MediaStore.ExtraDurationLimit, (int)vidOptions.MaximumLength.TotalSeconds);
+				pickerIntent.PutExtra (MediaStore.ExtraVideoQuality, (int)vidOptions.Quality);
+			}
+
 			this.context.StartActivity (pickerIntent);
 
-			var tcs = new TaskCompletionSource<T> (id);
 			EventHandler<MediaPickedEventArgs> handler = null;
 			handler = (s, e) =>
 			{
@@ -65,16 +111,16 @@ namespace Xamarin.Media
 					return;
 
 				if (e.Error != null)
-					tcs.SetException (e.Error);
+					ntcs.SetException (e.Error);
 				else if (e.IsCanceled)
-					tcs.SetCanceled();
+					ntcs.SetCanceled();
 				else
-					tcs.SetResult ((T)e.Media);
+					ntcs.SetResult (e.Media);
 			};
 
 			MediaPickerActivity.MediaPicked += handler;
 
-			return tcs.Task;
+			return ntcs.Task;
 		}
 	}
 }

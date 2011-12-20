@@ -1,7 +1,12 @@
 using System;
+using System.IO;
 using Android.App;
 using Android.Content;
+using Android.Database;
 using Android.OS;
+using Android.Provider;
+using Environment = Android.OS.Environment;
+using Path = System.IO.Path;
 using Uri = Android.Net.Uri;
 
 namespace Xamarin.Media
@@ -10,23 +15,51 @@ namespace Xamarin.Media
 	internal class MediaPickerActivity
 		: Activity
 	{
+		internal const string ExtraPath = "path";
+		internal const string ExtraLocation = "location";
+		internal const string ExtraType = "type";
+		internal const string ExtraId = "id";
+		internal const string ExtraAction = "action";
+
 		internal static event EventHandler<MediaPickedEventArgs> MediaPicked;
 
+		private Uri path;
 		private bool isPhoto;
 		protected override void OnCreate (Bundle savedInstanceState)
 		{
 			base.OnCreate (savedInstanceState);
 
-			int id = this.Intent.GetIntExtra ("id", 0);
-			string type = this.Intent.GetStringExtra ("type");
+			int id = this.Intent.GetIntExtra (ExtraId, 0);
+			string type = this.Intent.GetStringExtra (ExtraType);
 			if (type == "image/*")
 				isPhoto = true;
+
+			string action = this.Intent.GetStringExtra (ExtraAction);
 
 			Intent pickIntent = null;
 			try
 			{
-				pickIntent = new Intent (Intent.ActionPick);
-				pickIntent.SetType (type);
+				pickIntent = new Intent (action);
+				if (action == Intent.ActionPick)
+					pickIntent.SetType (type);
+				else
+				{
+					if (!this.isPhoto)
+					{
+						int seconds = this.Intent.GetIntExtra (MediaStore.ExtraVideoQuality, 0);
+						if (seconds != 0)
+							pickIntent.PutExtra (MediaStore.ExtraDurationLimit, seconds);
+					}
+
+					pickIntent.PutExtra (MediaStore.ExtraVideoQuality, this.Intent.GetIntExtra (MediaStore.ExtraVideoQuality, 1));
+
+					MediaFileStoreLocation loc = (MediaFileStoreLocation) this.Intent.GetIntExtra (ExtraLocation, 0);
+					this.path = GetOutputMediaFile (loc, this.Intent.GetStringExtra (ExtraPath), this.Intent.GetStringExtra (MediaStore.MediaColumns.Title));
+					Touch();
+
+					pickIntent.PutExtra (MediaStore.ExtraOutput, this.path);
+				}
+
 				StartActivityForResult (pickIntent, id);
 			}
 			catch (Exception ex)
@@ -39,6 +72,14 @@ namespace Xamarin.Media
 					pickIntent.Dispose();
 			}
 		}
+		
+		private void Touch()
+		{
+			if (this.path.Scheme != "file")
+				return;
+
+			File.Create (GetLocalPath (this.path)).Close();
+		}
 
 		protected override void OnActivityResult (int requestCode, Result resultCode, Intent data)
 		{
@@ -49,18 +90,93 @@ namespace Xamarin.Media
 				args = new MediaPickedEventArgs (requestCode, isCanceled: true);
 			else
 			{
-				string targetUri = data.Data.ToString();
-				object media;
-				if (isPhoto)
-					media = new Photo (targetUri);
-				else
-					media = new Video (targetUri);
+				Uri targetUri = (data != null) ? data.Data : this.path;
+				if (targetUri == null)
+					targetUri = this.path;
 
-				args = new MediaPickedEventArgs (requestCode, false, media);
+				var mf = new MediaFile (() => GetStreamForUri (targetUri), () => DeleteFileAtUri (targetUri));
+				args = new MediaPickedEventArgs (requestCode, false, mf);
 			}
 
 			OnMediaPicked (args);
 			Finish();
+		}
+
+		private string GetUniquePath (MediaFileStoreLocation loc, string name)
+		{
+			string ext = Path.GetExtension (name) ?? ((this.isPhoto) ? ".jpg" : ".mp4");
+			name = Path.GetFileNameWithoutExtension (name);
+
+			string nname = name + ext;
+			int i = 1;
+			while (File.Exists (nname))
+				nname = name + "_" + (i++) + ext;
+
+			return nname;
+		}
+
+		private Uri GetOutputMediaFile (MediaFileStoreLocation loc, string subdir, string name)
+		{
+			if (loc == MediaFileStoreLocation.None && subdir == null)
+				subdir = "tmp";
+
+			string type = (this.isPhoto) ? Environment.DirectoryPictures : Environment.DirectoryMovies;
+			Java.IO.File mediaStorageDir = new Java.IO.File (GetExternalFilesDir (type), subdir);
+			if (!mediaStorageDir.Exists())
+			{
+				if (!mediaStorageDir.Mkdirs())
+					return null;
+			}
+
+			if (String.IsNullOrWhiteSpace (name))
+			{
+				string timestamp = DateTime.Now.ToString ("yyyyMMdd_HHmmss");
+				if (this.isPhoto)
+					name = "IMG_" + timestamp + ".jpg";
+				else
+					name = "VID_" + timestamp + ".mp4";
+			}
+
+			return Uri.FromFile (new Java.IO.File (
+				mediaStorageDir.Path + Java.IO.File.Separator + GetUniquePath (loc, name)));
+		}
+
+		private Stream GetStreamForUri (Uri uri)
+		{
+			if (uri.Scheme == "file")
+				return File.OpenRead (new System.Uri (uri.ToString()).LocalPath);
+
+			ICursor c = null;
+			try
+			{
+				c = ContentResolver.Query (uri, null, null, null, null);
+				if (!c.MoveToNext())
+					return null;
+
+				byte[] image = c.GetBlob (c.GetColumnIndex (MediaStore.MediaColumns.Data));
+				return new MemoryStream (image);
+				/*string path = c.GetString (c.GetColumnIndex (MediaStore.MediaColumns.Title));
+				bool exists = File.Exists (path);//Path.Combine (Environment.DirectoryPictures, path));
+				exists.ToString();*/
+			}
+			finally
+			{
+				if (c != null)
+					c.Close();
+			}
+		}
+
+		private string GetLocalPath (Uri uri)
+		{
+			return new System.Uri (uri.ToString()).LocalPath;
+		}
+
+		private void DeleteFileAtUri (Uri uri)
+		{
+			if (uri.Scheme == "file")
+				File.Delete (GetLocalPath (uri));
+			else
+				ContentResolver.Delete (uri, null, null);
 		}
 
 		private static void OnMediaPicked (MediaPickedEventArgs e)
@@ -83,7 +199,7 @@ namespace Xamarin.Media
 			Error = error;
 		}
 
-		public MediaPickedEventArgs (int id, bool isCanceled, object media = null)
+		public MediaPickedEventArgs (int id, bool isCanceled, MediaFile media = null)
 		{
 			RequestId = id;
 			IsCanceled = isCanceled;
@@ -111,7 +227,7 @@ namespace Xamarin.Media
 			private set;
 		}
 
-		public object Media
+		public MediaFile Media
 		{
 			get;
 			private set;

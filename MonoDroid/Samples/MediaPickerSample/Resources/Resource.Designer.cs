@@ -37,6 +37,9 @@ namespace MediaPickerSample
 		public partial class Id
 		{
 			
+			// aapt resource value: 0x7f050002
+			public const int image = 2131034114;
+			
 			// aapt resource value: 0x7f050000
 			public const int photoButton = 2131034112;
 			

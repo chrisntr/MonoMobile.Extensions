@@ -12,7 +12,7 @@
     <RootNamespace>Xamarin</RootNamespace>
     <AssemblyName>Xamarin.Mobile</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkVersion>v2.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v2.2</TargetFrameworkVersion>
     <AndroidSupportedAbis>armeabi</AndroidSupportedAbis>
     <AndroidStoreUncompressedFileExtensions />
     <MandroidI18n />
@@ -30,12 +30,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <OutputPath>bin\Debug\</OutputPath>
-    <DebugType>none</DebugType>
+    <DebugType>full</DebugType>
     <AndroidLinkMode>None</AndroidLinkMode>
     <WarningLevel>4</WarningLevel>
     <Optimize>false</Optimize>
+    <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
+    <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
@@ -70,11 +73,8 @@
     <Compile Include="..\..\Shared\Media\Media.cs">
       <Link>Media\Media.cs</Link>
     </Compile>
-    <Compile Include="..\..\Shared\Media\Photo.cs">
-      <Link>Media\Photo.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Shared\Media\Video.cs">
-      <Link>Media\Video.cs</Link>
+    <Compile Include="..\..\Shared\Media\StoreMediaOptions.cs">
+      <Link>Media\StoreMediaOptions.cs</Link>
     </Compile>
     <Compile Include="..\..\Shared\Position.cs">
       <Link>Geolocation\Position.cs</Link>

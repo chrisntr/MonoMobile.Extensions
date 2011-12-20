@@ -1,20 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-<Button  
-    android:id="@+id/photoButton"
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="Pick Photo"
-    />
-
-<Button
-    android:id="@+id/videoButton"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:text="Pick Video"
-    />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+	<Button android:id="@+id/photoButton" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Take Photo" />
+	<Button android:id="@+id/videoButton" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Take Video" />
+	<ImageView android:id="@+id/image" android:layout_width="fill_parent" android:layout_height="wrap_content"/>
 </LinearLayout>
