@@ -70,8 +70,8 @@
     <Compile Include="..\..\Shared\Contacts\Website.cs">
       <Link>Contacts\Website.cs</Link>
     </Compile>
-    <Compile Include="..\..\Shared\Media\Media.cs">
-      <Link>Media\Media.cs</Link>
+    <Compile Include="..\..\Shared\Media\MediaFile.cs">
+      <Link>Media\MediaFile.cs</Link>
     </Compile>
     <Compile Include="..\..\Shared\Media\StoreMediaOptions.cs">
       <Link>Media\StoreMediaOptions.cs</Link>
