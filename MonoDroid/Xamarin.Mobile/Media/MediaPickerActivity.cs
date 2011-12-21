@@ -102,17 +102,17 @@ namespace Xamarin.Media
 			Finish();
 		}
 
-		private string GetUniquePath (MediaFileStoreLocation loc, string name)
+		private string GetUniquePath (string folder, string name)
 		{
 			string ext = Path.GetExtension (name) ?? ((this.isPhoto) ? ".jpg" : ".mp4");
 			name = Path.GetFileNameWithoutExtension (name);
 
 			string nname = name + ext;
 			int i = 1;
-			while (File.Exists (nname))
+			while (File.Exists (Path.Combine (folder, nname)))
 				nname = name + "_" + (i++) + ext;
 
-			return nname;
+			return Path.Combine (folder, nname);
 		}
 
 		private Uri GetOutputMediaFile (MediaFileStoreLocation loc, string subdir, string name)
@@ -137,8 +137,7 @@ namespace Xamarin.Media
 					name = "VID_" + timestamp + ".mp4";
 			}
 
-			return Uri.FromFile (new Java.IO.File (
-				mediaStorageDir.Path + Java.IO.File.Separator + GetUniquePath (loc, name)));
+			return Uri.FromFile (new Java.IO.File (GetUniquePath (mediaStorageDir.Path, name)));
 		}
 
 		private Stream GetStreamForUri (Uri uri)
