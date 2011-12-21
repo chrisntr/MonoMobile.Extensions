@@ -46,7 +46,7 @@ namespace Xamarin.Media
 				{
 					if (!this.isPhoto)
 					{
-						int seconds = this.Intent.GetIntExtra (MediaStore.ExtraVideoQuality, 0);
+						int seconds = this.Intent.GetIntExtra (MediaStore.ExtraDurationLimit, 0);
 						if (seconds != 0)
 							pickIntent.PutExtra (MediaStore.ExtraDurationLimit, seconds);
 					}
