@@ -32,7 +32,7 @@ namespace Xamarin.Media
 			int id = this.Intent.GetIntExtra (ExtraId, 0);
 			string type = this.Intent.GetStringExtra (ExtraType);
 			if (type == "image/*")
-				isPhoto = true;
+				this.isPhoto = true;
 
 			string action = this.Intent.GetStringExtra (ExtraAction);
 

@@ -57,6 +57,8 @@ namespace Xamarin.Media
 		{
 			if (options == null)
 				throw new ArgumentNullException ("options");
+			if (!Enum.IsDefined (typeof(MediaFileStoreLocation), options.Location))
+				throw new ArgumentException ("options.Location is not a member of MediaFileStoreLocation");
 			if (options.Location == MediaFileStoreLocation.Local)
 			{
 				//if (String.IsNullOrWhiteSpace (options.Directory))
