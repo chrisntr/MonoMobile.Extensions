@@ -104,7 +104,10 @@ namespace Xamarin.Media
 
 		private string GetUniquePath (string folder, string name)
 		{
-			string ext = Path.GetExtension (name) ?? ((this.isPhoto) ? ".jpg" : ".mp4");
+			string ext = Path.GetExtension (name);
+			if (ext == String.Empty)
+				ext = ((this.isPhoto) ? ".jpg" : ".mp4");
+
 			name = Path.GetFileNameWithoutExtension (name);
 
 			string nname = name + ext;
