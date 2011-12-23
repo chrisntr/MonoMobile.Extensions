@@ -1,8 +1,9 @@
 using System;
-using MonoTouch.UIKit;
-using System.Threading.Tasks;
 using System.IO;
+using System.Threading.Tasks;
+using MonoTouch.AssetsLibrary;
 using MonoTouch.Foundation;
+using MonoTouch.UIKit;
 
 namespace Xamarin.Media
 {
@@ -19,25 +20,39 @@ namespace Xamarin.Media
 			get { return tcs.Task; }
 		}
 
-		public override void FinishedPickingMedia (UIImagePickerController picker, MonoTouch.Foundation.NSDictionary info)
+		public override void FinishedPickingMedia (UIImagePickerController picker, NSDictionary info)
 		{
-			string path;
+			Task<NSUrl> saved = null;
 			Func<Stream> streamGetter = null;
 			switch ((NSString)info[UIImagePickerController.MediaType])
 			{
 				case MediaPicker.TypeImage:
-					streamGetter = GetPictureStreamGetter (info);
+					streamGetter = GetPictureStreamGetter (info, out saved);
 					break;
 
 				case MediaPicker.TypeMovie:
-					streamGetter = GetMovieStreamGetter (info);
+					streamGetter = GetMovieStreamGetter (info, out saved);
 					break;
 
 				default:
 					throw new NotSupportedException();
 			}
 
-			this.tcs.TrySetResult (new MediaFile (streamGetter, null));
+			if (saved == null)
+				this.tcs.TrySetResult (new MediaFile (streamGetter, null));
+			else
+			{
+				saved.ContinueWith (t =>
+				{
+					if (t.IsCanceled)
+						this.tcs.TrySetCanceled();
+					else if (t.IsFaulted)
+						this.tcs.TrySetException (t.Exception);
+					else
+						this.tcs.TrySetResult (new MediaFile (streamGetter, null));
+				});
+			}
+
 			picker.DismissModalViewControllerAnimated (animated: true);
 		}
 
@@ -47,12 +62,13 @@ namespace Xamarin.Media
 			picker.DismissModalViewControllerAnimated (animated: true);
 		}
 
-		private TaskCompletionSource<MediaFile> tcs = new TaskCompletionSource<MediaFile>();
-		private StoreCameraMediaOptions options;
-		private bool isPhoto;
+		private readonly TaskCompletionSource<MediaFile> tcs = new TaskCompletionSource<MediaFile>();
+		private readonly StoreCameraMediaOptions options;
 
-		private Func<Stream> GetPictureStreamGetter (NSDictionary info)
+		private Func<Stream> GetPictureStreamGetter (NSDictionary info, out Task<NSUrl> saveCompleted)
 		{
+			saveCompleted = null;
+
 			var image = (UIImage)info[UIImagePickerController.EditedImage];
 			if (image == null)
 				image = (UIImage)info[UIImagePickerController.OriginalImage];
@@ -73,11 +89,29 @@ namespace Xamarin.Media
 					s.Flush();
 				}
 			}
+			else if (this.options.Location == MediaFileStoreLocation.CameraRoll)
+			{
+				var saveTcs = new TaskCompletionSource<NSUrl>();
+				saveCompleted = saveTcs.Task;
+
+				ALAssetsLibrary library = new ALAssetsLibrary();
+				library.WriteImageToSavedPhotosAlbum (image.AsJPEG(), (NSDictionary)info[UIImagePickerController.MediaMetadata],
+					(u, e) =>
+					{
+						if (e != null)
+							saveTcs.SetException (new Exception (e.LocalizedDescription));
+						else
+							saveTcs.SetResult (u);
+
+						library.Dispose();
+					});
+			}
 
 			return () =>
 			{
 				switch (this.options.Location)
 				{
+					case MediaFileStoreLocation.CameraRoll:
 					case MediaFileStoreLocation.None:
 						return new NSDataStream (image.AsJPEG());
 
@@ -85,17 +119,15 @@ namespace Xamarin.Media
 						return File.OpenRead (path);
 						break;
 
-					case MediaFileStoreLocation.CameraRoll:
-						throw new NotImplementedException();
-
 					default:
 						throw new NotSupportedException();
 				}
 			};
 		}
 
-		private Func<Stream> GetMovieStreamGetter (NSDictionary info)
+		private Func<Stream> GetMovieStreamGetter (NSDictionary info, out Task<NSUrl> saveCompleted)
 		{
+			saveCompleted = null;
 			NSUrl url = (NSUrl)info[UIImagePickerController.MediaURL];
 		
 			string path = null;
@@ -103,6 +135,22 @@ namespace Xamarin.Media
 			{
 				path = GetOutputPath (MediaPicker.TypeMovie, options.Directory ?? String.Empty, this.options.Name);
 				File.Copy (url.Path, path);
+			}
+			else if (this.options.Location == MediaFileStoreLocation.CameraRoll)
+			{
+				var saveTcs = new TaskCompletionSource<NSUrl>();
+				saveCompleted = saveTcs.Task;
+
+				ALAssetsLibrary library = new ALAssetsLibrary();
+				library.WriteVideoToSavedPhotosAlbum (url, (u, e) =>
+				{
+					if (e != null)
+						saveTcs.SetException (new Exception (e.LocalizedDescription));
+					else
+						saveTcs.SetResult (u);
+
+					library.Dispose();
+				});
 			}
 			else
 				path = url.Path;

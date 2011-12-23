@@ -17,11 +17,11 @@ namespace Xamarin.Media
 									.Intersect (UIImagePickerController.AvailableMediaTypes (UIImagePickerControllerSourceType.PhotoLibrary))
 				            		.ToArray();
 
-			for (int i = 0; i < mediaTypes.Length; ++i)
+			foreach (string type in mediaTypes)
 			{
-				if (mediaTypes[i] == TypeMovie)
+				if (type == TypeMovie)
 					VideosSupported = true;
-				else if (mediaTypes[i] == TypeImage)
+				else if (type == TypeImage)
 					PhotosSupported = true;
 			}
 		}
