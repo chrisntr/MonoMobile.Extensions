@@ -51,7 +51,8 @@ namespace Xamarin.Media
 							pickIntent.PutExtra (MediaStore.ExtraDurationLimit, seconds);
 					}
 
-					pickIntent.PutExtra (MediaStore.ExtraVideoQuality, this.Intent.GetIntExtra (MediaStore.ExtraVideoQuality, 1));
+					VideoQuality quality = (VideoQuality)this.Intent.GetIntExtra (MediaStore.ExtraVideoQuality, (int)VideoQuality.High);
+					pickIntent.PutExtra (MediaStore.ExtraVideoQuality, GetVideoQuality (quality));
 
 					MediaFileStoreLocation loc = (MediaFileStoreLocation) this.Intent.GetIntExtra (ExtraLocation, 0);
 					this.path = GetOutputMediaFile (loc, this.Intent.GetStringExtra (ExtraPath), this.Intent.GetStringExtra (MediaStore.MediaColumns.Title));
@@ -100,6 +101,18 @@ namespace Xamarin.Media
 
 			OnMediaPicked (args);
 			Finish();
+		}
+
+		private int GetVideoQuality (VideoQuality quality)
+		{
+			switch (quality)
+			{
+				case VideoQuality.High:
+					return 1;
+
+				default:
+					return 0;
+			}
 		}
 
 		private string GetUniquePath (string folder, string name)
