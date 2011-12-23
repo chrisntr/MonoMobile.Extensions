@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using MonoTouch.UIKit;
 using System.Threading;
 using System.IO;
+using System.Linq;
 
 namespace Xamarin.Media
 {
@@ -10,41 +11,67 @@ namespace Xamarin.Media
 	{
 		public MediaPicker ()
 		{
+			IsCameraAvailable = UIImagePickerController.IsSourceTypeAvailable (UIImagePickerControllerSourceType.Camera);
+
+			string[] mediaTypes = UIImagePickerController.AvailableMediaTypes (UIImagePickerControllerSourceType.Camera)
+									.Intersect (UIImagePickerController.AvailableMediaTypes (UIImagePickerControllerSourceType.PhotoLibrary))
+				            		.ToArray();
+
+			for (int i = 0; i < mediaTypes.Length; ++i)
+			{
+				if (mediaTypes[i] == TypeMovie)
+					VideosSupported = true;
+				else if (mediaTypes[i] == TypeImage)
+					PhotosSupported = true;
+			}
 		}
-		
+
+		public bool IsCameraAvailable
+		{
+			get;
+			private set;
+		}
+
 		public bool PhotosSupported
 		{
 			get;
 			private set;
 		}
-		
+
 		public bool VideosSupported
 		{
 			get;
 			private set;
 		}
-		
+
 		public Task<MediaFile> PickPhotoAsync()
 		{
 			return TakeMedia (UIImagePickerControllerSourceType.PhotoLibrary, TypeImage);
 		}
-		
-		public Task<MediaFile> TakePhotoAsync (StoreMediaOptions options)
+
+		public Task<MediaFile> TakePhotoAsync (StoreCameraMediaOptions options)
 		{
-			VerifyOptions (options);
+			VerifyCameraOptions (options);
 
 			return TakeMedia (UIImagePickerControllerSourceType.Camera, TypeImage, options);
 		}
-		
+
 		public Task<MediaFile> PickVideoAsync()
 		{
-			return TakeMedia (UIImagePickerControllerSourceType.PhotoLibrary, TypeVideo);
+			return TakeMedia (UIImagePickerControllerSourceType.PhotoLibrary, TypeMovie);
 		}
-		
+
+		public Task<MediaFile> TakeVideoAsync (StoreVideoOptions options)
+		{
+			VerifyCameraOptions (options);
+
+			return TakeMedia (UIImagePickerControllerSourceType.Camera, TypeMovie, options);
+		}
+
 		private UIImagePickerControllerDelegate pickerDelegate;
 		internal const string TypeImage = "public.image";
-		internal const string TypeVideo = "public.video";
-		
+		internal const string TypeMovie = "public.movie";
+
 		private void VerifyOptions (StoreMediaOptions options)
 		{
 			if (options == null)
@@ -57,19 +84,43 @@ namespace Xamarin.Media
 					throw new ArgumentException ("options.Directory must be a relative path", "options");
 			}
 		}
-		
-		private Task<MediaFile> TakeMedia (UIImagePickerControllerSourceType sourceType, string mediaType, StoreMediaOptions options = null)
+
+		private void VerifyCameraOptions (StoreCameraMediaOptions options)
 		{
-			var ndelegate = new MediaPickerDelegate (options);
+			VerifyOptions (options);
+			if (!Enum.IsDefined (typeof(CameraDevice), options.DefaultCamera))
+				throw new ArgumentException ("options.Camera is not a member of CameraDevice");
+		}
+
+		private Task<MediaFile> TakeMedia (UIImagePickerControllerSourceType sourceType, string mediaType, StoreCameraMediaOptions options = null)
+		{
+			MediaPickerDelegate ndelegate = new MediaPickerDelegate (options);
 			var od = Interlocked.CompareExchange (ref this.pickerDelegate, ndelegate, null);
 			if (od != null)
 				throw new InvalidOperationException ("Only one operation can be active at at time");
-			
+
 			UIImagePickerController picker = new UIImagePickerController();
 			picker.Delegate = ndelegate;
-				
-			picker.SourceType = sourceType;
 			picker.MediaTypes = new[] { mediaType };
+			picker.SourceType = sourceType;
+
+			if (sourceType == UIImagePickerControllerSourceType.Camera)
+			{
+				picker.CameraDevice = GetUICameraDevice (options.DefaultCamera);
+				
+				if (mediaType == TypeImage)
+				{
+					picker.CameraCaptureMode = UIImagePickerControllerCameraCaptureMode.Photo;
+				}
+				else if (mediaType == TypeMovie)
+				{
+					StoreVideoOptions voptions = (StoreVideoOptions)options;
+					
+					picker.CameraCaptureMode = UIImagePickerControllerCameraCaptureMode.Video;
+					picker.VideoQuality = (voptions.Quality == VideoQuality.High) ? UIImagePickerControllerQualityType.High : UIImagePickerControllerQualityType.Medium;
+					picker.VideoMaximumDuration = voptions.MaximumLength.TotalSeconds;
+				}
+			}
 
 			UIWindow window = UIApplication.SharedApplication.KeyWindow;
 			UIViewController rootController = window.RootViewController;
@@ -79,8 +130,21 @@ namespace Xamarin.Media
 			{
 				throw new NotImplementedException();
 			}
-			
+
 			return ndelegate.Task;
+		}
+		
+		private UIImagePickerControllerCameraDevice GetUICameraDevice (CameraDevice device)
+		{
+			switch (device)
+			{
+				case CameraDevice.Front:
+					return UIImagePickerControllerCameraDevice.Front;
+				case CameraDevice.Rear:
+					return UIImagePickerControllerCameraDevice.Rear;
+				default:
+					throw new NotSupportedException();
+			}
 		}
 	}
 }

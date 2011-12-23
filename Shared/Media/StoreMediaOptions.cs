@@ -34,6 +34,28 @@ namespace Xamarin.Media
 			get;
 			set;
 		}
+		
+		public bool AllowEditing
+		{
+			get;
+			set;
+		}
+	}
+	
+	public enum CameraDevice
+	{
+		Rear,
+		Front
+	}
+	
+	public class StoreCameraMediaOptions
+		: StoreMediaOptions
+	{
+		public CameraDevice DefaultCamera
+		{
+			get;
+			set;
+		}
 	}
 
 	public enum VideoQuality
@@ -43,7 +65,7 @@ namespace Xamarin.Media
 	}
 
 	public class StoreVideoOptions
-		: StoreMediaOptions
+		: StoreCameraMediaOptions
 	{
 		public StoreVideoOptions()
 		{
