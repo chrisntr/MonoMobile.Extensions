@@ -145,8 +145,7 @@ namespace Xamarin.Media
 					return null;
 
 				Java.IO.File nomedia = new Java.IO.File (mediaStorageDir, ".nomedia");
-				if (!nomedia.CreateNewFile())
-					return null;
+				nomedia.CreateNewFile();
 			}
 
 			if (String.IsNullOrWhiteSpace (name))
