@@ -28,7 +28,7 @@ namespace MediaPickerSample
 					Name = "video",
 					Description = "desc",
 					Directory = "asdf",
-					MaximumLength = TimeSpan.FromSeconds (10)
+					DesiredLength = TimeSpan.FromSeconds (10)
 				})
 				.ContinueWith (t =>
 				{
