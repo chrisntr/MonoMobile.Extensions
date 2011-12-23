@@ -117,7 +117,7 @@ namespace Xamarin.Media
 					StoreVideoOptions voptions = (StoreVideoOptions)options;
 					
 					picker.CameraCaptureMode = UIImagePickerControllerCameraCaptureMode.Video;
-					picker.VideoQuality = (voptions.Quality == VideoQuality.High) ? UIImagePickerControllerQualityType.High : UIImagePickerControllerQualityType.Medium;
+					picker.VideoQuality = GetQuailty (voptions.Quality);
 					picker.VideoMaximumDuration = voptions.MaximumLength.TotalSeconds;
 				}
 			}
@@ -144,6 +144,19 @@ namespace Xamarin.Media
 					return UIImagePickerControllerCameraDevice.Rear;
 				default:
 					throw new NotSupportedException();
+			}
+		}
+
+		private UIImagePickerControllerQualityType GetQuailty (VideoQuality quality)
+		{
+			switch (quality)
+			{
+				case VideoQuality.Low:
+					return UIImagePickerControllerQualityType.Low;
+				case VideoQuality.Medium:
+					return UIImagePickerControllerQualityType.Medium;
+				default:
+					return UIImagePickerControllerQualityType.High;
 			}
 		}
 	}
