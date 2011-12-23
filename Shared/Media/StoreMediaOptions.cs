@@ -71,10 +71,10 @@ namespace Xamarin.Media
 		public StoreVideoOptions()
 		{
 			Quality = VideoQuality.High;
-			MaximumLength = TimeSpan.FromMinutes (10);
+			DesiredLength = TimeSpan.FromMinutes (10);
 		}
 
-		public TimeSpan MaximumLength
+		public TimeSpan DesiredLength
 		{
 			get;
 			set;

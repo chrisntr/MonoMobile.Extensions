@@ -118,7 +118,7 @@ namespace Xamarin.Media
 					
 					picker.CameraCaptureMode = UIImagePickerControllerCameraCaptureMode.Video;
 					picker.VideoQuality = GetQuailty (voptions.Quality);
-					picker.VideoMaximumDuration = voptions.MaximumLength.TotalSeconds;
+					picker.VideoMaximumDuration = voptions.DesiredLength.TotalSeconds;
 				}
 			}
 

@@ -98,7 +98,7 @@ namespace Xamarin.Media
 			var vidOptions = (options as StoreVideoOptions);
 			if (vidOptions != null)
 			{
-				pickerIntent.PutExtra (MediaStore.ExtraDurationLimit, (int)vidOptions.MaximumLength.TotalSeconds);
+				pickerIntent.PutExtra (MediaStore.ExtraDurationLimit, (int)vidOptions.DesiredLength.TotalSeconds);
 				pickerIntent.PutExtra (MediaStore.ExtraVideoQuality, (int)vidOptions.Quality);
 			}
 
