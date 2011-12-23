@@ -61,7 +61,8 @@ namespace Xamarin.Media
 	public enum VideoQuality
 	{
 		Low = 0,
-		High = 1,
+		Medium = 1,
+		High = 2,
 	}
 
 	public class StoreVideoOptions
