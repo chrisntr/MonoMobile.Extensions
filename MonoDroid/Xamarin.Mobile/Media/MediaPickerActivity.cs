@@ -107,6 +107,7 @@ namespace Xamarin.Media
 		{
 			switch (quality)
 			{
+				case VideoQuality.Medium:
 				case VideoQuality.High:
 					return 1;
 
