@@ -86,6 +86,7 @@
     <Compile Include="Contacts\Contact.cs" />
     <Compile Include="Contacts\ContactQueryProvider.cs" />
     <Compile Include="Contacts\ContactHelper.cs" />
+    <Compile Include="DateTimeExtensions.cs" />
     <Compile Include="Geolocation\GeolocationContinuousListener.cs" />
     <Compile Include="Geolocation\GeolocationSingleListener.cs" />
     <Compile Include="Geolocation\Geolocator.cs" />
