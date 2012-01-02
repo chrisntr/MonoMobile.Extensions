@@ -84,8 +84,7 @@ namespace Xamarin.Media
 				this.requestId++;
 
 			var ntcs = new TaskCompletionSource<MediaFile> (id);
-			var tcs = Interlocked.CompareExchange (ref this.completionSource, ntcs, null);
-			if (tcs != null)
+			if (Interlocked.CompareExchange (ref this.completionSource, ntcs, null) != null)
 				throw new InvalidOperationException ("Only one operation can be active at a time");
 
 			Intent pickerIntent = new Intent (this.context, typeof (MediaPickerActivity));
