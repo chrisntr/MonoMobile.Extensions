@@ -34,20 +34,20 @@ namespace Xamarin.Media
 			get;
 			set;
 		}
-		
+
 		public bool AllowEditing
 		{
 			get;
 			set;
 		}
 	}
-	
+
 	public enum CameraDevice
 	{
 		Rear,
 		Front
 	}
-	
+
 	public class StoreCameraMediaOptions
 		: StoreMediaOptions
 	{
@@ -86,5 +86,4 @@ namespace Xamarin.Media
 			set;
 		}
 	}
-
 }
