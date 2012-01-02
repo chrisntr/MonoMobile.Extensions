@@ -122,13 +122,10 @@ namespace Xamarin.Contacts
 			set { this.phones = new List<Phone> (value); }
 		}
 
-		public UIImage PhotoThumbnail
+		public UIImage GetPhotoThumbnail()
 		{
-			get
-			{
-				LoadThumbnail();
-				return this.thumbnail;
-			}
+			LoadThumbnail();
+			return this.thumbnail;
 		}
 
 		private readonly ABPerson person;

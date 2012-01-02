@@ -122,43 +122,17 @@ namespace Xamarin.Contacts
 			set { this.phones = new List<Phone> (value); }
 		}
 
-		public Bitmap PhotoThumbnail
+		public Bitmap GetPhotoThumbnail()
 		{
-			get
-			{
-				LoadThumbnail();
+			LoadThumbnail();
 
-				return this.thumbnail;
-			}
+			return this.thumbnail;
 		}
-
-		//public Bitmap Photo
-		//{
-		//    get
-		//    {
-		//        LoadPhoto();
-
-		//        return this.photo;
-		//    }
-		//}
 
 		private readonly ContentResolver content;
 
-		//private bool photoLoaded;
-		//private Bitmap photo;
-
 		private bool thubnailLoaded;
 		private Bitmap thumbnail;
-
-		//private void LoadPhoto()
-		//{
-		//    if (this.photoLoaded)
-		//        return;
-
-		//    this.photoLoaded = true;
-
-		//    throw new NotImplementedException();
-		//}
 
 		private void LoadThumbnail()
 		{
