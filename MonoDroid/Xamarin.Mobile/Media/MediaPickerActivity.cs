@@ -55,7 +55,11 @@ namespace Xamarin.Media
 					pickIntent.PutExtra (MediaStore.ExtraVideoQuality, GetVideoQuality (quality));
 
 					MediaFileStoreLocation loc = (MediaFileStoreLocation) this.Intent.GetIntExtra (ExtraLocation, 0);
-					this.path = GetOutputMediaFile (loc, this.Intent.GetStringExtra (ExtraPath), this.Intent.GetStringExtra (MediaStore.MediaColumns.Title));
+					this.path = GetOutputMediaFile (loc,
+						this.Intent.GetStringExtra (ExtraPath),
+						this.Intent.GetStringExtra (MediaStore.MediaColumns.Title),
+						this.Intent.GetStringExtra (MediaStore.Images.ImageColumns.Description));
+
 					Touch();
 
 					pickIntent.PutExtra (MediaStore.ExtraOutput, this.path);
@@ -132,21 +136,10 @@ namespace Xamarin.Media
 			return Path.Combine (folder, nname);
 		}
 
-		private Uri GetOutputMediaFile (MediaFileStoreLocation loc, string subdir, string name)
+		private Uri GetOutputMediaFile (MediaFileStoreLocation loc, string subdir, string name, string description)
 		{
 			if (loc == MediaFileStoreLocation.None && subdir == null)
 				subdir = "tmp";
-
-			string type = (this.isPhoto) ? Environment.DirectoryPictures : Environment.DirectoryMovies;
-			Java.IO.File mediaStorageDir = new Java.IO.File (GetExternalFilesDir (type), subdir);
-			if (!mediaStorageDir.Exists())
-			{
-				if (!mediaStorageDir.Mkdirs())
-					return null;
-
-				Java.IO.File nomedia = new Java.IO.File (mediaStorageDir, ".nomedia");
-				nomedia.CreateNewFile();
-			}
 
 			if (String.IsNullOrWhiteSpace (name))
 			{
@@ -157,7 +150,39 @@ namespace Xamarin.Media
 					name = "VID_" + timestamp + ".mp4";
 			}
 
-			return Uri.FromFile (new Java.IO.File (GetUniquePath (mediaStorageDir.Path, name)));
+			if (loc == MediaFileStoreLocation.CameraRoll)
+			{
+				ContentValues values = new ContentValues();
+				if (this.isPhoto)
+				{
+					values.Put (MediaStore.Images.ImageColumns.Title, name);
+					values.Put (MediaStore.Images.ImageColumns.Description, description);
+					values.Put (MediaStore.Images.ImageColumns.DateTaken, DateTime.Now.ToAndroidTimestamp());
+					return ContentResolver.Insert (MediaStore.Images.Media.ExternalContentUri, values);
+				}
+				else
+				{
+					values.Put (MediaStore.Video.VideoColumns.Title, name);
+					values.Put (MediaStore.Video.VideoColumns.Description, description);
+					values.Put (MediaStore.Video.VideoColumns.DateTaken, DateTime.Now.ToAndroidTimestamp());
+					return ContentResolver.Insert (MediaStore.Video.Media.ExternalContentUri, values);
+				}
+			}
+			else
+			{
+				string type = (this.isPhoto) ? Environment.DirectoryPictures : Environment.DirectoryMovies;
+				Java.IO.File mediaStorageDir = new Java.IO.File (GetExternalFilesDir (type), subdir);
+				if (!mediaStorageDir.Exists())
+				{
+					if (!mediaStorageDir.Mkdirs())
+						return null;
+
+					Java.IO.File nomedia = new Java.IO.File (mediaStorageDir, ".nomedia");
+					nomedia.CreateNewFile();
+				}
+
+				return Uri.FromFile (new Java.IO.File (GetUniquePath (mediaStorageDir.Path, name)));
+			}
 		}
 
 		private Stream GetStreamForUri (Uri uri)
@@ -172,11 +197,7 @@ namespace Xamarin.Media
 				if (!c.MoveToNext())
 					return null;
 
-				byte[] image = c.GetBlob (c.GetColumnIndex (MediaStore.MediaColumns.Data));
-				return new MemoryStream (image);
-				/*string path = c.GetString (c.GetColumnIndex (MediaStore.MediaColumns.Title));
-				bool exists = File.Exists (path);//Path.Combine (Environment.DirectoryPictures, path));
-				exists.ToString();*/
+				return File.OpenRead (c.GetString (c.GetColumnIndex (MediaStore.MediaColumns.Data)));
 			}
 			finally
 			{
