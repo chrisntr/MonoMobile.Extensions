@@ -3,7 +3,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Android.Content;
-using Android.OS;
+using Android.Content.PM;
 using Android.Provider;
 
 namespace Xamarin.Media
@@ -13,6 +13,13 @@ namespace Xamarin.Media
 		public MediaPicker (Context context)
 		{
 			this.context = context;
+			IsCameraAvailable = context.PackageManager.HasSystemFeature (PackageManager.FeatureCamera);
+		}
+
+		public bool IsCameraAvailable
+		{
+			get;
+			private set;
 		}
 
 		public bool PhotosSupported
