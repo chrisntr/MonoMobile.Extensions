@@ -95,7 +95,7 @@ namespace Xamarin.Media
 
 			if (options != null)
 			{
-				pickerIntent.PutExtra (MediaPickerActivity.ExtraLocation, options.Location.ToString());
+				pickerIntent.PutExtra (MediaPickerActivity.ExtraLocation, (int)options.Location);
 				pickerIntent.PutExtra (MediaPickerActivity.ExtraPath, options.Directory);
 				pickerIntent.PutExtra (MediaStore.Images.ImageColumns.Title, options.Name);
 				if (options.Description != null)
