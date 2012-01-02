@@ -54,14 +54,11 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\Shared\Media\Media.cs">
-      <Link>Media\Media.cs</Link>
+    <Compile Include="..\..\Shared\Media\MediaFile.cs">
+      <Link>Media\MediaFile.cs</Link>
     </Compile>
-    <Compile Include="..\..\Shared\Media\Photo.cs">
-      <Link>Media\Photo.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Shared\Media\Video.cs">
-      <Link>Media\Video.cs</Link>
+    <Compile Include="..\..\Shared\Media\StoreMediaOptions.cs">
+      <Link>Media\StoreMediaOptions.cs</Link>
     </Compile>
     <Compile Include="Media\MediaPicker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

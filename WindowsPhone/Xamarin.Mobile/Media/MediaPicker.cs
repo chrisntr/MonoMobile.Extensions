@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Devices;
 using Microsoft.Phone.Tasks;
 
 namespace Xamarin.Media
@@ -11,13 +11,17 @@ namespace Xamarin.Media
 		public MediaPicker()
 		{
 			this.photoChooser.Completed += OnPhotoChosen;
-			ShowCamera = true;
+			this.photoChooser.ShowCamera = false;
+
+			this.cameraCapture.Completed += OnPhotoChosen;
+
+			IsCameraAvailable = Camera.IsCameraTypeSupported (CameraType.Primary) || Camera.IsCameraTypeSupported (CameraType.FrontFacing);
 		}
 
-		public bool ShowCamera
+		public bool IsCameraAvailable
 		{
-			get { return this.photoChooser.ShowCamera; }
-			set { this.photoChooser.ShowCamera = value; }
+			get;
+			private set;
 		}
 
 		public bool PhotosSupported
@@ -30,34 +34,64 @@ namespace Xamarin.Media
 			get { return false; }
 		}
 
-		public Task<Photo> PickPhotoAsync()
+		public Task<MediaFile> PickPhotoAsync()
 		{
-			var ntcs = new TaskCompletionSource<Photo>();
-			var tcs = Interlocked.CompareExchange (ref this.completionSource, ntcs, null);
-			if (tcs != null)
-				throw new InvalidOperationException ("Only one pick operation can be active at at time");
+			var ntcs = new TaskCompletionSource<MediaFile>();
+			if (Interlocked.CompareExchange (ref this.completionSource, ntcs, null) != null)
+				throw new InvalidOperationException ("Only one operation can be active at at time");
 
 			this.photoChooser.Show();
 
 			return ntcs.Task;
 		}
 
-		public Task<Video> PickVideoAsync()
+		public Task<MediaFile> TakePhotoAsync (StoreMediaOptions options)
+		{
+			if (options == null)
+				throw new ArgumentNullException ("options");
+
+			var ntcs = new TaskCompletionSource<MediaFile> (options);
+			if (Interlocked.CompareExchange (ref this.completionSource, ntcs, null) != null)
+				throw new InvalidOperationException ("Only one operation can be active at a time");
+
+			this.cameraCapture.Show();
+
+			return ntcs.Task;
+		}
+
+		public Task<MediaFile> PickVideoAsync()
 		{
 			throw new NotSupportedException();
 		}
 
+		public Task<MediaFile> TakeVideoAsync (StoreVideoOptions options)
+		{
+			throw new NotSupportedException();
+		}
+
+		private readonly CameraCaptureTask cameraCapture = new CameraCaptureTask();
 		private readonly PhotoChooserTask photoChooser = new PhotoChooserTask();
-		private TaskCompletionSource<Photo> completionSource;
+		private TaskCompletionSource<MediaFile> completionSource;
 
 		private void OnPhotoChosen (object sender, PhotoResult photoResult)
 		{
 			var tcs = Interlocked.Exchange (ref this.completionSource, null);
 
+			var options = tcs.Task.AsyncState as StoreMediaOptions;
+			if (options != null)
+			{
+				switch (options.Location)
+				{
+					case MediaFileStoreLocation.CameraRoll:
+					case MediaFileStoreLocation.Local:
+						throw new NotImplementedException();
+				}
+			}
+
 			switch (photoResult.TaskResult)
 			{
 				case TaskResult.OK:
-					tcs.SetResult (new Photo (photoResult.OriginalFileName));
+					tcs.SetResult (new MediaFile (() => photoResult.ChosenPhoto, null));
 					break;
 
 				case TaskResult.None:
