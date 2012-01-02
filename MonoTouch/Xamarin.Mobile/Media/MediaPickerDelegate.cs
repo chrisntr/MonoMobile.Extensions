@@ -99,7 +99,7 @@ namespace Xamarin.Media
 					(u, e) =>
 					{
 						if (e != null)
-							saveTcs.SetException (new Exception (e.LocalizedDescription));
+							saveTcs.SetException (new NSErrorException (e));
 						else
 							saveTcs.SetResult (u);
 
@@ -145,7 +145,7 @@ namespace Xamarin.Media
 				library.WriteVideoToSavedPhotosAlbum (url, (u, e) =>
 				{
 					if (e != null)
-						saveTcs.SetException (new Exception (e.LocalizedDescription));
+						saveTcs.SetException (new NSErrorException (e));
 					else
 						saveTcs.SetResult (u);
 
