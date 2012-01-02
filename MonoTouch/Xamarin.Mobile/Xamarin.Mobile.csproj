@@ -71,6 +71,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <Compile Include="NSErrorException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Geolocation\GeolocationSingleUpdateDelegate.cs" />
     <Compile Include="Geolocation\Geolocator.cs" />
