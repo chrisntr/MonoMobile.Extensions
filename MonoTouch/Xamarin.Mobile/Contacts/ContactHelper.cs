@@ -77,12 +77,28 @@ namespace Xamarin.Contacts
 				Address = url.Value
 			});
 
+			contact.Relationships = person.GetRelatedNames().Select (p => new Relationship
+			{
+				Name = p.Value,
+				Type = GetRelationType (p.Label)
+			});
+
 			return contact;
 		}
 
 		internal static string GetLabel (NSString label)
 		{
 			return CultureInfo.CurrentCulture.TextInfo.ToTitleCase (ABAddressBook.LocalizedLabel (label));
+		}
+
+		internal static RelationshipType GetRelationType (string label)
+		{
+			if (label == ABPersonRelatedNamesLabel.Spouse || label == ABPersonRelatedNamesLabel.Friend)
+				return RelationshipType.SignificantOther;
+			if (label == ABPersonRelatedNamesLabel.Child)
+				return RelationshipType.Child;
+
+			return RelationshipType.Other;
 		}
 
 		internal static EmailType GetEmailType (string label)

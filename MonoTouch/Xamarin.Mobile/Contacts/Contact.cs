@@ -73,6 +73,13 @@ namespace Xamarin.Contacts
 			set;
 		}
 
+		internal List<Relationship> relationships = new List<Relationship>();
+		public IEnumerable<Relationship> Relationships
+		{
+			get { return this.relationships; }
+			set { this.relationships = new List<Relationship> (value); }
+		}
+
 		internal List<Address> addresses = new List<Address>();
 		public IEnumerable<Address> Addresses
 		{

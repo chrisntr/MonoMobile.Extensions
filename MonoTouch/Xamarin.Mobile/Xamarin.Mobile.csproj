@@ -67,6 +67,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <Compile Include="..\..\Shared\Contacts\Relationship.cs">
+      <Link>Contacts\Relationship.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Geolocation\GeolocationSingleUpdateDelegate.cs" />
     <Compile Include="Geolocation\Geolocator.cs" />
