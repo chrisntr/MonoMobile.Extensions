@@ -12,6 +12,7 @@ using Uri = Android.Net.Uri;
 using InstantMessaging = Android.Provider.ContactsContract.CommonDataKinds.Im;
 using OrganizationData = Android.Provider.ContactsContract.CommonDataKinds.Organization;
 using WebsiteData = Android.Provider.ContactsContract.CommonDataKinds.Website;
+using Relation = Android.Provider.ContactsContract.CommonDataKinds.Relation;
 
 namespace Xamarin.Contacts
 {
@@ -107,6 +108,10 @@ namespace Xamarin.Contacts
 						case WebsiteData.ContentItemType:
 							contact.websites.Add (GetWebsite (c, resources));
 							break;
+
+						case Relation.ContentItemType:
+							contact.relationships.Add (GetRelationship (c, resources));
+							break;
 					}
 				}
 			}
@@ -115,6 +120,31 @@ namespace Xamarin.Contacts
 				if (c != null)
 					c.Close();
 			}
+		}
+
+		private static Relationship GetRelationship (ICursor c, Resources resources)
+		{
+			Relationship r = new Relationship { Name = c.GetString (Relation.Name) };
+
+			RelationDataKind rtype = (RelationDataKind)c.GetInt (c.GetColumnIndex (CommonColumns.Type));
+			switch (rtype)
+			{
+				case RelationDataKind.DomesticPartner:
+				case RelationDataKind.Spouse:
+				case RelationDataKind.Friend:
+					r.Type = RelationshipType.SignificantOther;
+					break;
+
+				case RelationDataKind.Child:
+					r.Type = RelationshipType.Child;
+					break;
+
+				default:
+					r.Type = RelationshipType.Other;
+					break;
+			}
+
+			return r;
 		}
 
 		private static InstantMessagingAccount GetImAccount (ICursor c, Resources resources)
