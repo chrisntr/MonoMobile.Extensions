@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using Android.Provider;
 
-namespace Xamarin.Contacts
+namespace Xamarin
 {
 	/*
 	 * Find first Where/Select/Order to determine table
@@ -14,12 +14,14 @@ namespace Xamarin.Contacts
 	 * Query should be for IDs to be filled as loaded
 	 */
 
-	internal class QueryTranslator
+	internal class ContentQueryTranslator
 		: ExpressionVisitor
 	{
-		public QueryTranslator (bool rawContacts)
+		private readonly ITableFinder tableFinder;
+
+		public ContentQueryTranslator (ITableFinder tableFinder)
 		{
-			this.rawContacts = rawContacts;
+			this.tableFinder = tableFinder;
 		}
 
 		public Android.Net.Uri Table
@@ -35,7 +37,7 @@ namespace Xamarin.Contacts
 
 		public string QueryString
 		{
-			get { return (this.queryBuilder.Length > 0) ? this.sortBuilder.ToString() : null; }
+			get { return (this.queryBuilder.Length > 0) ? this.queryBuilder.ToString() : null; }
 		}
 
 		public string[] ClauseParameters
@@ -48,39 +50,41 @@ namespace Xamarin.Contacts
 			get { return (this.sortBuilder != null) ? this.sortBuilder.ToString() : null; }
 		} 
 
-		protected override Expression VisitMethodCall (MethodCallExpression methodCall)
-		{
-			methodCall = (MethodCallExpression)base.VisitMethodCall (methodCall); // go inner first
-
-			if (!this.fallback)
-			{
-				if (methodCall.Method.Name == "Where")
-					methodCall = VisitWhere (methodCall);
-				else if (methodCall.Method.Name == "Any")
-					methodCall = VisitAny (methodCall);
-				else if (methodCall.Method.Name == "Select" || methodCall.Method.Name == "SelectMany")
-					methodCall = VisitSelect (methodCall);
-				else if (methodCall.Method.Name == "OrderBy" || methodCall.Method.Name == "OrderBy")
-					methodCall = VisitOrder (methodCall);
-			}
-			
-			return methodCall;
-		}
-
-		private readonly bool rawContacts;
-
 		private bool fallback = false;
 		private List<string> columns;
 		private StringBuilder sortBuilder;
 		private readonly List<string> parameters = new List<string>();
 		private readonly StringBuilder queryBuilder = new StringBuilder();
 
+		protected override Expression VisitMethodCall (MethodCallExpression methodCall)
+		{
+			if (this.fallback)
+				return methodCall;
+
+			Expression expression = base.VisitMethodCall (methodCall);
+
+			methodCall = expression as MethodCallExpression;
+			if (methodCall == null)
+				return expression;
+
+			if (methodCall.Method.Name == "Where")
+				expression = VisitWhere (methodCall);
+			else if (methodCall.Method.Name == "Any")
+				expression = VisitAny (methodCall);
+			else if (methodCall.Method.Name == "Select" || methodCall.Method.Name == "SelectMany")
+				expression = VisitSelect (methodCall);
+			else if (methodCall.Method.Name == "OrderBy" || methodCall.Method.Name == "OrderByDescending")
+				expression = VisitOrder (methodCall);
+			
+			return expression;
+		}
+
 		private MethodCallExpression VisitAny (MethodCallExpression methodCall)
 		{
 			return methodCall;
 		}
 
-		private MethodCallExpression VisitWhere (MethodCallExpression methodCall)
+		private Expression VisitWhere (MethodCallExpression methodCall)
 		{
 			// TODO: Need to actually evaluate expression to determine
 			// whether we can use it in the query, the operand
@@ -105,12 +109,12 @@ namespace Xamarin.Contacts
 			return methodCall;
 		}
 
-		private MethodCallExpression VisitSelect (MethodCallExpression methodCall)
+		private Expression VisitSelect (MethodCallExpression methodCall)
 		{
 			return methodCall;
 		}
 
-		private MethodCallExpression VisitOrder (MethodCallExpression methodCall)
+		private Expression VisitOrder (MethodCallExpression methodCall)
 		{
 			MemberExpression me = FindMemberExpression (methodCall.Arguments[1]);
 			if (!TryGetTable (me))
@@ -124,10 +128,10 @@ namespace Xamarin.Contacts
 					builder.Append (", ");
 
 				builder.Append (column);
-				if (methodCall.Method.Name == "OrderByDesending")
+				if (methodCall.Method.Name == "OrderByDescending")
 					builder.Append (" DESC");
 
-				return null;
+				return methodCall.Arguments[0];
 			}
 
 			return methodCall;
@@ -135,7 +139,7 @@ namespace Xamarin.Contacts
 
 		private bool TryGetTable (MemberExpression me)
 		{
-			Android.Net.Uri table = TableFinder.Find (me, this.rawContacts, this.queryBuilder, this.parameters);
+			Android.Net.Uri table = this.tableFinder.Find (me, this.queryBuilder, this.parameters);
 
 			if (Table == null)
 				Table = table;
@@ -158,6 +162,10 @@ namespace Xamarin.Contacts
 					return ContactsContract.CommonDataKinds.StructuredName.Prefix;
 				case "FirstName":
 					return ContactsContract.CommonDataKinds.StructuredName.GivenName;
+				case "LastName":
+					return ContactsContract.CommonDataKinds.StructuredName.FamilyName;
+				case "Suffix":
+					return ContactsContract.CommonDataKinds.StructuredName.Suffix;
 
 				default:
 					return null;
@@ -175,27 +183,22 @@ namespace Xamarin.Contacts
 				expression = le.Body;
 
 			MemberExpression me = expression as MemberExpression;
-			if (me != null && IsSupportedType (me.Member.DeclaringType))
+			if (me != null && this.tableFinder.IsSupportedType (me.Member.DeclaringType))
 				return me;
 
 			BinaryExpression be = expression as BinaryExpression;
 			if (be != null)
 			{
 				me = be.Left as MemberExpression;
-				if (me != null && IsSupportedType (me.Member.DeclaringType))
+				if (me != null && this.tableFinder.IsSupportedType (me.Member.DeclaringType))
 					return me;
 
 				me = be.Right as MemberExpression;
-				if (me != null && IsSupportedType (me.Member.DeclaringType))
+				if (me != null && this.tableFinder.IsSupportedType (me.Member.DeclaringType))
 					return me;
 			}
 
 			return null;
-		}
-
-		private bool IsSupportedType (Type type)
-		{
-			return type == typeof(Contact) || type == typeof(Phone) || type == typeof (Email);
 		}
 	}
 }

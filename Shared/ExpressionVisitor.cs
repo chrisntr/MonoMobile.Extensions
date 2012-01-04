@@ -8,7 +8,7 @@ namespace Xamarin
 {
 	internal abstract class ExpressionVisitor
 	{
-		public Expression Visit (Expression expression)
+		public virtual Expression Visit (Expression expression)
 		{
 			if (expression == null)
 				throw new ArgumentNullException ("expression");

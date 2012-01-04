@@ -1,83 +1,32 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 using Android.Content;
 using Android.Content.Res;
+using Android.Database;
 
 namespace Xamarin.Contacts
 {
 	internal class ContactQueryProvider
-		: IQueryProvider
+		: ContentQueryProvider<Contact>
 	{
 		internal ContactQueryProvider (ContentResolver content, Resources resources)
+			: base (content, resources, new ContactTableFinder())
 		{
-			this.content = content;
-			this.resources = resources;
 		}
 
 		public bool UseRawContacts
 		{
-			get;
-			set;
+			get { return ((ContactTableFinder)TableFinder).UseRawContacts; }
+			set { ((ContactTableFinder)TableFinder).UseRawContacts = value; }
 		}
 
-		protected readonly ContentResolver content;
-		protected readonly Resources resources;
-
-		IQueryable IQueryProvider.CreateQuery (Expression expression)
+		protected override Contact GetElement (ICursor cursor)
 		{
-			throw new NotImplementedException();
+			return ContactHelper.GetContact (UseRawContacts, this.content, this.resources, cursor);
 		}
 
-		object IQueryProvider.Execute (Expression expression)
-		{
-			IQueryable<Contact> q = GetContacts().AsQueryable();
-
-			expression = ReplaceQueryable (expression, q);
-			
-			if (expression.Type.IsGenericType && expression.Type.GetGenericTypeDefinition() == typeof(IOrderedQueryable<>))
-				return q.Provider.CreateQuery (expression);
-			else
-				return q.Provider.Execute (expression);
-		}
-
-		IQueryable<TElement> IQueryProvider.CreateQuery<TElement> (Expression expression)
-		{
-			return new Query<TElement> (this, expression);
-		}
-
-		TResult IQueryProvider.Execute<TResult> (Expression expression)
-		{
-			return (TResult)((IQueryProvider)this).Execute (expression);
-		}
-
-		private IEnumerable<Contact> GetContacts ()
+		protected override IEnumerable<Contact> GetElements ()
 		{
 			return ContactHelper.GetContacts (UseRawContacts, this.content, this.resources);
-		}
-
-		private Expression ReplaceQueryable (Expression expression, object value)
-		{
-			MethodCallExpression mc = expression as MethodCallExpression;
-			if (mc != null)
-			{
-				Expression[] args = mc.Arguments.ToArray();
-				Expression narg = ReplaceQueryable (mc.Arguments[0], value);
-				if (narg != args[0])
-				{
-					args[0] = narg;
-					return Expression.Call (mc.Method, args);
-				}
-				else
-					return mc;
-			}
-
-			ConstantExpression c = expression as ConstantExpression;
-			if (c != null && c.Type.GetInterfaces().Contains (typeof(IQueryable<Contact>)))
-				return Expression.Constant (value);
-
-			return expression;
 		}
 	}
 }

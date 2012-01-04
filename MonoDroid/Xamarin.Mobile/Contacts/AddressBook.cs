@@ -25,7 +25,7 @@ namespace Xamarin.Contacts
 
 			this.content = context.ContentResolver;
 			this.resources = context.Resources;
-			this.rawContactsProvider = new ContactQueryProvider (context.ContentResolver, context.Resources);
+			this.contactsProvider = new ContactQueryProvider (context.ContentResolver, context.Resources);
 		}
 
 		public bool IsReadOnly
@@ -45,8 +45,8 @@ namespace Xamarin.Contacts
 
 		public bool PreferContactAggregation
 		{
-			get { return !this.rawContactsProvider.UseRawContacts; }
-			set { this.rawContactsProvider.UseRawContacts = !value; }
+			get { return !this.contactsProvider.UseRawContacts; }
+			set { this.contactsProvider.UseRawContacts = !value; }
 		}
 
 		public IEnumerator<Contact> GetEnumerator()
@@ -151,10 +151,10 @@ namespace Xamarin.Contacts
 
 		IQueryProvider IQueryable.Provider
 		{
-			get { return this.rawContactsProvider; }
+			get { return this.contactsProvider; }
 		}
 
-		private readonly ContactQueryProvider rawContactsProvider;
+		private readonly ContactQueryProvider contactsProvider;
 		private readonly ContentResolver content;
 		private readonly Resources resources;
 	}

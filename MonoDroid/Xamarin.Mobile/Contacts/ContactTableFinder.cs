@@ -7,20 +7,38 @@ using Uri = Android.Net.Uri;
 
 namespace Xamarin.Contacts
 {
-	internal class TableFinder
-		: ExpressionVisitor
+	internal class ContactTableFinder
+		: ExpressionVisitor, ITableFinder
 	{
-		private TableFinder (bool rawContacts, StringBuilder queryBuilder, List<string> arguments)
+		public bool UseRawContacts
 		{
-			this.rawContacts = rawContacts;
-			this.queryBuilder = queryBuilder;
-			this.arguments = arguments;
+			get;
+			set;
+		}
+
+		public Uri Find (Expression expression, StringBuilder builder, IList<string> argumentList)
+		{
+			if (builder == null)
+				throw new ArgumentNullException ("builder");
+			if (argumentList == null)
+				throw new ArgumentNullException ("argumentList");
+
+			this.queryBuilder = builder;
+			this.arguments = argumentList;
+
+			Visit (expression);
+
+			return this.table;
+		}
+
+		public bool IsSupportedType (Type type)
+		{
+			return type == typeof(Contact) || type == typeof(Phone) || type == typeof (Email);
 		}
 
 		private Uri table;
-		private readonly bool rawContacts;
-		private readonly StringBuilder queryBuilder;
-		private readonly List<string> arguments;
+		private StringBuilder queryBuilder;
+		private IList<string> arguments;
 
 		protected override Expression VisitMemberAccess (MemberExpression member)
 		{
@@ -44,7 +62,7 @@ namespace Xamarin.Contacts
 			switch (expression.Member.Name)
 			{
 				case "DisplayName":
-					return (this.rawContacts) ? ContactsContract.RawContacts.ContentUri : ContactsContract.Contacts.ContentUri;
+					return (UseRawContacts) ? ContactsContract.RawContacts.ContentUri : ContactsContract.Contacts.ContentUri;
 				
 				case "Prefix":
 				case "FirstName":
@@ -61,13 +79,6 @@ namespace Xamarin.Contacts
 				default:
 					throw new ArgumentException();
 			}
-		}
-
-		public static Uri Find (Expression expression, bool rawContacts, StringBuilder queryBuilder, List<string> arguments)
-		{
-			var finder = new TableFinder (rawContacts, queryBuilder, arguments);
-			finder.Visit (expression);
-			return finder.table;
 		}
 	}
 }

@@ -70,6 +70,9 @@
     <Compile Include="..\..\Shared\Contacts\Website.cs">
       <Link>Contacts\Website.cs</Link>
     </Compile>
+    <Compile Include="..\..\Shared\ExpressionVisitor.cs">
+      <Link>ExpressionVisitor.cs</Link>
+    </Compile>
     <Compile Include="..\..\Shared\Position.cs">
       <Link>Geolocation\Position.cs</Link>
     </Compile>
@@ -80,9 +83,13 @@
     <Compile Include="Contacts\Contact.cs" />
     <Compile Include="Contacts\ContactQueryProvider.cs" />
     <Compile Include="Contacts\ContactHelper.cs" />
+    <Compile Include="Contacts\ContactTableFinder.cs" />
+    <Compile Include="ContentQueryProvider.cs" />
+    <Compile Include="ContentQueryTranslator.cs" />
     <Compile Include="Geolocation\GeolocationContinuousListener.cs" />
     <Compile Include="Geolocation\GeolocationSingleListener.cs" />
     <Compile Include="Geolocation\Geolocator.cs" />
+    <Compile Include="ITableFinder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
