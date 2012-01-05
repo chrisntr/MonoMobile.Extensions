@@ -152,7 +152,7 @@ namespace Xamarin.Contacts
 			InstantMessagingAccount ima = new InstantMessagingAccount();
 			ima.Account = c.GetString (CommonColumns.Data);
 
-			IMTypeDataKind imKind = (IMTypeDataKind) c.GetInt (c.GetColumnIndex (CommonColumns.Type));
+			//IMTypeDataKind imKind = (IMTypeDataKind) c.GetInt (c.GetColumnIndex (CommonColumns.Type));
 			//ima.Type = imKind.ToInstantMessagingType();
 			//ima.Label = InstantMessaging.GetTypeLabel (resources, imKind, c.GetString (CommonColumns.Label));
 
