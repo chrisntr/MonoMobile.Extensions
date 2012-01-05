@@ -58,24 +58,24 @@ namespace Xamarin
 
 		protected override Expression VisitMethodCall (MethodCallExpression methodCall)
 		{
-			if (this.fallback)
-				return methodCall;
-
 			Expression expression = base.VisitMethodCall (methodCall);
 
 			methodCall = expression as MethodCallExpression;
 			if (methodCall == null)
 				return expression;
 
-			if (methodCall.Method.Name == "Where")
-				expression = VisitWhere (methodCall);
-			else if (methodCall.Method.Name == "Any")
-				expression = VisitAny (methodCall);
-			else if (methodCall.Method.Name == "Select" || methodCall.Method.Name == "SelectMany")
-				expression = VisitSelect (methodCall);
-			else if (methodCall.Method.Name == "OrderBy" || methodCall.Method.Name == "OrderByDescending")
-				expression = VisitOrder (methodCall);
-			
+			if (!this.fallback)
+			{
+				if (methodCall.Method.Name == "Where")
+					expression = VisitWhere (methodCall);
+				else if (methodCall.Method.Name == "Any")
+					expression = VisitAny (methodCall);
+				else if (methodCall.Method.Name == "Select" || methodCall.Method.Name == "SelectMany")
+					expression = VisitSelect (methodCall);
+				else if (methodCall.Method.Name == "OrderBy" || methodCall.Method.Name == "OrderByDescending")
+					expression = VisitOrder (methodCall);
+			}
+
 			return expression;
 		}
 
