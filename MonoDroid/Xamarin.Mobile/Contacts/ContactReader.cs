@@ -20,14 +20,19 @@ namespace Xamarin.Contacts
 
 		public IEnumerator<Contact> GetEnumerator()
 		{
+			ICursor cursor = null;
 			try
 			{
-				while (this.cursor.MoveToNext())
-					yield return ContactHelper.GetContact (this.rawContacts, this.content, this.resources, this.cursor);
+				cursor = this.content.Query (this.translator.Table, this.translator.Projections, this.translator.QueryString,
+				                             this.translator.ClauseParameters, this.translator.SortString);
+
+				while (cursor.MoveToNext())
+					yield return ContactHelper.GetContact (this.rawContacts, this.content, this.resources, cursor);
 			}
 			finally
 			{
-				this.cursor.Close();
+				if (cursor != null)
+					cursor.Close();
 			}
 		}
 
@@ -38,7 +43,6 @@ namespace Xamarin.Contacts
 
 		private readonly bool rawContacts;
 		private readonly ContentQueryTranslator translator;
-		private readonly ICursor cursor;
 		private readonly ContentResolver content;
 		private readonly Resources resources;
 	}
