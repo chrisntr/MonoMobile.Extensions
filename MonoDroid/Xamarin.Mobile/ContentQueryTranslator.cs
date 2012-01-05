@@ -120,14 +120,15 @@ namespace Xamarin
 			if (!TryGetTable (me))
 				return methodCall;
 
-			string column = GetContactColumn (me.Member);
+			Tuple<string, Type> column = this.tableFinder.GetColumn (me.Member);
 			if (column != null)
 			{
 				StringBuilder builder = this.sortBuilder ?? (this.sortBuilder = new StringBuilder());
 				if (builder.Length > 0)
 					builder.Append (", ");
 
-				builder.Append (column);
+				builder.Append (column.Item1);
+
 				if (methodCall.Method.Name == "OrderByDescending")
 					builder.Append (" DESC");
 
@@ -150,26 +151,6 @@ namespace Xamarin
 			}
 
 			return true;
-		}
-
-		private string GetContactColumn (MemberInfo member)
-		{
-			switch (member.Name)
-			{
-				case "DisplayName":
-					return ContactsContract.ContactsColumns.DisplayName;
-				case "Prefix":
-					return ContactsContract.CommonDataKinds.StructuredName.Prefix;
-				case "FirstName":
-					return ContactsContract.CommonDataKinds.StructuredName.GivenName;
-				case "LastName":
-					return ContactsContract.CommonDataKinds.StructuredName.FamilyName;
-				case "Suffix":
-					return ContactsContract.CommonDataKinds.StructuredName.Suffix;
-
-				default:
-					return null;
-			}
 		}
 
 		private MemberExpression FindMemberExpression (Expression expression)
