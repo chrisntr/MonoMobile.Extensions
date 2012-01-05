@@ -83,7 +83,9 @@
     <Compile Include="Contacts\Contact.cs" />
     <Compile Include="Contacts\ContactQueryProvider.cs" />
     <Compile Include="Contacts\ContactHelper.cs" />
+    <Compile Include="Contacts\ContactReader.cs" />
     <Compile Include="Contacts\ContactTableFinder.cs" />
+    <Compile Include="ProjectionReader.cs" />
     <Compile Include="ContentQueryProvider.cs" />
     <Compile Include="ContentQueryTranslator.cs" />
     <Compile Include="Geolocation\GeolocationContinuousListener.cs" />
