@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Reflection;
 using System.Text;
-using Android.Provider;
 
 namespace Xamarin
 {
@@ -30,6 +28,17 @@ namespace Xamarin
 			private set;
 		}
 
+		public Type ReturnType
+		{
+			get;
+			private set;
+		}
+
+		public string[] Projections
+		{
+			get { return (this.projections != null) ? this.projections.ToArray() : null; }
+		}
+
 		public string[] Columns
 		{
 			get { return (this.columns != null) ? this.columns.ToArray() : null; }
@@ -51,6 +60,7 @@ namespace Xamarin
 		} 
 
 		private bool fallback = false;
+		private List<string> projections;
 		private List<string> columns;
 		private StringBuilder sortBuilder;
 		private readonly List<string> parameters = new List<string>();
@@ -111,7 +121,21 @@ namespace Xamarin
 
 		private Expression VisitSelect (MethodCallExpression methodCall)
 		{
-			return methodCall;
+			MemberExpression me = FindMemberExpression (methodCall.Arguments[1]);
+			if (!TryGetTable (me))
+				return methodCall;
+
+			Tuple<string, Type> column = this.tableFinder.GetColumn (me.Member);
+			if (column == null)
+				return methodCall;
+
+			(this.projections ?? (this.projections = new List<string>())).Add (column.Item1);
+			if (column.Item2.IsValueType || column.Item2 == typeof(string))
+				ReturnType = column.Item2;
+
+			this.fallback = true;
+
+			return methodCall.Arguments[0];
 		}
 
 		private Expression VisitOrder (MethodCallExpression methodCall)
