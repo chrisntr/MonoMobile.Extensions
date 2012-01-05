@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -8,7 +9,7 @@ using Android.Database;
 
 namespace Xamarin
 {
-	internal abstract class ContentQueryProvider<T>
+	internal abstract class ContentQueryProvider
 		: IQueryProvider
 	{
 		internal ContentQueryProvider (ContentResolver content, Resources resources, ITableFinder tableFinder)
@@ -36,8 +37,8 @@ namespace Xamarin
 		{
 			var translator = new ContentQueryTranslator (this.tableFinder);
 			expression = translator.Visit (expression);
-
-			IQueryable<T> q = GetElements (translator).AsQueryable();
+			
+			IQueryable q = GetObjectReader (this.content, this.resources, translator).AsQueryable();
 
 			//IQueryable<T> q = GetElements().AsQueryable();
 			expression = ReplaceQueryable (expression, q);
@@ -48,6 +49,8 @@ namespace Xamarin
 				return q.Provider.Execute (expression);
 		}
 
+		protected abstract IEnumerable GetObjectReader (ContentResolver content, Resources resources, ContentQueryTranslator translator);
+
 		IQueryable<TElement> IQueryProvider.CreateQuery<TElement> (Expression expression)
 		{
 			return new Query<TElement> (this, expression);
@@ -56,26 +59,6 @@ namespace Xamarin
 		TResult IQueryProvider.Execute<TResult> (Expression expression)
 		{
 			return (TResult)((IQueryProvider)this).Execute (expression);
-		}
-
-		protected abstract T GetElement (ICursor cursor);
-		protected abstract IEnumerable<T> GetElements();
-
-		private IEnumerable<T> GetElements (ContentQueryTranslator translator)
-		{
-			ICursor c = null;
-
-			try
-			{
-				c = content.Query (translator.Table, null, translator.QueryString, translator.ClauseParameters, translator.SortString);
-				while (c.MoveToNext())
-					yield return GetElement (c);
-			}
-			finally
-			{
-				if (c != null)
-					c.Close();
-			}
 		}
 
 		private Expression ReplaceQueryable (Expression expression, object value)
@@ -95,7 +78,7 @@ namespace Xamarin
 			}
 
 			ConstantExpression c = expression as ConstantExpression;
-			if (c != null && c.Type.GetInterfaces().Contains (typeof(IQueryable<T>)))
+			if (c != null && c.Type.GetInterfaces().Contains (typeof(IQueryable)))
 				return Expression.Constant (value);
 
 			return expression;
