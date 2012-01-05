@@ -164,6 +164,12 @@ namespace Xamarin
 
 		private bool TryGetTable (MemberExpression me)
 		{
+			if (me == null)
+			{
+				this.fallback = true;
+				return false;
+			}
+
 			Android.Net.Uri table = this.tableFinder.Find (me, this.queryBuilder, this.parameters);
 
 			if (Table == null)
