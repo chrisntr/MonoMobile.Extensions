@@ -9,7 +9,12 @@ namespace Xamarin
 {
 	internal interface ITableFinder
 	{
-		Uri Find (Expression expression, StringBuilder queryBuilder, IList<string> arguments);
+		/// <summary>
+		/// Gets the default table (content hierarchy root).
+		/// </summary>
+		Uri DefaultTable { get; }
+
+		TableFindResult Find (Expression expression);
 
 		/// <summary>
 		/// Gets whether the <paramref name="type"/> is a supported type for this finder.
@@ -24,5 +29,33 @@ namespace Xamarin
 		/// <param name="memberInfo">The <see cref="MemberInfo"/> for the model's member.</param>
 		/// <returns>Android column name for the model's member, <c>null</c> if unknown.</returns>
 		Tuple<string, Type> GetColumn (MemberInfo memberInfo);
+	}
+
+	internal class TableFindResult
+	{
+		internal TableFindResult (Uri table, string queryString, IEnumerable<string> arguments)
+		{
+			Table = table;
+			QueryString = queryString;
+			Arguments = arguments;
+		}
+
+		public Uri Table
+		{
+			get;
+			private set;
+		}
+
+		public string QueryString
+		{
+			get;
+			private set;
+		}
+
+		public IEnumerable<string> Arguments
+		{
+			get;
+			private set;
+		}
 	}
 }

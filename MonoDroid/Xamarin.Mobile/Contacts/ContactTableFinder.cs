@@ -17,19 +17,19 @@ namespace Xamarin.Contacts
 			set;
 		}
 
-		public Uri Find (Expression expression, StringBuilder builder, IList<string> argumentList)
+		public Uri DefaultTable
 		{
-			if (builder == null)
-				throw new ArgumentNullException ("builder");
-			if (argumentList == null)
-				throw new ArgumentNullException ("argumentList");
+			get { return (UseRawContacts) ? ContactsContract.RawContacts.ContentUri : ContactsContract.Contacts.ContentUri; }
+		}
 
-			this.queryBuilder = builder;
-			this.arguments = argumentList;
+		public TableFindResult Find (Expression expression)
+		{
+			this.queryBuilder.Clear();
+			this.arguments.Clear();
 
 			Visit (expression);
 
-			return this.table;
+			return new TableFindResult (this.table, this.queryBuilder.ToString(), this.arguments.ToArray());
 		}
 
 		public bool IsSupportedType (Type type)
@@ -50,8 +50,8 @@ namespace Xamarin.Contacts
 		}
 
 		private Uri table;
-		private StringBuilder queryBuilder;
-		private IList<string> arguments;
+		private readonly StringBuilder queryBuilder = new StringBuilder();
+		private readonly List<string> arguments = new List<string>();
 
 		private Tuple<string, Type> GetPhoneColumn (MemberInfo member)
 		{
