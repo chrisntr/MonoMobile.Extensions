@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Android.Content;
 using Android.Database;
 
@@ -18,15 +19,24 @@ namespace Xamarin
 
 		public IEnumerator<T> GetEnumerator()
 		{
+			string[] projections = null;
+			if (this.translator.Projections != null)
+			{
+				projections = this.translator.Projections.Select (t => t.Item1).ToArray();
+				if (projections.Length == 0)
+					projections = null;
+			}
+
 			ICursor cursor = null;
 			try
 			{
-				cursor = content.Query (translator.Table, translator.Projections, translator.QueryString,
-				                        translator.ClauseParameters, translator.SortString);
+				
+				cursor = content.Query (translator.Table, projections,
+				                        translator.QueryString, translator.ClauseParameters, translator.SortString);
 
 				while (cursor.MoveToNext())
 				{
-					int colIndex = cursor.GetColumnIndex (this.translator.Projections[0]);
+					int colIndex = cursor.GetColumnIndex (projections[0]);
 					yield return this.selector (cursor, colIndex);
 				}
 			}

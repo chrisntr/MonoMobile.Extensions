@@ -1,17 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 
 namespace Xamarin
 {
-	/*
-	 * Find first Where/Select/Order to determine table
-	 * Generate args to ContentResover.Query
-	 * Caller replaces queryable with enumerable created from query
-	 * Query should be for IDs to be filled as loaded
-	 */
-
 	internal class ContentQueryTranslator
 		: ExpressionVisitor
 	{
@@ -34,9 +28,9 @@ namespace Xamarin
 			private set;
 		}
 
-		public string[] Projections
+		public IEnumerable<Tuple<string, Type>> Projections
 		{
-			get { return (this.projections != null) ? this.projections.ToArray() : null; }
+			get { return this.projections; }
 		}
 
 		public string[] Columns
@@ -60,7 +54,7 @@ namespace Xamarin
 		} 
 
 		private bool fallback = false;
-		private List<string> projections;
+		private List<Tuple<string, Type>> projections;
 		private List<string> columns;
 		private StringBuilder sortBuilder;
 		private readonly List<string> parameters = new List<string>();
@@ -129,7 +123,7 @@ namespace Xamarin
 			if (column == null)
 				return methodCall;
 
-			(this.projections ?? (this.projections = new List<string>())).Add (column.Item1);
+			(this.projections ?? (this.projections = new List<Tuple<string, Type>>())).Add (column);
 			if (column.Item2.IsValueType || column.Item2 == typeof(string))
 				ReturnType = column.Item2;
 
@@ -170,11 +164,15 @@ namespace Xamarin
 				return false;
 			}
 
-			Android.Net.Uri table = this.tableFinder.Find (me, this.queryBuilder, this.parameters);
+			TableFindResult result = this.tableFinder.Find (me);
+			if (result.QueryString != null)
+				this.queryBuilder.Append (result.QueryString);
+			
+			this.arguments.AddRange (result.Arguments);
 
 			if (Table == null)
-				Table = table;
-			else if (Table != table)
+				Table = result.Table;
+			else if (Table != result.Table)
 			{
 				this.fallback = true;
 				return false;
