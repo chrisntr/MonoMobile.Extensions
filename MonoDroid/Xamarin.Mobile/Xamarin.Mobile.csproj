@@ -70,6 +70,12 @@
     <Compile Include="..\..\Shared\Contacts\Website.cs">
       <Link>Contacts\Website.cs</Link>
     </Compile>
+    <Compile Include="..\..\Shared\EvaluationNominator.cs">
+      <Link>EvaluationNominator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\ExpressionEvaluator.cs">
+      <Link>ExpressionEvaluator.cs</Link>
+    </Compile>
     <Compile Include="..\..\Shared\ExpressionVisitor.cs">
       <Link>ExpressionVisitor.cs</Link>
     </Compile>
@@ -85,6 +91,8 @@
     <Compile Include="Contacts\ContactHelper.cs" />
     <Compile Include="Contacts\ContactReader.cs" />
     <Compile Include="Contacts\ContactTableFinder.cs" />
+    <Compile Include="MemberExpressionFinder.cs" />
+    <Compile Include="MultiProjectionReader.cs" />
     <Compile Include="ProjectionReader.cs" />
     <Compile Include="ContentQueryProvider.cs" />
     <Compile Include="ContentQueryTranslator.cs" />
