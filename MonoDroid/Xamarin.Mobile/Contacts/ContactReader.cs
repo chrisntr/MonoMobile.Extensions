@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Android.Content;
 using Android.Content.Res;
 using Android.Database;
+using Android.Provider;
 
 namespace Xamarin.Contacts
 {
@@ -20,11 +22,36 @@ namespace Xamarin.Contacts
 
 		public IEnumerator<Contact> GetEnumerator()
 		{
+			Android.Net.Uri table = (this.translator != null) 
+										? this.translator.Table
+										: ((this.rawContacts)
+											? ContactsContract.RawContacts.ContentUri
+											: ContactsContract.Contacts.ContentUri);
+
+			string[] projections = null;
+			if (this.translator != null && this.translator.Projections != null)
+			{
+				projections = this.translator.Projections.Select (t => t.Item1).ToArray();
+				if (projections.Length == 0)
+					projections = null;
+			}
+
+			string query = null;
+			if (this.translator != null)
+				query = this.translator.QueryString;
+
+			string[] parameters = null;
+			if (this.translator != null)
+				parameters = this.translator.ClauseParameters;
+
+			string sortString = null;
+			if (this.translator != null)
+				sortString = this.translator.SortString;
+
 			ICursor cursor = null;
 			try
 			{
-				cursor = this.content.Query (this.translator.Table, this.translator.Projections, this.translator.QueryString,
-				                             this.translator.ClauseParameters, this.translator.SortString);
+				cursor = this.content.Query (table, projections, query, parameters, sortString);
 
 				while (cursor.MoveToNext())
 					yield return ContactHelper.GetContact (this.rawContacts, this.content, this.resources, cursor);

@@ -1,10 +1,7 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using Android.Content;
 using Android.Content.Res;
-using Android.Database;
 
 namespace Xamarin.Contacts
 {
@@ -24,7 +21,7 @@ namespace Xamarin.Contacts
 
 		protected override IEnumerable GetObjectReader (ContentResolver content, Resources resources, ContentQueryTranslator translator)
 		{
-			if (translator.ReturnType == null || translator.ReturnType == typeof(Contact))
+			if (translator == null || translator.ReturnType == null || translator.ReturnType == typeof(Contact))
 				return new ContactReader (UseRawContacts, translator, content, resources);
 			else if (translator.ReturnType == typeof(string))
 				return new ProjectionReader<string> (content, translator, (cur,col) => cur.GetString (col));
