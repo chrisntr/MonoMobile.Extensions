@@ -51,7 +51,17 @@ namespace Xamarin
 		public string SortString
 		{
 			get { return (this.sortBuilder != null) ? this.sortBuilder.ToString() : null; }
-		} 
+		}
+
+		public Expression Translate (Expression expression)
+		{
+			Expression expr = Visit (expression);
+
+			if (Table == null)
+				Table = this.tableFinder.DefaultTable;
+
+			return expr;
+		}
 
 		private bool fallback = false;
 		private List<Tuple<string, Type>> projections;

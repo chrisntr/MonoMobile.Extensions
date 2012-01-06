@@ -36,9 +36,10 @@ namespace Xamarin
 		object IQueryProvider.Execute (Expression expression)
 		{
 			var translator = new ContentQueryTranslator (this.tableFinder);
-			expression = translator.Visit (expression);
+			expression = translator.Translate (expression);
 			
 			IQueryable q = GetObjectReader (this.content, this.resources, translator).AsQueryable();
+			//IQueryable q = GetObjectReader (this.content, this.resources, null).AsQueryable();
 
 			//IQueryable<T> q = GetElements().AsQueryable();
 			expression = ReplaceQueryable (expression, q);
