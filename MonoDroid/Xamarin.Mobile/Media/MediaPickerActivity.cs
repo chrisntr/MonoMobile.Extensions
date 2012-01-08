@@ -35,10 +35,10 @@ namespace Xamarin.Media
 				this.isPhoto = true;
 
 			string action = this.Intent.GetStringExtra (ExtraAction);
-
 			Intent pickIntent = null;
 			try
 			{
+				//pickIntent = new Intent(MediaStore.ActionVideoCapture);
 				pickIntent = new Intent (action);
 				if (action == Intent.ActionPick)
 					pickIntent.SetType (type);
@@ -60,9 +60,17 @@ namespace Xamarin.Media
 						this.Intent.GetStringExtra (MediaStore.MediaColumns.Title),
 						this.Intent.GetStringExtra (MediaStore.Images.ImageColumns.Description));
 
-					Touch();
-
-					pickIntent.PutExtra (MediaStore.ExtraOutput, this.path);
+					//Touch();
+					Console.WriteLine("path: {0}", this.path);
+					//
+					// Note: this Extra doesn't work on all
+					// cameras, and isn't just ignored, if added
+					// on some cameras (especially HTC's, such as 
+					// EVO 4Gs and EVO 3Ds, it will screw up the 
+					// response data and the content provider
+					// URL will be null
+					//
+					//pickIntent.PutExtra (MediaStore.ExtraOutput, this.path);
 				}
 
 				StartActivityForResult (pickIntent, id);
@@ -72,7 +80,7 @@ namespace Xamarin.Media
 				OnMediaPicked (new MediaPickedEventArgs (id, ex));
 			}
 			finally
-			{
+			{ 
 				if (pickIntent != null)
 					pickIntent.Dispose();
 			}
@@ -95,16 +103,52 @@ namespace Xamarin.Media
 				args = new MediaPickedEventArgs (requestCode, isCanceled: true);
 			else
 			{
-				Uri targetUri = (data != null) ? data.Data : this.path;
-				if (targetUri == null)
-					targetUri = this.path;
-
+				//Console.WriteLine("data is null: {0}, this.path: {1}", data == null, this.path);
+				//Uri targetUri = (data != null) ? data.Data : this.path;
+				//if (true)// (targetUri == null)
+				Uri targetUri = this.path;
+				
+				CopyFile(data.Data);
+				
 				var mf = new MediaFile (() => GetStreamForUri (targetUri), () => DeleteFileAtUri (targetUri));
 				args = new MediaPickedEventArgs (requestCode, false, mf);
 			}
 
 			OnMediaPicked (args);
 			Finish();
+		}
+		
+		private void CopyFile(Uri url)
+		{
+			Console.WriteLine("Copying {0}", url);
+			
+			ICursor cursor = null;
+			try
+			{
+			
+	            cursor = ManagedQuery(
+	                    url,
+	                    null,
+	                    null,
+	                    null,
+	                    null
+	            );
+				
+				if(cursor.MoveToFirst())
+				{
+					String filename = cursor.GetString(cursor.GetColumnIndex(MediaStore.Video.Media.InterfaceConsts.Data));
+					Console.WriteLine("filename: {0} {1}", filename, this.path.EncodedPath);
+					File.Copy(filename, this.path.EncodedPath);
+				}
+			}
+			catch(Exception ex)
+			{
+				Console.WriteLine("EX: {0}", ex.ToString());
+			}
+			finally
+			{
+				cursor = null;
+			}
 		}
 
 		private int GetVideoQuality (VideoQuality quality)
