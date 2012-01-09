@@ -9,11 +9,11 @@ namespace Xamarin
 	internal class ContentQueryTranslator
 		: ExpressionVisitor
 	{
-		private readonly ITableFinder tableFinder;
-
 		public ContentQueryTranslator (ITableFinder tableFinder)
 		{
 			this.tableFinder = tableFinder;
+			Skip = -1;
+			Take = -1;
 		}
 
 		public Android.Net.Uri Table
@@ -53,6 +53,18 @@ namespace Xamarin
 			get { return (this.sortBuilder != null) ? this.sortBuilder.ToString() : null; }
 		}
 
+		public int Skip
+		{
+			get;
+			private set;
+		}
+
+		public int Take
+		{
+			get;
+			private set;
+		}
+
 		public Expression Translate (Expression expression)
 		{
 			Expression expr = Visit (expression);
@@ -63,6 +75,7 @@ namespace Xamarin
 			return expr;
 		}
 
+		private readonly ITableFinder tableFinder;
 		private bool fallback = false;
 		private List<Tuple<string, Type>> projections;
 		private List<string> columns;
@@ -90,9 +103,29 @@ namespace Xamarin
 					expression = VisitSelectMany (methodCall);
 				else if (methodCall.Method.Name == "OrderBy" || methodCall.Method.Name == "OrderByDescending")
 					expression = VisitOrder (methodCall);
+				else if (methodCall.Method.Name == "Skip")
+				    expression = VisitSkip (methodCall);
+				else if (methodCall.Method.Name == "Take")
+				    expression = VisitTake (methodCall);
 			}
 
 			return expression;
+		}
+
+		private Expression VisitTake (MethodCallExpression methodCall)
+		{
+			ConstantExpression ce = (ConstantExpression) methodCall.Arguments[1];
+			Take = (int) ce.Value;
+
+			return methodCall.Arguments[0];
+		}
+
+		private Expression VisitSkip (MethodCallExpression methodCall)
+		{
+			ConstantExpression ce = (ConstantExpression) methodCall.Arguments[1];
+			Skip = (int) ce.Value;
+
+			return methodCall.Arguments[0];
 		}
 
 		private MethodCallExpression VisitAny (MethodCallExpression methodCall)

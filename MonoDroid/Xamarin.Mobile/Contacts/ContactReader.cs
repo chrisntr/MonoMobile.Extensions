@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Android.Content;
 using Android.Content.Res;
 using Android.Database;
@@ -47,6 +48,28 @@ namespace Xamarin.Contacts
 			string sortString = null;
 			if (this.translator != null)
 				sortString = this.translator.SortString;
+
+			if (this.translator != null && (this.translator.Skip > 0 || this.translator.Take > 0))
+			{
+				StringBuilder limitb = new StringBuilder();
+
+				if (sortString == null)
+					limitb.Append (ContactsContract.ContactsColumns.LookupKey);
+
+				limitb.Append (" LIMIT ");
+
+				if (this.translator.Skip > 0)
+				{
+					limitb.Append (this.translator.Skip);
+					if (this.translator.Take > 0)
+						limitb.Append (",");
+				}
+
+				if (this.translator.Take > 0)
+					limitb.Append (this.translator.Take);
+
+				sortString = (sortString == null) ? limitb.ToString() : sortString + limitb;
+			}
 
 			ICursor cursor = null;
 			try
