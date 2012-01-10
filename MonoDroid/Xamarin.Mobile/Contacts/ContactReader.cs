@@ -75,9 +75,8 @@ namespace Xamarin.Contacts
 			try
 			{
 				cursor = this.content.Query (table, projections, query, parameters, sortString);
-
-				while (cursor.MoveToNext())
-					yield return ContactHelper.GetContact (this.rawContacts, this.content, this.resources, cursor);
+				foreach (Contact contact in ContactHelper.GetContacts (cursor, this.rawContacts, this.content, this.resources, BatchSize))
+				    yield return contact;
 			}
 			finally
 			{
@@ -95,5 +94,7 @@ namespace Xamarin.Contacts
 		private readonly ContentQueryTranslator translator;
 		private readonly ContentResolver content;
 		private readonly Resources resources;
+
+		private const int BatchSize = 20;
 	}
 }

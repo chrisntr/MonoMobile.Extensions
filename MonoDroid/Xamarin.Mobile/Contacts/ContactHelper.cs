@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Android.Content;
 using Android.Content.Res;
 using Android.Database;
@@ -20,17 +22,95 @@ namespace Xamarin.Contacts
 	{
 		internal static IEnumerable<Contact> GetContacts (bool rawContacts, ContentResolver content, Resources resources)
 		{
-			ICursor c = null;
-
 			Uri curi = (rawContacts)
 						? ContactsContract.RawContacts.ContentUri
 						: ContactsContract.Contacts.ContentUri;
 
+			ICursor cursor = null;
 			try
 			{
-				c = content.Query (curi, null, null, null, null);
+				cursor = content.Query (curi, null, null, null, null);
+				//while (cursor.MoveToNext())
+				//    yield return GetContact (rawContacts, content, resources, cursor);
+				
+				foreach (Contact contact in GetContacts (cursor, rawContacts, content, resources, 20))
+				    yield return contact;
+			}
+			finally
+			{
+				if (cursor != null)
+					cursor.Close();
+			}
+		}
+
+		internal static IEnumerable<Contact> GetContacts (ICursor cursor, bool rawContacts, ContentResolver content, Resources resources, int batchSize)
+		{
+			string column = (rawContacts)
+								? ContactsContract.RawContactsColumns.ContactId
+								: ContactsContract.ContactsColumns.LookupKey;
+
+			string[] ids = new string[batchSize];
+			int columnIndex = cursor.GetColumnIndex (column);
+
+			int i = 0;
+			while (cursor.MoveToNext())
+			{
+				if (i == batchSize)
+				{
+				    i = 0;
+				    foreach (Contact c in GetContacts (rawContacts, content, resources, ids))
+				        yield return c;
+				}
+
+				ids[i++] = cursor.GetString (columnIndex);
+			}
+
+			if (i > 0)
+			{
+				foreach (Contact c in GetContacts (rawContacts, content, resources, ids.Take(i).ToArray()))
+				    yield return c;
+			}
+		}
+
+		internal static IEnumerable<Contact> GetContacts (bool rawContacts, ContentResolver content, Resources resources, string[] ids)
+		{
+			ICursor c = null;
+
+			string column = (rawContacts)
+								? ContactsContract.RawContactsColumns.ContactId
+								: ContactsContract.ContactsColumns.LookupKey;
+
+			StringBuilder whereb = new StringBuilder();
+			for (int i = 0; i < ids.Length; i++)
+			{
+				if (i > 0)
+					whereb.Append (" OR ");
+
+				whereb.Append (column);
+				whereb.Append ("=?");
+			}
+
+			try
+			{
+				Contact currentContact = null;
+
+				c = content.Query (ContactsContract.Data.ContentUri, null, whereb.ToString(), ids, ContactsContract.ContactsColumns.LookupKey);
+				int idIndex = c.GetColumnIndex (column);
+				int dnIndex = c.GetColumnIndex (ContactsContract.ContactsColumns.DisplayName);
 				while (c.MoveToNext())
-					yield return GetContact (rawContacts, content, resources, c);
+				{
+					string id = c.GetString (idIndex);
+					if (currentContact == null || currentContact.Id != id)
+					{
+						if (currentContact != null)
+							yield return currentContact;
+
+						currentContact = new Contact (id, !rawContacts, content);
+						currentContact.DisplayName = c.GetString (dnIndex);
+					}
+
+					FillContactWithRow (resources, currentContact, c);
+				}
 			}
 			finally
 			{
@@ -66,59 +146,64 @@ namespace Xamarin.Contacts
 				c = content.Query (ContactsContract.Data.ContentUri, null, column + " = ?", new[] { recordId }, null);
 				while (c.MoveToNext())
 				{
-					string dataType = c.GetString (c.GetColumnIndex (ContactsContract.DataColumns.Mimetype));
-					switch (dataType)
-					{
-						case ContactsContract.CommonDataKinds.Nickname.ContentItemType:
-							contact.Nickname = c.GetString (c.GetColumnIndex (ContactsContract.CommonDataKinds.Nickname.Name));
-							break;
-
-						case StructuredName.ContentItemType:
-							contact.Prefix = c.GetString (StructuredName.Prefix);
-							contact.FirstName = c.GetString (StructuredName.GivenName);
-							contact.MiddleName = c.GetString (StructuredName.MiddleName);
-							contact.LastName = c.GetString (StructuredName.FamilyName);
-							contact.Suffix = c.GetString (StructuredName.Suffix);
-							break;
-
-						case ContactsContract.CommonDataKinds.Phone.ContentItemType:
-							contact.phones.Add (GetPhone (c, resources));
-							break;
-
-						case ContactsContract.CommonDataKinds.Email.ContentItemType:
-							contact.emails.Add (GetEmail (c, resources));
-							break;
-
-						case ContactsContract.CommonDataKinds.Note.ContentItemType:
-							contact.notes.Add (new Note { Contents = GetString (c, ContactsContract.CommonDataKinds.Note.NoteColumnId) });
-							break;
-
-						case ContactsContract.CommonDataKinds.Organization.ContentItemType:
-							contact.organizations.Add (GetOrganization (c, resources));
-							break;
-
-						case StructuredPostal.ContentItemType:
-							contact.addresses.Add (GetAddress (c, resources));
-							break;
-
-						case InstantMessaging.ContentItemType:
-							contact.instantMessagingAccounts.Add (GetImAccount (c, resources));
-							break;
-
-						case WebsiteData.ContentItemType:
-							contact.websites.Add (GetWebsite (c, resources));
-							break;
-
-						case Relation.ContentItemType:
-							contact.relationships.Add (GetRelationship (c, resources));
-							break;
-					}
+					FillContactWithRow (resources, contact, c);
 				}
 			}
 			finally
 			{
 				if (c != null)
 					c.Close();
+			}
+		}
+
+		private static void FillContactWithRow (Resources resources, Contact contact, ICursor c)
+		{
+			string dataType = c.GetString (c.GetColumnIndex (ContactsContract.DataColumns.Mimetype));
+			switch (dataType)
+			{
+				case ContactsContract.CommonDataKinds.Nickname.ContentItemType:
+					contact.Nickname = c.GetString (c.GetColumnIndex (ContactsContract.CommonDataKinds.Nickname.Name));
+					break;
+
+				case StructuredName.ContentItemType:
+					contact.Prefix = c.GetString (StructuredName.Prefix);
+					contact.FirstName = c.GetString (StructuredName.GivenName);
+					contact.MiddleName = c.GetString (StructuredName.MiddleName);
+					contact.LastName = c.GetString (StructuredName.FamilyName);
+					contact.Suffix = c.GetString (StructuredName.Suffix);
+					break;
+
+				case ContactsContract.CommonDataKinds.Phone.ContentItemType:
+					contact.phones.Add (GetPhone (c, resources));
+					break;
+
+				case ContactsContract.CommonDataKinds.Email.ContentItemType:
+					contact.emails.Add (GetEmail (c, resources));
+					break;
+
+				case ContactsContract.CommonDataKinds.Note.ContentItemType:
+					contact.notes.Add (new Note { Contents = GetString (c, ContactsContract.CommonDataKinds.Note.NoteColumnId) });
+					break;
+
+				case ContactsContract.CommonDataKinds.Organization.ContentItemType:
+					contact.organizations.Add (GetOrganization (c, resources));
+					break;
+
+				case StructuredPostal.ContentItemType:
+					contact.addresses.Add (GetAddress (c, resources));
+					break;
+
+				case InstantMessaging.ContentItemType:
+					contact.instantMessagingAccounts.Add (GetImAccount (c, resources));
+					break;
+
+				case WebsiteData.ContentItemType:
+					contact.websites.Add (GetWebsite (c, resources));
+					break;
+
+				case Relation.ContentItemType:
+					contact.relationships.Add (GetRelationship (c, resources));
+					break;
 			}
 		}
 
