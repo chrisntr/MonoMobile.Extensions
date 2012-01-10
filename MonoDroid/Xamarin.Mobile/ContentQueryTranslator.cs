@@ -22,6 +22,12 @@ namespace Xamarin
 			private set;
 		}
 
+		public bool IsCount
+		{
+			get;
+			private set;
+		}
+
 		public Type ReturnType
 		{
 			get;
@@ -107,9 +113,24 @@ namespace Xamarin
 				    expression = VisitSkip (methodCall);
 				else if (methodCall.Method.Name == "Take")
 				    expression = VisitTake (methodCall);
+				else if (methodCall.Method.Name == "Count")
+					expression = VisitCount (methodCall);
 			}
 
 			return expression;
+		}
+
+		private Expression VisitCount (MethodCallExpression methodCall)
+		{
+			if (methodCall.Arguments.Count > 1)
+			{
+				VisitWhere (methodCall);
+				if (this.fallback)
+					return methodCall;
+			}
+
+			this.IsCount = true;
+			return methodCall.Arguments[0];
 		}
 
 		private Expression VisitTake (MethodCallExpression methodCall)

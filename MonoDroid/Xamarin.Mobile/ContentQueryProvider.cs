@@ -37,11 +37,30 @@ namespace Xamarin
 		{
 			var translator = new ContentQueryTranslator (this.tableFinder);
 			expression = translator.Translate (expression);
+
+			if (translator.IsCount)
+			{
+			    ICursor cursor = null;
+			    try
+			    {
+			        string[] projections = (translator.Projections != null)
+			                                ? translator.Projections.Select (t => t.Item1).ToArray()
+			                                : null;
+
+			        cursor = this.content.Query (translator.Table, projections, translator.QueryString,
+			                                        translator.ClauseParameters, translator.QueryString);
+			        return cursor.Count;
+			    }
+			    finally
+			    {
+			        if (cursor != null)
+			            cursor.Close();
+			    }
+			}
 			
 			IQueryable q = GetObjectReader (this.content, this.resources, translator).AsQueryable();
 			//IQueryable q = GetObjectReader (this.content, this.resources, null).AsQueryable();
 
-			//IQueryable<T> q = GetElements().AsQueryable();
 			expression = ReplaceQueryable (expression, q);
 			
 			if (expression.Type.IsGenericType && expression.Type.GetGenericTypeDefinition() == typeof(IOrderedQueryable<>))
