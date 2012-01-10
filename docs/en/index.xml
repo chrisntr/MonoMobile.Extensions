@@ -52,6 +52,8 @@
       <Type Name="OrganizationType" Kind="Enumeration" />
       <Type Name="Phone" Kind="Class" />
       <Type Name="PhoneType" Kind="Enumeration" />
+      <Type Name="Relationship" Kind="Class" />
+      <Type Name="RelationshipType" Kind="Enumeration" />
       <Type Name="Website" Kind="Class" />
     </Namespace>
     <Namespace Name="Xamarin.Geolocation">

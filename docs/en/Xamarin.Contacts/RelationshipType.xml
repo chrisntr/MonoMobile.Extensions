@@ -1,0 +1,59 @@
+<Type Name="RelationshipType" FullName="Xamarin.Contacts.RelationshipType">
+  <TypeSignature Language="C#" Value="public enum RelationshipType" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed RelationshipType extends System.Enum" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.Mobile</AssemblyName>
+    <AssemblyVersion>0.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="Child">
+      <MemberSignature Language="C#" Value="Child" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Contacts.RelationshipType Child = int32(1)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Contacts.RelationshipType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Other">
+      <MemberSignature Language="C#" Value="Other" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Contacts.RelationshipType Other = int32(2)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Contacts.RelationshipType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="SignificantOther">
+      <MemberSignature Language="C#" Value="SignificantOther" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Contacts.RelationshipType SignificantOther = int32(0)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Contacts.RelationshipType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+  </Members>
+</Type>
