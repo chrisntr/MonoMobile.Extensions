@@ -51,7 +51,7 @@ namespace Xamarin.Contacts
 
 		public IEnumerator<Contact> GetEnumerator()
 		{
-			return ContactHelper.GetContacts (true, this.content, this.resources).GetEnumerator();
+			return ContactHelper.GetContacts (!PreferContactAggregation, this.content, this.resources).GetEnumerator();
 		}
 
 		/// <summary>
