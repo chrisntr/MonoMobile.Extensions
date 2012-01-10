@@ -10,12 +10,12 @@
   </Base>
   <Docs>
     <summary>Represents the service that an <see href="T:Xamarin.Contacts.InstantMessagingAccount" /> is with.</summary>
-	<remarks>
-		<para>
+    <remarks>
+      <para>
 			Only the services supported by both iOS and Android are present. The services that are not present on all platforms
 			are represented by <see cref="F:Xamarin.Contacts.InstantMessagingService.Other" />.
 		</para>
-	</remarks>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName="Aim">

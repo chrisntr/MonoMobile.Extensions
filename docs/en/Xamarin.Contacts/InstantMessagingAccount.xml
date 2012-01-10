@@ -11,6 +11,7 @@
   <Interfaces />
   <Docs>
     <summary>Represents an instant messaging account belonging to a <see cref="T:Xamarin.Contacts.Contact" />.</summary>
+    <remarks>To be added.</remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -23,6 +24,7 @@
       <Parameters />
       <Docs>
         <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.InstantMessagingAccount" /> class.</summary>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Account">
@@ -38,6 +40,7 @@
       <Docs>
         <summary>Gets or sets the account name.</summary>
         <value>The account name.</value>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Service">
@@ -53,6 +56,7 @@
       <Docs>
         <summary>Gets or sets the instant messaging service the account is with.</summary>
         <value>The instant messaging service the account is with.</value>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="ServiceLabel">
@@ -68,12 +72,12 @@
       <Docs>
         <summary>Gets or sets the label for the service.</summary>
         <value>The label of the service, or <c>null</c> if not set.</value>
-		<remarks>
-			<para>
+        <remarks>
+          <para>
 				For service types built into the underlying OS, this contains a localized version of the label. If the label is custom, it will contain
 				the custom label. In situations where types/labels are not supported, it will be <c>null</c>.
 			</para>
-		</remarks>
+        </remarks>
       </Docs>
     </Member>
   </Members>

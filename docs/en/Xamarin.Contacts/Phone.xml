@@ -10,7 +10,8 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>Represents a phone belonging to a <see cref="T:Xamarin.Contacts.Contact"/>.</summary>
+    <summary>Represents a phone belonging to a <see cref="T:Xamarin.Contacts.Contact" />.</summary>
+    <remarks>To be added.</remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -25,6 +26,7 @@
         <summary>
 			Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.Phone" /> class.
 		</summary>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Label">
@@ -40,12 +42,12 @@
       <Docs>
         <summary>Gets or sets the label for this phone.</summary>
         <value>The phone's label.</value>
-		<remarks>
-			<para>
+        <remarks>
+          <para>
 				For phone types built into the underlying OS, this contains a localized version of the label. If the type is custom, it will contain
 				the custom label. In situations where types/labels are not supported, it will be <c>null</c>.
 			</para>
-		</remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Number">
@@ -61,6 +63,7 @@
       <Docs>
         <summary>Gets or sets the number for this phone.</summary>
         <value>The phone's number.</value>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Type">
@@ -76,6 +79,7 @@
       <Docs>
         <summary>Gets or sets the phone's type.</summary>
         <value>The type of phone.</value>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>

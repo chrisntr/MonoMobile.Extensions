@@ -11,6 +11,7 @@
   <Interfaces />
   <Docs>
     <summary>Represents a website belonging to a <see cref="T:Xamarin.Contacts.Contact" />.</summary>
+    <remarks>To be added.</remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -23,6 +24,7 @@
       <Parameters />
       <Docs>
         <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.Website" /> class.</summary>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Address">
@@ -38,6 +40,7 @@
       <Docs>
         <summary>Gets or sets the website's address.</summary>
         <value>The website address.</value>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>

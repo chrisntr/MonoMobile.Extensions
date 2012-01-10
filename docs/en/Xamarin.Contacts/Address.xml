@@ -11,6 +11,7 @@
   <Interfaces />
   <Docs>
     <summary>Represents an address related to a <see cref="T:Xamarin.Contacts.Contact" />.</summary>
+    <remarks>To be added.</remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -23,6 +24,7 @@
       <Parameters />
       <Docs>
         <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.Address" /> class.</summary>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="City">
@@ -38,6 +40,7 @@
       <Docs>
         <summary>Gets or sets the city for this address.</summary>
         <value>The city of the address, or <c>null</c> if not set.</value>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Country">
@@ -53,6 +56,7 @@
       <Docs>
         <summary>Gets or sets the country of this address.</summary>
         <value>The country of the address, or <c>null</c> if not set.</value>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Label">
@@ -68,12 +72,12 @@
       <Docs>
         <summary>Gets or sets the label for this address.</summary>
         <value>The user's label for this address, or <c>null</c> if not set.</value>
-		<remarks>
-			<para>
+        <remarks>
+          <para>
 				For address types built into the underlying OS, this contains a localized version of the label. If the type is custom, it will contain
 				the custom label. In situations where types/labels are not supported, it will be <c>null</c>.
 			</para>
-		</remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="PostalCode">
@@ -89,6 +93,7 @@
       <Docs>
         <summary>Gets or sets the postal code for this address.</summary>
         <value>The postal code of the address, or <c>null</c> if not set.</value>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Region">
@@ -104,6 +109,7 @@
       <Docs>
         <summary>Gets or sets the state/province/region for this address.</summary>
         <value>The state, province or region for this address or <c>null</c> if not set.</value>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="StreetAddress">
@@ -120,11 +126,11 @@
         <summary>Gets or sets the street and house number for this address.</summary>
         <value>The street and house number for the address, or <c>null</c> if not set.</value>
         <remarks>
-			<para>
+          <para>
 				Some platforms multiple lines for the street address, or a non-mutually exclusive PO Box.
 				If either of these are present, this property will contain all of the values, each separated by a new line.
 			</para>
-		</remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Type">
@@ -140,6 +146,7 @@
       <Docs>
         <summary>Gets or sets the type of this address.</summary>
         <value>The type of address.</value>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>

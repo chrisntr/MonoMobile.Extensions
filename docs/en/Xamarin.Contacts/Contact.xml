@@ -10,8 +10,9 @@
   </Base>
   <Interfaces />
   <Docs>
-	<altmember cref="T:Xamarin.Contacts.Contact" />
     <summary>Represents an individual or aggregate contact in the user's address book.</summary>
+    <remarks>To be added.</remarks>
+    <altmember cref="T:Xamarin.Contacts.Contact" />
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -26,6 +27,7 @@
         <summary>
 			Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.Contact" /> class.
 		</summary>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Addresses">
@@ -41,7 +43,9 @@
       <Docs>
         <summary>Gets or sets an enumeration of addresses belonging to this contact.</summary>
         <value>An enumeration of addresses, empty if there are no addresses.</value>
-		<exception cref="T:System.ArgumentNullException"><paramref name="value" /> is <c>null</c>.</exception>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="value" /> is <c>null</c>.</exception>
       </Docs>
     </Member>
     <Member MemberName="DisplayName">
@@ -57,16 +61,16 @@
       <Docs>
         <summary>Gets or sets the display name for the contact.</summary>
         <value>The display name for the contact.</value>
-		<remarks>
-			<para>
+        <remarks>
+          <para>
 				When retrieved from an address book, this is the OS-assembled name from the individual
 				parts of the name, fit to display to the user.
 			</para>
-			<para>
+          <para>
 				Currently, setting this will manually not affect the other name properties,
 				nor will setting them affect this value.
 			</para>
-		</remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Emails">
@@ -82,7 +86,9 @@
       <Docs>
         <summary>Gets or sets an enumeration of email addresses belonging to this contact.</summary>
         <value>An enumeration of emails, empty if there are no emails.</value>
-		<exception cref="T:System.ArgumentNullException"><paramref name="value" /> is <c>null</c>.</exception>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="value" /> is <c>null</c>.</exception>
       </Docs>
     </Member>
     <Member MemberName="FirstName">
@@ -98,6 +104,7 @@
       <Docs>
         <summary>Gets or sets the first (given) name of the contact.</summary>
         <value>The first or given name of the contact, or <c>null</c> if not set.</value>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Id">
@@ -111,15 +118,15 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-		<altmember cref="P:Xamarin.Contacts.Contact.IsAggregate" />
         <summary>Gets the identifier for this contact.</summary>
         <value>The identifier for the contact, or <c>null</c> if not set.</value>
         <remarks>
-			<para>
+          <para>
 				Use <see cref="P:Xamarin.Contacts.Contact.IsAggregate" /> to determine
 				whether this is an aggregate identifier or not.
 			</para>
-		</remarks>
+        </remarks>
+        <altmember cref="P:Xamarin.Contacts.Contact.IsAggregate" />
       </Docs>
     </Member>
     <Member MemberName="InstantMessagingAccounts">
@@ -135,7 +142,9 @@
       <Docs>
         <summary>Gets or sets an enumeration of instant messaging accounts belonging to this contact.</summary>
         <value>An enumeration of instant messaging accounts, empty if there are no accounts.</value>
-		<exception cref="T:System.ArgumentNullException"><paramref name="value" /> is <c>null</c>.</exception>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="value" /> is <c>null</c>.</exception>
       </Docs>
     </Member>
     <Member MemberName="IsAggregate">
@@ -149,22 +158,22 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-		<altmember cref="T:Xamarin.Contacts.AddressBook.PreferContactAggregation" />
-		<altmember cref="T:Xamarin.Contacts.AddressBook.AggregateContactsSupported" />
         <summary>Gets whether this contact was retrieved with aggregation prefered and supported or not.</summary>
         <value>
-			<c>true</c> if the contact was retrieved with <see cref="P:Xamarin.Contacts.AddressBook.PreferContactAggregation" />
+          <c>true</c> if the contact was retrieved with <see cref="P:Xamarin.Contacts.AddressBook.PreferContactAggregation" />
 			and <see cref="P:Xamarin.Contacts.AddressBook.AggregateContactsSupported" /> being <c>true</c>,
 			<c>false</c> otherwise.
 		</value>
         <remarks>
-			<para>
+          <para>
 				If <c>true</c>, it does not neccessarily mean that there are multiple contacts
 				represented, but simply that it would if there were. The reason for this is it allows
 				you determine whether <see cref="P:Xamarin.Contacts.Contact.Id" /> is an aggregate ID
 				or a singular one.
 			</para>
-		</remarks>
+        </remarks>
+        <altmember cref="T:Xamarin.Contacts.AddressBook.PreferContactAggregation" />
+        <altmember cref="T:Xamarin.Contacts.AddressBook.AggregateContactsSupported" />
       </Docs>
     </Member>
     <Member MemberName="LastName">
@@ -180,6 +189,7 @@
       <Docs>
         <summary>Gets or sets the last (family) name of the contact.</summary>
         <value>The last or family name of the contact, or <c>null</c> if not set.</value>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="MiddleName">
@@ -195,6 +205,7 @@
       <Docs>
         <summary>Gets or sets the middle name of the contact.</summary>
         <value>The middle name of the contact, or <c>null</c> if not set.</value>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Nickname">
@@ -210,6 +221,7 @@
       <Docs>
         <summary>Gets or sets the nickname of the contact.</summary>
         <value>The nickname of the contact, or <c>null</c> if not set.</value>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Notes">
@@ -225,7 +237,9 @@
       <Docs>
         <summary>Gets or sets an enumeration of notes for the contact.</summary>
         <value>An enumeration of notes for the contact, empty if there are no notes.</value>
-		<exception cref="T:System.ArgumentNullException"><paramref name="value" /> is <c>null</c>.</exception>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="value" /> is <c>null</c>.</exception>
       </Docs>
     </Member>
     <Member MemberName="Organizations">
@@ -241,7 +255,9 @@
       <Docs>
         <summary>Gets or sets an enumeration of organizations the contact is a part of.</summary>
         <value>An enumeration of organizations the contact is a part of, empty if none.</value>
-		<exception cref="T:System.ArgumentNullException"><paramref name="value" /> is <c>null</c>.</exception>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="value" /> is <c>null</c>.</exception>
       </Docs>
     </Member>
     <Member MemberName="Phones">
@@ -257,7 +273,9 @@
       <Docs>
         <summary>Gets or sets an enumeration of phones belonging to the contact.</summary>
         <value>An enumeration of phones belonging to the contact, empty if none.</value>
-		<exception cref="T:System.ArgumentNullException"><paramref name="value" /> is <c>null</c>.</exception>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="value" /> is <c>null</c>.</exception>
       </Docs>
     </Member>
     <Member MemberName="PhotoThumbnail">
@@ -274,8 +292,8 @@
         <summary>Gets the thumbnail photo for the contact.</summary>
         <value>A thumbnail image for the contact, <c>null</c> if not set.</value>
         <remarks>
-			<para>This returns an UIImage on iOS and Bitmap on Android.</para>
-		</remarks>
+          <para>This returns an UIImage on iOS and Bitmap on Android.</para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Prefix">
@@ -292,8 +310,8 @@
         <summary>Gets or sets the name prefix for the contact.</summary>
         <value>The name prefix for the contact, <c>null</c> if not set.</value>
         <remarks>
-			<para>This contains name prefixes such as "Dr.", "Sir", etc.</para>
-		</remarks>
+          <para>This contains name prefixes such as "Dr.", "Sir", etc.</para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Suffix">
@@ -310,8 +328,8 @@
         <summary>Gets or sets the name suffix for the contact.</summary>
         <value>The name suffix for the contact, <c>null</c> if not set.</value>
         <remarks>
-			<para>This contains name suffixes such as "Sr.", "Jr.", etc.</para>
-		</remarks>
+          <para>This contains name suffixes such as "Sr.", "Jr.", etc.</para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Websites">
@@ -327,7 +345,9 @@
       <Docs>
         <summary>Gets or sets an enumeration of websites for the contact.</summary>
         <value>An enumeration of websites belonging to the contact, empty if none.</value>
-		<exception cref="T:System.ArgumentNullException"><paramref name="value" /> is <c>null</c>.</exception>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="value" /> is <c>null</c>.</exception>
       </Docs>
     </Member>
   </Members>
