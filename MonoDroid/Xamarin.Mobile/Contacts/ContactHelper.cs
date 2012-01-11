@@ -111,6 +111,9 @@ namespace Xamarin.Contacts
 
 					FillContactWithRow (resources, currentContact, c);
 				}
+
+				if (currentContact != null)
+					yield return currentContact;
 			}
 			finally
 			{
