@@ -38,7 +38,7 @@ namespace Xamarin
 			var translator = new ContentQueryTranslator (this.tableFinder);
 			expression = translator.Translate (expression);
 
-			if (translator.IsCount)
+			if (translator.IsCount || translator.IsAny)
 			{
 			    ICursor cursor = null;
 			    try
@@ -49,7 +49,11 @@ namespace Xamarin
 
 			        cursor = this.content.Query (translator.Table, projections, translator.QueryString,
 			                                        translator.ClauseParameters, translator.QueryString);
-			        return cursor.Count;
+
+			        if (translator.IsCount)
+			            return cursor.Count;
+			        else
+			            return (cursor.Count > 0);
 			    }
 			    finally
 			    {

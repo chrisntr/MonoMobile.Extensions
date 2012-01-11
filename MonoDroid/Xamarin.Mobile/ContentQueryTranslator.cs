@@ -22,6 +22,12 @@ namespace Xamarin
 			private set;
 		}
 
+		public bool IsAny
+		{
+			get;
+			private set;
+		}
+
 		public bool IsCount
 		{
 			get;
@@ -101,8 +107,8 @@ namespace Xamarin
 			{
 				if (methodCall.Method.Name == "Where")
 					expression = VisitWhere (methodCall);
-//				else if (methodCall.Method.Name == "Any")
-//					expression = VisitAny (methodCall);
+				else if (methodCall.Method.Name == "Any")
+					expression = VisitAny (methodCall);
 				else if (methodCall.Method.Name == "Select")
 					expression = VisitSelect (methodCall);
 				else if (methodCall.Method.Name == "SelectMany")
@@ -129,7 +135,7 @@ namespace Xamarin
 					return methodCall;
 			}
 
-			this.IsCount = true;
+			IsCount = true;
 			return methodCall.Arguments[0];
 		}
 
@@ -149,9 +155,17 @@ namespace Xamarin
 			return methodCall.Arguments[0];
 		}
 
-		private MethodCallExpression VisitAny (MethodCallExpression methodCall)
+		private Expression VisitAny (MethodCallExpression methodCall)
 		{
-		    return methodCall;
+			if (methodCall.Arguments.Count > 1)
+			{
+				VisitWhere (methodCall);
+				if (this.fallback)
+					return methodCall;
+			}
+
+			IsAny = true;
+			return methodCall.Arguments[0];
 		}
 
 		private class WhereEvaluator
