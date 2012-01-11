@@ -97,6 +97,9 @@ namespace Xamarin
 
 		protected override Expression VisitMethodCall (MethodCallExpression methodCall)
 		{
+			if (!(methodCall.Arguments[0] is ConstantExpression) && !(methodCall.Arguments[0] is MethodCallExpression))
+				return methodCall;
+
 			Expression expression = base.VisitMethodCall (methodCall);
 
 			methodCall = expression as MethodCallExpression;
