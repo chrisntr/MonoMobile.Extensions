@@ -86,7 +86,7 @@ namespace Xamarin.Media
 					while ((len = s.Read (buffer, 0, buffer.Length)) > 0)
 						fs.Write (buffer, 0, len);
 
-					s.Flush();
+					fs.Flush();
 				}
 			}
 			else if (this.options.Location == MediaFileStoreLocation.CameraRoll)
