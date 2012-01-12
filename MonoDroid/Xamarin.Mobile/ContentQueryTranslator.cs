@@ -338,7 +338,7 @@ namespace Xamarin
 				return methodCall;
 
 			Tuple<string, Type> column = this.tableFinder.GetColumn (me.Member);
-			if (column == null)
+			if (column == null || column.Item1 == null)
 				return methodCall;
 
 			(this.projections ?? (this.projections = new List<Tuple<string, Type>>())).Add (column);
@@ -384,11 +384,25 @@ namespace Xamarin
 
 		private Expression VisitSelectMany (MethodCallExpression methodCall)
 		{
-//			List<MemberExpression> mes = MemberExpressionFinder.Find (methodCall, this.tableFinder);
-//			if (!TryGetTable (mes))
-//				return methodCall;
+			List<MemberExpression> mes = MemberExpressionFinder.Find (methodCall, this.tableFinder);
+			if (mes.Count > 1)
+			{
+				this.fallback = true;
+				return methodCall;
+			}
 
-			return methodCall;
+			if (!TryGetTable (mes))
+				return methodCall;
+
+			Tuple<string, Type> column = this.tableFinder.GetColumn (mes[0].Member);
+			if (column == null || column.Item2.GetGenericTypeDefinition() != typeof(IEnumerable<>))
+			{
+				this.fallback = true;
+				return methodCall;
+			}
+
+			ReturnType = column.Item2.GetGenericArguments()[0];
+			return methodCall.Arguments[0];
 		}
 
 		private Expression VisitOrder (MethodCallExpression methodCall)

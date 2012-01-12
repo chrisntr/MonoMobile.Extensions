@@ -210,7 +210,7 @@ namespace Xamarin.Contacts
 			}
 		}
 
-		private static Relationship GetRelationship (ICursor c, Resources resources)
+		internal static Relationship GetRelationship (ICursor c, Resources resources)
 		{
 			Relationship r = new Relationship { Name = c.GetString (Relation.Name) };
 
@@ -235,7 +235,7 @@ namespace Xamarin.Contacts
 			return r;
 		}
 
-		private static InstantMessagingAccount GetImAccount (ICursor c, Resources resources)
+		internal static InstantMessagingAccount GetImAccount (ICursor c, Resources resources)
 		{
 			InstantMessagingAccount ima = new InstantMessagingAccount();
 			ima.Account = c.GetString (CommonColumns.Data);
@@ -253,7 +253,7 @@ namespace Xamarin.Contacts
 			return ima;
 		}
 
-		private static Address GetAddress (ICursor c, Resources resources)
+		internal static Address GetAddress (ICursor c, Resources resources)
 		{
 			Address a = new Address();
 			a.Country = c.GetString (StructuredPostal.Country);
@@ -281,7 +281,7 @@ namespace Xamarin.Contacts
 			return a;
 		}
 
-		private static Phone GetPhone (ICursor c, Resources resources)
+		internal static Phone GetPhone (ICursor c, Resources resources)
 		{
 			Phone p = new Phone();
 			p.Number = GetString (c, ContactsContract.CommonDataKinds.Phone.Number);
@@ -295,7 +295,7 @@ namespace Xamarin.Contacts
 			return p;
 		}
 
-		private static Email GetEmail (ICursor c, Resources resources)
+		internal static Email GetEmail (ICursor c, Resources resources)
 		{
 			Email e = new Email();
 			e.Address = c.GetString (ContactsContract.DataColumns.Data1);
@@ -309,7 +309,7 @@ namespace Xamarin.Contacts
 			return e;
 		}
 
-		private static Organization GetOrganization (ICursor c, Resources resources)
+		internal static Organization GetOrganization (ICursor c, Resources resources)
 		{
 			Organization o = new Organization();
 			o.Name = c.GetString (OrganizationData.Company);
@@ -324,7 +324,7 @@ namespace Xamarin.Contacts
 			return o;
 		}
 
-		private static Website GetWebsite (ICursor c, Resources resources)
+		internal static Website GetWebsite (ICursor c, Resources resources)
 		{
 			Website w = new Website();
 			w.Address = c.GetString (WebsiteData.Url);

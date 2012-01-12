@@ -77,6 +77,10 @@ namespace Xamarin.Contacts
 					return new Tuple<string, Type> (ContactsContract.CommonDataKinds.StructuredName.FamilyName, typeof(string));
 				case "Suffix":
 					return new Tuple<string, Type> (ContactsContract.CommonDataKinds.StructuredName.Suffix, typeof(string));
+				case "Phones":
+					return new Tuple<string, Type> (null, typeof (IEnumerable<Phone>));
+				case "Emails":
+					return new Tuple<string, Type> (null, typeof (IEnumerable<Email>));
 
 				default:
 					return null;
@@ -119,8 +123,14 @@ namespace Xamarin.Contacts
 
 					return ContactsContract.Data.ContentUri;
 
+				case "Phones":
+					return ContactsContract.CommonDataKinds.Phone.ContentUri;
+
+				case "Emails":
+					return ContactsContract.CommonDataKinds.Email.ContentUri;
+
 				default:
-					throw new ArgumentException();
+					return null;
 			}
 		}
 	}

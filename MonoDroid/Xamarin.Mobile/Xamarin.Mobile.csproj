@@ -91,6 +91,7 @@
     <Compile Include="Contacts\ContactHelper.cs" />
     <Compile Include="Contacts\ContactReader.cs" />
     <Compile Include="Contacts\ContactTableFinder.cs" />
+    <Compile Include="GenericQueryReader.cs" />
     <Compile Include="MemberExpressionFinder.cs" />
     <Compile Include="MultiProjectionReader.cs" />
     <Compile Include="ProjectionReader.cs" />

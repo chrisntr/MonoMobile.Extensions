@@ -62,8 +62,8 @@ namespace Xamarin
 			    }
 			}
 			
-			IQueryable q = GetObjectReader (this.content, this.resources, translator).AsQueryable();
-			//IQueryable q = GetObjectReader (this.content, this.resources, null).AsQueryable();
+			IQueryable q = GetObjectReader (translator).AsQueryable();
+			//IQueryable q = GetObjectReader (null).AsQueryable();
 
 			expression = ReplaceQueryable (expression, q);
 			
@@ -73,7 +73,7 @@ namespace Xamarin
 				return q.Provider.Execute (expression);
 		}
 
-		protected abstract IEnumerable GetObjectReader (ContentResolver content, Resources resources, ContentQueryTranslator translator);
+		protected abstract IEnumerable GetObjectReader (ContentQueryTranslator translator);
 
 		IQueryable<TElement> IQueryProvider.CreateQuery<TElement> (Expression expression)
 		{
