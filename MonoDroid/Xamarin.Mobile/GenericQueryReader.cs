@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Android.Content;
 using Android.Content.Res;
 using Android.Database;
@@ -12,6 +13,15 @@ namespace Xamarin
 	internal class GenericQueryReader<T>
 		: IEnumerable<T>
 	{
+		public GenericQueryReader (ContentQueryTranslator translator, ContentResolver content, Resources resources, Func<ICursor, Resources, T> selector, string defaultSort)
+			: this (translator, content, resources, selector)
+		{
+			if (defaultSort == null)
+				throw new ArgumentNullException ("defaultSort");
+
+			this.defaultSort = defaultSort;
+		}
+
 		public GenericQueryReader (ContentQueryTranslator translator, ContentResolver content, Resources resources, Func<ICursor, Resources, T> selector)
 		{
 			if (translator == null)
@@ -34,13 +44,40 @@ namespace Xamarin
 			ICursor cursor = null;
 			try
 			{
+				string sortString = this.translator.SortString;
+				if ((sortString != null || this.defaultSort != null)
+					&& this.translator != null && (this.translator.Skip > 0 || this.translator.Take > 0))
+				{
+					StringBuilder limitb = new StringBuilder();
+
+					if (sortString == null)
+						limitb.Append (this.defaultSort);
+
+					limitb.Append (" LIMIT ");
+
+					if (this.translator.Skip > 0)
+					{
+						limitb.Append (this.translator.Skip);
+						if (this.translator.Take > 0)
+							limitb.Append (",");
+					}
+
+					if (this.translator.Take > 0)
+						limitb.Append (this.translator.Take);
+
+					sortString = (sortString == null) ? limitb.ToString() : sortString + limitb;
+				}
+
 				string[] projections = (translator.Projections != null)
-				                       	? this.translator.Projections.Select (p => p.Item1).ToArray()
-				                       	: null;
+			                                ? translator.Projections
+												.Where (p => p.Columns != null)
+												.SelectMany (t => t.Columns)
+												.ToArray()
+			                                : null;
 
 				cursor = this.content.Query (this.translator.Table, projections,
 				                             this.translator.QueryString, this.translator.ClauseParameters,
-				                             this.translator.SortString);
+				                             sortString);
 
 				while (cursor.MoveToNext())
 					yield return this.selector (cursor, this.resources);
@@ -57,6 +94,7 @@ namespace Xamarin
 			return GetEnumerator();
 		}
 
+		private readonly string defaultSort;
 		private readonly Func<ICursor, Resources, T> selector;
 		private readonly ContentQueryTranslator translator;
 		private readonly ContentResolver content;
