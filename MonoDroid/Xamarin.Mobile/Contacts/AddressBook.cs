@@ -84,7 +84,7 @@ namespace Xamarin.Contacts
 			try
 			{
 				c = this.content.Query (curi, null, column + " = ?", new[] { id }, null);
-				return (c.MoveToNext() ? ContactHelper.GetContact (PreferContactAggregation, this.content, this.resources, c) : null);
+				return (c.MoveToNext() ? ContactHelper.GetContact (!PreferContactAggregation, this.content, this.resources, c) : null);
 			}
 			finally
 			{
