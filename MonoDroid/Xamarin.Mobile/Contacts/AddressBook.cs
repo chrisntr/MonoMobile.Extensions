@@ -68,12 +68,6 @@ namespace Xamarin.Contacts
 			if (id.Trim() == String.Empty)
 				throw new ArgumentException ("Invalid ID", "id");
 
-			int contactId;
-			if (PreferContactAggregation && Int32.TryParse (id, out contactId))
-				throw new ArgumentException ("Can not supply a raw contact ID while AddressBook prefers aggregation.", "id");
-			if (!PreferContactAggregation && !Int32.TryParse (id, out contactId))
-				throw new ArgumentException ("Can not supply a raw contact ID while AddressBook prefers aggregation.");
-
 			Android.Net.Uri curi; string column;
 			if (PreferContactAggregation)
 			{

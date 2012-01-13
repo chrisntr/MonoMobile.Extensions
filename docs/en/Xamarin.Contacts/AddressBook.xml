@@ -163,18 +163,9 @@
         <altmember cref="P:Xamarin.Contacts.Contact.IsAggregate" />
         <altmember cref="P:Xamarin.Contacts.AddressBook.PreferContactAggregation" />
         <exception cref="T:System.ArgumentNullException">
-          <paramref name="id" /> is <c>null</c>.</exception>
+        <paramref name="id" /> is <c>null</c>.</exception>
         <exception cref="T:System.ArgumentException">
-			<para>
-				<paramref name="id" /> is empty.
-			</para>
-			<para>
-				--- or ---
-			</para>
-			<para>
-				<paramref name="id" /> was a raw contact id while <see cref="P:Xamarin.Contacts.AddressBook.PreferContactAggregation" /> is enabled,
-				or was a lookup key while <see cref="P:Xamarin.Contacts.AddressBook.PreferContactAggregation" /> is disabled.
-			</para>
+			<para><paramref name="id" /> is empty.</para>
 		</exception>
       </Docs>
     </Member>
