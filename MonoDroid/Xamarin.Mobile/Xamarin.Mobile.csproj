@@ -94,7 +94,6 @@
     <Compile Include="ContentResolverColumnMapping.cs" />
     <Compile Include="GenericQueryReader.cs" />
     <Compile Include="MemberExpressionFinder.cs" />
-    <Compile Include="MultiProjectionReader.cs" />
     <Compile Include="ProjectionReader.cs" />
     <Compile Include="ContentQueryProvider.cs" />
     <Compile Include="ContentQueryTranslator.cs" />
