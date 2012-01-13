@@ -27,6 +27,18 @@ namespace Xamarin.Contacts
 				return new GenericQueryReader<Phone> (translator, content, resources, ContactHelper.GetPhone);
 			else if (translator.ReturnType == typeof(Email))
 				return new GenericQueryReader<Email> (translator, content, resources, ContactHelper.GetEmail);
+			else if (translator.ReturnType == typeof(Address))
+				return new GenericQueryReader<Address> (translator, content, resources, ContactHelper.GetAddress);
+			else if (translator.ReturnType == typeof(Relationship))
+				return new GenericQueryReader<Relationship> (translator, content, resources, ContactHelper.GetRelationship);
+			else if (translator.ReturnType == typeof(InstantMessagingAccount))
+				return new GenericQueryReader<InstantMessagingAccount> (translator, content, resources, ContactHelper.GetImAccount);
+			else if (translator.ReturnType == typeof(Website))
+				return new GenericQueryReader<Website> (translator, content, resources, ContactHelper.GetWebsite);
+			else if (translator.ReturnType == typeof(Organization))
+				return new GenericQueryReader<Organization> (translator, content, resources, ContactHelper.GetOrganization);
+			else if (translator.ReturnType == typeof(Note))
+				return new GenericQueryReader<Note> (translator, content, resources, ContactHelper.GetNote);
 			else if (translator.ReturnType == typeof(string))
 				return new ProjectionReader<string> (content, translator, (cur,col) => cur.GetString (col));
 			else if (translator.ReturnType == typeof(int))

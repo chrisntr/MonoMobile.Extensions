@@ -185,7 +185,7 @@ namespace Xamarin.Contacts
 					break;
 
 				case ContactsContract.CommonDataKinds.Note.ContentItemType:
-					contact.notes.Add (new Note { Contents = GetString (c, ContactsContract.CommonDataKinds.Note.NoteColumnId) });
+					contact.notes.Add (GetNote (c, resources));
 					break;
 
 				case ContactsContract.CommonDataKinds.Organization.ContentItemType:
@@ -208,6 +208,11 @@ namespace Xamarin.Contacts
 					contact.relationships.Add (GetRelationship (c, resources));
 					break;
 			}
+		}
+
+		internal  static Note GetNote (ICursor c, Resources resources)
+		{
+			return new Note { Contents = GetString (c, ContactsContract.CommonDataKinds.Note.NoteColumnId) };
 		}
 
 		internal static Relationship GetRelationship (ICursor c, Resources resources)

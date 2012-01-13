@@ -34,7 +34,11 @@ namespace Xamarin.Contacts
 
 		public bool IsSupportedType (Type type)
 		{
-			return type == typeof(Contact) || type == typeof(Phone) || type == typeof (Email);
+			return type == typeof(Contact)
+				|| type == typeof(Phone)
+				|| type == typeof(Email)
+				|| type == typeof(Address)
+				|| type == typeof(Relationship);
 		}
 
 		public ContentResolverColumnMapping GetColumn (MemberInfo member)
@@ -45,7 +49,18 @@ namespace Xamarin.Contacts
 				return GetEmailColumn (member);
 			if (member.DeclaringType == typeof(Phone))
 				return GetPhoneColumn (member);
+			if (member.DeclaringType == typeof(Address))
+				return GetAddressColumn (member);
+			if (member.DeclaringType == typeof(Relationship))
+				return GetRelationshipColumn (member);
+			if (member.DeclaringType == typeof(InstantMessagingAccount))
+				return GetImColumn (member);
 
+			return null;
+		}
+
+		private ContentResolverColumnMapping GetImColumn (MemberInfo member)
+		{
 			return null;
 		}
 
@@ -146,6 +161,14 @@ namespace Xamarin.Contacts
 			return member;
 		}
 
+		private void AddMimeConstraint (string type)
+		{
+			this.queryBuilder.Append (ContactsContract.DataColumns.Mimetype);
+			this.queryBuilder.Append ("=?");
+
+			this.arguments.Add (type);
+		}
+
 		private Uri GetContactTable (MemberExpression expression)
 		{
 			switch (expression.Member.Name)
@@ -158,18 +181,35 @@ namespace Xamarin.Contacts
 				case "MiddleName":
 				case "LastName":
 				case "Suffix":
-					this.queryBuilder.Append (ContactsContract.DataColumns.Mimetype);
-					this.queryBuilder.Append ("=?");
+					AddMimeConstraint (ContactsContract.CommonDataKinds.StructuredName.ContentItemType);
+					return ContactsContract.Data.ContentUri;
 
-					this.arguments.Add (ContactsContract.CommonDataKinds.StructuredName.ContentItemType);
+				case "Relationships":
+					AddMimeConstraint (ContactsContract.CommonDataKinds.Relation.ContentItemType);
+					return ContactsContract.Data.ContentUri;
 
+				case "Organizations":
+					AddMimeConstraint (ContactsContract.CommonDataKinds.Organization.ContentItemType);
+					return ContactsContract.Data.ContentUri;
+
+				case "Notes":
+					AddMimeConstraint (ContactsContract.CommonDataKinds.Note.ContentItemType);
 					return ContactsContract.Data.ContentUri;
 
 				case "Phones":
 					return ContactsContract.CommonDataKinds.Phone.ContentUri;
-
 				case "Emails":
 					return ContactsContract.CommonDataKinds.Email.ContentUri;
+				case "Addresses":
+					return ContactsContract.CommonDataKinds.StructuredPostal.ContentUri;
+
+				case "Websites":
+					AddMimeConstraint (ContactsContract.CommonDataKinds.Website.ContentItemType);
+					return ContactsContract.Data.ContentUri;
+
+				case "InstantMessagingAccounts":
+					AddMimeConstraint (ContactsContract.CommonDataKinds.Im.ContentItemType);
+					return ContactsContract.Data.ContentUri;
 
 				default:
 					return null;
