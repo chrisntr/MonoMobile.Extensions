@@ -290,7 +290,7 @@ namespace Xamarin
 				else
 				{
 					object value = constant.Value;
-					if (this.currentMap.ValueToQueryable != null)
+					if (this.currentMap != null && this.currentMap.ValueToQueryable != null)
 						value = this.currentMap.ValueToQueryable (value);
 
 					switch (Type.GetTypeCode (value.GetType()))
