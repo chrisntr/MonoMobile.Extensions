@@ -304,6 +304,18 @@ namespace Xamarin
 						this.builder.Append (" = ");
 						break;
 
+					case ExpressionType.GreaterThan:
+						this.builder.Append (" > ");
+						break;
+
+					case ExpressionType.LessThan:
+						this.builder.Append (" < ");
+						break;
+
+					case ExpressionType.NotEqual:
+						this.builder.Append (" != ");
+						break;
+
 					default:
 						Fallback = true;
 						return binary;
