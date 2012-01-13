@@ -45,9 +45,9 @@ namespace Xamarin
 			    {
 			        string[] projections = (translator.Projections != null)
 			                                ? translator.Projections
-												.Where (p => p.Columns != null)
-												.SelectMany (t => t.Columns)
-												.ToArray()
+			                                    .Where (p => p.Columns != null)
+			                                    .SelectMany (t => t.Columns)
+			                                    .ToArray()
 			                                : null;
 
 			        cursor = this.content.Query (translator.Table, projections, translator.QueryString,

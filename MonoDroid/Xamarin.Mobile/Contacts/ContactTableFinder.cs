@@ -38,7 +38,11 @@ namespace Xamarin.Contacts
 				|| type == typeof(Phone)
 				|| type == typeof(Email)
 				|| type == typeof(Address)
-				|| type == typeof(Relationship);
+				|| type == typeof(Relationship)
+				|| type == typeof(InstantMessagingAccount)
+				|| type == typeof(Website)
+				|| type == typeof(Organization)
+				|| type == typeof(Note);
 		}
 
 		public ContentResolverColumnMapping GetColumn (MemberInfo member)
@@ -55,18 +59,51 @@ namespace Xamarin.Contacts
 				return GetRelationshipColumn (member);
 			if (member.DeclaringType == typeof(InstantMessagingAccount))
 				return GetImColumn (member);
+			if (member.DeclaringType == typeof(Website))
+				return GetWebsiteColumn (member);
+			if (member.DeclaringType == typeof(Organization))
+				return GetOrganizationColumn (member);
+			if (member.DeclaringType == typeof(Note))
+				return GetNoteColumn (member);
 
-			return null;
-		}
-
-		private ContentResolverColumnMapping GetImColumn (MemberInfo member)
-		{
 			return null;
 		}
 
 		private Uri table;
 		private readonly StringBuilder queryBuilder = new StringBuilder();
 		private readonly List<string> arguments = new List<string>();
+
+		private ContentResolverColumnMapping GetNoteColumn (MemberInfo member)
+		{
+			switch (member.Name)
+			{
+				case "Contents":
+					return new ContentResolverColumnMapping (ContactsContract.CommonDataKinds.CommonColumns.Data, typeof (string));
+			}
+
+			return null;
+		}
+
+		private ContentResolverColumnMapping GetOrganizationColumn (MemberInfo member)
+		{
+			return null;
+		}
+
+		private ContentResolverColumnMapping GetWebsiteColumn (MemberInfo member)
+		{
+			return null;
+		}
+
+		private ContentResolverColumnMapping GetImColumn (MemberInfo member)
+		{
+			switch (member.Name)
+			{
+				case "Account":
+					return new ContentResolverColumnMapping (ContactsContract.CommonDataKinds.CommonColumns.Data, typeof(string));
+			}
+
+			return null;
+		}
 
 		private ContentResolverColumnMapping GetRelationshipColumn (MemberInfo member)
 		{
@@ -132,12 +169,23 @@ namespace Xamarin.Contacts
 					return new ContentResolverColumnMapping (ContactsContract.CommonDataKinds.StructuredName.FamilyName, typeof(string));
 				case "Suffix":
 					return new ContentResolverColumnMapping (ContactsContract.CommonDataKinds.StructuredName.Suffix, typeof(string));
+
 				case "Phones":
 					return new ContentResolverColumnMapping ((string)null, typeof (IEnumerable<Phone>));
 				case "Emails":
 					return new ContentResolverColumnMapping ((string)null, typeof (IEnumerable<Email>));
 				case "Addresses":
 					return new ContentResolverColumnMapping ((string)null, typeof (IEnumerable<Address>));
+				case "Notes":
+					return new ContentResolverColumnMapping ((string) null, typeof (IEnumerable<Note>));
+				case "Relationships":
+					return new ContentResolverColumnMapping ((string) null, typeof (IEnumerable<Relationship>));
+				case "InstantMessagingAccounts":
+					return new ContentResolverColumnMapping ((string) null, typeof (IEnumerable<InstantMessagingAccount>));
+				case "Websites":
+					return new ContentResolverColumnMapping ((string) null, typeof (IEnumerable<Website>));
+				case "Organizations":
+					return new ContentResolverColumnMapping ((string) null, typeof (IEnumerable<Organization>));
 
 				default:
 					return null;

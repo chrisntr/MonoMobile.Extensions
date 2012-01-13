@@ -212,7 +212,7 @@ namespace Xamarin.Contacts
 
 		internal  static Note GetNote (ICursor c, Resources resources)
 		{
-			return new Note { Contents = GetString (c, ContactsContract.CommonDataKinds.Note.NoteColumnId) };
+			return new Note { Contents = GetString (c, ContactsContract.DataColumns.Data1) };
 		}
 
 		internal static Relationship GetRelationship (ICursor c, Resources resources)
