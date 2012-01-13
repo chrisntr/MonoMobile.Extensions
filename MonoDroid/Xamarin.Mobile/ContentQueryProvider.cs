@@ -35,7 +35,7 @@ namespace Xamarin
 
 		object IQueryProvider.Execute (Expression expression)
 		{
-			var translator = new ContentQueryTranslator (this.tableFinder);
+			var translator = new ContentQueryTranslator (this, this.tableFinder);
 			expression = translator.Translate (expression);
 
 			if (translator.IsCount || translator.IsAny)

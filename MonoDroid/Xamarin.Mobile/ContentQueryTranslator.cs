@@ -9,8 +9,9 @@ namespace Xamarin
 	internal class ContentQueryTranslator
 		: ExpressionVisitor
 	{
-		public ContentQueryTranslator (ITableFinder tableFinder)
+		public ContentQueryTranslator (IQueryProvider provider, ITableFinder tableFinder)
 		{
+			this.provider = provider;
 			this.tableFinder = tableFinder;
 			Skip = -1;
 			Take = -1;
@@ -87,6 +88,7 @@ namespace Xamarin
 			return expr;
 		}
 
+		private readonly IQueryProvider provider;
 		private readonly ITableFinder tableFinder;
 		private bool fallback = false;
 		private List<Tuple<string, Type>> projections;
@@ -402,7 +404,8 @@ namespace Xamarin
 			}
 
 			ReturnType = column.Item2.GetGenericArguments()[0];
-			return methodCall.Arguments[0];
+			return Expression.Constant (Activator.CreateInstance (typeof (Query<>).MakeGenericType (ReturnType), this.provider));
+			//return methodCall.Arguments[0];
 		}
 
 		private Expression VisitOrder (MethodCallExpression methodCall)
