@@ -86,11 +86,25 @@ namespace Xamarin.Contacts
 
 		private ContentResolverColumnMapping GetOrganizationColumn (MemberInfo member)
 		{
+			switch (member.Name)
+			{
+				case "ContactTitle":
+					return new ContentResolverColumnMapping (ContactsContract.CommonDataKinds.Organization.Title, typeof (string));
+				case "Name":
+					return new ContentResolverColumnMapping (ContactsContract.CommonDataKinds.Organization.Company, typeof (string));
+			}
+
 			return null;
 		}
 
 		private ContentResolverColumnMapping GetWebsiteColumn (MemberInfo member)
 		{
+			switch (member.Name)
+			{
+				case "Address":
+					return new ContentResolverColumnMapping (ContactsContract.CommonDataKinds.Website.Url, typeof (string));
+			}
+
 			return null;
 		}
 
