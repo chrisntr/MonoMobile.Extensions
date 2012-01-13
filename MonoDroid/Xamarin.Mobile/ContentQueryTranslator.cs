@@ -132,9 +132,39 @@ namespace Xamarin
 				    expression = VisitTake (methodCall);
 				else if (methodCall.Method.Name == "Count")
 					expression = VisitCount (methodCall);
+				else if (methodCall.Method.Name == "First" || methodCall.Method.Name == "FirstOrDefault")
+					expression = VisitFirst (methodCall);
+				else if (methodCall.Method.Name == "Single" || methodCall.Method.Name == "SingleOrDefault")
+					expression = VisitSingle (methodCall);
 			}
 
 			return expression;
+		}
+
+		private Expression VisitFirst (MethodCallExpression methodCall)
+		{
+			if (methodCall.Arguments.Count > 1)
+			{
+				VisitWhere (methodCall);
+				if (this.fallback)
+					return methodCall;
+			}
+
+			Take = 1;
+			return methodCall;
+		}
+
+		private Expression VisitSingle (MethodCallExpression methodCall)
+		{
+			if (methodCall.Arguments.Count > 1)
+			{
+				VisitWhere (methodCall);
+				if (this.fallback)
+					return methodCall;
+			}
+
+			Take = 2;
+			return methodCall;
 		}
 
 		private Expression VisitCount (MethodCallExpression methodCall)
