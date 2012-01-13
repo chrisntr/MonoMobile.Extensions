@@ -117,13 +117,18 @@
         <summary>Attempts to load a contact for the specified <paramref name="id" />.</summary>
         <returns>The <see cref="T:Xamarin.Contacts.Contact" /> if found, <c>null</c> otherwise.</returns>
         <remarks>
-          <para>
+			<para>
 				If <see cref="P:Xamarin.Contacts.AddressBook.PreferContactAggregation" /> and
 				<see cref="P:Xamarin.Contacts.AddressBook.AggregateContactsSupported" /> are <c>true</c>,
 				this will attempt to load the contact using <paramref name="id" /> as an aggregate ID.
 				You can use <see cref="P:Xamarin.Contacts.Contact.IsAggregate" /> to determine whether the
 				<see cref="P:Xamarin.Contacts.Contact.Id" /> is an aggregate ID or not when you originally
 				obtained the contact.
+			</para>
+			<para>
+				On Android, with <see cref="P:Xamarin.Contacts.AddressBook.PreferContactAggregation" /> enabled,
+				this can be used to retrieve <see cref="T:Xamarin.Contacts.Contact" /> instances from an Android
+				contact lookup key.
 			</para>
         </remarks>
         <altmember cref="P:Xamarin.Contacts.Contact.Id" />
@@ -132,7 +137,17 @@
         <exception cref="T:System.ArgumentNullException">
           <paramref name="id" /> is <c>null</c>.</exception>
         <exception cref="T:System.ArgumentException">
-          <paramref name="id" /> is empty.</exception>
+			<para>
+				<paramref name="id" /> is empty.
+			</para>
+			<para>
+				--- or ---
+			</para>
+			<para>
+				<paramref name="id" /> was a raw contact id while <see cref="P:Xamarin.Contacts.AddressBook.PreferContactAggregation" /> is enabled,
+				or was a lookup key while <see cref="P:Xamarin.Contacts.AddressBook.PreferContactAggregation" /> is disabled.
+			</para>
+		</exception>
       </Docs>
     </Member>
     <Member MemberName="PreferContactAggregation">
