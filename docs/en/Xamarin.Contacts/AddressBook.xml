@@ -20,15 +20,43 @@
     <summary>Represents the address book of the user.</summary>
     <remarks>To be added.</remarks>
     <example>
-      <para>
+		<para>
 			This example shows how you can retrieve all contacts with the first name of
 			"Eric" and has a phone listed. Then it iterates through the contacts, making
 			a list of each person and their phones.
 		</para>
-      <code language="C#" source="CodeSamples.cs#AddressBook" />
+		<code language="C#">
+			<![CDATA[
+			var builder = new StringBuilder();
+			var abook = new AddressBook();
+			foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any()))
+			{
+				builder.AppendLine (c.DisplayName);
+				foreach (Phone p in c.Phones)
+					builder.AppendLine (String.Format ("{0}: {1}", p.Label, p.Number));
+
+				builder.AppendLine();
+			}
+			]]>
+		</code>
     </example>
   </Docs>
   <Members>
+	<Member MemberName=".ctor">
+		<MemberSignature Language="C#" Value="public AddressBook ();" />
+		<MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+		<MemberType>Constructor</MemberType>
+		<AssemblyInfo>
+			<AssemblyVersion>0.0.0.0</AssemblyVersion>
+		</AssemblyInfo>
+		<Parameters />
+		<Docs>
+			<summary>
+				Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.AddressBook" /> class.
+			</summary>
+			<remarks>Available only on iOS.</remarks>
+		</Docs>
+	</Member>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public AddressBook (Android.Content.Context context);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class Android.Content.Context context) cil managed" />
@@ -40,8 +68,8 @@
         <Parameter Name="context" Type="Android.Content.Context" />
       </Parameters>
       <Docs>
-        <param name="context">To be added.</param>
-        <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.AddressBook" /> class. .</summary>
+        <param name="context">The <see cref="T:Android.Content.Context" /> to use to retrieve contacts.</param>
+        <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.AddressBook" /> class.</summary>
         <remarks>Available only on Android.</remarks>
       </Docs>
     </Member>
@@ -79,7 +107,7 @@
       <Docs>
         <summary>Returns an enumerator that iterates through the <see href="T:Xamarin.Contacts.AddressBook" />.</summary>
         <returns>An enumerator for the <see href="T:Xamarin.Contacts.AddressBook" />.</returns>
-        <remarks>To be added.</remarks>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="IsReadOnly">

@@ -27,7 +27,7 @@
         <summary>
 			Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.Contact" /> class.
 		</summary>
-        <remarks>To be added.</remarks>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Addresses">
@@ -86,7 +86,7 @@
       <Docs>
         <summary>Gets or sets an enumeration of email addresses belonging to this contact.</summary>
         <value>An enumeration of emails, empty if there are no emails.</value>
-        <remarks>To be added.</remarks>
+        <remarks />
         <exception cref="T:System.ArgumentNullException">
           <paramref name="value" /> is <c>null</c>.</exception>
       </Docs>
@@ -104,7 +104,7 @@
       <Docs>
         <summary>Gets or sets the first (given) name of the contact.</summary>
         <value>The first or given name of the contact, or <c>null</c> if not set.</value>
-        <remarks>To be added.</remarks>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="GetPhotoThumbnail">
@@ -119,9 +119,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Gets a thumbnail of the Contact's photo.</summary>
+        <returns>A thumbnail of the Contact's photo, <c>null</c> if there isn't one.</returns>
+        <remarks>This is a <see cref="T:Android.Graphics.Bitmap" /> on Android and a <see cref="T:MonoTouch.UIKit.UIImage" /> on iOS.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Id">
@@ -184,8 +184,8 @@
         <remarks>
           <para>
 				If <c>true</c>, it does not neccessarily mean that there are multiple contacts
-				represented, but simply that it would if there were. The reason for this is it allows
-				you determine whether <see cref="P:Xamarin.Contacts.Contact.Id" /> is an aggregate ID
+				represented, but simply that it would if there were more than one contact. This
+				allows you determine whether <see cref="P:Xamarin.Contacts.Contact.Id" /> is an aggregate ID
 				or a singular one.
 			</para>
         </remarks>
@@ -206,7 +206,7 @@
       <Docs>
         <summary>Gets or sets the last (family) name of the contact.</summary>
         <value>The last or family name of the contact, or <c>null</c> if not set.</value>
-        <remarks>To be added.</remarks>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="MiddleName">
@@ -222,7 +222,7 @@
       <Docs>
         <summary>Gets or sets the middle name of the contact.</summary>
         <value>The middle name of the contact, or <c>null</c> if not set.</value>
-        <remarks>To be added.</remarks>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Nickname">
@@ -254,7 +254,7 @@
       <Docs>
         <summary>Gets or sets an enumeration of notes for the contact.</summary>
         <value>An enumeration of notes for the contact, empty if there are no notes.</value>
-        <remarks>To be added.</remarks>
+        <remarks />
         <exception cref="T:System.ArgumentNullException">
           <paramref name="value" /> is <c>null</c>.</exception>
       </Docs>
