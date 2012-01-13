@@ -18,7 +18,7 @@ namespace Xamarin
 
 		public IEnumerator<object[]> GetEnumerator()
 		{
-			Tuple<string, Type>[] projections = translator.Projections.ToArray();
+			ContentResolverColumnMapping[] projections = translator.Projections.ToArray();
 
 			ICursor cursor = null;
 			try

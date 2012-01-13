@@ -28,7 +28,7 @@ namespace Xamarin
 		/// </summary>
 		/// <param name="memberInfo">The <see cref="MemberInfo"/> for the model's member.</param>
 		/// <returns>Android column name for the model's member, <c>null</c> if unknown.</returns>
-		Tuple<string, Type> GetColumn (MemberInfo memberInfo);
+		ContentResolverColumnMapping GetColumn (MemberInfo memberInfo);
 	}
 
 	internal class TableFindResult

@@ -32,7 +32,11 @@ namespace Xamarin.Contacts
 			string[] projections = null;
 			if (this.translator != null && this.translator.Projections != null)
 			{
-				projections = this.translator.Projections.Select (t => t.Item1).ToArray();
+				projections = this.translator.Projections
+								.Where (p => p.Columns != null)
+								.SelectMany (t => t.Columns)
+								.ToArray();
+
 				if (projections.Length == 0)
 					projections = null;
 			}

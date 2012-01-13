@@ -41,7 +41,7 @@ namespace Xamarin
 			private set;
 		}
 
-		public IEnumerable<Tuple<string, Type>> Projections
+		public IEnumerable<ContentResolverColumnMapping> Projections
 		{
 			get { return this.projections; }
 		}
@@ -91,7 +91,7 @@ namespace Xamarin
 		private readonly IQueryProvider provider;
 		private readonly ITableFinder tableFinder;
 		private bool fallback = false;
-		private List<Tuple<string, Type>> projections;
+		private List<ContentResolverColumnMapping> projections;
 		private List<string> columns;
 		private StringBuilder sortBuilder;
 		private readonly List<string> arguments = new List<string>();
@@ -213,6 +213,7 @@ namespace Xamarin
 			private Android.Net.Uri table;
 			private readonly StringBuilder builder = new StringBuilder();
 			private readonly List<string> arguments = new List<string>();
+			private ContentResolverColumnMapping currentMap;
 
 			protected override Expression VisitMemberAccess (MemberExpression memberExpression)
 			{
@@ -229,17 +230,22 @@ namespace Xamarin
 					return memberExpression;
 				}
 
-				Tuple<string, Type> column = this.tableFinder.GetColumn (memberExpression.Member);
-				if (column == null)
+				ContentResolverColumnMapping cmap = this.tableFinder.GetColumn (memberExpression.Member);
+				if (cmap == null || cmap.Columns == null)
 				{
 					Fallback = true;
 					return memberExpression;
 				}
 
+				this.currentMap = cmap;
+
 				if (this.builder.Length > 0)
 					this.builder.Append (" AND ");
 
-				this.builder.Append (column.Item1);
+				if (cmap.Columns.Length == 1)
+					this.builder.Append (cmap.Columns[0]);
+				else
+					throw new NotSupportedException();
 
 				return base.VisitMemberAccess (memberExpression);
 			}
@@ -253,19 +259,23 @@ namespace Xamarin
 					this.builder.Append ("NULL");
 				else
 				{
-					switch (Type.GetTypeCode (constant.Value.GetType()))
+					object value = constant.Value;
+					if (this.currentMap.ValueToQueryable != null)
+						value = this.currentMap.ValueToQueryable (value);
+
+					switch (Type.GetTypeCode (value.GetType()))
 					{
 						case TypeCode.Object:
 							Fallback = true;
 							return constant;
 
 						case TypeCode.Boolean:
-							this.arguments.Add ((bool)constant.Value ? "1" : "0");
+							this.arguments.Add ((bool)value ? "1" : "0");
 							this.builder.Append ("?");
 							break;
 
 						default:
-							this.arguments.Add (constant.Value.ToString());
+							this.arguments.Add (value.ToString());
 							this.builder.Append ("?");
 							break;
 					}
@@ -339,13 +349,13 @@ namespace Xamarin
 			if (!TryGetTable (me))
 				return methodCall;
 
-			Tuple<string, Type> column = this.tableFinder.GetColumn (me.Member);
-			if (column == null || column.Item1 == null)
+			ContentResolverColumnMapping column = this.tableFinder.GetColumn (me.Member);
+			if (column == null || column.Columns == null)
 				return methodCall;
 
-			(this.projections ?? (this.projections = new List<Tuple<string, Type>>())).Add (column);
-			if (column.Item2.IsValueType || column.Item2 == typeof(string))
-				ReturnType = column.Item2;
+			(this.projections ?? (this.projections = new List<ContentResolverColumnMapping>())).Add (column);
+			if (column.ReturnType.IsValueType || column.ReturnType == typeof(string))
+				ReturnType = column.ReturnType;
 
 			this.fallback = true;
 
@@ -396,14 +406,15 @@ namespace Xamarin
 			if (!TryGetTable (mes))
 				return methodCall;
 
-			Tuple<string, Type> column = this.tableFinder.GetColumn (mes[0].Member);
-			if (column == null || column.Item2.GetGenericTypeDefinition() != typeof(IEnumerable<>))
+			ContentResolverColumnMapping column = this.tableFinder.GetColumn (mes[0].Member);
+			if (column == null || column.ReturnType.GetGenericTypeDefinition() != typeof(IEnumerable<>))
 			{
 				this.fallback = true;
 				return methodCall;
 			}
 
-			ReturnType = column.Item2.GetGenericArguments()[0];
+			ReturnType = column.ReturnType.GetGenericArguments()[0];
+
 			return Expression.Constant (Activator.CreateInstance (typeof (Query<>).MakeGenericType (ReturnType), this.provider));
 			//return methodCall.Arguments[0];
 		}
@@ -414,14 +425,17 @@ namespace Xamarin
 			if (!TryGetTable (me))
 				return methodCall;
 
-			Tuple<string, Type> column = this.tableFinder.GetColumn (me.Member);
-			if (column != null)
+			ContentResolverColumnMapping column = this.tableFinder.GetColumn (me.Member);
+			if (column != null && column.Columns != null)
 			{
 				StringBuilder builder = this.sortBuilder ?? (this.sortBuilder = new StringBuilder());
 				if (builder.Length > 0)
 					builder.Append (", ");
 
-				builder.Append (column.Item1);
+				if (column.Columns.Length > 1)
+					throw new NotSupportedException();
+
+				builder.Append (column.Columns[0]);
 
 				if (methodCall.Method.Name == "OrderByDescending")
 					builder.Append (" DESC");

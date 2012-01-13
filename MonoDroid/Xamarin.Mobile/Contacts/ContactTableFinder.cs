@@ -37,7 +37,7 @@ namespace Xamarin.Contacts
 			return type == typeof(Contact) || type == typeof(Phone) || type == typeof (Email);
 		}
 
-		public Tuple<string, Type> GetColumn (MemberInfo member)
+		public ContentResolverColumnMapping GetColumn (MemberInfo member)
 		{
 			if (member.DeclaringType == typeof(Contact))
 				return GetContactColumn (member);
@@ -53,34 +53,76 @@ namespace Xamarin.Contacts
 		private readonly StringBuilder queryBuilder = new StringBuilder();
 		private readonly List<string> arguments = new List<string>();
 
-		private Tuple<string, Type> GetPhoneColumn (MemberInfo member)
+		private ContentResolverColumnMapping GetRelationshipColumn (MemberInfo member)
 		{
+			switch (member.Name)
+			{
+				case "Name":
+					return new ContentResolverColumnMapping (ContactsContract.CommonDataKinds.Relation.Name, typeof (string));
+			}
+
 			return null;
 		}
 
-		private Tuple<string, Type> GetEmailColumn (MemberInfo member)
+		private ContentResolverColumnMapping GetAddressColumn (MemberInfo member)
 		{
+			switch (member.Name)
+			{
+				case "City":
+					return new ContentResolverColumnMapping (ContactsContract.CommonDataKinds.StructuredPostal.City, typeof(string));
+				case "Region":
+					return new ContentResolverColumnMapping (ContactsContract.CommonDataKinds.StructuredPostal.Region, typeof (string));
+				case "Country":
+					return new ContentResolverColumnMapping (ContactsContract.CommonDataKinds.StructuredPostal.Country, typeof (string));
+				case "PostalCode":
+					return new ContentResolverColumnMapping (ContactsContract.CommonDataKinds.StructuredPostal.Postcode, typeof(string));
+			}
+
 			return null;
 		}
 
-		private Tuple<string, Type> GetContactColumn (MemberInfo member)
+		private ContentResolverColumnMapping GetPhoneColumn (MemberInfo member)
+		{
+			switch (member.Name)
+			{
+				case "Number":
+					return new ContentResolverColumnMapping (ContactsContract.CommonDataKinds.Phone.Number, typeof (string));
+			}
+
+			return null;
+		}
+
+		private ContentResolverColumnMapping GetEmailColumn (MemberInfo member)
+		{
+			switch (member.Name)
+			{
+				case "Address":
+					return new ContentResolverColumnMapping (ContactsContract.DataColumns.Data1, typeof (string));
+			}
+
+			return null;
+		}
+
+		private ContentResolverColumnMapping GetContactColumn (MemberInfo member)
 		{
 			switch (member.Name)
 			{
 				case "DisplayName":
-					return new Tuple<string, Type> (ContactsContract.ContactsColumns.DisplayName, typeof(string));
+					return new ContentResolverColumnMapping (ContactsContract.ContactsColumns.DisplayName, typeof(string));
 				case "Prefix":
-					return new Tuple<string, Type> (ContactsContract.CommonDataKinds.StructuredName.Prefix, typeof(string));
+					return new ContentResolverColumnMapping (ContactsContract.CommonDataKinds.StructuredName.Prefix, typeof(string));
 				case "FirstName":
-					return new Tuple<string, Type> (ContactsContract.CommonDataKinds.StructuredName.GivenName, typeof(string));
+					return new ContentResolverColumnMapping (ContactsContract.CommonDataKinds.StructuredName.GivenName, typeof(string));
 				case "LastName":
-					return new Tuple<string, Type> (ContactsContract.CommonDataKinds.StructuredName.FamilyName, typeof(string));
+					return new ContentResolverColumnMapping (ContactsContract.CommonDataKinds.StructuredName.FamilyName, typeof(string));
 				case "Suffix":
-					return new Tuple<string, Type> (ContactsContract.CommonDataKinds.StructuredName.Suffix, typeof(string));
+					return new ContentResolverColumnMapping (ContactsContract.CommonDataKinds.StructuredName.Suffix, typeof(string));
 				case "Phones":
-					return new Tuple<string, Type> (null, typeof (IEnumerable<Phone>));
+					return new ContentResolverColumnMapping ((string)null, typeof (IEnumerable<Phone>));
 				case "Emails":
-					return new Tuple<string, Type> (null, typeof (IEnumerable<Email>));
+					return new ContentResolverColumnMapping ((string)null, typeof (IEnumerable<Email>));
+				case "Addresses":
+					return new ContentResolverColumnMapping ((string)null, typeof (IEnumerable<Address>));
 
 				default:
 					return null;
