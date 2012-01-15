@@ -24,10 +24,27 @@ namespace ContactsSample
 			list = new List<Contact>();
             
 			//
-			// grab the contacts and put them into a list
+			// get the address book, which gives us access to the
+			// the contacts store
 			//
-			var addressBook = new AddressBook();
-			foreach (Contact contact in addressBook)
+			var book = new AddressBook ();
+			
+			//
+			// important: PreferContactAggregation must be set to the 
+			// the same value when looking up contacts by ID
+			// since we look up contacts by ID on the subsequent 
+			// ContactsActivity in this sample, we will set to false
+			//
+			book.PreferContactAggregation = true;
+			
+			//
+			// loop through the contacts and put them into a List
+			//
+			// contacts can be selected and sorted using linq!
+			//
+			// In this sample, we'll just use LINQ to grab the first 10 users with mobile phone entries
+			//
+			foreach (Contact contact in book.Where(c => c.Phones.Any(p => p.Type == PhoneType.Mobile)).Take(10))
 			{
 				list.Add(contact);
 			}
