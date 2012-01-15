@@ -3,4 +3,9 @@
 	<Button android:id="@+id/photoButton" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Take Photo" />
 	<Button android:id="@+id/videoButton" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Take Video" />
 	<ImageView android:id="@+id/image" android:layout_width="fill_parent" android:layout_height="wrap_content"/>
+	<VideoView
+        android:id="@+id/surfacevideoview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+    />
 </LinearLayout>

@@ -12,7 +12,6 @@
     <RootNamespace>Xamarin</RootNamespace>
     <AssemblyName>Xamarin.Mobile</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkVersion>v2.2</TargetFrameworkVersion>
     <AndroidSupportedAbis>armeabi</AndroidSupportedAbis>
     <AndroidStoreUncompressedFileExtensions />
     <MandroidI18n />
@@ -37,8 +36,7 @@
     <AndroidLinkMode>None</AndroidLinkMode>
     <WarningLevel>4</WarningLevel>
     <Optimize>false</Optimize>
-    <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
-    <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
