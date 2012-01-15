@@ -20,16 +20,64 @@ namespace ContactsSample
 		{
 			base.OnCreate (bundle);
 			
-			var displayName = bundle.GetString("displayName");
-			//var mobilePhone = bundle.GetString("mobilePhone");
+			//
+			// Get the contact ID that is passed in
+			// from the main activity
+			//
+			String contactID = String.Empty;
+			if(bundle != null)
+			{
+				contactID = bundle.GetString("contactID");
+			}
+			else
+			{
+				contactID = Intent.GetStringExtra("contactID");	
+			}
 			
+			//
+			// get the address book
+			//
+			var book = new AddressBook (this);
+			
+			//
+			// important: PreferContactAggregation must be set to the 
+			// the same value as when the ID was generated (from the
+			// previous activity
+			//
+			book.PreferContactAggregation = true;
+			
+			Contact contact = book.Where( c => c.Id == contactID).FirstOrDefault();
+			
+			//
+			// if the contact is empty, we'll
+			// display a 'not found' error
+			//
+			String displayName = "Contact Not Found";
+			String mobilePhone = String.Empty;
+			
+			//
+			// set the displayName variable to the contact's
+			// DisplayName property
+			//
+			if(contact != null)
+			{
+				displayName = contact.DisplayName;
+				var phone = contact.Phones.Where( p => p.Type == PhoneType.Mobile).FirstOrDefault();
+				if(phone != null)
+				{
+					mobilePhone = phone.Number;	
+				}
+			}
+			
+			//
+			// show the contacts display name and mobile phone
+			//
 			SetContentView (Resource.Layout.contact_view);
-			
 			var fullNameTextView = FindViewById<TextView> (Resource.Id.full_name);
-			//var mobilePhoneTextView = FindViewById<TextView> (Resource.Id.mobile_phone);
-			
 			fullNameTextView.Text = displayName;
-			//mobilePhoneTextView.Text = mobilePhone;
+			var mobilePhoneTextView = FindViewById<TextView> (Resource.Id.mobile_phone);
+			mobilePhoneTextView.Text = mobilePhone;
+			
 		}
 	}
 }
