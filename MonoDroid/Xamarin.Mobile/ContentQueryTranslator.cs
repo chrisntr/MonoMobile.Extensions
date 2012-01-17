@@ -385,6 +385,17 @@ namespace Xamarin
 			return methodCall.Arguments[0];
 		}
 
+		private Type GetExpressionArgumentType (Expression expression)
+		{
+			switch (expression.NodeType)
+			{
+				case ExpressionType.Constant:
+					return ((ConstantExpression) expression).Value.GetType();
+			}
+
+			return null;
+		}
+
 		private Expression VisitSelect (MethodCallExpression methodCall)
 		{
 			MemberExpression me = FindMemberExpression (methodCall.Arguments[1]);
@@ -401,7 +412,11 @@ namespace Xamarin
 
 			this.fallback = true;
 
-			return methodCall.Arguments[0];
+			Type argType = GetExpressionArgumentType (methodCall.Arguments[0]);
+			if (ReturnType == null || (argType != null && ReturnType.IsAssignableFrom (argType)))
+				return methodCall.Arguments[0];
+
+			return Expression.Constant (Activator.CreateInstance (typeof (Query<>).MakeGenericType (ReturnType), this.provider));
 		}
 
 //		private Expression VisitSelect (MethodCallExpression methodCall)
