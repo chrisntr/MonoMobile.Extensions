@@ -38,7 +38,6 @@ namespace Xamarin.Media
 			Intent pickIntent = null;
 			try
 			{
-				//pickIntent = new Intent(MediaStore.ActionVideoCapture);
 				pickIntent = new Intent (action);
 				if (action == Intent.ActionPick)
 					pickIntent.SetType (type);
@@ -60,17 +59,11 @@ namespace Xamarin.Media
 						this.Intent.GetStringExtra (MediaStore.MediaColumns.Title),
 						this.Intent.GetStringExtra (MediaStore.Images.ImageColumns.Description));
 
-					//Touch();
-					Console.WriteLine("path: {0}", this.path);
-					//
-					// Note: this Extra doesn't work on all
-					// cameras, and isn't just ignored, if added
-					// on some cameras (especially HTC's, such as 
-					// EVO 4Gs and EVO 3Ds, it will screw up the 
-					// response data and the content provider
-					// URL will be null
-					//
-					//pickIntent.PutExtra (MediaStore.ExtraOutput, this.path);
+					if (this.isPhoto)
+					{
+						Touch();
+						pickIntent.PutExtra (MediaStore.ExtraOutput, this.path);
+					}
 				}
 
 				StartActivityForResult (pickIntent, id);
@@ -103,14 +96,16 @@ namespace Xamarin.Media
 				args = new MediaPickedEventArgs (requestCode, isCanceled: true);
 			else
 			{
-				//Console.WriteLine("data is null: {0}, this.path: {1}", data == null, this.path);
-				//Uri targetUri = (data != null) ? data.Data : this.path;
-				//if (true)// (targetUri == null)
-				Uri targetUri = this.path;
-				
-				CopyFile(data.Data);
-				
-				var mf = new MediaFile (() => GetStreamForUri (targetUri), () => DeleteFileAtUri (targetUri));
+				Uri targetUri;
+				if (data != null)
+				{
+					targetUri = data.Data;
+					MoveFile (data.Data);
+				}
+				else
+					targetUri = this.path;
+
+				var mf = new MediaFile (this.path.Path, () => GetStreamForUri (targetUri), () => DeleteFileAtUri (targetUri));
 				args = new MediaPickedEventArgs (requestCode, false, mf);
 			}
 
@@ -118,36 +113,23 @@ namespace Xamarin.Media
 			Finish();
 		}
 		
-		private void CopyFile(Uri url)
+		private void MoveFile (Uri url)
 		{
-			Console.WriteLine("Copying {0}", url);
-			
 			ICursor cursor = null;
 			try
 			{
-			
-	            cursor = ManagedQuery(
-	                    url,
-	                    null,
-	                    null,
-	                    null,
-	                    null
-	            );
-				
-				if(cursor.MoveToFirst())
+	            cursor = ContentResolver.Query (url, null, null, null, null);
+				if (cursor.MoveToFirst())
 				{
-					String filename = cursor.GetString(cursor.GetColumnIndex(MediaStore.Video.Media.InterfaceConsts.Data));
-					Console.WriteLine("filename: {0} {1}", filename, this.path.EncodedPath);
-					File.Copy(filename, this.path.EncodedPath);
+					String filename = cursor.GetString (cursor.GetColumnIndex (MediaStore.Video.Media.InterfaceConsts.Data));
+					File.Move (filename, this.path.EncodedPath);
+					ContentResolver.Delete (url, null, null);
 				}
-			}
-			catch(Exception ex)
-			{
-				Console.WriteLine("EX: {0}", ex.ToString());
 			}
 			finally
 			{
-				cursor = null;
+				if (cursor != null)
+					cursor.Close();
 			}
 		}
 

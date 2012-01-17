@@ -5,14 +5,23 @@ namespace Xamarin.Media
 {
 	public class MediaFile
 	{
-		internal MediaFile (Func<Stream> streamGetter, Action delete)
+		internal MediaFile (string path, Func<Stream> streamGetter, Action delete)
 		{
+			if (path == null)
+				throw new ArgumentNullException ("path");
 			if (streamGetter == null)
 				throw new ArgumentNullException ("streamGetter");
 
+			Path = path;
 			this.streamGetter = streamGetter;
 			CanDelete = (delete != null);
 			this.delete = delete;
+		}
+
+		public string Path
+		{
+			get;
+			private set;
 		}
 
 		public bool CanDelete
