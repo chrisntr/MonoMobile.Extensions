@@ -96,16 +96,10 @@ namespace Xamarin.Media
 				args = new MediaPickedEventArgs (requestCode, isCanceled: true);
 			else
 			{
-				Uri targetUri;
-				if (data != null)
-				{
-					targetUri = data.Data;
+				if (data != null && data.Data != null)
 					MoveFile (data.Data);
-				}
-				else
-					targetUri = this.path;
 
-				var mf = new MediaFile (this.path.Path, () => GetStreamForUri (targetUri), () => DeleteFileAtUri (targetUri));
+				var mf = new MediaFile (this.path.Path, () => GetStreamForUri (this.path), () => DeleteFileAtUri (this.path));
 				args = new MediaPickedEventArgs (requestCode, false, mf);
 			}
 
