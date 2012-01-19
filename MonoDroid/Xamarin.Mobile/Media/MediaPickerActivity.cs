@@ -25,6 +25,8 @@ namespace Xamarin.Media
 
 		private Uri path;
 		private bool isPhoto;
+		private MediaFileStoreLocation location;
+
 		protected override void OnCreate (Bundle savedInstanceState)
 		{
 			base.OnCreate (savedInstanceState);
@@ -53,8 +55,8 @@ namespace Xamarin.Media
 					VideoQuality quality = (VideoQuality)this.Intent.GetIntExtra (MediaStore.ExtraVideoQuality, (int)VideoQuality.High);
 					pickIntent.PutExtra (MediaStore.ExtraVideoQuality, GetVideoQuality (quality));
 
-					MediaFileStoreLocation loc = (MediaFileStoreLocation) this.Intent.GetIntExtra (ExtraLocation, 0);
-					this.path = GetOutputMediaFile (loc,
+					this.location = (MediaFileStoreLocation) this.Intent.GetIntExtra (ExtraLocation, 0);
+					this.path = GetOutputMediaFile (this.location,
 						this.Intent.GetStringExtra (ExtraPath),
 						this.Intent.GetStringExtra (MediaStore.MediaColumns.Title),
 						this.Intent.GetStringExtra (MediaStore.Images.ImageColumns.Description));
@@ -96,10 +98,16 @@ namespace Xamarin.Media
 				args = new MediaPickedEventArgs (requestCode, isCanceled: true);
 			else
 			{
-				if (data != null && data.Data != null)
-					MoveFile (data.Data);
+				string path = null;
+				if (this.location == MediaFileStoreLocation.Local)
+				{
+					if (data != null && data.Data != null)
+						MoveFile (data.Data);
 
-				var mf = new MediaFile (this.path.Path, () => GetStreamForUri (this.path), () => DeleteFileAtUri (this.path));
+					path = this.path.Path;
+				}
+
+				var mf = new MediaFile (path, () => GetStreamForUri (this.path));
 				args = new MediaPickedEventArgs (requestCode, false, mf);
 			}
 
