@@ -4,7 +4,6 @@ namespace Xamarin.Media
 {
 	public enum MediaFileStoreLocation
 	{
-		None,
 		CameraRoll,
 		Local
 	}
