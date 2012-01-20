@@ -23,26 +23,35 @@ namespace Xamarin.Media
 
 		internal static event EventHandler<MediaPickedEventArgs> MediaPicked;
 
+		private string title;
+		private string description;
 		private Uri path;
 		private bool isPhoto;
+		private string action;
 		private MediaFileStoreLocation location;
 
 		protected override void OnCreate (Bundle savedInstanceState)
 		{
 			base.OnCreate (savedInstanceState);
 
+			this.title = this.Intent.GetStringExtra (MediaStore.MediaColumns.Title);
+			this.description = this.Intent.GetStringExtra (MediaStore.Images.ImageColumns.Description);
+
 			int id = this.Intent.GetIntExtra (ExtraId, 0);
 			string type = this.Intent.GetStringExtra (ExtraType);
 			if (type == "image/*")
 				this.isPhoto = true;
 
-			string action = this.Intent.GetStringExtra (ExtraAction);
+			this.action = this.Intent.GetStringExtra (ExtraAction);
 			Intent pickIntent = null;
 			try
 			{
-				pickIntent = new Intent (action);
+				pickIntent = new Intent (this.action);
 				if (action == Intent.ActionPick)
+				{
+					this.location = MediaFileStoreLocation.CameraRoll;
 					pickIntent.SetType (type);
+				}
 				else
 				{
 					if (!this.isPhoto)
@@ -56,10 +65,7 @@ namespace Xamarin.Media
 					pickIntent.PutExtra (MediaStore.ExtraVideoQuality, GetVideoQuality (quality));
 
 					this.location = (MediaFileStoreLocation) this.Intent.GetIntExtra (ExtraLocation, 0);
-					this.path = GetOutputMediaFile (this.location,
-						this.Intent.GetStringExtra (ExtraPath),
-						this.Intent.GetStringExtra (MediaStore.MediaColumns.Title),
-						this.Intent.GetStringExtra (MediaStore.Images.ImageColumns.Description));
+					this.path = GetOutputMediaFile (this.location, this.Intent.GetStringExtra (ExtraPath), this.title, this.description);
 
 					if (this.isPhoto)
 					{
@@ -98,16 +104,39 @@ namespace Xamarin.Media
 				args = new MediaPickedEventArgs (requestCode, isCanceled: true);
 			else
 			{
-				string path = null;
+				string filePath = null;
 				if (this.location == MediaFileStoreLocation.Local)
 				{
 					if (data != null && data.Data != null)
 						MoveFile (data.Data);
 
-					path = this.path.Path;
+					filePath = this.path.Path;
+				}
+				else
+				{
+					if (data != null && data.Data != null)
+						this.path = data.Data;
+
+					filePath = GetFilePathForUri (this.path);
+
+					ContentValues values = new ContentValues();
+					if (this.isPhoto)
+					{
+						values.Put (MediaStore.Images.ImageColumns.Title, this.title);
+						values.Put (MediaStore.Images.ImageColumns.Description, this.description);
+						values.Put (MediaStore.Images.ImageColumns.DateTaken, DateTime.Now.ToAndroidTimestamp());
+						values.Put (MediaStore.MediaColumns.Data, filePath);
+						ContentResolver.Insert (MediaStore.Images.Media.ExternalContentUri, values);
+					}
+					else
+					{
+						values.Put (MediaStore.Video.VideoColumns.Title, this.title);
+						values.Put (MediaStore.Video.VideoColumns.Description, this.description);
+						ContentResolver.Update (this.path, values, null, null);
+					}
 				}
 
-				var mf = new MediaFile (path, () => GetStreamForUri (this.path));
+				var mf = new MediaFile (filePath, () => GetStreamForUri (this.path));
 				args = new MediaPickedEventArgs (requestCode, false, mf);
 			}
 
@@ -175,26 +204,26 @@ namespace Xamarin.Media
 					name = "VID_" + timestamp + ".mp4";
 			}
 
-			if (loc == MediaFileStoreLocation.CameraRoll)
-			{
-				ContentValues values = new ContentValues();
-				if (this.isPhoto)
-				{
-					values.Put (MediaStore.Images.ImageColumns.Title, name);
-					values.Put (MediaStore.Images.ImageColumns.Description, description);
-					values.Put (MediaStore.Images.ImageColumns.DateTaken, DateTime.Now.ToAndroidTimestamp());
-					return ContentResolver.Insert (MediaStore.Images.Media.ExternalContentUri, values);
-				}
-				else
-				{
-					values.Put (MediaStore.Video.VideoColumns.Title, name);
-					values.Put (MediaStore.Video.VideoColumns.Description, description);
-					values.Put (MediaStore.Video.VideoColumns.DateTaken, DateTime.Now.ToAndroidTimestamp());
-					return ContentResolver.Insert (MediaStore.Video.Media.ExternalContentUri, values);
-				}
-			}
-			else
-			{
+			//if (loc == MediaFileStoreLocation.CameraRoll)
+			//{
+			//    ContentValues values = new ContentValues();
+			//    if (this.isPhoto)
+			//    {
+			//        values.Put (MediaStore.Images.ImageColumns.Title, name);
+			//        values.Put (MediaStore.Images.ImageColumns.Description, description);
+			//        values.Put (MediaStore.Images.ImageColumns.DateTaken, DateTime.Now.ToAndroidTimestamp());
+			//        return ContentResolver.Insert (MediaStore.Images.Media.ExternalContentUri, values);
+			//    }
+			//    else
+			//    {
+			//        values.Put (MediaStore.Video.VideoColumns.Title, name);
+			//        values.Put (MediaStore.Video.VideoColumns.Description, description);
+			//        values.Put (MediaStore.Video.VideoColumns.DateTaken, DateTime.Now.ToAndroidTimestamp());
+			//        return ContentResolver.Insert (MediaStore.Video.Media.ExternalContentUri, values);
+			//    }
+			//}
+			//else
+			//{
 				string type = (this.isPhoto) ? Environment.DirectoryPictures : Environment.DirectoryMovies;
 				Java.IO.File mediaStorageDir = new Java.IO.File (GetExternalFilesDir (type), subdir);
 				if (!mediaStorageDir.Exists())
@@ -207,13 +236,13 @@ namespace Xamarin.Media
 				}
 
 				return Uri.FromFile (new Java.IO.File (GetUniquePath (mediaStorageDir.Path, name)));
-			}
+			//}
 		}
 
-		private Stream GetStreamForUri (Uri uri)
+		private string GetFilePathForUri (Uri uri)
 		{
 			if (uri.Scheme == "file")
-				return File.OpenRead (new System.Uri (uri.ToString()).LocalPath);
+				return new System.Uri (uri.ToString()).LocalPath;
 
 			ICursor c = null;
 			try
@@ -222,13 +251,18 @@ namespace Xamarin.Media
 				if (!c.MoveToNext())
 					return null;
 
-				return File.OpenRead (c.GetString (c.GetColumnIndex (MediaStore.MediaColumns.Data)));
+				return c.GetString (c.GetColumnIndex (MediaStore.MediaColumns.Data));
 			}
 			finally
 			{
 				if (c != null)
 					c.Close();
 			}
+		}
+
+		private Stream GetStreamForUri (Uri uri)
+		{
+			return File.OpenRead (GetFilePathForUri (uri));
 		}
 
 		private string GetLocalPath (Uri uri)
