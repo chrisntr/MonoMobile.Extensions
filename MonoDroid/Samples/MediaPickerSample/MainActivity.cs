@@ -44,7 +44,6 @@ namespace MediaPickerSample
 				picker.TakeVideoAsync (new StoreVideoOptions
 				{
 					Name = "MyVideo",
-					Description = "This is a video from the Xamarin Mobile API Media Picker Sample",
 					Directory = "MyVideos",
 					DesiredLength = TimeSpan.FromSeconds (10)
 				})
@@ -55,18 +54,29 @@ namespace MediaPickerSample
 					// We can use ContinueWith to run more code
 					// after the user finishes recording the video
 					//
-					   
-					//
-					// TODO requires filepath to video to be completely reliable
-					//	
-					// Load in the video file
-					//videoView.SetVideoPath(videoFile);
-        
-					// Handle when the video finishes playing
-        			//videoView.setOnCompletionListener(this);
-        
-					// Start playing the video
-        			//videoView.Start();
+					RunOnUiThread (() =>
+					{
+						//
+						// toggle the visibility of the image and videoviews
+						//
+						image.Visibility = Android.Views.ViewStates.Gone;	
+						videoView.Visibility = Android.Views.ViewStates.Visible;
+						
+						//	
+						// Load in the video file
+						//
+						videoView.SetVideoPath(t.Result.Path);
+	        
+						//
+						// optional: Handle when the video finishes playing
+						//
+	        			//videoView.setOnCompletionListener(this);
+	        
+						//
+						// Start playing the video
+						//	
+	        			videoView.Start();
+					});
 				});
 			};
 			
@@ -79,15 +89,25 @@ namespace MediaPickerSample
 				var picker = new MediaPicker (this);
 				picker.TakePhotoAsync (new StoreMediaOptions
 				{
-					Location = MediaFileStoreLocation.Local,
 					Name = "test.jpg",
-					Description = "Description!",
 					Directory = "MediaPickerSample"
 				})
 				.ContinueWith (t =>
 				{
 					Bitmap b = BitmapFactory.DecodeStream (t.Result.GetStream());
-					RunOnUiThread (() => image.SetImageBitmap (b));
+					RunOnUiThread (() =>
+					{
+						//
+						// toggle the visibility of the image and videoviews
+						//
+						videoView.Visibility = Android.Views.ViewStates.Gone;
+						image.Visibility = Android.Views.ViewStates.Visible;
+							
+						//
+						// display the bitmap
+						//
+						image.SetImageBitmap (b);
+					});
 				});
 			};
 		}
