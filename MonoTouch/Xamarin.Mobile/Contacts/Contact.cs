@@ -1,9 +1,13 @@
 using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 using MonoTouch.AddressBook;
+using MonoTouch.CoreGraphics;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using System;
 using System.Runtime.InteropServices;
+using Xamarin.Media;
 
 namespace Xamarin.Contacts
 {
@@ -129,33 +133,49 @@ namespace Xamarin.Contacts
 			set { this.phones = new List<Phone> (value); }
 		}
 
-		public UIImage GetPhotoThumbnail()
+		public UIImage GetThumbnail()
 		{
-			LoadThumbnail();
-			return this.thumbnail;
+			if (!this.person.HasImage)
+				return null;
+
+			IntPtr data;
+			lock (this.person)
+				data = ABPersonCopyImageDataWithFormat (person.Handle, ABPersonImageFormat.Thumbnail);
+
+			if (data == IntPtr.Zero)
+				return null;
+
+			return new UIImage (data);
+		}
+
+		public Task<MediaFile> SaveThumbnail (string path)
+		{
+			if (path == null)
+				throw new ArgumentNullException ("path");
+
+			return Task<MediaFile>.Factory.StartNew (s =>
+			{
+				string p = (string) s;
+
+				using (UIImage img = GetThumbnail())
+				using (NSDataStream stream = new NSDataStream(img.AsJPEG()))
+				using (Stream writeStream = File.Create (p))
+				{
+					byte[] buffer = new byte[20480];
+					int len;
+					while ((len = stream.Read (buffer, 0, buffer.Length)) != 0)
+						writeStream.Write (buffer, 0, len);
+
+					writeStream.Flush();
+				}
+
+				return new MediaFile (p, () => File.OpenRead (p));
+			}, path);
 		}
 
 		private readonly ABPerson person;
 
-		private bool thumbnailLoaded;
-		private UIImage thumbnail;
-
 		[DllImport ("/System/Library/Frameworks/AddressBook.framework/AddressBook")]
 		private static extern IntPtr ABPersonCopyImageDataWithFormat (IntPtr handle, ABPersonImageFormat format);
-
-		private void LoadThumbnail()
-		{
-			if (this.thumbnailLoaded || this.person == null)
-				return;
-
-			this.thumbnailLoaded = true;
-
-			if (!this.person.HasImage)
-				return;
-
-			NSData imageData = new NSData (ABPersonCopyImageDataWithFormat (person.Handle, ABPersonImageFormat.Thumbnail));
-			if (imageData != null)
-				this.thumbnail = new UIImage (imageData);
-		}
 	}
 }
