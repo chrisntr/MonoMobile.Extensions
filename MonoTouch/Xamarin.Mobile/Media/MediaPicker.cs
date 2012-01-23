@@ -92,13 +92,13 @@ namespace Xamarin.Media
 		{
 			if (options == null)
 				throw new ArgumentNullException ("options");
-			if (!Enum.IsDefined (typeof(MediaFileStoreLocation), options.Location))
-				throw new ArgumentException ("options.Location is not a member of MediaFileStoreLocation");
-			if (options.Location == MediaFileStoreLocation.Local)
-			{
-				if (Path.IsPathRooted (options.Directory))
+			//if (!Enum.IsDefined (typeof(MediaFileStoreLocation), options.Location))
+			//	throw new ArgumentException ("options.Location is not a member of MediaFileStoreLocation");
+			//if (options.Location == MediaFileStoreLocation.Local)
+			//{
+				if (options.Directory != null && Path.IsPathRooted (options.Directory))
 					throw new ArgumentException ("options.Directory must be a relative path", "options");
-			}
+			//}
 		}
 
 		private void VerifyCameraOptions (StoreCameraMediaOptions options)
@@ -110,7 +110,7 @@ namespace Xamarin.Media
 
 		private Task<MediaFile> TakeMedia (UIImagePickerControllerSourceType sourceType, string mediaType, StoreCameraMediaOptions options = null)
 		{
-			MediaPickerDelegate ndelegate = new MediaPickerDelegate (options);
+			MediaPickerDelegate ndelegate = new MediaPickerDelegate (sourceType, options);
 			var od = Interlocked.CompareExchange (ref this.pickerDelegate, ndelegate, null);
 			if (od != null)
 				throw new InvalidOperationException ("Only one operation can be active at at time");
