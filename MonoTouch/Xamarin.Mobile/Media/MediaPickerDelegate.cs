@@ -215,6 +215,8 @@ namespace Xamarin.Media
 		private static string GetOutputPath (string type, string path, string name)
 		{
 			path = Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.Personal), path);
+			Directory.CreateDirectory (path);
+
 			if (String.IsNullOrWhiteSpace (name))
 			{
 				string timestamp = DateTime.Now.ToString ("yyyMMdd_HHmmss");
