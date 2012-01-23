@@ -93,6 +93,7 @@
     <Compile Include="..\..\Shared\Query.cs">
       <Link>Query.cs</Link>
     </Compile>
+    <Compile Include="AsyncQuery.cs" />
     <Compile Include="Contacts\AddressBook.cs" />
     <Compile Include="Contacts\Contact.cs" />
     <Compile Include="Contacts\ContactQueryProvider.cs" />
