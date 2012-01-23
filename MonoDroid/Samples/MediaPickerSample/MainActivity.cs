@@ -87,7 +87,7 @@ namespace MediaPickerSample
 			photoButton.Click += delegate
 			{
 				var picker = new MediaPicker (this);
-				picker.TakePhotoAsync (new StoreMediaOptions
+				picker.TakePhotoAsync (new StoreCameraMediaOptions
 				{
 					Name = "test.jpg",
 					Directory = "MediaPickerSample"

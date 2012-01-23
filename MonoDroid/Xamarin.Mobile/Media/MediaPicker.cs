@@ -37,7 +37,7 @@ namespace Xamarin.Media
 			return TakeMediaAsync ("image/*", Intent.ActionPick, null);
 		}
 
-		public Task<MediaFile> TakePhotoAsync (StoreMediaOptions options)
+		public Task<MediaFile> TakePhotoAsync (StoreCameraMediaOptions options)
 		{
 			VerifyOptions (options);
 
