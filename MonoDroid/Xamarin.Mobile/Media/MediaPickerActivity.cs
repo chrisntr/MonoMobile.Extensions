@@ -196,6 +196,8 @@ namespace Xamarin.Media
 
 		private Uri GetOutputMediaFile (string subdir, string name, string description)
 		{
+			subdir = subdir ?? String.Empty;
+
 			if (String.IsNullOrWhiteSpace (name))
 			{
 				string timestamp = DateTime.Now.ToString ("yyyyMMdd_HHmmss");
