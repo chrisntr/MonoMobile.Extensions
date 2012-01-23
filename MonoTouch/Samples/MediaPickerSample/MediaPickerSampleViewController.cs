@@ -3,6 +3,7 @@ using System.Drawing;
 using System;
 using MonoTouch.Foundation;
 using Xamarin.Media;
+using MonoTouch.MediaPlayer;
 
 namespace MediaPickerSample
 {
@@ -12,38 +13,72 @@ namespace MediaPickerSample
 		{
 		}
 		
+		MediaPicker picker;
+		MPMoviePlayerViewController moviePlayer;
+		
 		partial void takePhotoBtnClicked (MonoTouch.Foundation.NSObject sender)
 		{
 			Console.WriteLine("takePhotoBtnClicked");
 			
-			var picker = new MediaPicker ();
-				picker.TakePhotoAsync (new StoreCameraMediaOptions
-				{
-					Name = "test.jpg",
-					Directory = "MediaPickerSample"
-				})
-				.ContinueWith (t =>
-				{
-					InvokeOnMainThread( delegate {
-						UIImage image = UIImage.FromFile(t.Result.Path);
-						this.imageView.Image = image;	
-					});
+			picker = new MediaPicker ();
+			picker.TakePhotoAsync (new StoreCameraMediaOptions
+			{
+				Name = "test.jpg",
+				Directory = "MediaPickerSample"
+			})
+			.ContinueWith (t =>
+			{
+				InvokeOnMainThread( delegate {
+					UIImage image = UIImage.FromFile(t.Result.Path);
+					this.imageView.Image = image;	
 				});
+			});
 		}
 
 		partial void pickPhotoBtnClicked (MonoTouch.Foundation.NSObject sender)
 		{
 			Console.WriteLine("pickPhotoBtnClicked");
+			picker = new MediaPicker ();
+			picker.PickPhotoAsync ()
+			.ContinueWith (t =>
+			{
+				InvokeOnMainThread( delegate {
+					UIImage image = UIImage.FromFile(t.Result.Path);
+					this.imageView.Image = image;	
+				});
+			});
 		}
 
 		partial void takeVideoBtnClicked (MonoTouch.Foundation.NSObject sender)
 		{
 			Console.WriteLine("takeVideoBtnClicked");
+			picker = new MediaPicker ();
+			picker.TakeVideoAsync (new StoreVideoOptions
+			{
+				Quality = VideoQuality.Medium,
+				DesiredLength = new TimeSpan(0, 0, 30)
+			})
+			.ContinueWith (t =>
+			{
+				InvokeOnMainThread( delegate {
+					moviePlayer = new MPMoviePlayerViewController(new NSUrl(t.Result.Path)); 
+					this.PresentMoviePlayerViewController(moviePlayer);	
+				});
+			});
 		}
 
 		partial void pickVideoBtnClicked (MonoTouch.Foundation.NSObject sender)
 		{
 			Console.WriteLine("pickVideoBtnClicked");
+			picker = new MediaPicker ();
+			picker.PickVideoAsync ()
+			.ContinueWith (t =>
+			{
+				InvokeOnMainThread( delegate {
+					moviePlayer = new MPMoviePlayerViewController(new NSUrl(t.Result.Path)); 
+					this.PresentMoviePlayerViewController(moviePlayer);	
+				});
+			});
 		}
 		
 		
