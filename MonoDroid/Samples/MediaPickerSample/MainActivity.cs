@@ -23,7 +23,7 @@ namespace MediaPickerSample
 			//
 			// wire up the take a video button
 			//
-			Button videoButton = FindViewById<Button> (Resource.Id.videoButton);
+			Button videoButton = FindViewById<Button> (Resource.Id.takeVideoButton);
 			videoButton.Click += delegate
 			{
 				//
@@ -83,7 +83,7 @@ namespace MediaPickerSample
 			//
 			// wire up the take a photo button
 			//
-			Button photoButton = FindViewById<Button> (Resource.Id.photoButton);
+			Button photoButton = FindViewById<Button> (Resource.Id.takePhotoButton);
 			photoButton.Click += delegate
 			{
 				var picker = new MediaPicker (this);
@@ -92,6 +92,85 @@ namespace MediaPickerSample
 					Name = "test.jpg",
 					Directory = "MediaPickerSample"
 				})
+				.ContinueWith (t =>
+				{
+					Bitmap b = BitmapFactory.DecodeStream (t.Result.GetStream());
+					RunOnUiThread (() =>
+					{
+						//
+						// toggle the visibility of the image and videoviews
+						//
+						videoView.Visibility = Android.Views.ViewStates.Gone;
+						image.Visibility = Android.Views.ViewStates.Visible;
+							
+						//
+						// display the bitmap
+						//
+						image.SetImageBitmap (b);
+					});
+				});
+			};
+			
+			//
+			// wire up the pick a video button
+			//
+			Button pickVideoButton = FindViewById<Button> (Resource.Id.pickVideoButton);
+			pickVideoButton.Click += delegate
+			{
+				//
+				// The MediaPicker is the class used to 
+				// invoke the camera and gallery picker
+				// for selecting and taking photos
+				// and videos
+				//
+				var picker = new MediaPicker (this);
+				
+				//
+				// PickVideoAsync is an async API that invokes
+				// the native gallery
+				//
+				picker.PickVideoAsync ()
+				.ContinueWith (t =>
+				{
+					//
+					// Because PickVideoAsync returns a Task
+					// We can use ContinueWith to run more code
+					// after the user finishes recording the video
+					//
+					RunOnUiThread (() =>
+					{
+						//
+						// toggle the visibility of the image and videoviews
+						//
+						image.Visibility = Android.Views.ViewStates.Gone;	
+						videoView.Visibility = Android.Views.ViewStates.Visible;
+						
+						//	
+						// Load in the video file
+						//
+						videoView.SetVideoPath(t.Result.Path);
+	        
+						//
+						// optional: Handle when the video finishes playing
+						//
+	        			//videoView.setOnCompletionListener(this);
+	        
+						//
+						// Start playing the video
+						//	
+	        			videoView.Start();
+					});
+				});
+			};
+			
+			//
+			// wire up the pick a photo button
+			//
+			Button pickPhotoButton = FindViewById<Button> (Resource.Id.pickPhotoButton);
+			pickPhotoButton.Click += delegate
+			{
+				var picker = new MediaPicker (this);
+				picker.PickPhotoAsync ()
 				.ContinueWith (t =>
 				{
 					Bitmap b = BitmapFactory.DecodeStream (t.Result.GetStream());
