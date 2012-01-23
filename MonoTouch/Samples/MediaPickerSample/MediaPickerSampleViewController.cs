@@ -16,10 +16,22 @@ namespace MediaPickerSample
 		MediaPicker picker;
 		MPMoviePlayerViewController moviePlayer;
 		
+		/// <summary>
+		/// Event handler when the user clicks the Take a Photo button
+		/// </summary>
+		/// <param name='sender'>
+		/// Sender
+		/// </param>
 		partial void takePhotoBtnClicked (MonoTouch.Foundation.NSObject sender)
 		{
 			Console.WriteLine("takePhotoBtnClicked");
 			
+			//
+			// create the MediaPicker and call TakePhotoAsync, which
+			// returns a Task, which we can use to get the 
+			// file path and then show the image the user
+			// took with the camera
+			//
 			picker = new MediaPicker ();
 			picker.TakePhotoAsync (new StoreCameraMediaOptions
 			{
@@ -34,10 +46,23 @@ namespace MediaPickerSample
 				});
 			});
 		}
-
+		
+		/// <summary>
+		/// Event handler when the user clicks the Pick a Photo button
+		/// </summary>
+		/// <param name='sender'>
+		/// Sender
+		/// </param>
 		partial void pickPhotoBtnClicked (MonoTouch.Foundation.NSObject sender)
 		{
 			Console.WriteLine("pickPhotoBtnClicked");
+			
+			//
+			// create the MediaPicker and call PickPhotoAsync, which
+			// returns a Task, which we can use to get the 
+			// file path and then show the image the user
+			// picked from the gallery
+			//
 			picker = new MediaPicker ();
 			picker.PickPhotoAsync ()
 			.ContinueWith (t =>
@@ -48,10 +73,23 @@ namespace MediaPickerSample
 				});
 			});
 		}
-
+		
+		/// <summary>
+		/// Event handler when the user clicks the Take a Video button
+		/// </summary>
+		/// <param name='sender'>
+		/// Sender
+		/// </param>
 		partial void takeVideoBtnClicked (MonoTouch.Foundation.NSObject sender)
 		{
 			Console.WriteLine("takeVideoBtnClicked");
+			
+			//
+			// create the MediaPicker and call TakeVideoAsync, which
+			// returns a Task, which we can use to get the 
+			// file path and then play the video the user
+			// took with the camera
+			//
 			picker = new MediaPicker ();
 			picker.TakeVideoAsync (new StoreVideoOptions
 			{
@@ -69,10 +107,23 @@ namespace MediaPickerSample
 				});
 			});
 		}
-
+		
+		/// <summary>
+		/// Event handler when the user clicks the pick a video button 
+		/// </summary>
+		/// <param name='sender'>
+		/// Sender
+		/// </param>
 		partial void pickVideoBtnClicked (MonoTouch.Foundation.NSObject sender)
 		{
 			Console.WriteLine("pickVideoBtnClicked");
+			
+			//
+			// create the MediaPicker and call PickideoAsync, which
+			// returns a Task, which we can use to get the 
+			// file path and then play the video the user
+			// picked from the gallery
+			//
 			picker = new MediaPicker ();
 			picker.PickVideoAsync ()
 			.ContinueWith (t =>
