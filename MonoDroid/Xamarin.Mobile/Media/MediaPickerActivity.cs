@@ -108,17 +108,19 @@ namespace Xamarin.Media
 				string filePath = null;
 				//if (this.location == MediaFileStoreLocation.Local)
 				//{
+				if (this.action != Intent.ActionPick)
+				{
 					if (data != null && data.Data != null)
 						MoveFile (data.Data);
 
 					filePath = this.path.Path;
-				//}
-				//else
-				//{
-				//    if (data != null && data.Data != null)
-				//        this.path = data.Data;
+				}
+				else
+				{
+				    if (data != null && data.Data != null)
+						this.path = data.Data;
 
-				//    filePath = GetFilePathForUri (this.path);
+				    filePath = GetFilePathForUri (this.path);
 
 				//    ContentValues values = new ContentValues();
 				//    if (this.isPhoto)
@@ -135,7 +137,7 @@ namespace Xamarin.Media
 				//        values.Put (MediaStore.Video.VideoColumns.Description, this.description);
 				//        ContentResolver.Update (this.path, values, null, null);
 				//    }
-				//}
+				}
 
 				var mf = new MediaFile (filePath, () => GetStreamForUri (this.path));
 				args = new MediaPickedEventArgs (requestCode, false, mf);
