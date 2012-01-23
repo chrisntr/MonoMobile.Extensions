@@ -46,11 +46,19 @@ namespace Xamarin.Media
 
 		public Task<MediaFile> PickPhotoAsync()
 		{
+			if (!PhotosSupported)
+				throw new NotSupportedException();
+			
 			return TakeMedia (UIImagePickerControllerSourceType.PhotoLibrary, TypeImage);
 		}
 
 		public Task<MediaFile> TakePhotoAsync (StoreCameraMediaOptions options)
 		{
+			if (!PhotosSupported)
+				throw new NotSupportedException();
+			if (!IsCameraAvailable)
+				throw new NotSupportedException();
+			
 			VerifyCameraOptions (options);
 
 			return TakeMedia (UIImagePickerControllerSourceType.Camera, TypeImage, options);
@@ -58,11 +66,19 @@ namespace Xamarin.Media
 
 		public Task<MediaFile> PickVideoAsync()
 		{
+			if (!VideosSupported)
+				throw new NotSupportedException();
+			
 			return TakeMedia (UIImagePickerControllerSourceType.PhotoLibrary, TypeMovie);
 		}
 
 		public Task<MediaFile> TakeVideoAsync (StoreVideoOptions options)
 		{
+			if (!VideosSupported)
+				throw new NotSupportedException();
+			if (!IsCameraAvailable)
+				throw new NotSupportedException();
+			
 			VerifyCameraOptions (options);
 
 			return TakeMedia (UIImagePickerControllerSourceType.Camera, TypeMovie, options);
