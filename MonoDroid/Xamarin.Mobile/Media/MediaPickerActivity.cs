@@ -28,7 +28,7 @@ namespace Xamarin.Media
 		private Uri path;
 		private bool isPhoto;
 		private string action;
-		private MediaFileStoreLocation location;
+		//private MediaFileStoreLocation location;
 
 		protected override void OnCreate (Bundle savedInstanceState)
 		{
@@ -49,7 +49,7 @@ namespace Xamarin.Media
 				pickIntent = new Intent (this.action);
 				if (action == Intent.ActionPick)
 				{
-					this.location = MediaFileStoreLocation.CameraRoll;
+					//this.location = MediaFileStoreLocation.CameraRoll;
 					pickIntent.SetType (type);
 				}
 				else
@@ -64,8 +64,9 @@ namespace Xamarin.Media
 					VideoQuality quality = (VideoQuality)this.Intent.GetIntExtra (MediaStore.ExtraVideoQuality, (int)VideoQuality.High);
 					pickIntent.PutExtra (MediaStore.ExtraVideoQuality, GetVideoQuality (quality));
 
-					this.location = (MediaFileStoreLocation) this.Intent.GetIntExtra (ExtraLocation, 0);
-					this.path = GetOutputMediaFile (this.location, this.Intent.GetStringExtra (ExtraPath), this.title, this.description);
+					//this.location = (MediaFileStoreLocation) this.Intent.GetIntExtra (ExtraLocation, 0);
+					//this.path = GetOutputMediaFile (this.location, this.Intent.GetStringExtra (ExtraPath), this.title, this.description);
+					this.path = GetOutputMediaFile (this.Intent.GetStringExtra (ExtraPath), this.title, this.description);
 
 					if (this.isPhoto)
 					{
@@ -105,36 +106,36 @@ namespace Xamarin.Media
 			else
 			{
 				string filePath = null;
-				if (this.location == MediaFileStoreLocation.Local)
-				{
+				//if (this.location == MediaFileStoreLocation.Local)
+				//{
 					if (data != null && data.Data != null)
 						MoveFile (data.Data);
 
 					filePath = this.path.Path;
-				}
-				else
-				{
-					if (data != null && data.Data != null)
-						this.path = data.Data;
+				//}
+				//else
+				//{
+				//    if (data != null && data.Data != null)
+				//        this.path = data.Data;
 
-					filePath = GetFilePathForUri (this.path);
+				//    filePath = GetFilePathForUri (this.path);
 
-					ContentValues values = new ContentValues();
-					if (this.isPhoto)
-					{
-						values.Put (MediaStore.Images.ImageColumns.Title, this.title);
-						values.Put (MediaStore.Images.ImageColumns.Description, this.description);
-						values.Put (MediaStore.Images.ImageColumns.DateTaken, DateTime.Now.ToAndroidTimestamp());
-						values.Put (MediaStore.MediaColumns.Data, filePath);
-						ContentResolver.Insert (MediaStore.Images.Media.ExternalContentUri, values);
-					}
-					else
-					{
-						values.Put (MediaStore.Video.VideoColumns.Title, this.title);
-						values.Put (MediaStore.Video.VideoColumns.Description, this.description);
-						ContentResolver.Update (this.path, values, null, null);
-					}
-				}
+				//    ContentValues values = new ContentValues();
+				//    if (this.isPhoto)
+				//    {
+				//        values.Put (MediaStore.Images.ImageColumns.Title, this.title);
+				//        values.Put (MediaStore.Images.ImageColumns.Description, this.description);
+				//        values.Put (MediaStore.Images.ImageColumns.DateTaken, DateTime.Now.ToAndroidTimestamp());
+				//        values.Put (MediaStore.MediaColumns.Data, filePath);
+				//        ContentResolver.Insert (MediaStore.Images.Media.ExternalContentUri, values);
+				//    }
+				//    else
+				//    {
+				//        values.Put (MediaStore.Video.VideoColumns.Title, this.title);
+				//        values.Put (MediaStore.Video.VideoColumns.Description, this.description);
+				//        ContentResolver.Update (this.path, values, null, null);
+				//    }
+				//}
 
 				var mf = new MediaFile (filePath, () => GetStreamForUri (this.path));
 				args = new MediaPickedEventArgs (requestCode, false, mf);
@@ -193,7 +194,7 @@ namespace Xamarin.Media
 			return Path.Combine (folder, nname);
 		}
 
-		private Uri GetOutputMediaFile (MediaFileStoreLocation loc, string subdir, string name, string description)
+		private Uri GetOutputMediaFile (string subdir, string name, string description)
 		{
 			if (String.IsNullOrWhiteSpace (name))
 			{

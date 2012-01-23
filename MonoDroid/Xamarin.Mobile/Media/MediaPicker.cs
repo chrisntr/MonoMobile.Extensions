@@ -64,15 +64,15 @@ namespace Xamarin.Media
 		{
 			if (options == null)
 				throw new ArgumentNullException ("options");
-			if (!Enum.IsDefined (typeof(MediaFileStoreLocation), options.Location))
-				throw new ArgumentException ("options.Location is not a member of MediaFileStoreLocation");
-			if (options.Location == MediaFileStoreLocation.Local)
-			{
+			//if (!Enum.IsDefined (typeof(MediaFileStoreLocation), options.Location))
+			//    throw new ArgumentException ("options.Location is not a member of MediaFileStoreLocation");
+			//if (options.Location == MediaFileStoreLocation.Local)
+			//{
 				//if (String.IsNullOrWhiteSpace (options.Directory))
 				//	throw new ArgumentNullException ("options", "For local storage, options.Directory must be set");
 				if (Path.IsPathRooted (options.Directory))
 					throw new ArgumentException ("options.Directory must be a relative path", "options");
-			}
+			//}
 		}
 
 		private Task<MediaFile> TakeMediaAsync (string type, string action, StoreMediaOptions options)
@@ -94,11 +94,11 @@ namespace Xamarin.Media
 
 			if (options != null)
 			{
-				pickerIntent.PutExtra (MediaPickerActivity.ExtraLocation, (int)options.Location);
+				//pickerIntent.PutExtra (MediaPickerActivity.ExtraLocation, (int)options.Location);
 				pickerIntent.PutExtra (MediaPickerActivity.ExtraPath, options.Directory);
 				pickerIntent.PutExtra (MediaStore.Images.ImageColumns.Title, options.Name);
-				if (options.Description != null)
-					pickerIntent.PutExtra (MediaStore.Images.ImageColumns.Description, options.Description);
+				//if (options.Description != null)
+				//    pickerIntent.PutExtra (MediaStore.Images.ImageColumns.Description, options.Description);
 			}
 
 			var vidOptions = (options as StoreVideoOptions);
