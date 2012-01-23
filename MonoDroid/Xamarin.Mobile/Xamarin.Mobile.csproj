@@ -110,9 +110,6 @@
     <Compile Include="Geolocation\Geolocator.cs" />
     <Compile Include="ITableFinder.cs" />
     <Compile Include="DateTimeExtensions.cs" />
-    <Compile Include="Geolocation\GeolocationContinuousListener.cs" />
-    <Compile Include="Geolocation\GeolocationSingleListener.cs" />
-    <Compile Include="Geolocation\Geolocator.cs" />
     <Compile Include="Media\MediaPicker.cs" />
     <Compile Include="Media\MediaPickerActivity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
