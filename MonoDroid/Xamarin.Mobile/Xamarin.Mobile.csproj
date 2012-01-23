@@ -12,7 +12,6 @@
     <RootNamespace>Xamarin</RootNamespace>
     <AssemblyName>Xamarin.Mobile</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkVersion>v2.1</TargetFrameworkVersion>
     <AndroidSupportedAbis>armeabi</AndroidSupportedAbis>
     <AndroidStoreUncompressedFileExtensions />
     <MandroidI18n />
@@ -30,6 +29,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <OutputPath>bin\Debug\</OutputPath>
     <DebugType>full</DebugType>
@@ -38,7 +38,6 @@
     <Optimize>false</Optimize>
     <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
     <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
-    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
@@ -82,6 +81,12 @@
     <Compile Include="..\..\Shared\ExpressionVisitor.cs">
       <Link>ExpressionVisitor.cs</Link>
     </Compile>
+    <Compile Include="..\..\Shared\Media\MediaFile.cs">
+      <Link>Media\MediaFile.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\Media\StoreMediaOptions.cs">
+      <Link>Media\StoreMediaOptions.cs</Link>
+    </Compile>
     <Compile Include="..\..\Shared\Position.cs">
       <Link>Geolocation\Position.cs</Link>
     </Compile>
@@ -104,6 +109,12 @@
     <Compile Include="Geolocation\GeolocationSingleListener.cs" />
     <Compile Include="Geolocation\Geolocator.cs" />
     <Compile Include="ITableFinder.cs" />
+    <Compile Include="DateTimeExtensions.cs" />
+    <Compile Include="Geolocation\GeolocationContinuousListener.cs" />
+    <Compile Include="Geolocation\GeolocationSingleListener.cs" />
+    <Compile Include="Geolocation\Geolocator.cs" />
+    <Compile Include="Media\MediaPicker.cs" />
+    <Compile Include="Media\MediaPickerActivity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
