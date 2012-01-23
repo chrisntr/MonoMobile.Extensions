@@ -113,17 +113,19 @@ namespace Xamarin.Media
 			EventHandler<MediaPickedEventArgs> handler = null;
 			handler = (s, e) =>
 			{
+				TaskCompletionSource<MediaFile> tcs = Interlocked.Exchange (ref this.completionSource, null);
+
 				MediaPickerActivity.MediaPicked -= handler;
 
 				if (e.RequestId != id)
 					return;
 
 				if (e.Error != null)
-					ntcs.SetException (e.Error);
+					tcs.SetException (e.Error);
 				else if (e.IsCanceled)
-					ntcs.SetCanceled();
+					tcs.SetCanceled();
 				else
-					ntcs.SetResult (e.Media);
+					tcs.SetResult (e.Media);
 			};
 
 			MediaPickerActivity.MediaPicked += handler;

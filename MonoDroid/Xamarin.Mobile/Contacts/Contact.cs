@@ -1,8 +1,12 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 using Android.Content;
 using Android.Database;
 using Android.Graphics;
 using Android.Provider;
+using Xamarin.Media;
 
 namespace Xamarin.Contacts
 {
@@ -131,23 +135,6 @@ namespace Xamarin.Contacts
 
 		public Bitmap GetPhotoThumbnail()
 		{
-			LoadThumbnail();
-
-			return this.thumbnail;
-		}
-
-		private readonly ContentResolver content;
-
-		private bool thubnailLoaded;
-		private Bitmap thumbnail;
-
-		private void LoadThumbnail()
-		{
-			if (this.thubnailLoaded || this.content == null)
-				return;
-
-			this.thubnailLoaded = true;
-
 			string lookupColumn = (IsAggregate)
 			                      	? ContactsContract.ContactsColumns.LookupKey
 			                      	: ContactsContract.RawContactsColumns.ContactId;
@@ -162,10 +149,7 @@ namespace Xamarin.Contacts
 				{
 					byte[] tdata = c.GetBlob (c.GetColumnIndex (ContactsContract.CommonDataKinds.Photo.PhotoColumnId));
 					if (tdata != null)
-					{
-						this.thumbnail = BitmapFactory.DecodeByteArray (tdata, 0, tdata.Length);
-						break;
-					}
+						return BitmapFactory.DecodeByteArray (tdata, 0, tdata.Length);
 				}
 			}
 			finally
@@ -173,6 +157,33 @@ namespace Xamarin.Contacts
 				if (c != null)
 					c.Close();
 			}
+
+			return null;
 		}
+
+		public Task<MediaFile> SaveThumbnail (string path)
+		{
+			if (path == null)
+				throw new ArgumentNullException ("path");
+
+			string lookupColumn = (IsAggregate)
+									? ContactsContract.ContactsColumns.LookupKey
+									: ContactsContract.RawContactsColumns.ContactId;
+
+			AsyncQuery<byte[]> query = new AsyncQuery<byte[]> (this.content, c => c.GetBlob (c.GetColumnIndex (ContactsContract.CommonDataKinds.Photo.PhotoColumnId)));
+			query.StartQuery (0, null, ContactsContract.Data.ContentUri, new[] { ContactsContract.CommonDataKinds.Photo.PhotoColumnId, ContactsContract.DataColumns.Mimetype },
+					lookupColumn + "=? AND " + ContactsContract.DataColumns.Mimetype + "=?", new[] { Id, ContactsContract.CommonDataKinds.Photo.ContentItemType }, null);
+
+			return query.Task.ContinueWith (t =>
+			{
+				if (t.Result == null)
+					return null;
+
+				File.WriteAllBytes (path, t.Result);
+				return new MediaFile (path, () => File.OpenRead (path));
+			});
+		}
+
+		private readonly ContentResolver content;
 	}
 }

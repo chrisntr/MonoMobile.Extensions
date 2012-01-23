@@ -147,7 +147,12 @@ namespace Xamarin.Media
 				throw new NotImplementedException();
 			}
 
-			return ndelegate.Task;
+			return ndelegate.Task
+				.ContinueWith (t =>
+				{
+					Interlocked.Exchange (ref this.pickerDelegate, null);
+					return t.Result;
+				});
 		}
 		
 		private UIImagePickerControllerCameraDevice GetUICameraDevice (CameraDevice device)
