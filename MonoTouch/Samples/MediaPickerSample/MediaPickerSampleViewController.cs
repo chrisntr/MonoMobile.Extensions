@@ -60,9 +60,12 @@ namespace MediaPickerSample
 			})
 			.ContinueWith (t =>
 			{
+				Console.WriteLine("File Path: {0}", t.Result.Path);
+					
 				InvokeOnMainThread( delegate {
-					moviePlayer = new MPMoviePlayerViewController(new NSUrl(t.Result.Path)); 
-					this.PresentMoviePlayerViewController(moviePlayer);	
+					moviePlayer = new MPMoviePlayerViewController (NSUrl.FromFilename(t.Result.Path));
+					moviePlayer.MoviePlayer.UseApplicationAudioSession = true;
+		    		this.PresentMoviePlayerViewController(moviePlayer);
 				});
 			});
 		}
@@ -74,13 +77,15 @@ namespace MediaPickerSample
 			picker.PickVideoAsync ()
 			.ContinueWith (t =>
 			{
+				Console.WriteLine("File Path: {0}", t.Result.Path);
+					
 				InvokeOnMainThread( delegate {
-					moviePlayer = new MPMoviePlayerViewController(new NSUrl(t.Result.Path)); 
-					this.PresentMoviePlayerViewController(moviePlayer);	
+					moviePlayer = new MPMoviePlayerViewController (NSUrl.FromFilename(t.Result.Path));
+					moviePlayer.MoviePlayer.UseApplicationAudioSession = true;
+		    		this.PresentMoviePlayerViewController(moviePlayer);
 				});
 			});
 		}
-		
 		
 		public override void DidReceiveMemoryWarning ()
 		{
