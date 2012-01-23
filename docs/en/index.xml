@@ -64,6 +64,15 @@
       <Type Name="PositionErrorEventArgs" Kind="Class" />
       <Type Name="PositionEventArgs" Kind="Class" />
     </Namespace>
+    <Namespace Name="Xamarin.Media">
+      <Type Name="CameraDevice" Kind="Enumeration" />
+      <Type Name="MediaFile" Kind="Class" />
+      <Type Name="MediaPicker" Kind="Class" />
+      <Type Name="StoreCameraMediaOptions" Kind="Class" />
+      <Type Name="StoreMediaOptions" Kind="Class" />
+      <Type Name="StoreVideoOptions" Kind="Class" />
+      <Type Name="VideoQuality" Kind="Enumeration" />
+    </Namespace>
   </Types>
   <Title>Xamarin.Mobile</Title>
 </Overview>

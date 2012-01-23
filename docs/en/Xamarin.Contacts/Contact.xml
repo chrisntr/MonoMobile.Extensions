@@ -107,9 +107,9 @@
         <remarks />
       </Docs>
     </Member>
-    <Member MemberName="GetPhotoThumbnail">
-      <MemberSignature Language="C#" Value="public Android.Graphics.Bitmap GetPhotoThumbnail ();" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Android.Graphics.Bitmap GetPhotoThumbnail() cil managed" />
+    <Member MemberName="GetThumbnail">
+      <MemberSignature Language="C#" Value="public Android.Graphics.Bitmap GetThumbnail ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Android.Graphics.Bitmap GetThumbnail() cil managed" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>0.0.0.0</AssemblyVersion>
@@ -326,6 +326,26 @@
       <Docs>
         <summary>To be added.</summary>
         <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SaveThumbnail">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;Xamarin.Media.MediaFile&gt; SaveThumbnail (string path);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;class Xamarin.Media.MediaFile&gt; SaveThumbnail(string path) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;Xamarin.Media.MediaFile&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="path" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="path">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
