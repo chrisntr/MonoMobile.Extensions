@@ -133,7 +133,7 @@ namespace Xamarin.Contacts
 			set { this.phones = new List<Phone> (value); }
 		}
 
-		public Bitmap GetPhotoThumbnail()
+		public Bitmap GetThumbnail()
 		{
 			string lookupColumn = (IsAggregate)
 			                      	? ContactsContract.ContactsColumns.LookupKey
