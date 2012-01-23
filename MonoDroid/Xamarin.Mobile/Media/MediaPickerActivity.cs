@@ -184,14 +184,14 @@ namespace Xamarin.Media
 		{
 			string ext = Path.GetExtension (name);
 			if (ext == String.Empty)
-				ext = ((this.isPhoto) ? ".jpg" : ".mp4");
+				ext = ((this.isPhoto) ? "jpg" : "mp4");
 
 			name = Path.GetFileNameWithoutExtension (name);
 
-			string nname = name + ext;
+			string nname = name + "." + ext;
 			int i = 1;
 			while (File.Exists (Path.Combine (folder, nname)))
-				nname = name + "_" + (i++) + ext;
+				nname = name + "_" + (i++) + "." + ext;
 
 			return Path.Combine (folder, nname);
 		}
