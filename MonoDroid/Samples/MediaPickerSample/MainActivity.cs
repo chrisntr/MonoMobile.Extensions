@@ -94,7 +94,7 @@ namespace MediaPickerSample
 				})
 				.ContinueWith (t =>
 				{
-					Bitmap b = BitmapFactory.DecodeStream (t.Result.GetStream());
+					Bitmap b = BitmapFactory.DecodeFile (t.Result.Path);
 					RunOnUiThread (() =>
 					{
 						//
@@ -173,7 +173,7 @@ namespace MediaPickerSample
 				picker.PickPhotoAsync ()
 				.ContinueWith (t =>
 				{
-					Bitmap b = BitmapFactory.DecodeStream (t.Result.GetStream());
+					Bitmap b = BitmapFactory.DecodeFile (t.Result.Path);
 					RunOnUiThread (() =>
 					{
 						//

@@ -1,17 +1,10 @@
-using System;
-using System.IO;
-
 namespace Xamarin.Media
 {
 	public class MediaFile
 	{
-		internal MediaFile (string path, Func<Stream> streamGetter)
+		internal MediaFile (string path)
 		{
-			if (streamGetter == null)
-				throw new ArgumentNullException ("streamGetter");
-
 			Path = path;
-			this.streamGetter = streamGetter;
 		}
 
 		public string Path
@@ -19,12 +12,5 @@ namespace Xamarin.Media
 			get;
 			private set;
 		}
-
-		public Stream GetStream()
-		{
-			return this.streamGetter();
-		}
-
-		private readonly Func<Stream> streamGetter;
 	}
 }

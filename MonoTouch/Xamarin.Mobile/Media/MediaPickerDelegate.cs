@@ -115,9 +115,9 @@ namespace Xamarin.Media
 //					});
 //			}
 
-			Func<Stream> streamGetter = () =>
-			{
-				return File.OpenRead (path);
+			//Func<Stream> streamGetter = () =>
+			//{
+			//    return File.OpenRead (path);
 //				switch (this.options.Location)
 //				{
 //					case MediaFileStoreLocation.CameraRoll:
@@ -130,9 +130,9 @@ namespace Xamarin.Media
 //					default:
 //						throw new NotSupportedException();
 //				}
-			};
+			//};
 			
-			return new MediaFile (path, streamGetter);
+			return new MediaFile (path);
 		}
 
 		private MediaFile GetMovieMediaFile (NSDictionary info, out Task<NSUrl> saveCompleted)
@@ -178,9 +178,9 @@ namespace Xamarin.Media
 //				});
 //			}
 
-			Func<Stream> streamGetter = () =>
-			{
-				return File.OpenRead (path);
+			//Func<Stream> streamGetter = () =>
+			//{
+			//    return File.OpenRead (path);
 //				switch (this.options.Location)
 //				{
 //					case MediaFileStoreLocation.CameraRoll:
@@ -190,9 +190,9 @@ namespace Xamarin.Media
 //					default:
 //						throw new NotSupportedException();
 //				}
-			};
+			//};
 			
-			return new MediaFile (path, streamGetter);
+			return new MediaFile (path);
 		}
 		
 		private static string GetUniquePath (string type, string path, string name)
