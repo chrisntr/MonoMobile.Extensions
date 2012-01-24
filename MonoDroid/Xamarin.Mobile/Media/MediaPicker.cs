@@ -39,6 +39,9 @@ namespace Xamarin.Media
 
 		public Task<MediaFile> TakePhotoAsync (StoreCameraMediaOptions options)
 		{
+			if (!IsCameraAvailable)
+				throw new NotSupportedException();
+
 			VerifyOptions (options);
 
 			return TakeMediaAsync ("image/*", MediaStore.ActionImageCapture, options);
@@ -51,6 +54,9 @@ namespace Xamarin.Media
 
 		public Task<MediaFile> TakeVideoAsync (StoreVideoOptions options)
 		{
+			if (!IsCameraAvailable)
+				throw new NotSupportedException();
+
 			VerifyOptions (options);
 
 			return TakeMediaAsync ("video/*", MediaStore.ActionVideoCapture, options);
