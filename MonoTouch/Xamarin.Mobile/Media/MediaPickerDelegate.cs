@@ -67,6 +67,7 @@ namespace Xamarin.Media
 		{
 			this.tcs.TrySetCanceled();
 			picker.DismissModalViewControllerAnimated (animated: true);
+			picker.Dispose();
 		}
 		
 		private readonly UIImagePickerControllerSourceType source;
