@@ -9,8 +9,13 @@
     <BaseTypeName>System.Enum</BaseTypeName>
   </Base>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents a video quality setting.</summary>
+    <remarks>
+		<para>
+			Not all host systems support three settings. On Android, <see cref="F:Xamarin.Media.VideoQuality.Medium" /> is
+			interpreted as <see cref="F:Xamarin.Media.VideoQuality.High" />.
+		</para>
+	</remarks>
   </Docs>
   <Members>
     <Member MemberName="High">
@@ -24,7 +29,7 @@
         <ReturnType>Xamarin.Media.VideoQuality</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>High quality recording.</summary>
       </Docs>
     </Member>
     <Member MemberName="Low">
@@ -38,7 +43,7 @@
         <ReturnType>Xamarin.Media.VideoQuality</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Low quality recording.</summary>
       </Docs>
     </Member>
     <Member MemberName="Medium">
@@ -52,7 +57,7 @@
         <ReturnType>Xamarin.Media.VideoQuality</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Medium quality recording.</summary>
       </Docs>
     </Member>
   </Members>

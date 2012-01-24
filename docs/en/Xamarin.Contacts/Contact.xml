@@ -45,7 +45,7 @@
         <value>An enumeration of addresses, empty if there are no addresses.</value>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">
-          <paramref name="value" /> is <c>null</c>.</exception>
+        <paramref name="value" /> is <c>null</c>.</exception>
       </Docs>
     </Member>
     <Member MemberName="DisplayName">
@@ -63,13 +63,13 @@
         <value>The display name for the contact.</value>
         <remarks>
           <para>
-				When retrieved from an address book, this is the OS-assembled name from the individual
-				parts of the name, fit to display to the user.
-			</para>
+			When retrieved from an address book, this is the OS-assembled name from the individual
+			parts of the name, fit to display to the user.
+		  </para>
           <para>
-				Currently, setting this will manually not affect the other name properties,
-				nor will setting them affect this value.
-			</para>
+			Currently, setting this will manually not affect the other name properties,
+			nor will setting them affect this value.
+		  </para>
         </remarks>
       </Docs>
     </Member>
@@ -88,7 +88,7 @@
         <value>An enumeration of emails, empty if there are no emails.</value>
         <remarks />
         <exception cref="T:System.ArgumentNullException">
-          <paramref name="value" /> is <c>null</c>.</exception>
+        <paramref name="value" /> is <c>null</c>.</exception>
       </Docs>
     </Member>
     <Member MemberName="FirstName">
@@ -139,9 +139,9 @@
         <value>The identifier for the contact, or <c>null</c> if not set.</value>
         <remarks>
           <para>
-				Use <see cref="P:Xamarin.Contacts.Contact.IsAggregate" /> to determine
-				whether this is an aggregate identifier or not.
-			</para>
+			Use <see cref="P:Xamarin.Contacts.Contact.IsAggregate" /> to determine
+			whether this is an aggregate identifier or not.
+		  </para>
         </remarks>
         <altmember cref="P:Xamarin.Contacts.Contact.IsAggregate" />
       </Docs>
@@ -159,9 +159,9 @@
       <Docs>
         <summary>Gets or sets an enumeration of instant messaging accounts belonging to this contact.</summary>
         <value>An enumeration of instant messaging accounts, empty if there are no accounts.</value>
-        <remarks>To be added.</remarks>
+        <remarks />
         <exception cref="T:System.ArgumentNullException">
-          <paramref name="value" /> is <c>null</c>.</exception>
+        <paramref name="value" /> is <c>null</c>.</exception>
       </Docs>
     </Member>
     <Member MemberName="IsAggregate">
@@ -238,7 +238,7 @@
       <Docs>
         <summary>Gets or sets the nickname of the contact.</summary>
         <value>The nickname of the contact, or <c>null</c> if not set.</value>
-        <remarks>To be added.</remarks>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Notes">
@@ -272,7 +272,7 @@
       <Docs>
         <summary>Gets or sets an enumeration of organizations the contact is a part of.</summary>
         <value>An enumeration of organizations the contact is a part of, empty if none.</value>
-        <remarks>To be added.</remarks>
+        <remarks />
         <exception cref="T:System.ArgumentNullException">
           <paramref name="value" /> is <c>null</c>.</exception>
       </Docs>
@@ -290,7 +290,7 @@
       <Docs>
         <summary>Gets or sets an enumeration of phones belonging to the contact.</summary>
         <value>An enumeration of phones belonging to the contact, empty if none.</value>
-        <remarks>To be added.</remarks>
+        <remarks />
         <exception cref="T:System.ArgumentNullException">
           <paramref name="value" /> is <c>null</c>.</exception>
       </Docs>
@@ -324,9 +324,12 @@
         <ReturnType>System.Collections.Generic.IEnumerable&lt;Xamarin.Contacts.Relationship&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets the relationships belonging to the contact.</summary>
+        <value>An enumeration of relationships belonging to the contact, empty if none.</value>
+        <remarks />
+		<exception cref="T:System.ArgumentNullException">
+			<paramref name="value" /> is <c>null</c>.
+		</exception>
       </Docs>
     </Member>
     <Member MemberName="SaveThumbnail">
@@ -343,10 +346,15 @@
         <Parameter Name="path" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="path">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="path">The complete file path to save the thumbnail to.</param>
+        <summary>Saves the contact's thumnail to a specified <paramref name="path" />.</summary>
+        <returns>
+			A <see cref="T:System.Threading.Tasks.Task{T}" /> of <see cref="T:Xamarin.Media.MediaFile" />.
+		</returns>
+        <remarks />
+		<exception cref="T:System.ArgumentNullException">
+		   <paramref name="path" /> is <c>null</c>.
+		</exception>
       </Docs>
     </Member>
     <Member MemberName="Suffix">

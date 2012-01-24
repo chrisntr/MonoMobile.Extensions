@@ -10,10 +10,45 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Contains methods allowing the asynchronous picking and taking of media.</summary>
+    <remarks>
+		<para>
+			Only one async operation can be active at a time for a single instance of <see cref="T:Xamarin.Media.MediaPicker" />.
+		</para>
+		<para>
+			Avoid blocking on the resulting task (by using <see cref="P:System.Threading.Tasks.Task{T}.Result" />
+			or <see cref="M:System.Threading.Tasks.Task.Wait" />) from the pick and take operations. As these operations
+			invoke the system UI for picking or taking media the operation occurs on the current UI thread and may deadlock
+			the application. Instead, use <see cref="M:System.Threading.Tasks.Tasks.ContinueWith" /> to handle the result of the operation.
+		</para>
+		<para>
+			If the user cancels a pick or take operation, the returned task will continue with <see cref="P:System.Threading.Tasks.Task.IsCanceled" />
+			as <c>true</c>. If an error occured during the operation, <see cref="P:System.Threading.Tasks.Task.IsFaulted" /> will
+			be <c>true</c> and <see cref="P:System.Threading.Tasks.Task.Exception" /> will contain the errors. It's important to check
+			for any exceptions as otherwise the exception will be rethrown when the task's finalizer runs.
+		</para>
+		<para>
+			On Windows Phone, your application may be deactivated while a pick or take operation UI is presented. To ensure that
+			<see cref="T:Xamarin.Media.MediaPicker" /> receives the result of the operation, the <see cref="T:Xamarin.Media.MediaPicker" />
+			must be in class scope of your PhoneApplicationPage and it must be initialized in the page's constructor. This is an unavoidable
+			limitation of the Windows Phone platform.
+		</para>
+	</remarks>
   </Docs>
   <Members>
+	<Member MemberName=".ctor">
+		<MemberSignature Language="C#" Value="public MediaPicker ();" />
+		<MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+		<MemberType>Constructor</MemberType>
+		<AssemblyInfo>
+			<AssemblyVersion>0.0.0.0</AssemblyVersion>
+		</AssemblyInfo>
+		<Parameters />
+		<Docs>
+			<summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Media.MediaPicker" /> class.</summary>
+			<remarks>This constructor is available on iOS and Windows Phone.</remarks>
+		</Docs>
+	</Member>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public MediaPicker (Android.Content.Context context);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class Android.Content.Context context) cil managed" />
@@ -25,9 +60,9 @@
         <Parameter Name="context" Type="Android.Content.Context" />
       </Parameters>
       <Docs>
-        <param name="context">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="context">The context to use for operations.</param>
+        <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Media.MediaPicker" /> class.</summary>
+        <remarks>This constructor is only available on Android.</remarks>
       </Docs>
     </Member>
     <Member MemberName="IsCameraAvailable">
@@ -41,9 +76,17 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets whether a camera is available on the device.</summary>
+        <value><c>true</c> if a camera is present and available, <c>false</c> otherwise.</value>
+        <remarks>
+			<para>
+				Check this property before using <see cref="M:Xamarin.Media.MediaPicker.TakeVideoAsync" /> or 
+				<see cref="M:Xamarin.Media.MediaPicker.TakePhotoAsync" />, as they will throw <see cref="T:System.NotSupportedException" />
+				if it is <c>false</c>.
+			</para>
+		</remarks>
+		<altmember cref="M:Xamarin.Media.MediaPicker.TakePhotoAsync" />
+		<altmember cref="M:Xamarin.Media.MediaPicker.TakeVideoAsync" />
       </Docs>
     </Member>
     <Member MemberName="PhotosSupported">
@@ -57,9 +100,17 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets whether picking or taking photos is supported.</summary>
+        <value><c>true</c> if photos are supported, <c>false</c> otherwise.</value>
+        <remarks>
+			<para>
+				Check this property before using <see cref="M:Xamarin.Media.MediaPicker.PickPhotoAsync" /> or
+				<see cref="M:Xamarin.Media.MediaPicker.TakePhotoAsync" />, as they will throw <see cref="T:System.NotSupportedException" />
+				if it is <c>false</c>.
+			</para>
+		</remarks>
+		<altmember cref="M:Xamarin.Media.MediaPicker.TakePhotoAsync" />
+		<altmember cref="M:Xamarin.Media.MediaPicker.PickPhotoAsync" />
       </Docs>
     </Member>
     <Member MemberName="PickPhotoAsync">
@@ -74,9 +125,28 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Begins an asynchronous operation to pick a photo from the device's gallery.</summary>
+        <returns>A <see cref="T:System.Threading.Tasks.Task{T}" /> of <see cref="T:Xamarin.Media.MediaFile" />.</returns>
+        <remarks>
+			<para>
+				Avoid blocking on the resulting task (by using <see cref="P:System.Threading.Tasks.Task{T}.Result" />
+				or <see cref="M:System.Threading.Tasks.Task.Wait" />). As this operation invokes the system UI for picking a photo,
+				the operation occurs on the current UI thread and may deadlock the application. Instead, use
+				<see cref="M:System.Threading.Tasks.Tasks.ContinueWith" /> to handle the result of the operation.
+			</para>
+			<para>
+				If the user cancels the operation, the returned task will continue with <see cref="P:System.Threading.Tasks.Task.IsCanceled" />
+				as <c>true</c>. If an error occured during the operation, <see cref="P:System.Threading.Tasks.Task.IsFaulted" /> will
+				be <c>true</c> and <see cref="P:System.Threading.Tasks.Task.Exception" /> will contain the errors. It's important to check
+				for any exceptions as otherwise the exception will be rethrown when the task's finalizer runs.
+			</para>
+		</remarks>
+		  <exception cref="T:System.NotSupportedException">
+			  <see cref="P:Xamarin.Media.MediaPicker.PhotosAvailable" /> is <c>false</c>.
+		  </exception>
+		  <exception cref="T:System.InvalidOperationException">
+			  Another async operation is pending on this <see cref="T:Xamarin.Media.MediaPicker" />
+		  </exception>
       </Docs>
     </Member>
     <Member MemberName="PickVideoAsync">
@@ -90,11 +160,32 @@
         <ReturnType>System.Threading.Tasks.Task&lt;Xamarin.Media.MediaFile&gt;</ReturnType>
       </ReturnValue>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
+		<Docs>
+			<summary>Begins an asynchronous operation to pick a video from the device's gallery.</summary>
+			<returns>
+				A <see cref="T:System.Threading.Tasks.Task{T}" /> of <see cref="T:Xamarin.Media.MediaFile" />.
+			</returns>
+			<remarks>
+				<para>
+					Avoid blocking on the resulting task (by using <see cref="P:System.Threading.Tasks.Task{T}.Result" />
+					or <see cref="M:System.Threading.Tasks.Task.Wait" />). As this operation invokes the system UI for picking a video,
+					the operation occurs on the current UI thread and may deadlock the application. Instead, use
+					<see cref="M:System.Threading.Tasks.Tasks.ContinueWith" /> to handle the result of the operation.
+				</para>
+				<para>
+					If the user cancels the operation, the returned task will continue with <see cref="P:System.Threading.Tasks.Task.IsCanceled" />
+					as <c>true</c>. If an error occured during the operation, <see cref="P:System.Threading.Tasks.Task.IsFaulted" /> will
+					be <c>true</c> and <see cref="P:System.Threading.Tasks.Task.Exception" /> will contain the errors. It's important to check
+					for any exceptions as otherwise the exception will be rethrown when the task's finalizer runs.
+				</para>
+			</remarks>
+			<exception cref="T:System.NotSupportedException">
+				<see cref="P:Xamarin.Media.MediaPicker.PhotosAvailable" /> is <c>false</c>.
+			</exception>
+			<exception cref="T:System.InvalidOperationException">
+				Another async operation is pending on this <see cref="T:Xamarin.Media.MediaPicker" />
+			</exception>
+		</Docs>
     </Member>
     <Member MemberName="TakePhotoAsync">
       <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;Xamarin.Media.MediaFile&gt; TakePhotoAsync (Xamarin.Media.StoreCameraMediaOptions options);" />
@@ -109,12 +200,40 @@
       <Parameters>
         <Parameter Name="options" Type="Xamarin.Media.StoreCameraMediaOptions" />
       </Parameters>
-      <Docs>
-        <param name="options">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
+		<Docs>
+			<summary>Begins an asynchronous operation to take a new photo and store it in a file.</summary>
+			<returns>
+				A <see cref="T:System.Threading.Tasks.Task{T}" /> of <see cref="T:Xamarin.Media.MediaFile" />.
+			</returns>
+			<remarks>
+				<para>
+					Avoid blocking on the resulting task (by using <see cref="P:System.Threading.Tasks.Task{T}.Result" />
+					or <see cref="M:System.Threading.Tasks.Task.Wait" />). As this operation invokes the system UI for taking photos,
+					the operation occurs on the current UI thread and may deadlock the application. Instead, use
+					<see cref="M:System.Threading.Tasks.Tasks.ContinueWith" /> to handle the result of the operation.
+				</para>
+				<para>
+					If the user cancels the operation, the returned task will continue with <see cref="P:System.Threading.Tasks.Task.IsCanceled" />
+					as <c>true</c>. If an error occured during the operation, <see cref="P:System.Threading.Tasks.Task.IsFaulted" /> will
+					be <c>true</c> and <see cref="P:System.Threading.Tasks.Task.Exception" /> will contain the errors. It's important to check
+					for any exceptions as otherwise the exception will be rethrown when the task's finalizer runs.
+				</para>
+			</remarks>
+			<exception cref="T:System.ArgumentNullException">
+				<paramref name="options" /> is <c>null</c>.
+			</exception>
+			<exception cref="T:System.ArgumentException">
+				One of the members of <paramref name="options" /> has an invalid value.
+			</exception>
+			<exception cref="T:System.NotSupportedException">
+				<see cref="P:Xamarin.Media.MediaPicker.IsCameraAvailable" /> or <see cref="P:Xamarin.Media.MediaPicker.PhotosAvailable" />
+				is <c>false</c>.
+			</exception>
+			<exception cref="T:System.InvalidOperationException">
+				Another async operation is pending on this <see cref="T:Xamarin.Media.MediaPicker" />
+			</exception>
+			<altmember cref="T:Xamarin.Media.StoreCameraMediaOptions" />
+		</Docs>
     </Member>
     <Member MemberName="TakeVideoAsync">
       <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;Xamarin.Media.MediaFile&gt; TakeVideoAsync (Xamarin.Media.StoreVideoOptions options);" />
@@ -129,12 +248,39 @@
       <Parameters>
         <Parameter Name="options" Type="Xamarin.Media.StoreVideoOptions" />
       </Parameters>
-      <Docs>
-        <param name="options">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
+		<Docs>
+			<summary>Begins an asynchronous operation to record a new video and store it to a file.</summary>
+			<returns>
+				A <see cref="T:System.Threading.Tasks.Task{T}" /> of <see cref="T:Xamarin.Media.MediaFile" />.
+			</returns>
+			<remarks>
+				<para>
+					Avoid blocking on the resulting task (by using <see cref="P:System.Threading.Tasks.Task{T}.Result" />
+					or <see cref="M:System.Threading.Tasks.Task.Wait" />). As this operation invokes the system UI for recording video,
+					the operation occurs on the current UI thread and may deadlock the application. Instead, use
+					<see cref="M:System.Threading.Tasks.Tasks.ContinueWith" /> to handle the result of the operation.
+				</para>
+				<para>
+					If the user cancels the operation, the returned task will continue with <see cref="P:System.Threading.Tasks.Task.IsCanceled" />
+					as <c>true</c>. If an error occured during the operation, <see cref="P:System.Threading.Tasks.Task.IsFaulted" /> will
+					be <c>true</c> and <see cref="P:System.Threading.Tasks.Task.Exception" /> will contain the errors. It's important to check
+					for any exceptions as otherwise the exception will be rethrown when the task's finalizer runs.
+				</para>
+			</remarks>
+			<exception cref="T:System.ArgumentNullException">
+				<paramref name="options" /> is <c>null</c>.
+			</exception>
+			<exception cref="T:System.ArgumentException">
+				One of the members of <paramref name="options" /> has an invalid value.
+			</exception>
+			<exception cref="T:System.NotSupportedException">
+				<see cref="P:Xamarin.Media.MediaPicker.IsCameraAvailable" /> or <see cref="P:Xamarin.Media.MediaPicker.VideosAvailable" />
+				is <c>false</c>.
+			</exception>
+			<exception cref="T:System.InvalidOperationException">
+				Another async operation is pending on this <see cref="T:Xamarin.Media.MediaPicker" />
+			</exception>
+		</Docs>
     </Member>
     <Member MemberName="VideosSupported">
       <MemberSignature Language="C#" Value="public bool VideosSupported { get; }" />
@@ -146,11 +292,24 @@
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
+		<Docs>
+			<summary>Gets whether picking or taking videos is supported.</summary>
+			<value>
+				<c>true</c> if videos are supported, <c>false</c> otherwise.
+			</value>
+			<remarks>
+				<para>
+					Check this property before using <see cref="M:Xamarin.Media.MediaPicker.PickVideoAsync" /> or
+					<see cref="M:Xamarin.Media.MediaPicker.TakeVideoAsync" />, as they will throw <see cref="T:System.NotSupportedException" />
+					if it is <c>false</c>.
+				</para>
+				<para>
+					This currently always <c>false</c> on Windows Phone.
+				</para>
+			</remarks>
+			<altmember cref="M:Xamarin.Media.MediaPicker.TakeVideoAsync" />
+			<altmember cref="M:Xamarin.Media.MediaPicker.PickVideoAsync" />
+		</Docs>
     </Member>
   </Members>
 </Type>
