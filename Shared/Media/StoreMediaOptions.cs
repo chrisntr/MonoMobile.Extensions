@@ -10,6 +10,10 @@ namespace Xamarin.Media
 
 	public class StoreMediaOptions
 	{
+		protected StoreMediaOptions()
+		{
+		}
+
 		//public MediaFileStoreLocation Location
 		//{
 		//    get;
