@@ -33,7 +33,7 @@ namespace ContactsSample
 			//
 			contactImage = new UIImageView(new RectangleF(210, 5, 60, 60));
 			this.View.AddSubview(contactImage);
-			contactImage.Image = contact.PhotoThumbnail;
+			contactImage.Image = contact.GetThumbnail();
 			
 			//
 			// position and display the contact Display name
