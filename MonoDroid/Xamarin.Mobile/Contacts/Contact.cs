@@ -161,7 +161,7 @@ namespace Xamarin.Contacts
 			return null;
 		}
 
-		public Task<MediaFile> SaveThumbnail (string path)
+		public Task<MediaFile> SaveThumbnailAsync (string path)
 		{
 			if (path == null)
 				throw new ArgumentNullException ("path");
