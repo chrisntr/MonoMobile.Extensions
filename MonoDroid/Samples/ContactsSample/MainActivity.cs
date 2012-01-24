@@ -33,14 +33,14 @@ namespace ContactsSample
 			// important: PreferContactAggregation must be set to the 
 			// the same value when looking up contacts by ID
 			// since we look up contacts by ID on the subsequent 
-			// ContactsActivity in this sample, we will set to false
+			// ContactsActivity in this sample, we will set both to true
 			//
 			book.PreferContactAggregation = true;
 			
 			//
 			// loop through the contacts and put them into a List<String>
 			//
-			// Note that the contacts are ordered by last name - contacts can be selected and sorted using linq!
+			// Note that the contacts are ordered by last name - contacts can be selected and sorted using LINQ!
 			// A more performant solution would create a custom adapter to lazily pull the contacts
 			//
 			// In this sample, we'll just use LINQ to grab the first 10 users with mobile phone entries

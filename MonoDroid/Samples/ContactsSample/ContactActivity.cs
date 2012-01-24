@@ -35,34 +35,34 @@ namespace ContactsSample
 			}
 			
 			//
-			// get the address book
+			// Get the address book
 			//
 			var book = new AddressBook (this);
 			
 			//
-			// important: PreferContactAggregation must be set to the 
+			// Important: PreferContactAggregation must be set to the 
 			// the same value as when the ID was generated (from the
-			// previous activity
+			// previous activity)
 			//
 			book.PreferContactAggregation = true;
 			
-			Contact contact = book.Where( c => c.Id == contactID).FirstOrDefault();
+			Contact contact = book.Load (contactID);
 			
 			//
-			// if the contact is empty, we'll
+			// If the contact is empty, we'll
 			// display a 'not found' error
 			//
 			String displayName = "Contact Not Found";
 			String mobilePhone = String.Empty;
 			
 			//
-			// set the displayName variable to the contact's
+			// Set the displayName variable to the contact's
 			// DisplayName property
 			//
 			if(contact != null)
 			{
 				displayName = contact.DisplayName;
-				var phone = contact.Phones.Where( p => p.Type == PhoneType.Mobile).FirstOrDefault();
+				var phone = contact.Phones.FirstOrDefault (p => p.Type == PhoneType.Mobile);
 				if(phone != null)
 				{
 					mobilePhone = phone.Number;	
@@ -70,7 +70,7 @@ namespace ContactsSample
 			}
 			
 			//
-			// show the contacts display name and mobile phone
+			// Show the contacts display name and mobile phone
 			//
 			SetContentView (Resource.Layout.contact_view);
 			var fullNameTextView = FindViewById<TextView> (Resource.Id.full_name);
