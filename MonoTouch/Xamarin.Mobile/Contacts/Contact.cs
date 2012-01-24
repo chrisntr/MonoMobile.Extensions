@@ -169,7 +169,7 @@ namespace Xamarin.Contacts
 					writeStream.Flush();
 				}
 
-				return new MediaFile (p, () => File.OpenRead (p));
+				return new MediaFile (p);
 			}, path);
 		}
 
