@@ -11,7 +11,7 @@
   <Interfaces />
   <Docs>
     <summary>Represents an instant messaging account belonging to a <see cref="T:Xamarin.Contacts.Contact" />.</summary>
-    <remarks>To be added.</remarks>
+    <remarks />
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -24,7 +24,7 @@
       <Parameters />
       <Docs>
         <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.InstantMessagingAccount" /> class.</summary>
-        <remarks>To be added.</remarks>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Account">
@@ -40,7 +40,7 @@
       <Docs>
         <summary>Gets or sets the account name.</summary>
         <value>The account name.</value>
-        <remarks>To be added.</remarks>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Service">
@@ -56,7 +56,7 @@
       <Docs>
         <summary>Gets or sets the instant messaging service the account is with.</summary>
         <value>The instant messaging service the account is with.</value>
-        <remarks>To be added.</remarks>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="ServiceLabel">

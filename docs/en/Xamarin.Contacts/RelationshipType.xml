@@ -9,8 +9,14 @@
     <BaseTypeName>System.Enum</BaseTypeName>
   </Base>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents the type of a relationship.</summary>
+    <remarks>
+		<para>
+			Only the common subset of relationships across all three platforms (iOS, Android and Windows Phone) is present.
+			Any relationship types that do not fall under specific categorizations will be defined as
+			<see cref="F:Xamarin.Contacts.RelationshipType.Other" />
+		</para>
+	</remarks>
   </Docs>
   <Members>
     <Member MemberName="Child">
@@ -24,7 +30,7 @@
         <ReturnType>Xamarin.Contacts.RelationshipType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>A child of the contact.</summary>
       </Docs>
     </Member>
     <Member MemberName="Other">
@@ -38,7 +44,7 @@
         <ReturnType>Xamarin.Contacts.RelationshipType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>An other type of relationship with the contact.</summary>
       </Docs>
     </Member>
     <Member MemberName="SignificantOther">
@@ -52,7 +58,7 @@
         <ReturnType>Xamarin.Contacts.RelationshipType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>A spouse, partner, friends or anyone else significant to the contact.</summary>
       </Docs>
     </Member>
   </Members>

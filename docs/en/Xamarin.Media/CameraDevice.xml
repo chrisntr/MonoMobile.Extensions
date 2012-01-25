@@ -9,8 +9,8 @@
     <BaseTypeName>System.Enum</BaseTypeName>
   </Base>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents the various types of cameras available.</summary>
+    <remarks />
   </Docs>
   <Members>
     <Member MemberName="Front">
@@ -24,7 +24,7 @@
         <ReturnType>Xamarin.Media.CameraDevice</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The front facing camera.</summary>
       </Docs>
     </Member>
     <Member MemberName="Rear">
@@ -38,7 +38,7 @@
         <ReturnType>Xamarin.Media.CameraDevice</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The rear facing camera.</summary>
       </Docs>
     </Member>
   </Members>

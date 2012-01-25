@@ -11,7 +11,7 @@
   <Interfaces />
   <Docs>
     <summary>Represents an obtained location at a specific time.</summary>
-    <remarks>To be added.</remarks>
+    <remarks />
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -70,7 +70,7 @@
       <Docs>
         <summary>Gets or sets the altitude in meters relative to sea level.</summary>
         <value>The altitude in meters, relative to seal level.</value>
-        <remarks>To be added.</remarks>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="AltitudeAccuracy">

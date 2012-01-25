@@ -11,7 +11,7 @@
   <Interfaces />
   <Docs>
     <summary>Represents a note made on a <see cref="T:Xamarin.Contacts.Contact" />.</summary>
-    <remarks>To be added.</remarks>
+    <remarks />
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -26,7 +26,7 @@
         <summary>
 			Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.Note" /> class.
 		</summary>
-        <remarks>To be added.</remarks>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Contents">
@@ -42,7 +42,7 @@
       <Docs>
         <summary>Gets the contents of the note.</summary>
         <value>The content of the note.</value>
-        <remarks>To be added.</remarks>
+        <remarks />
       </Docs>
     </Member>
   </Members>

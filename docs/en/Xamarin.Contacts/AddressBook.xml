@@ -18,7 +18,7 @@
   </Interfaces>
   <Docs>
     <summary>Represents the address book of the user.</summary>
-    <remarks>To be added.</remarks>
+    <remarks />
     <example>
 		<para>
 			This example shows how you can retrieve all contacts with the first name of
@@ -27,16 +27,16 @@
 		</para>
 		<code language="C#">
 			<![CDATA[
-			var builder = new StringBuilder();
-			var abook = new AddressBook();
-			foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any()))
-			{
-				builder.AppendLine (c.DisplayName);
-				foreach (Phone p in c.Phones)
-					builder.AppendLine (String.Format ("{0}: {1}", p.Label, p.Number));
+var builder = new StringBuilder();
+var abook = new AddressBook();
+foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any()))
+{
+	builder.AppendLine (c.DisplayName);
+	foreach (Phone p in c.Phones)
+		builder.AppendLine (String.Format ("{0}: {1}", p.Label, p.Number));
 
-				builder.AppendLine();
-			}
+	builder.AppendLine();
+}
 			]]>
 		</code>
     </example>

@@ -10,8 +10,8 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents a defined relationship of a <see cref="T:Xamarin.Contacts.Contact" />.</summary>
+    <remarks />
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -23,8 +23,8 @@
       </AssemblyInfo>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.Relationship" /> class.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Name">
@@ -38,9 +38,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets the name of the person being related to the contact.</summary>
+        <value>The name of the person being related to the contact.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Type">
@@ -54,9 +54,9 @@
         <ReturnType>Xamarin.Contacts.RelationshipType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets the relationship type.</summary>
+        <value>The relationship type.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>
