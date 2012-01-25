@@ -59,7 +59,7 @@ Global
 		{64565954-31A4-46EE-ACB1-A362405CE6FE} = {8A4D3352-DBA8-4BE4-B66C-2BF4A538C725}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Samples\ContactsSample\ContactsSample.csproj
+		StartupItem = Samples\MediaPickerSample\MediaPickerSample.csproj
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
