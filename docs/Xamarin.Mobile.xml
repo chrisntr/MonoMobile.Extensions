@@ -5,21 +5,20 @@
     <members>
         <member name="T:Xamarin.Contacts.Address">
             <summary>Represents an address related to a <see cref="T:Xamarin.Contacts.Contact" />.</summary>
-            <remarks>To be added.</remarks>
+            <remarks />
         </member>
         <member name="C:Xamarin.Contacts.Address">
             <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.Address" /> class.</summary>
-            <remarks>To be added.</remarks>
+            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.Address.City">
             <summary>Gets or sets the city for this address.</summary>
             <value>The city of the address, or <c>null</c> if not set.</value>
-            <remarks>To be added.</remarks>
         </member>
         <member name="P:Xamarin.Contacts.Address.Country">
             <summary>Gets or sets the country of this address.</summary>
             <value>The country of the address, or <c>null</c> if not set.</value>
-            <remarks>To be added.</remarks>
+            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.Address.Label">
             <summary>Gets or sets the label for this address.</summary>
@@ -28,18 +27,18 @@
                 <para>
 				For address types built into the underlying OS, this contains a localized version of the label. If the type is custom, it will contain
 				the custom label. In situations where types/labels are not supported, it will be <c>null</c>.
-			</para>
+		  </para>
             </remarks>
         </member>
         <member name="P:Xamarin.Contacts.Address.PostalCode">
             <summary>Gets or sets the postal code for this address.</summary>
             <value>The postal code of the address, or <c>null</c> if not set.</value>
-            <remarks>To be added.</remarks>
+            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.Address.Region">
             <summary>Gets or sets the state/province/region for this address.</summary>
             <value>The state, province or region for this address or <c>null</c> if not set.</value>
-            <remarks>To be added.</remarks>
+            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.Address.StreetAddress">
             <summary>Gets or sets the street and house number for this address.</summary>
@@ -54,11 +53,11 @@
         <member name="P:Xamarin.Contacts.Address.Type">
             <summary>Gets or sets the type of this address.</summary>
             <value>The type of address.</value>
-            <remarks>To be added.</remarks>
+            <remarks />
         </member>
         <member name="T:Xamarin.Contacts.AddressBook">
             <summary>Represents the address book of the user.</summary>
-            <remarks>To be added.</remarks>
+            <remarks />
             <example>
                 <para>
 			This example shows how you can retrieve all contacts with the first name of
@@ -66,16 +65,16 @@
 			a list of each person and their phones.
 		</para>
                 <code language="C#"><![CDATA[
-			var builder = new StringBuilder();
-			var abook = new AddressBook();
-			foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any()))
-			{
-				builder.AppendLine (c.DisplayName);
-				foreach (Phone p in c.Phones)
-					builder.AppendLine (String.Format ("{0}: {1}", p.Label, p.Number));
+var builder = new StringBuilder();
+var abook = new AddressBook();
+foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any()))
+{
+	builder.AppendLine (c.DisplayName);
+	foreach (Phone p in c.Phones)
+		builder.AppendLine (String.Format ("{0}: {1}", p.Label, p.Number));
 
-				builder.AppendLine();
-			}
+	builder.AppendLine();
+}
 			]]></code>
             </example>
         </member>
@@ -200,7 +199,7 @@
         </member>
         <member name="T:Xamarin.Contacts.Contact">
             <summary>Represents an individual or aggregate contact in the user's address book.</summary>
-            <remarks>To be added.</remarks>
+            <remarks />
             <altmember cref="T:Xamarin.Contacts.Contact" />
         </member>
         <member name="C:Xamarin.Contacts.Contact">
@@ -212,7 +211,7 @@
         <member name="P:Xamarin.Contacts.Contact.Addresses">
             <summary>Gets or sets an enumeration of addresses belonging to this contact.</summary>
             <value>An enumeration of addresses, empty if there are no addresses.</value>
-            <remarks>To be added.</remarks>
+            <remarks />
             <exception cref="T:System.ArgumentNullException">
                 <paramref name="value" /> is <c>null</c>.</exception>
         </member>
@@ -355,22 +354,22 @@
         <member name="P:Xamarin.Contacts.Contact.Websites">
             <summary>Gets or sets an enumeration of websites for the contact.</summary>
             <value>An enumeration of websites belonging to the contact, empty if none.</value>
-            <remarks>To be added.</remarks>
+            <remarks />
             <exception cref="T:System.ArgumentNullException">
                 <paramref name="value" /> is <c>null</c>.</exception>
         </member>
         <member name="T:Xamarin.Contacts.Email">
             <summary>Represents an email address belonging to a <see cref="T:Xamarin.Contacts.Contact" />. </summary>
-            <remarks>To be added.</remarks>
+            <remarks />
         </member>
         <member name="C:Xamarin.Contacts.Email">
             <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.Email" /> class.</summary>
-            <remarks>To be added.</remarks>
+            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.Email.Address">
             <summary>Gets or sets the e-mail address.</summary>
             <value>The email address.</value>
-            <remarks>To be added.</remarks>
+            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.Email.Label">
             <summary>Gets or sets the label for this email address.</summary>
@@ -385,7 +384,7 @@
         <member name="P:Xamarin.Contacts.Email.Type">
             <summary>Gets or sets the type of this email address.</summary>
             <value>The type of this email address.</value>
-            <remarks>To be added.</remarks>
+            <remarks />
         </member>
         <member name="T:Xamarin.Contacts.EmailType">
             <summary>Represents a type of <see cref="T:Xamarin.Contacts.Email" />.</summary>
@@ -407,21 +406,21 @@
         </member>
         <member name="T:Xamarin.Contacts.InstantMessagingAccount">
             <summary>Represents an instant messaging account belonging to a <see cref="T:Xamarin.Contacts.Contact" />.</summary>
-            <remarks>To be added.</remarks>
+            <remarks />
         </member>
         <member name="C:Xamarin.Contacts.InstantMessagingAccount">
             <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.InstantMessagingAccount" /> class.</summary>
-            <remarks>To be added.</remarks>
+            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.InstantMessagingAccount.Account">
             <summary>Gets or sets the account name.</summary>
             <value>The account name.</value>
-            <remarks>To be added.</remarks>
+            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.InstantMessagingAccount.Service">
             <summary>Gets or sets the instant messaging service the account is with.</summary>
             <value>The instant messaging service the account is with.</value>
-            <remarks>To be added.</remarks>
+            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.InstantMessagingAccount.ServiceLabel">
             <summary>Gets or sets the label for the service.</summary>
@@ -462,35 +461,35 @@
         </member>
         <member name="T:Xamarin.Contacts.Note">
             <summary>Represents a note made on a <see cref="T:Xamarin.Contacts.Contact" />.</summary>
-            <remarks>To be added.</remarks>
+            <remarks />
         </member>
         <member name="C:Xamarin.Contacts.Note">
             <summary>
 			Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.Note" /> class.
 		</summary>
-            <remarks>To be added.</remarks>
+            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.Note.Contents">
             <summary>Gets the contents of the note.</summary>
             <value>The content of the note.</value>
-            <remarks>To be added.</remarks>
+            <remarks />
         </member>
         <member name="T:Xamarin.Contacts.Organization">
             <summary>
 		Represents an organization that a <see cref="T:Xamarin.Contacts.Contact" /> belongs to.
 	</summary>
-            <remarks>To be added.</remarks>
+            <remarks />
         </member>
         <member name="C:Xamarin.Contacts.Organization">
             <summary>
 			Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.Organization" /> class.
 		</summary>
-            <remarks>To be added.</remarks>
+            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.Organization.ContactTitle">
             <summary>Gets or sets the contact's title at this organization.</summary>
             <value>The contact's title at this organization, or <c>null</c> if not set.</value>
-            <remarks>To be added.</remarks>
+            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.Organization.Label">
             <summary>Gets or sets the label for this organization.</summary>
@@ -505,16 +504,16 @@
         <member name="P:Xamarin.Contacts.Organization.Name">
             <summary>Gets or sets the name of the organization.</summary>
             <value>The name of the organization.</value>
-            <remarks>To be added.</remarks>
+            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.Organization.Type">
             <summary>Gets or sets the type of relationship the contact has with this organization.</summary>
             <value>The type of relationship the contact has with this organization.</value>
-            <remarks>To be added.</remarks>
+            <remarks />
         </member>
         <member name="T:Xamarin.Contacts.OrganizationType">
             <summary>Specifies the relationship between a <see cref="T:Xamarin.Contacts.Contact" /> and an <see cref="T:Xamarin.Contacts.Organization" />.</summary>
-            <remarks>To be added.</remarks>
+            <remarks />
         </member>
         <member name="F:Xamarin.Contacts.OrganizationType.Other">
             <summary>The contact has some other relationship with this organization.</summary>
@@ -524,13 +523,11 @@
         </member>
         <member name="T:Xamarin.Contacts.Phone">
             <summary>Represents a phone belonging to a <see cref="T:Xamarin.Contacts.Contact" />.</summary>
-            <remarks>To be added.</remarks>
+            <remarks />
         </member>
         <member name="C:Xamarin.Contacts.Phone">
-            <summary>
-			Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.Phone" /> class.
-		</summary>
-            <remarks>To be added.</remarks>
+            <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.Phone" /> class.</summary>
+            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.Phone.Label">
             <summary>Gets or sets the label for this phone.</summary>
@@ -545,12 +542,12 @@
         <member name="P:Xamarin.Contacts.Phone.Number">
             <summary>Gets or sets the number for this phone.</summary>
             <value>The phone's number.</value>
-            <remarks>To be added.</remarks>
+            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.Phone.Type">
             <summary>Gets or sets the phone's type.</summary>
             <value>The type of phone.</value>
-            <remarks>To be added.</remarks>
+            <remarks />
         </member>
         <member name="T:Xamarin.Contacts.PhoneType">
             <summary>Specifies a type of <see cref="T:Xamarin.Contacts.Phone" />.</summary>
@@ -583,48 +580,53 @@
             <summary>A work fax number.</summary>
         </member>
         <member name="T:Xamarin.Contacts.Relationship">
-            <summary>To be added.</summary>
-            <remarks>To be added.</remarks>
+            <summary>Represents a defined relationship of a <see cref="T:Xamarin.Contacts.Contact" />.</summary>
+            <remarks />
         </member>
         <member name="C:Xamarin.Contacts.Relationship">
-            <summary>To be added.</summary>
-            <remarks>To be added.</remarks>
+            <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.Relationship" /> class.</summary>
+            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.Relationship.Name">
-            <summary>To be added.</summary>
-            <value>To be added.</value>
-            <remarks>To be added.</remarks>
+            <summary>Gets or sets the name of the person being related to the contact.</summary>
+            <value>The name of the person being related to the contact.</value>
+            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.Relationship.Type">
-            <summary>To be added.</summary>
-            <value>To be added.</value>
-            <remarks>To be added.</remarks>
+            <summary>Gets or sets the relationship type.</summary>
+            <value>The relationship type.</value>
+            <remarks />
         </member>
         <member name="T:Xamarin.Contacts.RelationshipType">
-            <summary>To be added.</summary>
-            <remarks>To be added.</remarks>
+            <summary>Represents the type of a relationship.</summary>
+            <remarks>
+                <para>
+			Only the common subset of relationships across all three platforms (iOS, Android and Windows Phone) is present.
+			Any relationship types that do not fall under specific categorizations will be defined as
+			<see cref="F:Xamarin.Contacts.RelationshipType.Other" /></para>
+            </remarks>
         </member>
         <member name="F:Xamarin.Contacts.RelationshipType.Child">
-            <summary>To be added.</summary>
+            <summary>A child of the contact.</summary>
         </member>
         <member name="F:Xamarin.Contacts.RelationshipType.Other">
-            <summary>To be added.</summary>
+            <summary>An other type of relationship with the contact.</summary>
         </member>
         <member name="F:Xamarin.Contacts.RelationshipType.SignificantOther">
-            <summary>To be added.</summary>
+            <summary>A spouse, partner, friends or anyone else significant to the contact.</summary>
         </member>
         <member name="T:Xamarin.Contacts.Website">
             <summary>Represents a website belonging to a <see cref="T:Xamarin.Contacts.Contact" />.</summary>
-            <remarks>To be added.</remarks>
+            <remarks />
         </member>
         <member name="C:Xamarin.Contacts.Website">
             <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.Website" /> class.</summary>
-            <remarks>To be added.</remarks>
+            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.Website.Address">
             <summary>Gets or sets the website's address.</summary>
             <value>The website address.</value>
-            <remarks>To be added.</remarks>
+            <remarks />
         </member>
         <member name="T:Xamarin.Geolocation.GeolocationError">
             <summary>Specifies what type of error occured.</summary>
@@ -636,18 +638,18 @@
             <summary>The app is not, or no longer, authorized to receive location data.</summary>
         </member>
         <member name="T:Xamarin.Geolocation.GeolocationException">
-            <summary>To be added.</summary>
-            <remarks>To be added.</remarks>
+            <summary>Represents a geolocation error.</summary>
+            <remarks />
         </member>
         <member name="C:Xamarin.Geolocation.GeolocationException(Xamarin.Geolocation.GeolocationError)">
             <param name="error">The type of error that occured.</param>
-            <summary>To be added.</summary>
-            <remarks>To be added.</remarks>
+            <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Geolocation.GeolocationException" /> class.</summary>
+            <remarks />
         </member>
         <member name="P:Xamarin.Geolocation.GeolocationException.Error">
-            <summary>Gets the error that occured.</summary>
-            <value>To be added.</value>
-            <remarks>To be added.</remarks>
+            <summary>Gets the type of error that occured.</summary>
+            <value>The type of error that occred.</value>
+            <remarks />
         </member>
         <member name="T:Xamarin.Geolocation.Geolocator">
             <summary>A class providing the ability to get or listen to the device's current geo-location.</summary>
@@ -837,7 +839,7 @@
         </member>
         <member name="T:Xamarin.Geolocation.Position">
             <summary>Represents an obtained location at a specific time.</summary>
-            <remarks>To be added.</remarks>
+            <remarks />
         </member>
         <member name="C:Xamarin.Geolocation.Position">
             <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Geolocation.Position" /> class.</summary>
@@ -854,7 +856,7 @@
         <member name="P:Xamarin.Geolocation.Position.Altitude">
             <summary>Gets or sets the altitude in meters relative to sea level.</summary>
             <value>The altitude in meters, relative to seal level.</value>
-            <remarks>To be added.</remarks>
+            <remarks />
         </member>
         <member name="P:Xamarin.Geolocation.Position.AltitudeAccuracy">
             <summary>Gets or sets the potential altitude error range in meters.</summary>
@@ -900,22 +902,22 @@
         <member name="C:Xamarin.Geolocation.PositionEventArgs(Xamarin.Geolocation.Position)">
             <param name="position">A <see cref="T:Xamarin.Geolocation.Position" /></param>
             <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Geolocation.PositionEventArgs" /> class by specifying the <see cref="T:Xamarin.Geolocation.Position" />.</summary>
-            <remarks>To be added.</remarks>
+            <remarks />
         </member>
         <member name="P:Xamarin.Geolocation.PositionEventArgs.Position">
             <summary>Gets the <see cref="T:Xamarin.Geolocation.Position" /> for the event.</summary>
-            <value>To be added.</value>
-            <remarks>To be added.</remarks>
+            <value>The position for the event.</value>
+            <remarks />
         </member>
         <member name="T:Xamarin.Media.CameraDevice">
-            <summary>To be added.</summary>
-            <remarks>To be added.</remarks>
+            <summary>Represents the various types of cameras available.</summary>
+            <remarks />
         </member>
         <member name="F:Xamarin.Media.CameraDevice.Front">
-            <summary>To be added.</summary>
+            <summary>The front facing camera.</summary>
         </member>
         <member name="F:Xamarin.Media.CameraDevice.Rear">
-            <summary>To be added.</summary>
+            <summary>The rear facing camera.</summary>
         </member>
         <member name="T:Xamarin.Media.MediaFile">
             <summary>To be added.</summary>
