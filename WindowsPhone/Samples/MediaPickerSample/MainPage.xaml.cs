@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.IO;
+using System.IO.IsolatedStorage;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -21,13 +24,7 @@ namespace MediaPickerSample
 			try
 			{
 				MediaFile photo = await picker.PickPhotoAsync();
-
-				var bmp = new BitmapImage();
-				bmp.SetSource (photo.GetStream());
-				this.image.Source = bmp;
-
-				if (photo.CanDelete)
-					photo.Delete();
+				this.image.Source = new BitmapImage (new Uri (photo.Path));
 			}
 			catch (TaskCanceledException ex)
 			{
@@ -38,14 +35,12 @@ namespace MediaPickerSample
 		{
 			try
 			{
-				MediaFile photo = await picker.TakePhotoAsync (new StoreMediaOptions());
+				MediaFile photo = await picker.TakePhotoAsync (new StoreCameraMediaOptions());
+				var source = new BitmapImage();
+				using (IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForApplication())
+					source.SetSource (storage.OpenFile (photo.Path, FileMode.Open));
 
-				var bmp = new BitmapImage();
-				bmp.SetSource (photo.GetStream());
-				this.image.Source = bmp;
-
-				if (photo.CanDelete)
-					photo.Delete();
+				this.image.Source = source;
 			}
 			catch (TaskCanceledException ex)
 			{

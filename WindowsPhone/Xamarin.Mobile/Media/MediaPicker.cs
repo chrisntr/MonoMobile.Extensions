@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.IO.IsolatedStorage;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Devices;
@@ -47,8 +49,7 @@ namespace Xamarin.Media
 
 		public Task<MediaFile> TakePhotoAsync (StoreMediaOptions options)
 		{
-			if (options == null)
-				throw new ArgumentNullException ("options");
+			options.VerifyOptions();
 
 			var ntcs = new TaskCompletionSource<MediaFile> (options);
 			if (Interlocked.CompareExchange (ref this.completionSource, ntcs, null) != null)
@@ -77,21 +78,32 @@ namespace Xamarin.Media
 		{
 			var tcs = Interlocked.Exchange (ref this.completionSource, null);
 
-			var options = tcs.Task.AsyncState as StoreMediaOptions;
+			string path = photoResult.OriginalFileName;
+
+			var options = tcs.Task.AsyncState as StoreCameraMediaOptions;
 			if (options != null)
 			{
-				switch (options.Location)
+				using (var store = IsolatedStorageFile.GetUserStoreForApplication())
 				{
-					case MediaFileStoreLocation.CameraRoll:
-					case MediaFileStoreLocation.Local:
-						throw new NotImplementedException();
+					path = options.GetUniqueFilepath (null, p => store.FileExists (p));
+
+					using (var fs = store.CreateFile (path))
+					using (var s = photoResult.ChosenPhoto)
+					{
+						byte[] buffer = new byte[20480];
+						int len;
+						while ((len = s.Read (buffer, 0, buffer.Length)) > 0)
+							fs.Write (buffer, 0, len);
+
+						fs.Flush (true);
+					}
 				}
 			}
 
 			switch (photoResult.TaskResult)
 			{
 				case TaskResult.OK:
-					tcs.SetResult (new MediaFile (() => photoResult.ChosenPhoto, null));
+					tcs.SetResult (new MediaFile (path));
 					break;
 
 				case TaskResult.None:

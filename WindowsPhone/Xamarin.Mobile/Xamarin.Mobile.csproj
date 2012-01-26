@@ -54,6 +54,9 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Shared\Media\MediaExtensions.cs">
+      <Link>Media\MediaExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\..\Shared\Media\MediaFile.cs">
       <Link>Media\MediaFile.cs</Link>
     </Compile>
