@@ -139,10 +139,21 @@ namespace Xamarin.Geolocation
 			p.Longitude = position.Location.Longitude;
 			p.Latitude = position.Location.Latitude;
 
-			p.AltitudeAccuracy = position.Location.VerticalAccuracy;
-			p.Altitude = position.Location.Altitude;
+			if (!Double.IsNaN (position.Location.VerticalAccuracy) && !Double.IsNaN (position.Location.Altitude))
+			{
+				p.AltitudeAccuracy = position.Location.VerticalAccuracy;
+				p.Altitude = position.Location.Altitude;
+			}
+			else
+			{
+				p.AltitudeAccuracy = 0;
+				p.Altitude = 0;
+			}
 
-			p.Heading = position.Location.Course;
+			if (!Double.IsNaN (position.Location.Course))
+				p.Heading = position.Location.Course;
+			else
+				p.Heading = 0;
 
 			p.Speed = position.Location.Speed;
 			p.Timestamp = position.Timestamp;

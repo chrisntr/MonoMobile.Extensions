@@ -10,16 +10,20 @@ namespace Xamarin.Geolocation
 		internal SinglePositionListener (double accuracy, int timeout, CancellationToken cancelToken)
 		{
 			cancelToken.Register (HandleTimeout, true);
-
-			this.watcher = new GeoCoordinateWatcher (Geolocator.GetAccuracy (accuracy));
-			this.watcher.PositionChanged += WatcherOnPositionChanged;
-			this.watcher.StatusChanged += WatcherOnStatusChanged;
-
-			this.watcher.Start();
-
 			this.desiredAccuracy = accuracy;
+			this.start = DateTime.Now;
+
+			System.Threading.Tasks.Task.Factory.StartNew (() =>
+			{
+				this.watcher = new GeoCoordinateWatcher (Geolocator.GetAccuracy (accuracy));
+				this.watcher.PositionChanged += WatcherOnPositionChanged;
+				this.watcher.StatusChanged += WatcherOnStatusChanged;
+
+				this.watcher.Start();
+			});
+
 			if (timeout != Timeout.Infinite)
-				this.timeout = new Timer (HandleTimeout);
+				this.timer = new Timer (HandleTimeout, null, timeout, Timeout.Infinite);
 
 			Task.ContinueWith (Cleanup);
 		}
@@ -30,18 +34,22 @@ namespace Xamarin.Geolocation
 		}
 
 		private GeoPosition<GeoCoordinate> bestPosition;
-		private readonly GeoCoordinateWatcher watcher;
+		private GeoCoordinateWatcher watcher;
 		private readonly double desiredAccuracy;
-		private readonly Timer timeout;
+		private readonly DateTime start;
+		private readonly Timer timer;
 		private readonly TaskCompletionSource<Position> tcs = new TaskCompletionSource<Position>();
 
 		private void Cleanup (Task task)
 		{
-			if (this.timeout != null)
-				this.timeout.Dispose();
+			this.watcher.PositionChanged -= WatcherOnPositionChanged;
+			this.watcher.StatusChanged -= WatcherOnStatusChanged;
 
 			this.watcher.Stop();
 			this.watcher.Dispose();
+
+			if (this.timer != null)
+				this.timer.Dispose();
 		}
 
 		private void HandleTimeout (object state)
@@ -71,13 +79,13 @@ namespace Xamarin.Geolocation
 
 		private void WatcherOnPositionChanged (object sender, GeoPositionChangedEventArgs<GeoCoordinate> e)
 		{
-			if (e.Position.Location.IsUnknown)
+			if (e.Position.Location.IsUnknown || e.Position.Timestamp < this.start)
 				return;
 
-			if (e.Position.Location.HorizontalAccuracy > this.desiredAccuracy)
+			if (e.Position.Location.HorizontalAccuracy <= this.desiredAccuracy)
 				this.tcs.TrySetResult (Geolocator.GetPosition (e.Position));
 
-			if (this.bestPosition == null || e.Position.Location.HorizontalAccuracy > this.bestPosition.Location.HorizontalAccuracy)
+			if (this.bestPosition == null || e.Position.Location.HorizontalAccuracy < this.bestPosition.Location.HorizontalAccuracy)
 				this.bestPosition = e.Position;
 		}
 	}
