@@ -90,12 +90,17 @@
     <Compile Include="..\..\Shared\Media\StoreMediaOptions.cs">
       <Link>Media\StoreMediaOptions.cs</Link>
     </Compile>
+    <Compile Include="..\..\Shared\Position.cs">
+      <Link>Geolocation\Position.cs</Link>
+    </Compile>
     <Compile Include="..\..\Shared\Query.cs">
       <Link>Query.cs</Link>
     </Compile>
     <Compile Include="Contacts\AddressBook.cs" />
     <Compile Include="Contacts\Contact.cs" />
     <Compile Include="Contacts\ContactQueryProvider.cs" />
+    <Compile Include="Geolocation\Geolocator.cs" />
+    <Compile Include="Geolocation\SinglePositionListener.cs" />
     <Compile Include="Media\MediaPicker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
