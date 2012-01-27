@@ -32,7 +32,7 @@
 				<RowDefinition />
 			</Grid.RowDefinitions>
 			
-			<StackPanel Grid.Row="0" Orientation="Horizontal">
+			<StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" >
 				<Button Content="Pick Image" Name="pick" Width="187" Click="Pick_OnClick" />
 				<Button Content="Take Image" Name="take" Width="187" Click="Take_OnClick" />
 			</StackPanel>
