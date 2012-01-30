@@ -116,24 +116,24 @@ namespace Xamarin.Media
 //					});
 //			}
 
-			//Func<Stream> streamGetter = () =>
-			//{
-			//    return File.OpenRead (path);
-//				switch (this.options.Location)
-//				{
-//					case MediaFileStoreLocation.CameraRoll:
-//						return new NSDataStream (image.AsJPEG());
-//
-//					case MediaFileStoreLocation.Local:
-//						return File.OpenRead (path);
-//						break;
-//
-//					default:
-//						throw new NotSupportedException();
-//				}
-			//};
-			
-			return new MediaFile (path);
+			Func<Stream> streamGetter = () =>
+			{
+				return File.OpenRead (path);
+				//switch (this.options.Location)
+				//{
+				//    case MediaFileStoreLocation.CameraRoll:
+				//        return new NSDataStream (image.AsJPEG());
+
+				//    case MediaFileStoreLocation.Local:
+				//        return File.OpenRead (path);
+				//        break;
+
+				//    default:
+				//        throw new NotSupportedException();
+				//}
+			};
+
+			return new MediaFile (path, streamGetter);
 		}
 
 		private MediaFile GetMovieMediaFile (NSDictionary info, out Task<NSUrl> saveCompleted)
@@ -179,21 +179,21 @@ namespace Xamarin.Media
 //				});
 //			}
 
-			//Func<Stream> streamGetter = () =>
-			//{
-			//    return File.OpenRead (path);
-//				switch (this.options.Location)
-//				{
-//					case MediaFileStoreLocation.CameraRoll:
-//					case MediaFileStoreLocation.Local:
-//						return File.OpenRead (path);
-//
-//					default:
-//						throw new NotSupportedException();
-//				}
-			//};
+			Func<Stream> streamGetter = () =>
+			{
+			    return File.OpenRead (path);
+				//switch (this.options.Location)
+				//{
+				//    case MediaFileStoreLocation.CameraRoll:
+				//    case MediaFileStoreLocation.Local:
+				//        return File.OpenRead (path);
+
+				//    default:
+				//        throw new NotSupportedException();
+				//}
+			};
 			
-			return new MediaFile (path);
+			return new MediaFile (path, streamGetter);
 		}
 		
 		private static string GetUniquePath (string type, string path, string name)
