@@ -139,7 +139,7 @@ namespace Xamarin.Media
 				//    }
 				}
 
-				var mf = new MediaFile (filePath);
+				var mf = new MediaFile (filePath, () => File.OpenRead (filePath));
 				args = new MediaPickedEventArgs (requestCode, false, mf);
 			}
 
