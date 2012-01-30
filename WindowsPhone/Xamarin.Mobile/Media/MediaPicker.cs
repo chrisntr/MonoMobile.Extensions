@@ -80,39 +80,53 @@ namespace Xamarin.Media
 
 			string path = photoResult.OriginalFileName;
 
+			long pos = photoResult.ChosenPhoto.Position;
 			var options = tcs.Task.AsyncState as StoreCameraMediaOptions;
-			if (options != null)
+			using (var store = IsolatedStorageFile.GetUserStoreForApplication())
 			{
-				using (var store = IsolatedStorageFile.GetUserStoreForApplication())
+				path = options.GetUniqueFilepath ((options == null) ? "temp" : null, p => store.FileExists (p));
+
+				string dir = Path.GetDirectoryName (path);
+				if (!String.IsNullOrWhiteSpace (dir))
+					store.CreateDirectory (dir);
+
+				using (var fs = store.CreateFile (path))
 				{
-					path = options.GetUniqueFilepath (null, p => store.FileExists (p));
+					byte[] buffer = new byte[20480];
+					int len;
+					while ((len = photoResult.ChosenPhoto.Read (buffer, 0, buffer.Length)) > 0)
+						fs.Write (buffer, 0, len);
 
-					using (var fs = store.CreateFile (path))
-					using (var s = photoResult.ChosenPhoto)
-					{
-						byte[] buffer = new byte[20480];
-						int len;
-						while ((len = s.Read (buffer, 0, buffer.Length)) > 0)
-							fs.Write (buffer, 0, len);
-
-						fs.Flush (true);
-					}
+					fs.Flush (flushToDisk: true);
 				}
+			}
+
+			Action<bool> dispose = null;
+			if (options == null)
+			{
+			    dispose = d =>
+			    {
+			        using (var store = IsolatedStorageFile.GetUserStoreForApplication())
+			            store.DeleteFile (path);
+			    };
 			}
 
 			switch (photoResult.TaskResult)
 			{
 				case TaskResult.OK:
-					tcs.SetResult (new MediaFile (path));
+					photoResult.ChosenPhoto.Position = pos;
+					tcs.SetResult (new MediaFile (path, () => photoResult.ChosenPhoto, dispose));
 					break;
 
 				case TaskResult.None:
+					photoResult.ChosenPhoto.Dispose();
 					if (photoResult.Error != null)
 						tcs.SetException (photoResult.Error);
 
 					break;
 
 				case TaskResult.Cancel:
+					photoResult.ChosenPhoto.Dispose();
 					tcs.SetCanceled();
 					break;
 			}
