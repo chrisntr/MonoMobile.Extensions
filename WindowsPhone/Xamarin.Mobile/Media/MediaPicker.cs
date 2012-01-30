@@ -47,7 +47,7 @@ namespace Xamarin.Media
 			return ntcs.Task;
 		}
 
-		public Task<MediaFile> TakePhotoAsync (StoreMediaOptions options)
+		public Task<MediaFile> TakePhotoAsync (StoreCameraMediaOptions options)
 		{
 			options.VerifyOptions();
 
