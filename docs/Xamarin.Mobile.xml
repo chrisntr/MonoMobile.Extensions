@@ -920,18 +920,13 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
             <summary>The rear facing camera.</summary>
         </member>
         <member name="T:Xamarin.Media.MediaFile">
-            <summary>To be added.</summary>
-            <remarks>To be added.</remarks>
-        </member>
-        <member name="M:Xamarin.Media.MediaFile.GetStream">
-            <summary>To be added.</summary>
-            <returns>To be added.</returns>
-            <remarks>To be added.</remarks>
+            <summary>Represents a media file newly taken or picked from the gallery.</summary>
+            <altmember cref="T:Xamarin.Media.MediaPicker" />
+            <altmember cref="M:Xamarin.Contacts.Contact.SaveThumbnail" />
         </member>
         <member name="P:Xamarin.Media.MediaFile.Path">
-            <summary>To be added.</summary>
-            <value>To be added.</value>
-            <remarks>To be added.</remarks>
+            <summary>Gets the full path to the file.</summary>
+            <value>The full path to the file..</value>
         </member>
         <member name="T:Xamarin.Media.MediaPicker">
             <summary>Contains methods allowing the asynchronous picking and taking of media.</summary>
