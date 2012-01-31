@@ -122,9 +122,23 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
       </ReturnValue>
       <Docs>
         <summary>Gets whether this address book is read-only.</summary>
-        <value>
-          <c>true</c> if this address book is read-only, <c>false</c> otherwise.</value>
+        <value><c>true</c> if this address book is read-only, <c>false</c> otherwise.</value>
         <remarks>Currently this will always return <c>true</c>.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="LoadSupported">
+      <MemberSignature Language="C#" Value="public bool LoadSupported { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool LoadSupported" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets whether <see cref="M:Xamarin.Contacts.AddressBook.Load" /> is supported or not.</summary>
+        <value><c>true</c> on iOS and Android, <c>false</c> on Windows Phone.</value>
       </Docs>
     </Member>
     <Member MemberName="Load">
@@ -162,8 +176,12 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
         <altmember cref="P:Xamarin.Contacts.Contact.Id" />
         <altmember cref="P:Xamarin.Contacts.Contact.IsAggregate" />
         <altmember cref="P:Xamarin.Contacts.AddressBook.PreferContactAggregation" />
+        <exception cref="T:System.NotSupportedException">
+          <see cref="P:Xamarin.Contacts.AddressBook.LoadSupported" /> is <c>false</c>.
+        </exception>
         <exception cref="T:System.ArgumentNullException">
-        <paramref name="id" /> is <c>null</c>.</exception>
+          <paramref name="id" /> is <c>null</c>.
+        </exception>
         <exception cref="T:System.ArgumentException">
 			<para><paramref name="id" /> is empty.</para>
 		</exception>

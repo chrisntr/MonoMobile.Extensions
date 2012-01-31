@@ -136,7 +136,7 @@
       </ReturnValue>
       <Docs>
         <summary>Gets the identifier for this contact.</summary>
-        <value>The identifier for the contact, or <c>null</c> if not set.</value>
+        <value>The identifier for the contact on iOS and Android, <c>null</c> on Windows Phone.</value>
         <remarks>
           <para>
 			Use <see cref="P:Xamarin.Contacts.Contact.IsAggregate" /> to determine
@@ -144,6 +144,7 @@
 		  </para>
         </remarks>
         <altmember cref="P:Xamarin.Contacts.Contact.IsAggregate" />
+        <altmember cref="M:Xamarin.Contacts.AddressBook.Load" />
       </Docs>
     </Member>
     <Member MemberName="InstantMessagingAccounts">
