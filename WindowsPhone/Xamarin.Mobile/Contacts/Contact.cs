@@ -22,8 +22,7 @@ namespace Xamarin.Contacts
 
 		public string Id
 		{
-			get;
-			private set;
+			get { return null; }
 		}
 
 		public bool IsAggregate

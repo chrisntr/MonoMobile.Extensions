@@ -49,6 +49,11 @@ namespace Xamarin.Contacts
 			set { this.contactsProvider.UseRawContacts = !value; }
 		}
 
+		public bool LoadSupported
+		{
+			get { return true; }
+		}
+
 		public IEnumerator<Contact> GetEnumerator()
 		{
 			return ContactHelper.GetContacts (!PreferContactAggregation, this.content, this.resources).GetEnumerator();

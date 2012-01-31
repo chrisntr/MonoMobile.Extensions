@@ -35,6 +35,11 @@ namespace Xamarin.Contacts
 			set;
 		}
 
+		public bool LoadSupported
+		{
+			get { return false; }
+		}
+
 		public Contact Load (string id)
 		{
 			throw new NotSupportedException();
