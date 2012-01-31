@@ -101,6 +101,9 @@ namespace Xamarin.Contacts
 			foreach (string url in contact.Websites)
 				c.websites.Add (new Website { Address = url });
 
+			foreach (string note in contact.Notes)
+				c.notes.Add (new Note { Contents = note });
+
 			return c;
 		}
 
