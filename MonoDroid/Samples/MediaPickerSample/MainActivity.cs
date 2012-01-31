@@ -49,6 +49,9 @@ namespace MediaPickerSample
 				})
 				.ContinueWith (t =>
 				{
+					if (t.IsCanceled)
+						return;
+
 					//
 					// Because TakeVideoAsync returns a Task
 					// We can use ContinueWith to run more code
@@ -94,6 +97,9 @@ namespace MediaPickerSample
 				})
 				.ContinueWith (t =>
 				{
+					if (t.IsCanceled)
+						return;
+
 					Bitmap b = BitmapFactory.DecodeFile (t.Result.Path);
 					RunOnUiThread (() =>
 					{
@@ -132,6 +138,9 @@ namespace MediaPickerSample
 				picker.PickVideoAsync ()
 				.ContinueWith (t =>
 				{
+					if (t.IsCanceled)
+						return;
+
 					//
 					// Because PickVideoAsync returns a Task
 					// We can use ContinueWith to run more code
@@ -173,6 +182,9 @@ namespace MediaPickerSample
 				picker.PickPhotoAsync ()
 				.ContinueWith (t =>
 				{
+					if (t.IsCanceled)
+						return;
+
 					Bitmap b = BitmapFactory.DecodeFile (t.Result.Path);
 					RunOnUiThread (() =>
 					{
