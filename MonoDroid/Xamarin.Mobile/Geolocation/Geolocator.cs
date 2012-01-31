@@ -182,7 +182,7 @@ namespace Xamarin.Geolocation
 			if (minDistance < 0)
 				throw new ArgumentOutOfRangeException ("minDistance");
 			if (IsListening)
-				throw new InvalidOperationException ("This geolocation is already listening");
+				throw new InvalidOperationException ("This Geolocator is already listening");
 
 			this.listener = new GeolocationContinuousListener (this.manager, TimeSpan.FromMilliseconds (minTime), this.providers);
 			this.listener.PositionChanged += OnListenerPositionChanged;
