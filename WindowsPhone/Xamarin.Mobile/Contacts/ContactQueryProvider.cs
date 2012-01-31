@@ -113,6 +113,7 @@ namespace Xamarin.Contacts
 			o.Name = company.CompanyName;
 			o.ContactTitle = company.JobTitle;
 			o.Type = OrganizationType.Work;
+			o.Label = "Work";
 
 			return o;
 		}
@@ -126,24 +127,31 @@ namespace Xamarin.Contacts
 			{
 				case PhoneNumberKind.Home:
 					p.Type = PhoneType.Home;
+					p.Label = "Home";
 					break;
 				case PhoneNumberKind.HomeFax:
 					p.Type = PhoneType.HomeFax;
+					p.Label = "Home Fax";
 					break;
 				case PhoneNumberKind.Work:
 					p.Type = PhoneType.Work;
+					p.Label = "Work";
 					break;
 				case PhoneNumberKind.WorkFax:
 					p.Type = PhoneType.WorkFax;
+					p.Label = "Work Fax";
 					break;
 				case PhoneNumberKind.Mobile:
 					p.Type = PhoneType.Mobile;
+					p.Label = "Mobile";
 					break;
 				case PhoneNumberKind.Pager:
 					p.Type = PhoneType.Pager;
+					p.Label = "Pager";
 					break;
 				default:
 					p.Type = PhoneType.Other;
+					p.Label = "Other";
 					break;
 			}
 
@@ -159,12 +167,15 @@ namespace Xamarin.Contacts
 			{
 				case EmailAddressKind.Work:
 					e.Type = EmailType.Work;
+					e.Label = "Work";
 					break;
 				case EmailAddressKind.Personal:
 					e.Type = EmailType.Home;
+					e.Label = "Home";
 					break;
 				default:
 					e.Type = EmailType.Other;
+					e.Label = "Other";
 					break;
 			}
 
@@ -187,12 +198,15 @@ namespace Xamarin.Contacts
 			{
 				case AddressKind.Home:
 					a.Type = AddressType.Home;
+					a.Label = "Home";
 					break;
 				case AddressKind.Work:
 					a.Type = AddressType.Work;
+					a.Label = "Work";
 					break;
 				default:
 					a.Type = AddressType.Other;
+					a.Label = "Other";
 					break;
 			}
 
