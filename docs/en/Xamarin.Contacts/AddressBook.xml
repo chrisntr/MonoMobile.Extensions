@@ -18,7 +18,6 @@
   </Interfaces>
   <Docs>
     <summary>Represents the address book of the user.</summary>
-    <remarks />
     <example>
 		<para>
 			This example shows how you can retrieve all contacts with the first name of
@@ -107,7 +106,6 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
       <Docs>
         <summary>Returns an enumerator that iterates through the <see href="T:Xamarin.Contacts.AddressBook" />.</summary>
         <returns>An enumerator for the <see href="T:Xamarin.Contacts.AddressBook" />.</returns>
-        <remarks />
       </Docs>
     </Member>
     <Member MemberName="IsReadOnly">
