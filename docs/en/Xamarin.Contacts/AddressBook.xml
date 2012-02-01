@@ -17,7 +17,15 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <summary>Represents the address book of the user.</summary>
+		<summary>Represents the address book of the user.</summary>
+		<remarks>
+			<para>
+				For storing and retrieving contacts, use the most uniquely identifying information for a contact
+				that is available, such as mobile phone numbers or personal email addresses. Even for platforms
+				that provide <see cref="P:Xamarin.Contacts.Contact.Id" />, it is not neccessarily stable long term,
+				as records can be removed and readded or merged.
+			</para>
+		</remarks>
     <example>
 		<para>
 			This example shows how you can retrieve all contacts with the first name of

@@ -130,13 +130,19 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the identifier for this contact.</summary>
+        <summary>Gets the unique identifier for this contact.</summary>
         <value>The identifier for the contact on iOS and Android, <c>null</c> on Windows Phone.</value>
         <remarks>
-          <para>
-			Use <see cref="P:Xamarin.Contacts.Contact.IsAggregate" /> to determine
-			whether this is an aggregate identifier or not.
-		  </para>
+			<para>
+				It is not recommended to use this for storing references to contacts in long-term storage such
+				as a file or database. Even for the platforms that support this property (iOS, Android), it is not
+				neccessarily gauranteed to be stable long-term. Instead, use uniquely identifiable contact information
+				such as a mobile phone number or personal email address.
+			</para>
+			<para>
+				Use <see cref="P:Xamarin.Contacts.Contact.IsAggregate" /> to determine
+				whether this is an aggregate identifier or not.
+			</para>
         </remarks>
         <altmember cref="P:Xamarin.Contacts.Contact.IsAggregate" />
         <altmember cref="M:Xamarin.Contacts.AddressBook.Load" />
