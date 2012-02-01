@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Media.Imaging;
 using Xamarin.Contacts;
@@ -6,56 +8,60 @@ using Xamarin.Contacts;
 namespace ContactsSample
 {
 	public class MainPageViewModel
+		: INotifyPropertyChanged
 	{
-		public IEnumerable<ContactViewModel> Contacts
+		public MainPageViewModel()
 		{
-			get { return addressBook.Select (c => new ContactViewModel (c)); }
+			Contact = Contacts.First();
 		}
 
-		public class ContactViewModel
+		public event EventHandler SelectedContact;
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		public IEnumerable<Contact> Contacts
 		{
-			private readonly Contact contact;
+			get { return addressBook; }
+		}
 
-			public ContactViewModel (Contact contact)
+		private BitmapImage thumb;
+		public BitmapImage Thumbnail
+		{
+			get { return this.thumb ?? (this.thumb = this.contact.GetThumbnail()); }
+		}
+
+		private Contact contact;
+		public Contact Contact
+		{
+			get { return this.contact; }
+			set
 			{
-				this.contact = contact;
-			}
+				if (this.contact == value)
+					return;
 
-			public BitmapImage Photo
-			{
-				get { return this.contact.GetThumbnail(); }
-			}
+				this.contact = value;
+				this.thumb = null;
+				OnPropertyChanged ("Contact");
+				OnPropertyChanged ("Thumbnail");
 
-			public string DisplayName
-			{
-				get { return this.contact.DisplayName; }
-			}
-
-			public string PhoneNumber
-			{
-				get
-				{
-					Phone p = this.contact.Phones.FirstOrDefault();
-					if (p == null)
-						return null;
-
-					return p.Number;
-				}
-			}
-
-			public string EmailAddress
-			{
-				get
-				{
-					Email e = this.contact.Emails.FirstOrDefault();
-					if (e == null)
-						return null;
-
-					return e.Address;
-				}
+				if (value != null)
+					OnSelectedContact (EventArgs.Empty);
 			}
 		}
 
 		private readonly AddressBook addressBook = new AddressBook();
+		
+		private void OnPropertyChanged (string name)
+		{
+			var changed = PropertyChanged;
+			if (changed != null)
+				changed (this, new PropertyChangedEventArgs (name));
+		}
+
+		private void OnSelectedContact (EventArgs e)
+		{
+			var selected = SelectedContact;
+			if (selected != null)
+				selected (this, e);
+		}
 	}
 }

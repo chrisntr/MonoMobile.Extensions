@@ -6,7 +6,7 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls" mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -14,38 +14,62 @@
     shell:SystemTray.IsVisible="True">
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+		<controls:Pivot Name="pivot" Title="Xamarin Mobile API Preview Contacts Sample">
+			<controls:PivotItem Header="contacts">
+				<ListBox Grid.Row="1" ItemsSource="{Binding Contacts}"  SelectedItem="{Binding Contact,Mode=TwoWay}">
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding DisplayName}" />
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+			</controls:PivotItem>
 
-        <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="Xamarin Mobile API Preview Contact Sample" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock x:Name="PageTitle" Text="contacts" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
-        </StackPanel>
-
-		<ListBox Grid.Row="1" ItemsSource="{Binding Contacts}">
-			<ListBox.ItemTemplate>
-				<DataTemplate>
-					<Grid Margin="0,0,0,8">
-						<Grid.RowDefinitions>
-							<RowDefinition />
-							<RowDefinition />
-							<RowDefinition />
-						</Grid.RowDefinitions>
+			<controls:PivotItem Header="details">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="80" />
+						<RowDefinition Height="30" />
+						<RowDefinition />
+						<RowDefinition Height="30" />
+						<RowDefinition />
+					</Grid.RowDefinitions>
+					
+					<Grid Grid.Row="0">
 						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="32" />
-							<ColumnDefinition />
+							<ColumnDefinition Width="80*" />
+							<ColumnDefinition Width="20*" />
 						</Grid.ColumnDefinitions>
-						
-						<Image Source="{Binding Photo}" Grid.Column="0" Grid.RowSpan="3" />
-						<TextBlock Text="{Binding DisplayName}" Grid.Column="1" Grid.Row="0" />
-						<TextBlock Text="{Binding PhoneNumber}" Grid.Column="1" Grid.Row="1" />
-						<TextBlock Text="{Binding EmailAddress}" Grid.Column="1" Grid.Row="2" />
+
+						<TextBlock Grid.Column="0" Text="{Binding Contact.DisplayName}" />
+						<Image Grid.Column="1" Source="{Binding Thumbnail}" />
 					</Grid>
-				</DataTemplate>
-			</ListBox.ItemTemplate>
-		</ListBox>
+					
+					<TextBlock Grid.Row="1">Phones:</TextBlock>
+					<ListBox Grid.Row="2" ItemsSource="{Binding Contact.Phones}">
+						<ListBox.ItemTemplate>
+							<DataTemplate>
+								<StackPanel>
+									<TextBlock Text="{Binding Label}" />
+									<TextBlock Text="{Binding Number}" />
+								</StackPanel>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+					</ListBox>
+
+					<TextBlock Grid.Row="3">Emails:</TextBlock>
+					<ListBox Grid.Row="4" ItemsSource="{Binding Contact.Emails}">
+						<ListBox.ItemTemplate>
+							<DataTemplate>
+								<StackPanel>
+									<TextBlock Text="{Binding Label}" />
+									<TextBlock Text="{Binding Address}" />
+								</StackPanel>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+					</ListBox>
+				</Grid>
+			</controls:PivotItem>
+		</controls:Pivot>
 	</Grid>
 </phone:PhoneApplicationPage>
