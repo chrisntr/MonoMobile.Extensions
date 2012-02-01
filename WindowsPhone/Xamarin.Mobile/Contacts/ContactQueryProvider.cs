@@ -74,11 +74,15 @@ namespace Xamarin.Contacts
 		{
 			Contact c = new Contact (contact);
 			c.DisplayName = contact.DisplayName;
-			c.Prefix = contact.CompleteName.Title;
-			c.FirstName = contact.CompleteName.FirstName;
-			c.MiddleName = contact.CompleteName.MiddleName;
-			c.LastName = contact.CompleteName.LastName;
-			c.Suffix = contact.CompleteName.Suffix;
+
+			if (contact.CompleteName != null)
+			{
+				c.Prefix = contact.CompleteName.Title;
+				c.FirstName = contact.CompleteName.FirstName;
+				c.MiddleName = contact.CompleteName.MiddleName;
+				c.LastName = contact.CompleteName.LastName;
+				c.Suffix = contact.CompleteName.Suffix;
+			}
 
 			foreach (ContactAddress address in contact.Addresses)
 				c.addresses.Add (GetAddress (address));
