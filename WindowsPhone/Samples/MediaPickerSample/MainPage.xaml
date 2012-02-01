@@ -21,8 +21,9 @@
 		</Grid.RowDefinitions>
 
 		<!--TitlePanel contains the name of the application and page title-->
-		<StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-			<TextBlock x:Name="ApplicationTitle" Text="MediaPicker Sample" Style="{StaticResource PhoneTextNormalStyle}"/>
+		<StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,10">
+			<TextBlock x:Name="ApplicationTitle" Text="Xamarin Mobile API Preview MediaPicker Sample" Style="{StaticResource PhoneTextNormalStyle}"/>
+			<TextBlock Text="{Binding State}" />
 		</StackPanel>
 
 		<!--ContentPanel - place additional content here-->
@@ -33,11 +34,11 @@
 			</Grid.RowDefinitions>
 			
 			<StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" >
-				<Button Content="Pick Image" Name="pick" Width="187" Click="Pick_OnClick" />
-				<Button Content="Take Image" Name="take" Width="187" Click="Take_OnClick" />
+				<Button Content="Pick Photo" Width="187" Command="{Binding PickPhoto}" />
+				<Button Content="Take Photo" Width="187" Command="{Binding TakePhoto}" />
 			</StackPanel>
 
-			<Image Grid.Row="1" Name="image" />
+			<Image Grid.Row="1" Name="image" Source="{Binding Image}" />
 		</Grid>
 	</Grid>
 </phone:PhoneApplicationPage>
