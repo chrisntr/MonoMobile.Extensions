@@ -9,9 +9,9 @@ using Android.App;
 [assembly: AssemblyTitle("MediaPickerSample")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Xamarin Inc.")]
 [assembly: AssemblyProduct("MediaPickerSample")]
-[assembly: AssemblyCopyright("Copyright ©  2011")]
+[assembly: AssemblyCopyright("Copyright © 2011-2012 Xamarin Inc.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
