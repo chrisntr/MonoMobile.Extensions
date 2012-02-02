@@ -145,7 +145,7 @@ namespace Xamarin.Contacts
 			if (data == IntPtr.Zero)
 				return null;
 
-			return new UIImage (data);
+			return new UIImage (new NSData (data));
 		}
 
 		public Task<MediaFile> SaveThumbnailAsync (string path)
@@ -163,10 +163,10 @@ namespace Xamarin.Contacts
 						return null;
 
 					using (NSDataStream stream = new NSDataStream (img.AsJPEG()))
-					using (Stream writeStream = File.Create (p))
+					using (Stream fs = File.OpenWrite (p))
 					{
-						stream.CopyTo (writeStream);
-						writeStream.Flush();
+						stream.CopyTo (fs);
+						fs.Flush();
 					}
 				}
 
