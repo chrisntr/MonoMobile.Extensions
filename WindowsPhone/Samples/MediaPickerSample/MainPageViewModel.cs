@@ -63,10 +63,12 @@ namespace MediaPickerSample
 		{
 			try
 			{
-				MediaFile file = await this.picker.TakePhotoAsync (new StoreCameraMediaOptions());
-				State = file.Path;
-				Image = new BitmapImage();
-				Image.SetSource (file.GetStream());
+				using (MediaFile file = await this.picker.TakePhotoAsync (new StoreCameraMediaOptions()))
+				{
+					State = file.Path;
+					Image = new BitmapImage();
+					Image.SetSource (file.GetStream());
+				}
 			}
 			catch (TaskCanceledException canceled)
 			{
@@ -82,10 +84,12 @@ namespace MediaPickerSample
 		{
 			try
 			{
-				MediaFile file = await this.picker.PickPhotoAsync();
-				State = file.Path;
-				Image = new BitmapImage();
-				Image.SetSource (file.GetStream());
+				using (MediaFile file = await this.picker.PickPhotoAsync())
+				{
+					State = file.Path;
+					Image = new BitmapImage();
+					Image.SetSource (file.GetStream());
+				}
 			}
 			catch (TaskCanceledException canceled)
 			{
