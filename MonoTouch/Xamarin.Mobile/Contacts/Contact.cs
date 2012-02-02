@@ -158,15 +158,20 @@ namespace Xamarin.Contacts
 				string p = (string) s;
 
 				using (UIImage img = GetThumbnail())
-				using (NSDataStream stream = new NSDataStream(img.AsJPEG()))
-				using (Stream writeStream = File.Create (p))
 				{
-					byte[] buffer = new byte[20480];
-					int len;
-					while ((len = stream.Read (buffer, 0, buffer.Length)) != 0)
-						writeStream.Write (buffer, 0, len);
+					if (img == null)
+						return null;
 
-					writeStream.Flush();
+					using (NSDataStream stream = new NSDataStream (img.AsJPEG()))
+					using (Stream writeStream = File.Create (p))
+					{
+						byte[] buffer = new byte[20480];
+						int len;
+						while ((len = stream.Read (buffer, 0, buffer.Length)) != 0)
+							writeStream.Write (buffer, 0, len);
+
+						writeStream.Flush();
+					}
 				}
 
 				return new MediaFile (p);
