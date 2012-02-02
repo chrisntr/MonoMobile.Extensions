@@ -361,16 +361,13 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
         </member>
         <member name="T:Xamarin.Contacts.Email">
             <summary>Represents an email address belonging to a <see cref="T:Xamarin.Contacts.Contact" />. </summary>
-            <remarks />
         </member>
         <member name="C:Xamarin.Contacts.Email">
             <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.Email" /> class.</summary>
-            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.Email.Address">
             <summary>Gets or sets the e-mail address.</summary>
             <value>The email address.</value>
-            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.Email.Label">
             <summary>Gets or sets the label for this email address.</summary>
@@ -385,7 +382,6 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
         <member name="P:Xamarin.Contacts.Email.Type">
             <summary>Gets or sets the type of this email address.</summary>
             <value>The type of this email address.</value>
-            <remarks />
         </member>
         <member name="T:Xamarin.Contacts.EmailType">
             <summary>Represents a type of <see cref="T:Xamarin.Contacts.Email" />.</summary>
