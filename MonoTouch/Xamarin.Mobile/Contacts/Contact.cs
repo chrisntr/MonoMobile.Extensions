@@ -165,16 +165,12 @@ namespace Xamarin.Contacts
 					using (NSDataStream stream = new NSDataStream (img.AsJPEG()))
 					using (Stream writeStream = File.Create (p))
 					{
-						byte[] buffer = new byte[20480];
-						int len;
-						while ((len = stream.Read (buffer, 0, buffer.Length)) != 0)
-							writeStream.Write (buffer, 0, len);
-
+						stream.CopyTo (writeStream);
 						writeStream.Flush();
 					}
 				}
 
-				return new MediaFile (p);
+				return new MediaFile (p, () => File.OpenRead (path));
 			}, path);
 		}
 
