@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.IsolatedStorage;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using Xamarin.Media;
@@ -131,17 +132,59 @@ namespace Xamarin.Contacts
 
 		public Task<MediaFile> SaveThumbnail (string path)
 		{
-			throw new NotImplementedException();
+			if (path == null)
+				throw new ArgumentNullException ("path");
+
+			string folder = Path.GetDirectoryName (path);
+
+			return Task.Factory.StartNew (() =>
+			{
+				lock (this.contact)
+				{
+					Stream s = this.contact.GetPicture();
+					if (s == null)
+						return null;
+
+					IsolatedStorageFile iso = null;
+					try
+					{
+						iso = IsolatedStorageFile.GetUserStoreForApplication();
+						//if (!String.IsNullOrWhiteSpace (folder))
+						//    iso.CreateDirectory (folder);
+
+						//string fn = ((StoreMediaOptions) null).GetUniqueFilepath (folder, f => iso.FileExists (f));
+						using (var fs = iso.CreateFile (path))
+						{
+							s.CopyTo (fs);
+							fs.Flush (flushToDisk: true);
+						}
+
+						return new MediaFile (path, () => iso.OpenFile (path, FileMode.Open), d => iso.Dispose());
+					}
+					catch
+					{
+						if (iso != null)
+							iso.Dispose();
+
+						throw;
+					}
+				}
+			});
 		}
 
 		public BitmapImage GetThumbnail()
 		{
-			Stream s = this.contact.GetPicture();
-			if (s == null)
-				return null;
-
 			var image = new BitmapImage();
-			image.SetSource (s);
+
+			lock (this.contact)
+			{
+				Stream s = this.contact.GetPicture();
+				if (s == null)
+					return null;
+
+				image.SetSource (s);
+			}
+
 			return image;
 		}
 	}
