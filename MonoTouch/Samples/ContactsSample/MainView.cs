@@ -44,8 +44,7 @@ namespace ContactsSample
 			//
 			// In this sample, we'll just use LINQ to grab the first 10 users with mobile phone entries
 			//
-			//foreach (Contact contact in book.Where(c => c.Phones.Any(p => p.Type == PhoneType.Mobile)).Take(10))
-			foreach (Contact contact in book.Where(c => c.LastName == "Ballinger"))
+			foreach (Contact contact in book.Where(c => c.Phones.Any(p => p.Type == PhoneType.Mobile)).Take(10))
 			{
 				list.Add(contact);
 			}
