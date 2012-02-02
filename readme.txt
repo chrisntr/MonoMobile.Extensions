@@ -20,7 +20,7 @@ Enhancements:
    improving performance on many simple queries.
  - Removed Contact.PhotoThumbnail
  - Added Contact.GetThumbnail()
- - Added Task<MediaFile> Contact.SaveThumbnail(string)
+ - Added Task<MediaFile> Contact.SaveThumbnailAsync(string)
  - Added bool AddressBook.LoadSupported
 
 Fixes:
