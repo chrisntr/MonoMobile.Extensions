@@ -20,12 +20,13 @@ Enhancements:
    improving performance on many simple queries.
  - Removed Contact.PhotoThumbnail
  - Added Contact.GetThumbnail()
- - Added Task<MediaFile> Contact.SaveThumbnail(string)
+ - Added Task<MediaFile> Contact.SaveThumbnailAsync(string)
  - Added bool AddressBook.LoadSupported
 
 Fixes:
  - Fixed an issue where iterating the AddressBook without a query
    would always return aggregate contacts, regardless of PreferContactAggregation
+ - Fixed an AddressBook crash with the latest version of MonoTouch
 
 Release 2
 
