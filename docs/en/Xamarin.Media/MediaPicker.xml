@@ -125,7 +125,7 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Begins an asynchronous operation to pick a photo from the device's gallery.</summary>
+        <summary>Begins an asynchronous operation to pick a photo from the device's gallery by launching the system UI for this.</summary>
         <returns>A <see cref="T:System.Threading.Tasks.Task{T}" /> of <see cref="T:Xamarin.Media.MediaFile" />.</returns>
         <remarks>
 			<para>
@@ -171,7 +171,7 @@
       </ReturnValue>
       <Parameters />
 		<Docs>
-			<summary>Begins an asynchronous operation to pick a video from the device's gallery.</summary>
+			<summary>Begins an asynchronous operation to pick a video from the device's gallery by launching the system UI for this.</summary>
 			<returns>
 				A <see cref="T:System.Threading.Tasks.Task{T}" /> of <see cref="T:Xamarin.Media.MediaFile" />.
 			</returns>
@@ -215,7 +215,7 @@
         <Parameter Name="options" Type="Xamarin.Media.StoreCameraMediaOptions" />
       </Parameters>
 		<Docs>
-			<summary>Begins an asynchronous operation to take a new photo and store it in a file.</summary>
+			<summary>Begins an asynchronous operation to take a new photo and store it in a file by launching the system UI for this.</summary>
 			<returns>
 				A <see cref="T:System.Threading.Tasks.Task{T}" /> of <see cref="T:Xamarin.Media.MediaFile" />.
 			</returns>
@@ -267,7 +267,7 @@
         <Parameter Name="options" Type="Xamarin.Media.StoreVideoOptions" />
       </Parameters>
 		<Docs>
-			<summary>Begins an asynchronous operation to record a new video and store it to a file.</summary>
+			<summary>Begins an asynchronous operation to record a new video and store it to a file by launching the system UI for this.</summary>
 			<returns>
 				A <see cref="T:System.Threading.Tasks.Task{T}" /> of <see cref="T:Xamarin.Media.MediaFile" />.
 			</returns>
