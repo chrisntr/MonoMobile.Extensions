@@ -5,11 +5,9 @@
     <members>
         <member name="T:Xamarin.Contacts.Address">
             <summary>Represents an address related to a <see cref="T:Xamarin.Contacts.Contact" />.</summary>
-            <remarks />
         </member>
         <member name="C:Xamarin.Contacts.Address">
             <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.Address" /> class.</summary>
-            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.Address.City">
             <summary>Gets or sets the city for this address.</summary>
@@ -18,7 +16,6 @@
         <member name="P:Xamarin.Contacts.Address.Country">
             <summary>Gets or sets the country of this address.</summary>
             <value>The country of the address, or <c>null</c> if not set.</value>
-            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.Address.Label">
             <summary>Gets or sets the label for this address.</summary>
@@ -33,12 +30,10 @@
         <member name="P:Xamarin.Contacts.Address.PostalCode">
             <summary>Gets or sets the postal code for this address.</summary>
             <value>The postal code of the address, or <c>null</c> if not set.</value>
-            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.Address.Region">
             <summary>Gets or sets the state/province/region for this address.</summary>
             <value>The state, province or region for this address or <c>null</c> if not set.</value>
-            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.Address.StreetAddress">
             <summary>Gets or sets the street and house number for this address.</summary>
@@ -53,11 +48,17 @@
         <member name="P:Xamarin.Contacts.Address.Type">
             <summary>Gets or sets the type of this address.</summary>
             <value>The type of address.</value>
-            <remarks />
         </member>
         <member name="T:Xamarin.Contacts.AddressBook">
             <summary>Represents the address book of the user.</summary>
-            <remarks />
+            <remarks>
+                <para>
+				For storing and retrieving contacts, use the most uniquely identifying information for a contact
+				that is available, such as mobile phone numbers or personal email addresses. Even for platforms
+				that provide <see cref="P:Xamarin.Contacts.Contact.Id" />, it is not neccessarily stable long term,
+				as records can be removed and readded or merged.
+			</para>
+            </remarks>
             <example>
                 <para>
 			This example shows how you can retrieve all contacts with the first name of
@@ -101,13 +102,17 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
         <member name="M:Xamarin.Contacts.AddressBook.GetEnumerator">
             <summary>Returns an enumerator that iterates through the <see href="T:Xamarin.Contacts.AddressBook" />.</summary>
             <returns>An enumerator for the <see href="T:Xamarin.Contacts.AddressBook" />.</returns>
-            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.AddressBook.IsReadOnly">
             <summary>Gets whether this address book is read-only.</summary>
             <value>
                 <c>true</c> if this address book is read-only, <c>false</c> otherwise.</value>
             <remarks>Currently this will always return <c>true</c>.</remarks>
+        </member>
+        <member name="P:Xamarin.Contacts.AddressBook.LoadSupported">
+            <summary>Gets whether <see cref="M:Xamarin.Contacts.AddressBook.Load" /> is supported or not.</summary>
+            <value>
+                <c>true</c> on iOS and Android, <c>false</c> on Windows Phone.</value>
         </member>
         <member name="M:Xamarin.Contacts.AddressBook.Load(System.String)">
             <param name="id">The <see href="P:Xamarin.Contacts.Contact.Id" /> of the contact to load.</param>
@@ -131,8 +136,12 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
             <altmember cref="P:Xamarin.Contacts.Contact.Id" />
             <altmember cref="P:Xamarin.Contacts.Contact.IsAggregate" />
             <altmember cref="P:Xamarin.Contacts.AddressBook.PreferContactAggregation" />
+            <exception cref="T:System.NotSupportedException">
+                <see cref="P:Xamarin.Contacts.AddressBook.LoadSupported" /> is <c>false</c>.
+        </exception>
             <exception cref="T:System.ArgumentNullException">
-                <paramref name="id" /> is <c>null</c>.</exception>
+                <paramref name="id" /> is <c>null</c>.
+        </exception>
             <exception cref="T:System.ArgumentException">
                 <para>
                     <paramref name="id" /> is empty.</para>
@@ -199,19 +208,16 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
         </member>
         <member name="T:Xamarin.Contacts.Contact">
             <summary>Represents an individual or aggregate contact in the user's address book.</summary>
-            <remarks />
             <altmember cref="T:Xamarin.Contacts.Contact" />
         </member>
         <member name="C:Xamarin.Contacts.Contact">
             <summary>
 			Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.Contact" /> class.
 		</summary>
-            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.Contact.Addresses">
             <summary>Gets or sets an enumeration of addresses belonging to this contact.</summary>
             <value>An enumeration of addresses, empty if there are no addresses.</value>
-            <remarks />
             <exception cref="T:System.ArgumentNullException">
                 <paramref name="value" /> is <c>null</c>.</exception>
         </member>
@@ -232,14 +238,12 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
         <member name="P:Xamarin.Contacts.Contact.Emails">
             <summary>Gets or sets an enumeration of email addresses belonging to this contact.</summary>
             <value>An enumeration of emails, empty if there are no emails.</value>
-            <remarks />
             <exception cref="T:System.ArgumentNullException">
                 <paramref name="value" /> is <c>null</c>.</exception>
         </member>
         <member name="P:Xamarin.Contacts.Contact.FirstName">
             <summary>Gets or sets the first (given) name of the contact.</summary>
             <value>The first or given name of the contact, or <c>null</c> if not set.</value>
-            <remarks />
         </member>
         <member name="M:Xamarin.Contacts.Contact.GetThumbnail">
             <summary>Gets a thumbnail of the Contact's photo.</summary>
@@ -247,20 +251,26 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
             <remarks>This is a <see cref="T:Android.Graphics.Bitmap" /> on Android and a <see cref="T:MonoTouch.UIKit.UIImage" /> on iOS.</remarks>
         </member>
         <member name="P:Xamarin.Contacts.Contact.Id">
-            <summary>Gets the identifier for this contact.</summary>
-            <value>The identifier for the contact, or <c>null</c> if not set.</value>
+            <summary>Gets the unique identifier for this contact.</summary>
+            <value>The identifier for the contact on iOS and Android, <c>null</c> on Windows Phone.</value>
             <remarks>
                 <para>
-			Use <see cref="P:Xamarin.Contacts.Contact.IsAggregate" /> to determine
-			whether this is an aggregate identifier or not.
-		  </para>
+				It is not recommended to use this for storing references to contacts in long-term storage such
+				as a file or database. Even for the platforms that support this property (iOS, Android), it is not
+				neccessarily gauranteed to be stable long-term. Instead, use uniquely identifiable contact information
+				such as a mobile phone number or personal email address.
+			</para>
+                <para>
+				Use <see cref="P:Xamarin.Contacts.Contact.IsAggregate" /> to determine
+				whether this is an aggregate identifier or not.
+			</para>
             </remarks>
             <altmember cref="P:Xamarin.Contacts.Contact.IsAggregate" />
+            <altmember cref="M:Xamarin.Contacts.AddressBook.Load" />
         </member>
         <member name="P:Xamarin.Contacts.Contact.InstantMessagingAccounts">
             <summary>Gets or sets an enumeration of instant messaging accounts belonging to this contact.</summary>
             <value>An enumeration of instant messaging accounts, empty if there are no accounts.</value>
-            <remarks />
             <exception cref="T:System.ArgumentNullException">
                 <paramref name="value" /> is <c>null</c>.</exception>
         </member>
@@ -285,36 +295,30 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
         <member name="P:Xamarin.Contacts.Contact.LastName">
             <summary>Gets or sets the last (family) name of the contact.</summary>
             <value>The last or family name of the contact, or <c>null</c> if not set.</value>
-            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.Contact.MiddleName">
             <summary>Gets or sets the middle name of the contact.</summary>
             <value>The middle name of the contact, or <c>null</c> if not set.</value>
-            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.Contact.Nickname">
             <summary>Gets or sets the nickname of the contact.</summary>
             <value>The nickname of the contact, or <c>null</c> if not set.</value>
-            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.Contact.Notes">
             <summary>Gets or sets an enumeration of notes for the contact.</summary>
             <value>An enumeration of notes for the contact, empty if there are no notes.</value>
-            <remarks />
             <exception cref="T:System.ArgumentNullException">
                 <paramref name="value" /> is <c>null</c>.</exception>
         </member>
         <member name="P:Xamarin.Contacts.Contact.Organizations">
             <summary>Gets or sets an enumeration of organizations the contact is a part of.</summary>
             <value>An enumeration of organizations the contact is a part of, empty if none.</value>
-            <remarks />
             <exception cref="T:System.ArgumentNullException">
                 <paramref name="value" /> is <c>null</c>.</exception>
         </member>
         <member name="P:Xamarin.Contacts.Contact.Phones">
             <summary>Gets or sets an enumeration of phones belonging to the contact.</summary>
             <value>An enumeration of phones belonging to the contact, empty if none.</value>
-            <remarks />
             <exception cref="T:System.ArgumentNullException">
                 <paramref name="value" /> is <c>null</c>.</exception>
         </member>
@@ -328,7 +332,6 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
         <member name="P:Xamarin.Contacts.Contact.Relationships">
             <summary>Gets or sets the relationships belonging to the contact.</summary>
             <value>An enumeration of relationships belonging to the contact, empty if none.</value>
-            <remarks />
             <exception cref="T:System.ArgumentNullException">
                 <paramref name="value" /> is <c>null</c>.
 		</exception>
@@ -339,7 +342,6 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
             <returns>
 			A <see cref="T:System.Threading.Tasks.Task{T}" /> of <see cref="T:Xamarin.Media.MediaFile" />.
 		</returns>
-            <remarks />
             <exception cref="T:System.ArgumentNullException">
                 <paramref name="path" /> is <c>null</c>.
 		</exception>
@@ -354,7 +356,6 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
         <member name="P:Xamarin.Contacts.Contact.Websites">
             <summary>Gets or sets an enumeration of websites for the contact.</summary>
             <value>An enumeration of websites belonging to the contact, empty if none.</value>
-            <remarks />
             <exception cref="T:System.ArgumentNullException">
                 <paramref name="value" /> is <c>null</c>.</exception>
         </member>
@@ -406,21 +407,17 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
         </member>
         <member name="T:Xamarin.Contacts.InstantMessagingAccount">
             <summary>Represents an instant messaging account belonging to a <see cref="T:Xamarin.Contacts.Contact" />.</summary>
-            <remarks />
         </member>
         <member name="C:Xamarin.Contacts.InstantMessagingAccount">
             <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.InstantMessagingAccount" /> class.</summary>
-            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.InstantMessagingAccount.Account">
             <summary>Gets or sets the account name.</summary>
             <value>The account name.</value>
-            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.InstantMessagingAccount.Service">
             <summary>Gets or sets the instant messaging service the account is with.</summary>
             <value>The instant messaging service the account is with.</value>
-            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.InstantMessagingAccount.ServiceLabel">
             <summary>Gets or sets the label for the service.</summary>
@@ -461,35 +458,29 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
         </member>
         <member name="T:Xamarin.Contacts.Note">
             <summary>Represents a note made on a <see cref="T:Xamarin.Contacts.Contact" />.</summary>
-            <remarks />
         </member>
         <member name="C:Xamarin.Contacts.Note">
             <summary>
 			Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.Note" /> class.
 		</summary>
-            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.Note.Contents">
             <summary>Gets the contents of the note.</summary>
             <value>The content of the note.</value>
-            <remarks />
         </member>
         <member name="T:Xamarin.Contacts.Organization">
             <summary>
 		Represents an organization that a <see cref="T:Xamarin.Contacts.Contact" /> belongs to.
 	</summary>
-            <remarks />
         </member>
         <member name="C:Xamarin.Contacts.Organization">
             <summary>
 			Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.Organization" /> class.
 		</summary>
-            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.Organization.ContactTitle">
             <summary>Gets or sets the contact's title at this organization.</summary>
             <value>The contact's title at this organization, or <c>null</c> if not set.</value>
-            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.Organization.Label">
             <summary>Gets or sets the label for this organization.</summary>
@@ -504,16 +495,13 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
         <member name="P:Xamarin.Contacts.Organization.Name">
             <summary>Gets or sets the name of the organization.</summary>
             <value>The name of the organization.</value>
-            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.Organization.Type">
             <summary>Gets or sets the type of relationship the contact has with this organization.</summary>
             <value>The type of relationship the contact has with this organization.</value>
-            <remarks />
         </member>
         <member name="T:Xamarin.Contacts.OrganizationType">
             <summary>Specifies the relationship between a <see cref="T:Xamarin.Contacts.Contact" /> and an <see cref="T:Xamarin.Contacts.Organization" />.</summary>
-            <remarks />
         </member>
         <member name="F:Xamarin.Contacts.OrganizationType.Other">
             <summary>The contact has some other relationship with this organization.</summary>
@@ -523,11 +511,9 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
         </member>
         <member name="T:Xamarin.Contacts.Phone">
             <summary>Represents a phone belonging to a <see cref="T:Xamarin.Contacts.Contact" />.</summary>
-            <remarks />
         </member>
         <member name="C:Xamarin.Contacts.Phone">
             <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.Phone" /> class.</summary>
-            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.Phone.Label">
             <summary>Gets or sets the label for this phone.</summary>
@@ -542,12 +528,10 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
         <member name="P:Xamarin.Contacts.Phone.Number">
             <summary>Gets or sets the number for this phone.</summary>
             <value>The phone's number.</value>
-            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.Phone.Type">
             <summary>Gets or sets the phone's type.</summary>
             <value>The type of phone.</value>
-            <remarks />
         </member>
         <member name="T:Xamarin.Contacts.PhoneType">
             <summary>Specifies a type of <see cref="T:Xamarin.Contacts.Phone" />.</summary>
@@ -581,21 +565,17 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
         </member>
         <member name="T:Xamarin.Contacts.Relationship">
             <summary>Represents a defined relationship of a <see cref="T:Xamarin.Contacts.Contact" />.</summary>
-            <remarks />
         </member>
         <member name="C:Xamarin.Contacts.Relationship">
             <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.Relationship" /> class.</summary>
-            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.Relationship.Name">
             <summary>Gets or sets the name of the person being related to the contact.</summary>
             <value>The name of the person being related to the contact.</value>
-            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.Relationship.Type">
             <summary>Gets or sets the relationship type.</summary>
             <value>The relationship type.</value>
-            <remarks />
         </member>
         <member name="T:Xamarin.Contacts.RelationshipType">
             <summary>Represents the type of a relationship.</summary>
@@ -617,16 +597,13 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
         </member>
         <member name="T:Xamarin.Contacts.Website">
             <summary>Represents a website belonging to a <see cref="T:Xamarin.Contacts.Contact" />.</summary>
-            <remarks />
         </member>
         <member name="C:Xamarin.Contacts.Website">
             <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.Website" /> class.</summary>
-            <remarks />
         </member>
         <member name="P:Xamarin.Contacts.Website.Address">
             <summary>Gets or sets the website's address.</summary>
             <value>The website address.</value>
-            <remarks />
         </member>
         <member name="T:Xamarin.Geolocation.GeolocationError">
             <summary>Specifies what type of error occured.</summary>
@@ -639,26 +616,22 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
         </member>
         <member name="T:Xamarin.Geolocation.GeolocationException">
             <summary>Represents a geolocation error.</summary>
-            <remarks />
         </member>
         <member name="C:Xamarin.Geolocation.GeolocationException(Xamarin.Geolocation.GeolocationError)">
             <param name="error">The type of error that occured.</param>
             <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Geolocation.GeolocationException" /> class.</summary>
-            <remarks />
         </member>
         <member name="P:Xamarin.Geolocation.GeolocationException.Error">
             <summary>Gets the type of error that occured.</summary>
             <value>The type of error that occred.</value>
-            <remarks />
         </member>
         <member name="T:Xamarin.Geolocation.Geolocator">
             <summary>A class providing the ability to get or listen to the device's current geo-location.</summary>
-            <remarks>To be added.</remarks>
         </member>
         <member name="C:Xamarin.Geolocation.Geolocator">
             <param name="context">The context from which to get the location service.</param>
             <summary>Creates and initializes a new instance of the <see cref="T:Xamarin.Geolocation.Geolocator" /> class (iOS only).</summary>
-            <remarks>iOS only.</remarks>
+            <remarks>iOS and Windows Phone only.</remarks>
         </member>
         <member name="C:Xamarin.Geolocation.Geolocator(Android.Content.Context)">
             <param name="context">The context from which to get the location service.</param>
@@ -690,8 +663,9 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
                 <para>
 				If the underlying platform needs to request location access permissions, it will be performed automatically.
 				If all location services are disabled or a fatal error occurs, the future will contain <see cref="T:Xamarin.Geolocation.GeolocationException" />
-				with <see cref="P:Xamarin.Geolocation.GeolocationException.Error" /> of GeolocationError.PositionUnavailable. If the user has denied location
-				access to the app (iOS), or the app didn't specify location acccess in its manifest (Android), the error will be GelocationError.Unauthorized.
+				with <see cref="P:Xamarin.Geolocation.GeolocationException.Error" /> of <see cref="F:Xamarin.Geolocation.GeolocationError.PositionUnavailable." />
+			    If the user has denied location access to the app (iOS), or the app didn't specify location acccess in its manifest (Android), the error will be
+				<see cref="F:Xamarin.Geolocation.GelocationError.Unauthorized" />.
 		  </para>
             </remarks>
         </member>
@@ -705,10 +679,11 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
 				greater than or equal to <see cref="P:Xamarin.Geolocation.Geolocator.DesiredAccuracy" />.
 		  </para>
                 <para>
-				If the underlying platform needs to request location access permissions, it will be performed automatically.
-				If all location services are disabled or a fatal error occurs, the future will contain <see cref="T:Xamarin.Geolocation.GeolocationException" />
-				with <see cref="P:Xamarin.Geolocation.GeolocationException.Error" /> of GeolocationError.PositionUnavailable. If the user has denied location
-				access to the app (iOS), or the app didn't specify location acccess in its manifest (Android), the error will be GelocationError.Unauthorized.
+			  If the underlying platform needs to request location access permissions, it will be performed automatically.
+			  If all location services are disabled or a fatal error occurs, the future will contain <see cref="T:Xamarin.Geolocation.GeolocationException" />
+			  with <see cref="P:Xamarin.Geolocation.GeolocationException.Error" /> of <see cref="F:Xamarin.Geolocation.GeolocationError.PositionUnavailable." />
+			  If the user has denied location access to the app (iOS), or the app didn't specify location acccess in its manifest (Android), the error will be
+			  <see cref="F:Xamarin.Geolocation.GelocationError.Unauthorized" />.
 		  </para>
             </remarks>
         </member>
@@ -827,7 +802,6 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
         </member>
         <member name="M:Xamarin.Geolocation.Geolocator.StopListening">
             <summary>Stops listening to position changes.</summary>
-            <remarks>To be added.</remarks>
             <altmember cref="M:Xamarin.Geolocation.Geolocator.StartListening(System.Int32,System.Double)" />
         </member>
         <member name="P:Xamarin.Geolocation.Geolocator.SupportsHeading">
@@ -835,11 +809,9 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
             <value>
                 <c>true</c> if supports heading; otherwise, <c>false</c>.
         </value>
-            <remarks>To be added.</remarks>
         </member>
         <member name="T:Xamarin.Geolocation.Position">
             <summary>Represents an obtained location at a specific time.</summary>
-            <remarks />
         </member>
         <member name="C:Xamarin.Geolocation.Position">
             <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Geolocation.Position" /> class.</summary>
@@ -856,7 +828,6 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
         <member name="P:Xamarin.Geolocation.Position.Altitude">
             <summary>Gets or sets the altitude in meters relative to sea level.</summary>
             <value>The altitude in meters, relative to seal level.</value>
-            <remarks />
         </member>
         <member name="P:Xamarin.Geolocation.Position.AltitudeAccuracy">
             <summary>Gets or sets the potential altitude error range in meters.</summary>
@@ -902,16 +873,13 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
         <member name="C:Xamarin.Geolocation.PositionEventArgs(Xamarin.Geolocation.Position)">
             <param name="position">A <see cref="T:Xamarin.Geolocation.Position" /></param>
             <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Geolocation.PositionEventArgs" /> class by specifying the <see cref="T:Xamarin.Geolocation.Position" />.</summary>
-            <remarks />
         </member>
         <member name="P:Xamarin.Geolocation.PositionEventArgs.Position">
             <summary>Gets the <see cref="T:Xamarin.Geolocation.Position" /> for the event.</summary>
             <value>The position for the event.</value>
-            <remarks />
         </member>
         <member name="T:Xamarin.Media.CameraDevice">
             <summary>Represents the various types of cameras available.</summary>
-            <remarks />
         </member>
         <member name="F:Xamarin.Media.CameraDevice.Front">
             <summary>The front facing camera.</summary>
@@ -920,18 +888,48 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
             <summary>The rear facing camera.</summary>
         </member>
         <member name="T:Xamarin.Media.MediaFile">
-            <summary>To be added.</summary>
-            <remarks>To be added.</remarks>
+            <summary>Represents a media file newly taken or picked from the gallery.</summary>
+            <remarks>
+                <para>
+			It's important to <see cref="M:Xamarin.Media.MediaFile.Dispose" /> this <see cref="T:Xamarin.Media.MediaFile" /> when
+			you're done with it to release any memory and temporary file resources being used for it.
+		</para>
+                <para>
+			On Windows Phone, file paths returned from the photo picker can not be easily reused. As such, they are
+			copied locally under a "temp" directory in isolated storage for use with <see cref="T:Xamarin.Media.MediaFile" />.
+			Call <see cref="M:Xamarin.Media.MediaFile.Dispose" /> to remove this file, but keep in mind that if your app crashes before
+			you have a chance to dispose, this file will not be automatically reclaimed.
+		</para>
+            </remarks>
+            <altmember cref="T:Xamarin.Media.MediaPicker" />
+            <altmember cref="M:Xamarin.Contacts.Contact.SaveThumbnail" />
         </member>
         <member name="M:Xamarin.Media.MediaFile.GetStream">
-            <summary>To be added.</summary>
-            <returns>To be added.</returns>
-            <remarks>To be added.</remarks>
+            <summary>Gets a stream to the media file.</summary>
+            <returns>A <see cref="T:System.IO.Stream" /> for reading the file.</returns>
+            <remarks>
+                <para>
+				Disposing the returned stream is separate from disposing the containing <see cref="T:Xamarin.Media.MediaFile" />,
+				ensure that you dispose both.
+			</para>
+                <para>
+				Where possible, this method will return a stream from memory instead of reading from storage.
+			</para>
+            </remarks>
         </member>
         <member name="P:Xamarin.Media.MediaFile.Path">
-            <summary>To be added.</summary>
-            <value>To be added.</value>
-            <remarks>To be added.</remarks>
+            <summary>Gets the path to the file.</summary>
+            <value>The path to the file.</value>
+            <remarks>
+                <para>
+				On iOS and Android, this is the full path to the file. On Windows Phone, it's a relative path
+				under isolated storage.
+			</para>
+            </remarks>
+            <altmember cref="M:Xamarin.Media.MediaFile.GetStream" />
+        </member>
+        <member name="M:Xamarin.Media.MediaFile.Dispose">
+            <summary>Releases all resources used by the <see cref="T:Xamarin.Media.MediaFile" />.</summary>
         </member>
         <member name="T:Xamarin.Media.MediaPicker">
             <summary>Contains methods allowing the asynchronous picking and taking of media.</summary>
@@ -997,7 +995,7 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
             <altmember cref="M:Xamarin.Media.MediaPicker.PickPhotoAsync" />
         </member>
         <member name="M:Xamarin.Media.MediaPicker.PickPhotoAsync">
-            <summary>Begins an asynchronous operation to pick a photo from the device's gallery.</summary>
+            <summary>Begins an asynchronous operation to pick a photo from the device's gallery by launching the system UI for this.</summary>
             <returns>A <see cref="T:System.Threading.Tasks.Task{T}" /> of <see cref="T:Xamarin.Media.MediaFile" />.</returns>
             <remarks>
                 <para>
@@ -1012,6 +1010,16 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
 				be <c>true</c> and <see cref="P:System.Threading.Tasks.Task.Exception" /> will contain the errors. It's important to check
 				for any exceptions as otherwise the exception will be rethrown when the task's finalizer runs.
 			</para>
+                <para>
+				It's important to <see cref="M:Xamarin.Media.MediaFile.Dispose" /> the returned <see cref="T:Xamarin.Media.MediaFile" /> when
+				you're done with it to release any memory and temporary file resources being used for it.
+			</para>
+                <para>
+				On Windows Phone, file paths returned from the photo picker can not be easily reused. As such, they are
+				copied locally under a "temp" directory in isolated storage for use with <see cref="T:Xamarin.Media.MediaFile" />.
+				Call <see cref="M:Xamarin.Media.MediaFile.Dispose" /> to remove this file, but keep in mind that if your app crashes before
+				you have a chance to dispose, this file will not be automatically reclaimed.
+			</para>
             </remarks>
             <exception cref="T:System.NotSupportedException">
                 <see cref="P:Xamarin.Media.MediaPicker.PhotosAvailable" /> is <c>false</c>.
@@ -1020,7 +1028,7 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
 			  Another async operation is pending on this <see cref="T:Xamarin.Media.MediaPicker" /></exception>
         </member>
         <member name="M:Xamarin.Media.MediaPicker.PickVideoAsync">
-            <summary>Begins an asynchronous operation to pick a video from the device's gallery.</summary>
+            <summary>Begins an asynchronous operation to pick a video from the device's gallery by launching the system UI for this.</summary>
             <returns>
 				A <see cref="T:System.Threading.Tasks.Task{T}" /> of <see cref="T:Xamarin.Media.MediaFile" />.
 			</returns>
@@ -1037,6 +1045,10 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
 					be <c>true</c> and <see cref="P:System.Threading.Tasks.Task.Exception" /> will contain the errors. It's important to check
 					for any exceptions as otherwise the exception will be rethrown when the task's finalizer runs.
 				</para>
+                <para>
+					It's important to <see cref="M:Xamarin.Media.MediaFile.Dispose" /> the returned <see cref="T:Xamarin.Media.MediaFile" /> when
+					you're done with it to release any memory and temporary file resources being used for it.
+				</para>
             </remarks>
             <exception cref="T:System.NotSupportedException">
                 <see cref="P:Xamarin.Media.MediaPicker.PhotosAvailable" /> is <c>false</c>.
@@ -1045,7 +1057,7 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
 				Another async operation is pending on this <see cref="T:Xamarin.Media.MediaPicker" /></exception>
         </member>
         <member name="M:Xamarin.Media.MediaPicker.TakePhotoAsync(Xamarin.Media.StoreCameraMediaOptions)">
-            <summary>Begins an asynchronous operation to take a new photo and store it in a file.</summary>
+            <summary>Begins an asynchronous operation to take a new photo and store it in a file by launching the system UI for this.</summary>
             <returns>
 				A <see cref="T:System.Threading.Tasks.Task{T}" /> of <see cref="T:Xamarin.Media.MediaFile" />.
 			</returns>
@@ -1061,6 +1073,10 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
 					as <c>true</c>. If an error occured during the operation, <see cref="P:System.Threading.Tasks.Task.IsFaulted" /> will
 					be <c>true</c> and <see cref="P:System.Threading.Tasks.Task.Exception" /> will contain the errors. It's important to check
 					for any exceptions as otherwise the exception will be rethrown when the task's finalizer runs.
+				</para>
+                <para>
+					It's important to <see cref="M:Xamarin.Media.MediaFile.Dispose" /> the returned <see cref="T:Xamarin.Media.MediaFile" /> when
+					you're done with it to release any memory and temporary file resources being used for it.
 				</para>
             </remarks>
             <exception cref="T:System.ArgumentNullException">
@@ -1078,7 +1094,7 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
             <altmember cref="T:Xamarin.Media.StoreCameraMediaOptions" />
         </member>
         <member name="M:Xamarin.Media.MediaPicker.TakeVideoAsync(Xamarin.Media.StoreVideoOptions)">
-            <summary>Begins an asynchronous operation to record a new video and store it to a file.</summary>
+            <summary>Begins an asynchronous operation to record a new video and store it to a file by launching the system UI for this.</summary>
             <returns>
 				A <see cref="T:System.Threading.Tasks.Task{T}" /> of <see cref="T:Xamarin.Media.MediaFile" />.
 			</returns>
@@ -1094,6 +1110,10 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
 					as <c>true</c>. If an error occured during the operation, <see cref="P:System.Threading.Tasks.Task.IsFaulted" /> will
 					be <c>true</c> and <see cref="P:System.Threading.Tasks.Task.Exception" /> will contain the errors. It's important to check
 					for any exceptions as otherwise the exception will be rethrown when the task's finalizer runs.
+				</para>
+                <para>
+					It's important to <see cref="M:Xamarin.Media.MediaFile.Dispose" /> the returned <see cref="T:Xamarin.Media.MediaFile" /> when
+					you're done with it to release any memory and temporary file resources being used for it.
 				</para>
             </remarks>
             <exception cref="T:System.ArgumentNullException">
@@ -1121,7 +1141,7 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
 					if it is <c>false</c>.
 				</para>
                 <para>
-					This currently always <c>false</c> on Windows Phone.
+					This currently always returns <c>false</c> on Windows Phone.
 				</para>
             </remarks>
             <altmember cref="M:Xamarin.Media.MediaPicker.TakeVideoAsync" />
