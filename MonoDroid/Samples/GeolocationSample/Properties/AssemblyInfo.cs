@@ -8,9 +8,9 @@ using Android.App;
 [assembly: AssemblyTitle("GeolocationSample")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Xamarin Inc")]
+[assembly: AssemblyCompany("Xamarin Inc.")]
 [assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("Copyright 2011, Xamarin Inc")]
+[assembly: AssemblyCopyright("Copyright © 2011-2012 Xamarin Inc.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

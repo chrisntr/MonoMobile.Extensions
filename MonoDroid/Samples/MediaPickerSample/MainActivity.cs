@@ -21,7 +21,7 @@ namespace MediaPickerSample
 			
 			
 			//
-			// wire up the take a video button
+			// Wire up the take a video button
 			//
 			Button videoButton = FindViewById<Button> (Resource.Id.takeVideoButton);
 			videoButton.Click += delegate
@@ -37,7 +37,7 @@ namespace MediaPickerSample
 				//
 				// TakeVideoAsync is an async API that takes a 
 				// StoreVideoOptions object with various 
-				// properies, such as the name and folder to
+				// properties, such as the name and folder to
 				// store the resulting video. You can
 				// also limit the length of the video
 				//
@@ -49,15 +49,18 @@ namespace MediaPickerSample
 				})
 				.ContinueWith (t =>
 				{
+					if (t.IsCanceled)
+						return;
+
 					//
 					// Because TakeVideoAsync returns a Task
-					// We can use ContinueWith to run more code
+					// we can use ContinueWith to run more code
 					// after the user finishes recording the video
 					//
 					RunOnUiThread (() =>
 					{
 						//
-						// toggle the visibility of the image and videoviews
+						// Toggle the visibility of the image and videoviews
 						//
 						image.Visibility = Android.Views.ViewStates.Gone;	
 						videoView.Visibility = Android.Views.ViewStates.Visible;
@@ -81,7 +84,7 @@ namespace MediaPickerSample
 			};
 			
 			//
-			// wire up the take a photo button
+			// Wire up the take a photo button
 			//
 			Button photoButton = FindViewById<Button> (Resource.Id.takePhotoButton);
 			photoButton.Click += delegate
@@ -94,25 +97,31 @@ namespace MediaPickerSample
 				})
 				.ContinueWith (t =>
 				{
+					if (t.IsCanceled)
+						return;
+
 					Bitmap b = BitmapFactory.DecodeFile (t.Result.Path);
 					RunOnUiThread (() =>
 					{
 						//
-						// toggle the visibility of the image and videoviews
+						// Toggle the visibility of the image and video views
 						//
 						videoView.Visibility = Android.Views.ViewStates.Gone;
 						image.Visibility = Android.Views.ViewStates.Visible;
 							
 						//
-						// display the bitmap
+						// Display the bitmap
 						//
 						image.SetImageBitmap (b);
+
+						// Cleanup any resources held by the MediaFile instance
+						t.Result.Dispose();
 					});
 				});
 			};
 			
 			//
-			// wire up the pick a video button
+			// Wire up the pick a video button
 			//
 			Button pickVideoButton = FindViewById<Button> (Resource.Id.pickVideoButton);
 			pickVideoButton.Click += delegate
@@ -132,15 +141,18 @@ namespace MediaPickerSample
 				picker.PickVideoAsync ()
 				.ContinueWith (t =>
 				{
+					if (t.IsCanceled)
+						return;
+
 					//
 					// Because PickVideoAsync returns a Task
-					// We can use ContinueWith to run more code
+					// we can use ContinueWith to run more code
 					// after the user finishes recording the video
 					//
 					RunOnUiThread (() =>
 					{
 						//
-						// toggle the visibility of the image and videoviews
+						// Toggle the visibility of the image and video views
 						//
 						image.Visibility = Android.Views.ViewStates.Gone;	
 						videoView.Visibility = Android.Views.ViewStates.Visible;
@@ -151,7 +163,7 @@ namespace MediaPickerSample
 						videoView.SetVideoPath(t.Result.Path);
 	        
 						//
-						// optional: Handle when the video finishes playing
+						// Optional: Handle when the video finishes playing
 						//
 	        			//videoView.setOnCompletionListener(this);
 	        
@@ -159,12 +171,15 @@ namespace MediaPickerSample
 						// Start playing the video
 						//	
 	        			videoView.Start();
+
+						// Cleanup any resources held by the MediaFile instance
+						t.Result.Dispose();
 					});
 				});
 			};
 			
 			//
-			// wire up the pick a photo button
+			// Wire up the pick a photo button
 			//
 			Button pickPhotoButton = FindViewById<Button> (Resource.Id.pickPhotoButton);
 			pickPhotoButton.Click += delegate
@@ -173,19 +188,25 @@ namespace MediaPickerSample
 				picker.PickPhotoAsync ()
 				.ContinueWith (t =>
 				{
+					if (t.IsCanceled)
+						return;
+
 					Bitmap b = BitmapFactory.DecodeFile (t.Result.Path);
 					RunOnUiThread (() =>
 					{
 						//
-						// toggle the visibility of the image and videoviews
+						// Toggle the visibility of the image and video views
 						//
 						videoView.Visibility = Android.Views.ViewStates.Gone;
 						image.Visibility = Android.Views.ViewStates.Visible;
 							
 						//
-						// display the bitmap
+						// Display the bitmap
 						//
 						image.SetImageBitmap (b);
+
+						// Cleanup any resources held by the MediaFile instance
+						t.Result.Dispose();
 					});
 				});
 			};

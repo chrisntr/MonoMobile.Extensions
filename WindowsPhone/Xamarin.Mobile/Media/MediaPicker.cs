@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.IO.IsolatedStorage;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Devices;
@@ -45,10 +47,9 @@ namespace Xamarin.Media
 			return ntcs.Task;
 		}
 
-		public Task<MediaFile> TakePhotoAsync (StoreMediaOptions options)
+		public Task<MediaFile> TakePhotoAsync (StoreCameraMediaOptions options)
 		{
-			if (options == null)
-				throw new ArgumentNullException ("options");
+			options.VerifyOptions();
 
 			var ntcs = new TaskCompletionSource<MediaFile> (options);
 			if (Interlocked.CompareExchange (ref this.completionSource, ntcs, null) != null)
@@ -77,30 +78,55 @@ namespace Xamarin.Media
 		{
 			var tcs = Interlocked.Exchange (ref this.completionSource, null);
 
-			var options = tcs.Task.AsyncState as StoreMediaOptions;
-			if (options != null)
+			string path = photoResult.OriginalFileName;
+
+			long pos = photoResult.ChosenPhoto.Position;
+			var options = tcs.Task.AsyncState as StoreCameraMediaOptions;
+			using (var store = IsolatedStorageFile.GetUserStoreForApplication())
 			{
-				switch (options.Location)
+				path = options.GetUniqueFilepath ((options == null) ? "temp" : null, p => store.FileExists (p));
+
+				string dir = Path.GetDirectoryName (path);
+				if (!String.IsNullOrWhiteSpace (dir))
+					store.CreateDirectory (dir);
+
+				using (var fs = store.CreateFile (path))
 				{
-					case MediaFileStoreLocation.CameraRoll:
-					case MediaFileStoreLocation.Local:
-						throw new NotImplementedException();
+					byte[] buffer = new byte[20480];
+					int len;
+					while ((len = photoResult.ChosenPhoto.Read (buffer, 0, buffer.Length)) > 0)
+						fs.Write (buffer, 0, len);
+
+					fs.Flush (flushToDisk: true);
 				}
+			}
+
+			Action<bool> dispose = null;
+			if (options == null)
+			{
+			    dispose = d =>
+			    {
+			        using (var store = IsolatedStorageFile.GetUserStoreForApplication())
+			            store.DeleteFile (path);
+			    };
 			}
 
 			switch (photoResult.TaskResult)
 			{
 				case TaskResult.OK:
-					tcs.SetResult (new MediaFile (() => photoResult.ChosenPhoto, null));
+					photoResult.ChosenPhoto.Position = pos;
+					tcs.SetResult (new MediaFile (path, () => photoResult.ChosenPhoto, dispose));
 					break;
 
 				case TaskResult.None:
+					photoResult.ChosenPhoto.Dispose();
 					if (photoResult.Error != null)
 						tcs.SetException (photoResult.Error);
 
 					break;
 
 				case TaskResult.Cancel:
+					photoResult.ChosenPhoto.Dispose();
 					tcs.SetCanceled();
 					break;
 			}

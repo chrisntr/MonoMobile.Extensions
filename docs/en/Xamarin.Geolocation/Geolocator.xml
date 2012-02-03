@@ -11,7 +11,6 @@
   <Interfaces />
   <Docs>
     <summary>A class providing the ability to get or listen to the device's current geo-location.</summary>
-    <remarks>To be added.</remarks>
   </Docs>
   <Members>
 	<Member MemberName=".ctor">
@@ -25,7 +24,7 @@
       <Docs>
         <param name="context">The context from which to get the location service.</param>
         <summary>Creates and initializes a new instance of the <see cref="T:Xamarin.Geolocation.Geolocator" /> class (iOS only).</summary>
-        <remarks>iOS only.</remarks>
+        <remarks>iOS and Windows Phone only.</remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -93,8 +92,9 @@
           <para>
 				If the underlying platform needs to request location access permissions, it will be performed automatically.
 				If all location services are disabled or a fatal error occurs, the future will contain <see cref="T:Xamarin.Geolocation.GeolocationException" />
-				with <see cref="P:Xamarin.Geolocation.GeolocationException.Error" /> of GeolocationError.PositionUnavailable. If the user has denied location
-				access to the app (iOS), or the app didn't specify location acccess in its manifest (Android), the error will be GelocationError.Unauthorized.
+				with <see cref="P:Xamarin.Geolocation.GeolocationException.Error" /> of <see cref="F:Xamarin.Geolocation.GeolocationError.PositionUnavailable." />
+			    If the user has denied location access to the app (iOS), or the app didn't specify location acccess in its manifest (Android), the error will be
+				<see cref="F:Xamarin.Geolocation.GelocationError.Unauthorized" />.
 		  </para>
         </remarks>
       </Docs>
@@ -122,10 +122,11 @@
 				greater than or equal to <see cref="P:Xamarin.Geolocation.Geolocator.DesiredAccuracy" />.
 		  </para>
           <para>
-				If the underlying platform needs to request location access permissions, it will be performed automatically.
-				If all location services are disabled or a fatal error occurs, the future will contain <see cref="T:Xamarin.Geolocation.GeolocationException" />
-				with <see cref="P:Xamarin.Geolocation.GeolocationException.Error" /> of GeolocationError.PositionUnavailable. If the user has denied location
-				access to the app (iOS), or the app didn't specify location acccess in its manifest (Android), the error will be GelocationError.Unauthorized.
+			  If the underlying platform needs to request location access permissions, it will be performed automatically.
+			  If all location services are disabled or a fatal error occurs, the future will contain <see cref="T:Xamarin.Geolocation.GeolocationException" />
+			  with <see cref="P:Xamarin.Geolocation.GeolocationException.Error" /> of <see cref="F:Xamarin.Geolocation.GeolocationError.PositionUnavailable." />
+			  If the user has denied location access to the app (iOS), or the app didn't specify location acccess in its manifest (Android), the error will be
+			  <see cref="F:Xamarin.Geolocation.GelocationError.Unauthorized" />.
 		  </para>
         </remarks>
       </Docs>
@@ -341,7 +342,6 @@
       <Parameters />
       <Docs>
         <summary>Stops listening to position changes.</summary>
-        <remarks>To be added.</remarks>
         <altmember cref="M:Xamarin.Geolocation.Geolocator.StartListening(System.Int32,System.Double)" />
       </Docs>
     </Member>
@@ -360,7 +360,6 @@
         <value>
           <c>true</c> if supports heading; otherwise, <c>false</c>.
         </value>
-        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>

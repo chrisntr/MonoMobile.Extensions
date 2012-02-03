@@ -11,7 +11,6 @@
   <Interfaces />
   <Docs>
     <summary>Represents an individual or aggregate contact in the user's address book.</summary>
-    <remarks />
     <altmember cref="T:Xamarin.Contacts.Contact" />
   </Docs>
   <Members>
@@ -27,7 +26,6 @@
         <summary>
 			Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.Contact" /> class.
 		</summary>
-        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Addresses">
@@ -43,7 +41,6 @@
       <Docs>
         <summary>Gets or sets an enumeration of addresses belonging to this contact.</summary>
         <value>An enumeration of addresses, empty if there are no addresses.</value>
-        <remarks />
         <exception cref="T:System.ArgumentNullException">
         <paramref name="value" /> is <c>null</c>.</exception>
       </Docs>
@@ -86,7 +83,6 @@
       <Docs>
         <summary>Gets or sets an enumeration of email addresses belonging to this contact.</summary>
         <value>An enumeration of emails, empty if there are no emails.</value>
-        <remarks />
         <exception cref="T:System.ArgumentNullException">
         <paramref name="value" /> is <c>null</c>.</exception>
       </Docs>
@@ -104,7 +100,6 @@
       <Docs>
         <summary>Gets or sets the first (given) name of the contact.</summary>
         <value>The first or given name of the contact, or <c>null</c> if not set.</value>
-        <remarks />
       </Docs>
     </Member>
     <Member MemberName="GetThumbnail">
@@ -135,15 +130,22 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the identifier for this contact.</summary>
-        <value>The identifier for the contact, or <c>null</c> if not set.</value>
+        <summary>Gets the unique identifier for this contact.</summary>
+        <value>The identifier for the contact on iOS and Android, <c>null</c> on Windows Phone.</value>
         <remarks>
-          <para>
-			Use <see cref="P:Xamarin.Contacts.Contact.IsAggregate" /> to determine
-			whether this is an aggregate identifier or not.
-		  </para>
+			<para>
+				It is not recommended to use this for storing references to contacts in long-term storage such
+				as a file or database. Even for the platforms that support this property (iOS, Android), it is not
+				neccessarily gauranteed to be stable long-term. Instead, use uniquely identifiable contact information
+				such as a mobile phone number or personal email address.
+			</para>
+			<para>
+				Use <see cref="P:Xamarin.Contacts.Contact.IsAggregate" /> to determine
+				whether this is an aggregate identifier or not.
+			</para>
         </remarks>
         <altmember cref="P:Xamarin.Contacts.Contact.IsAggregate" />
+        <altmember cref="M:Xamarin.Contacts.AddressBook.Load" />
       </Docs>
     </Member>
     <Member MemberName="InstantMessagingAccounts">
@@ -159,7 +161,6 @@
       <Docs>
         <summary>Gets or sets an enumeration of instant messaging accounts belonging to this contact.</summary>
         <value>An enumeration of instant messaging accounts, empty if there are no accounts.</value>
-        <remarks />
         <exception cref="T:System.ArgumentNullException">
         <paramref name="value" /> is <c>null</c>.</exception>
       </Docs>
@@ -206,7 +207,6 @@
       <Docs>
         <summary>Gets or sets the last (family) name of the contact.</summary>
         <value>The last or family name of the contact, or <c>null</c> if not set.</value>
-        <remarks />
       </Docs>
     </Member>
     <Member MemberName="MiddleName">
@@ -222,7 +222,6 @@
       <Docs>
         <summary>Gets or sets the middle name of the contact.</summary>
         <value>The middle name of the contact, or <c>null</c> if not set.</value>
-        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Nickname">
@@ -238,7 +237,6 @@
       <Docs>
         <summary>Gets or sets the nickname of the contact.</summary>
         <value>The nickname of the contact, or <c>null</c> if not set.</value>
-        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Notes">
@@ -254,7 +252,6 @@
       <Docs>
         <summary>Gets or sets an enumeration of notes for the contact.</summary>
         <value>An enumeration of notes for the contact, empty if there are no notes.</value>
-        <remarks />
         <exception cref="T:System.ArgumentNullException">
           <paramref name="value" /> is <c>null</c>.</exception>
       </Docs>
@@ -272,7 +269,6 @@
       <Docs>
         <summary>Gets or sets an enumeration of organizations the contact is a part of.</summary>
         <value>An enumeration of organizations the contact is a part of, empty if none.</value>
-        <remarks />
         <exception cref="T:System.ArgumentNullException">
           <paramref name="value" /> is <c>null</c>.</exception>
       </Docs>
@@ -290,7 +286,6 @@
       <Docs>
         <summary>Gets or sets an enumeration of phones belonging to the contact.</summary>
         <value>An enumeration of phones belonging to the contact, empty if none.</value>
-        <remarks />
         <exception cref="T:System.ArgumentNullException">
           <paramref name="value" /> is <c>null</c>.</exception>
       </Docs>
@@ -326,7 +321,6 @@
       <Docs>
         <summary>Gets or sets the relationships belonging to the contact.</summary>
         <value>An enumeration of relationships belonging to the contact, empty if none.</value>
-        <remarks />
 		<exception cref="T:System.ArgumentNullException">
 			<paramref name="value" /> is <c>null</c>.
 		</exception>
@@ -351,7 +345,6 @@
         <returns>
 			A <see cref="T:System.Threading.Tasks.Task{T}" /> of <see cref="T:Xamarin.Media.MediaFile" />.
 		</returns>
-        <remarks />
 		<exception cref="T:System.ArgumentNullException">
 		   <paramref name="path" /> is <c>null</c>.
 		</exception>
@@ -388,7 +381,6 @@
       <Docs>
         <summary>Gets or sets an enumeration of websites for the contact.</summary>
         <value>An enumeration of websites belonging to the contact, empty if none.</value>
-        <remarks />
         <exception cref="T:System.ArgumentNullException">
           <paramref name="value" /> is <c>null</c>.</exception>
       </Docs>

@@ -125,7 +125,7 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Begins an asynchronous operation to pick a photo from the device's gallery.</summary>
+        <summary>Begins an asynchronous operation to pick a photo from the device's gallery by launching the system UI for this.</summary>
         <returns>A <see cref="T:System.Threading.Tasks.Task{T}" /> of <see cref="T:Xamarin.Media.MediaFile" />.</returns>
         <remarks>
 			<para>
@@ -139,6 +139,16 @@
 				as <c>true</c>. If an error occured during the operation, <see cref="P:System.Threading.Tasks.Task.IsFaulted" /> will
 				be <c>true</c> and <see cref="P:System.Threading.Tasks.Task.Exception" /> will contain the errors. It's important to check
 				for any exceptions as otherwise the exception will be rethrown when the task's finalizer runs.
+			</para>
+			<para>
+				It's important to <see cref="M:Xamarin.Media.MediaFile.Dispose" /> the returned <see cref="T:Xamarin.Media.MediaFile" /> when
+				you're done with it to release any memory and temporary file resources being used for it.
+			</para>
+			<para>
+				On Windows Phone, file paths returned from the photo picker can not be easily reused. As such, they are
+				copied locally under a &quot;temp&quot; directory in isolated storage for use with <see cref="T:Xamarin.Media.MediaFile" />.
+				Call <see cref="M:Xamarin.Media.MediaFile.Dispose" /> to remove this file, but keep in mind that if your app crashes before
+				you have a chance to dispose, this file will not be automatically reclaimed.
 			</para>
 		</remarks>
 		  <exception cref="T:System.NotSupportedException">
@@ -161,7 +171,7 @@
       </ReturnValue>
       <Parameters />
 		<Docs>
-			<summary>Begins an asynchronous operation to pick a video from the device's gallery.</summary>
+			<summary>Begins an asynchronous operation to pick a video from the device's gallery by launching the system UI for this.</summary>
 			<returns>
 				A <see cref="T:System.Threading.Tasks.Task{T}" /> of <see cref="T:Xamarin.Media.MediaFile" />.
 			</returns>
@@ -177,6 +187,10 @@
 					as <c>true</c>. If an error occured during the operation, <see cref="P:System.Threading.Tasks.Task.IsFaulted" /> will
 					be <c>true</c> and <see cref="P:System.Threading.Tasks.Task.Exception" /> will contain the errors. It's important to check
 					for any exceptions as otherwise the exception will be rethrown when the task's finalizer runs.
+				</para>
+				<para>
+					It's important to <see cref="M:Xamarin.Media.MediaFile.Dispose" /> the returned <see cref="T:Xamarin.Media.MediaFile" /> when
+					you're done with it to release any memory and temporary file resources being used for it.
 				</para>
 			</remarks>
 			<exception cref="T:System.NotSupportedException">
@@ -201,7 +215,7 @@
         <Parameter Name="options" Type="Xamarin.Media.StoreCameraMediaOptions" />
       </Parameters>
 		<Docs>
-			<summary>Begins an asynchronous operation to take a new photo and store it in a file.</summary>
+			<summary>Begins an asynchronous operation to take a new photo and store it in a file by launching the system UI for this.</summary>
 			<returns>
 				A <see cref="T:System.Threading.Tasks.Task{T}" /> of <see cref="T:Xamarin.Media.MediaFile" />.
 			</returns>
@@ -217,6 +231,10 @@
 					as <c>true</c>. If an error occured during the operation, <see cref="P:System.Threading.Tasks.Task.IsFaulted" /> will
 					be <c>true</c> and <see cref="P:System.Threading.Tasks.Task.Exception" /> will contain the errors. It's important to check
 					for any exceptions as otherwise the exception will be rethrown when the task's finalizer runs.
+				</para>
+				<para>
+					It's important to <see cref="M:Xamarin.Media.MediaFile.Dispose" /> the returned <see cref="T:Xamarin.Media.MediaFile" /> when
+					you're done with it to release any memory and temporary file resources being used for it.
 				</para>
 			</remarks>
 			<exception cref="T:System.ArgumentNullException">
@@ -249,7 +267,7 @@
         <Parameter Name="options" Type="Xamarin.Media.StoreVideoOptions" />
       </Parameters>
 		<Docs>
-			<summary>Begins an asynchronous operation to record a new video and store it to a file.</summary>
+			<summary>Begins an asynchronous operation to record a new video and store it to a file by launching the system UI for this.</summary>
 			<returns>
 				A <see cref="T:System.Threading.Tasks.Task{T}" /> of <see cref="T:Xamarin.Media.MediaFile" />.
 			</returns>
@@ -265,6 +283,10 @@
 					as <c>true</c>. If an error occured during the operation, <see cref="P:System.Threading.Tasks.Task.IsFaulted" /> will
 					be <c>true</c> and <see cref="P:System.Threading.Tasks.Task.Exception" /> will contain the errors. It's important to check
 					for any exceptions as otherwise the exception will be rethrown when the task's finalizer runs.
+				</para>
+				<para>
+					It's important to <see cref="M:Xamarin.Media.MediaFile.Dispose" /> the returned <see cref="T:Xamarin.Media.MediaFile" /> when
+					you're done with it to release any memory and temporary file resources being used for it.
 				</para>
 			</remarks>
 			<exception cref="T:System.ArgumentNullException">
@@ -304,7 +326,7 @@
 					if it is <c>false</c>.
 				</para>
 				<para>
-					This currently always <c>false</c> on Windows Phone.
+					This currently always returns <c>false</c> on Windows Phone.
 				</para>
 			</remarks>
 			<altmember cref="M:Xamarin.Media.MediaPicker.TakeVideoAsync" />

@@ -1,6 +1,6 @@
 <Type Name="MediaFile" FullName="Xamarin.Media.MediaFile">
   <TypeSignature Language="C#" Value="public class MediaFile" />
-  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit MediaFile extends System.Object" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit MediaFile extends System.Object implements class System.IDisposable" />
   <AssemblyInfo>
     <AssemblyName>Xamarin.Mobile</AssemblyName>
     <AssemblyVersion>0.0.0.0</AssemblyVersion>
@@ -11,10 +11,47 @@
   <Interfaces />
   <Docs>
     <summary>Represents a media file newly taken or picked from the gallery.</summary>
-    <altmember cref="T:Xamarin.Media.MediaPicker" />
+    <remarks>
+		<para>
+			It's important to <see cref="M:Xamarin.Media.MediaFile.Dispose" /> this <see cref="T:Xamarin.Media.MediaFile" /> when
+			you're done with it to release any memory and temporary file resources being used for it.
+		</para>
+		<para>
+			On Windows Phone, file paths returned from the photo picker can not be easily reused. As such, they are
+			copied locally under a &quot;temp&quot; directory in isolated storage for use with <see cref="T:Xamarin.Media.MediaFile" />.
+			Call <see cref="M:Xamarin.Media.MediaFile.Dispose" /> to remove this file, but keep in mind that if your app crashes before
+			you have a chance to dispose, this file will not be automatically reclaimed.
+		</para>
+	</remarks>
+	<altmember cref="T:Xamarin.Media.MediaPicker" />
 	<altmember cref="M:Xamarin.Contacts.Contact.SaveThumbnail" />
   </Docs>
   <Members>
+    <Member MemberName="GetStream">
+      <MemberSignature Language="C#" Value="public System.IO.Stream GetStream ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.IO.Stream GetStream() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.IO.Stream</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Gets a stream to the media file.</summary>
+        <returns>A <see cref="T:System.IO.Stream" /> for reading the file.</returns>
+        <remarks>
+			<para>
+				Disposing the returned stream is separate from disposing the containing <see cref="T:Xamarin.Media.MediaFile" />,
+				ensure that you dispose both.
+			</para>
+			<para>
+				Where possible, this method will return a stream from memory instead of reading from storage.
+			</para>
+		</remarks>
+      </Docs>
+    </Member>
     <Member MemberName="Path">
       <MemberSignature Language="C#" Value="public string Path { get; }" />
       <MemberSignature Language="ILAsm" Value=".property instance string Path" />
@@ -26,9 +63,31 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the full path to the file.</summary>
-        <value>The full path to the file..</value>
+		<summary>Gets the path to the file.</summary>
+		<value>The path to the file.</value>
+        <remarks>
+			<para>
+				On iOS and Android, this is the full path to the file. On Windows Phone, it's a relative path
+				under isolated storage.
+			</para>
+		</remarks>
+		<altmember cref="M:Xamarin.Media.MediaFile.GetStream" />
       </Docs>
     </Member>
+	<Member MemberName="Dispose">
+		<MemberSignature Language="C#" Value="public void Dispose ();" />
+		<MemberSignature Language="ILAsm" Value=".method public hidebysig instance class void GetStream() cil managed" />
+		<MemberType>Method</MemberType>
+		<AssemblyInfo>
+			<AssemblyVersion>0.0.0.0</AssemblyVersion>
+		</AssemblyInfo>
+		<ReturnValue>
+			<ReturnType>System.Void</ReturnType>
+		</ReturnValue>
+		<Parameters />
+		<Docs>
+			<summary>Releases all resources used by the <see cref="T:Xamarin.Media.MediaFile" />.</summary>
+		</Docs>
+	</Member>
   </Members>
 </Type>

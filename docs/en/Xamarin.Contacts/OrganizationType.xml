@@ -10,7 +10,6 @@
   </Base>
   <Docs>
     <summary>Specifies the relationship between a <see cref="T:Xamarin.Contacts.Contact" /> and an <see cref="T:Xamarin.Contacts.Organization" />.</summary>
-    <remarks />
   </Docs>
   <Members>
     <Member MemberName="Other">

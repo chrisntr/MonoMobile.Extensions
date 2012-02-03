@@ -36,6 +36,11 @@ namespace Xamarin.Contacts
 			set;
 		}
 
+		public bool LoadSupported
+		{
+			get { return true; }
+		}
+
 		public IEnumerator<Contact> GetEnumerator()
 		{
 			return this.addressBook.GetPeople().Select (ContactHelper.GetContact).GetEnumerator();

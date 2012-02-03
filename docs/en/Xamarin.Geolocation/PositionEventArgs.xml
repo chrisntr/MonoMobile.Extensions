@@ -26,7 +26,6 @@
       <Docs>
         <param name="position">A <see cref="T:Xamarin.Geolocation.Position" /></param>
         <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Geolocation.PositionEventArgs" /> class by specifying the <see cref="T:Xamarin.Geolocation.Position" />.</summary>
-        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Position">
@@ -42,7 +41,6 @@
       <Docs>
         <summary>Gets the <see cref="T:Xamarin.Geolocation.Position" /> for the event.</summary>
         <value>The position for the event.</value>
-        <remarks />
       </Docs>
     </Member>
   </Members>

@@ -10,7 +10,6 @@
   </Base>
   <Docs>
     <summary>Represents the various types of cameras available.</summary>
-    <remarks />
   </Docs>
   <Members>
     <Member MemberName="Front">
