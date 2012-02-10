@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace Xamarin.Contacts
 {
 	public class AddressBook
-		: IEnumerable<Contact> //IQueryable<Contact>
+		: IQueryable<Contact>
 	{
 		public AddressBook()
 		{
@@ -70,19 +70,19 @@ namespace Xamarin.Contacts
 			return GetEnumerator();
 		}
 		
-		//Type IQueryable.ElementType
-		//{
-		//    get { return typeof(Contact); }
-		//}
+		Type IQueryable.ElementType
+		{
+		    get { return typeof(Contact); }
+		}
 		
-		//Expression IQueryable.Expression
-		//{
-		//    get { return Expression.Constant (this); }
-		//}
+		Expression IQueryable.Expression
+		{
+		    get { return Expression.Constant (this); }
+		}
 		
-		//IQueryProvider IQueryable.Provider
-		//{
-		//    get { return this.provider; }
-		//}
+		IQueryProvider IQueryable.Provider
+		{
+		    get { return this.provider; }
+		}
 	}
 }
