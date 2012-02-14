@@ -27,6 +27,7 @@ Fixes:
  - Fixed an issue where iterating the AddressBook without a query
    would always return aggregate contacts, regardless of PreferContactAggregation
  - Fixed an AddressBook crash with the latest version of MonoTouch
+ - Fixed an occassional exception from Geolocator.GetLocation timeouts
 
 Release 2
 

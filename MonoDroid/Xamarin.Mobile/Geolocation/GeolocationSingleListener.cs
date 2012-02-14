@@ -90,8 +90,7 @@ namespace Xamarin.Geolocation
 			{
 				if (this.bestLocation == null)
 				{
-					this.completionSource.SetCanceled();
-					if (this.callback == null)
+					if (this.completionSource.TrySetCanceled() && this.callback != null)
 						this.callback();
 				}
 				else
