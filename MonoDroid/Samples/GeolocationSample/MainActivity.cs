@@ -1,18 +1,14 @@
 using System;
 using Android.App;
-using Android.Content;
-using Android.Runtime;
-using Android.Views;
 using Android.Widget;
 using Android.OS;
 using System.Threading;
 using Xamarin.Geolocation;
-using System.Threading.Tasks;
 
 namespace GeolocationSample
 {
 	[Activity (Label = "GeolocationSample", MainLauncher = true)]
-	public class Activity1 : Activity
+	public class MainActivity : Activity
 	{
 		private Button toggleListenButton, cancelPositionButton;
 		
