@@ -16,8 +16,8 @@ namespace GeolocationSample
 	{
 		private Button toggleListenButton, cancelPositionButton;
 		
-		private TextView	positionStatus, positionLatitude, positionLongitude,
-							listenStatus, listenLatitude, listenLongitude;
+		private TextView	positionStatus, positionLatitude, positionLongitude, positionAccuracy,
+							listenStatus, listenLatitude, listenLongitude, listenAccuracy;
 		
 		protected override void OnCreate (Bundle bundle)
 		{
@@ -36,10 +36,12 @@ namespace GeolocationSample
 			this.toggleListenButton.Click += OnToggleListening;
 			
 			this.positionStatus = FindViewById<TextView> (Resource.Id.status);
+			this.positionAccuracy = FindViewById<TextView> (Resource.Id.pAccuracy);
 			this.positionLatitude = FindViewById<TextView> (Resource.Id.pLatitude);
 			this.positionLongitude = FindViewById<TextView> (Resource.Id.pLongitude);
 			
 			this.listenStatus = FindViewById<TextView> (Resource.Id.listenStatus);
+			this.listenAccuracy = FindViewById<TextView> (Resource.Id.lAccuracy);
 			this.listenLatitude = FindViewById<TextView> (Resource.Id.lLatitude);
 			this.listenLongitude = FindViewById<TextView> (Resource.Id.lLongitude);
 		}
@@ -64,6 +66,7 @@ namespace GeolocationSample
 			this.cancelSource = new CancellationTokenSource();
 			
 			this.positionStatus.Text = String.Empty;
+			this.positionAccuracy.Text = String.Empty;
 			this.positionLatitude.Text = String.Empty;
 			this.positionLongitude.Text = String.Empty;
 			
@@ -77,6 +80,7 @@ namespace GeolocationSample
 					else
 					{
 						this.positionStatus.Text = t.Result.Timestamp.ToString("G");
+						this.positionAccuracy.Text = t.Result.Accuracy + "m";
 						this.positionLatitude.Text = "La: " + t.Result.Latitude.ToString("N4");
 						this.positionLongitude.Text = "Lo: " + t.Result.Longitude.ToString("N4");
 					}
@@ -117,6 +121,7 @@ namespace GeolocationSample
 		{
 			RunOnUiThread (() => {
 				this.listenStatus.Text = e.Position.Timestamp.ToString("G");
+				this.listenAccuracy.Text = e.Position.Accuracy + "m";
 				this.listenLatitude.Text = "La: " + e.Position.Latitude.ToString("N4");
 				this.listenLongitude.Text = "Lo: " + e.Position.Longitude.ToString("N4");
 			});

@@ -6,6 +6,7 @@
 	</LinearLayout>
 	<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
 		<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/status" android:text=" " />
+		<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/pAccuracy" android:text=" " />
 		<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/pLongitude" android:text=" " />
 		<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/pLatitude" android:text=" " />
 	</LinearLayout>
@@ -14,6 +15,7 @@
 	</LinearLayout>
 	<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
 		<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/listenStatus" android:text=" " />
+		<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/lAccuracy" android:text=" " />
 		<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/lLongitude" android:text=" " />
 		<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/lLatitude" android:text=" " />
 	</LinearLayout>
