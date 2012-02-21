@@ -78,6 +78,12 @@ namespace Xamarin.Media
 		{
 			var tcs = Interlocked.Exchange (ref this.completionSource, null);
 
+			if (photoResult.TaskResult == TaskResult.Cancel)
+			{
+				tcs.SetCanceled();
+				return;
+			}
+
 			string path = photoResult.OriginalFileName;
 
 			long pos = photoResult.ChosenPhoto.Position;
@@ -123,11 +129,6 @@ namespace Xamarin.Media
 					if (photoResult.Error != null)
 						tcs.SetException (photoResult.Error);
 
-					break;
-
-				case TaskResult.Cancel:
-					photoResult.ChosenPhoto.Dispose();
-					tcs.SetCanceled();
 					break;
 			}
 		}
