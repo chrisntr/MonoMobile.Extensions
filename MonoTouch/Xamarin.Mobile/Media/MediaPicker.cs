@@ -150,8 +150,8 @@ namespace Xamarin.Media
 				.ContinueWith (t =>
 				{
 					Interlocked.Exchange (ref this.pickerDelegate, null);
-					return t.Result;
-				});
+					return t;
+				}).Unwrap();
 		}
 		
 		private UIImagePickerControllerCameraDevice GetUICameraDevice (CameraDevice device)
