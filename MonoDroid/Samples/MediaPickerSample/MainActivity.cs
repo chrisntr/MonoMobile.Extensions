@@ -33,6 +33,14 @@ namespace MediaPickerSample
 				// and videos
 				//
 				var picker = new MediaPicker (this);
+
+				// We can check to make sure the device has a camera
+				// and supports dealing with video.
+				if (!picker.IsCameraAvailable || !picker.VideosSupported)
+				{
+					ShowUnsupported();
+					return;
+				}
 				
 				//
 				// TakeVideoAsync is an async API that takes a 
@@ -90,6 +98,13 @@ namespace MediaPickerSample
 			photoButton.Click += delegate
 			{
 				var picker = new MediaPicker (this);
+
+				if (!picker.IsCameraAvailable || !picker.PhotosSupported)
+				{
+					ShowUnsupported();
+					return;
+				}
+
 				picker.TakePhotoAsync (new StoreCameraMediaOptions
 				{
 					Name = "test.jpg",
@@ -134,6 +149,12 @@ namespace MediaPickerSample
 				//
 				var picker = new MediaPicker (this);
 				
+				if (!picker.VideosSupported)
+				{
+					ShowUnsupported();
+					return;
+				}
+
 				//
 				// PickVideoAsync is an async API that invokes
 				// the native gallery
@@ -185,6 +206,13 @@ namespace MediaPickerSample
 			pickPhotoButton.Click += delegate
 			{
 				var picker = new MediaPicker (this);
+
+				if (!picker.PhotosSupported)
+				{
+					ShowUnsupported();
+					return;
+				}
+
 				picker.PickPhotoAsync ()
 				.ContinueWith (t =>
 				{
@@ -210,6 +238,19 @@ namespace MediaPickerSample
 					});
 				});
 			};
+		}
+
+		private Toast unsupportedToast;
+		private void ShowUnsupported()
+		{
+			if (this.unsupportedToast != null)
+			{
+				this.unsupportedToast.Cancel();
+				this.unsupportedToast.Dispose();
+			}
+
+			this.unsupportedToast = Toast.MakeText (this, "Your device does not support this feature", ToastLength.Long);
+			this.unsupportedToast.Show();
 		}
 	}
 }
