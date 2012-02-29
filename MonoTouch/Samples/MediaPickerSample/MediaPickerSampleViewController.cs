@@ -15,6 +15,7 @@ namespace MediaPickerSample
 		
 		MediaPicker picker;
 		MPMoviePlayerViewController moviePlayer;
+		private UIAlertView errorAlert;
 		
 		/// <summary>
 		/// Event handler when the user clicks the Take a Photo button
@@ -26,20 +27,27 @@ namespace MediaPickerSample
 		{
 			Console.WriteLine("takePhotoBtnClicked");
 			
-			//
-			// create the MediaPicker and call TakePhotoAsync, which
-			// returns a Task, which we can use to get the 
-			// file path and then show the image the user
-			// took with the camera
-			//
 			picker = new MediaPicker ();
+			
+			// Check if a camera is available and photos are supported on this device
+			if (!picker.IsCameraAvailable || !picker.PhotosSupported)
+			{
+				ShowUnsupported();
+				return;
+			}
+
+			// Call TakePhotoAsync, which gives us a Task<MediaFile>
 			picker.TakePhotoAsync (new StoreCameraMediaOptions
 			{
 				Name = "test.jpg",
 				Directory = "MediaPickerSample"
 			})
-			.ContinueWith (t =>
+			.ContinueWith (t => // Continue when the user has taken a photo
 			{
+				if (t.IsCanceled) // The user canceled
+					return;
+					
+				// Show the photo the user took
 				InvokeOnMainThread( delegate {
 					UIImage image = UIImage.FromFile(t.Result.Path);
 					this.imageView.Image = image;	
@@ -57,16 +65,23 @@ namespace MediaPickerSample
 		{
 			Console.WriteLine("pickPhotoBtnClicked");
 			
-			//
-			// create the MediaPicker and call PickPhotoAsync, which
-			// returns a Task, which we can use to get the 
-			// file path and then show the image the user
-			// picked from the gallery
-			//
 			picker = new MediaPicker ();
-			picker.PickPhotoAsync ()
-			.ContinueWith (t =>
+			
+			// Check if photos are supported on this device
+			if (!picker.PhotosSupported)
 			{
+				ShowUnsupported();
+				return;
+			}
+			
+			// Call PickPhotoAsync, which gives us a Task<MediaFile>
+			picker.PickPhotoAsync ()
+			.ContinueWith (t => // Continue when the user has picked a photo
+			{
+				if (t.IsCanceled) // The user canceled
+					return;
+					
+				// Show the photo the user selected
 				InvokeOnMainThread( delegate {
 					UIImage image = UIImage.FromFile(t.Result.Path);
 					this.imageView.Image = image;	
@@ -84,22 +99,27 @@ namespace MediaPickerSample
 		{
 			Console.WriteLine("takeVideoBtnClicked");
 			
-			//
-			// create the MediaPicker and call TakeVideoAsync, which
-			// returns a Task, which we can use to get the 
-			// file path and then play the video the user
-			// took with the camera
-			//
 			picker = new MediaPicker ();
+			
+			// Check if a camera is available and videos are supported on this device
+			if (!picker.IsCameraAvailable || !picker.VideosSupported)
+			{
+				ShowUnsupported();
+				return;
+			}
+			
+			// Call TakeVideoAsync, which returns a Task<MediaFile>.
 			picker.TakeVideoAsync (new StoreVideoOptions
 			{
 				Quality = VideoQuality.Medium,
 				DesiredLength = new TimeSpan(0, 0, 30)
 			})
-			.ContinueWith (t =>
+			.ContinueWith (t => // Continue when the user has finished recording
 			{
-				Console.WriteLine("File Path: {0}", t.Result.Path);
+				if (t.IsCanceled) // The user canceled
+					return;
 					
+				// Play the video the user recorded
 				InvokeOnMainThread( delegate {
 					moviePlayer = new MPMoviePlayerViewController (NSUrl.FromFilename(t.Result.Path));
 					moviePlayer.MoviePlayer.UseApplicationAudioSession = true;
@@ -118,18 +138,24 @@ namespace MediaPickerSample
 		{
 			Console.WriteLine("pickVideoBtnClicked");
 			
-			//
-			// create the MediaPicker and call PickideoAsync, which
-			// returns a Task, which we can use to get the 
-			// file path and then play the video the user
-			// picked from the gallery
-			//
 			picker = new MediaPicker ();
-			picker.PickVideoAsync ()
-			.ContinueWith (t =>
+			
+			// Check that videos are supported on this device
+			if (!picker.VideosSupported)
 			{
-				Console.WriteLine("File Path: {0}", t.Result.Path);
+				ShowUnsupported();
+				return;
+			}
+			
+			//
+			// Call PickideoAsync, which returns a Task<MediaFile>
+			picker.PickVideoAsync ()
+			.ContinueWith (t => // Continue when the user has picked a video
+			{
+				if (t.IsCanceled) // The user canceled
+					return;
 					
+				// Play the video the user picked
 				InvokeOnMainThread( delegate {
 					moviePlayer = new MPMoviePlayerViewController (NSUrl.FromFilename(t.Result.Path));
 					moviePlayer.MoviePlayer.UseApplicationAudioSession = true;
@@ -138,6 +164,16 @@ namespace MediaPickerSample
 			});
 		}
 		
+		private void ShowUnsupported()
+		{
+			if (this.errorAlert != null)
+				this.errorAlert.Dispose();
+			
+			this.errorAlert = new UIAlertView ("Device unsupported", "Your device does not support this feature",
+			                                   new UIAlertViewDelegate(), "OK");
+			this.errorAlert.Show();
+		}
+
 		public override void DidReceiveMemoryWarning ()
 		{
 			// Releases the view if it doesn't have a superview.
