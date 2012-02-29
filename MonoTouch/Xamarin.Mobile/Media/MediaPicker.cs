@@ -13,11 +13,10 @@ namespace Xamarin.Media
 		{
 			IsCameraAvailable = UIImagePickerController.IsSourceTypeAvailable (UIImagePickerControllerSourceType.Camera);
 
-			string[] mediaTypes = UIImagePickerController.AvailableMediaTypes (UIImagePickerControllerSourceType.Camera)
-									.Intersect (UIImagePickerController.AvailableMediaTypes (UIImagePickerControllerSourceType.PhotoLibrary))
-				            		.ToArray();
+			string[] availableCameraMedia = UIImagePickerController.AvailableMediaTypes (UIImagePickerControllerSourceType.Camera) ?? new string[0];
+			string[] avaialbleLibraryMedia = UIImagePickerController.AvailableMediaTypes (UIImagePickerControllerSourceType.PhotoLibrary) ?? new string[0];
 
-			foreach (string type in mediaTypes)
+			foreach (string type in availableCameraMedia.Concat (avaialbleLibraryMedia))
 			{
 				if (type == TypeMovie)
 					VideosSupported = true;
