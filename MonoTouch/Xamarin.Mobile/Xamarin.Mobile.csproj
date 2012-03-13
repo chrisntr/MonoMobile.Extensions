@@ -116,6 +116,7 @@
     <Compile Include="Media\MediaPicker.cs" />
     <Compile Include="Media\MediaPickerDelegate.cs" />
     <Compile Include="NSDataStream.cs" />
+    <Compile Include="Media\MediaPickerPopoverDelegate.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

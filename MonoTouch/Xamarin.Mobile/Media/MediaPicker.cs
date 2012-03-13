@@ -4,6 +4,7 @@ using MonoTouch.UIKit;
 using System.Threading;
 using System.IO;
 using System.Linq;
+using System.Drawing;
 
 namespace Xamarin.Media
 {
@@ -83,6 +84,7 @@ namespace Xamarin.Media
 			return TakeMedia (UIImagePickerControllerSourceType.Camera, TypeMovie, options);
 		}
 
+		private UIPopoverController popover;
 		private UIImagePickerControllerDelegate pickerDelegate;
 		internal const string TypeImage = "public.image";
 		internal const string TypeMovie = "public.movie";
@@ -109,12 +111,18 @@ namespace Xamarin.Media
 
 		private Task<MediaFile> TakeMedia (UIImagePickerControllerSourceType sourceType, string mediaType, StoreCameraMediaOptions options = null)
 		{
-			MediaPickerDelegate ndelegate = new MediaPickerDelegate (sourceType, options);
+			UIWindow window = UIApplication.SharedApplication.KeyWindow;
+			UIViewController rootController = window.RootViewController;
+			
+			if (rootController == null)
+				throw new Exception ("Could not find root view controller");
+			
+			MediaPickerDelegate ndelegate = new MediaPickerDelegate (rootController, sourceType, options);
 			var od = Interlocked.CompareExchange (ref this.pickerDelegate, ndelegate, null);
 			if (od != null)
 				throw new InvalidOperationException ("Only one operation can be active at at time");
 
-			UIImagePickerController picker = new UIImagePickerController();
+			var picker = new UIImagePickerController();
 			picker.Delegate = ndelegate;
 			picker.MediaTypes = new[] { mediaType };
 			picker.SourceType = sourceType;
@@ -137,18 +145,24 @@ namespace Xamarin.Media
 				}
 			}
 
-			UIWindow window = UIApplication.SharedApplication.KeyWindow;
-			UIViewController rootController = window.RootViewController;
-			if (rootController != null)
-				rootController.PresentModalViewController (picker, true);
-			else
-			{
-				throw new NotImplementedException();
+			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad)
+			{	
+				ndelegate.Popover = new UIPopoverController (picker);
+				ndelegate.Popover.Delegate = new MediaPickerPopoverDelegate (ndelegate, picker);
+				ndelegate.DisplayPopover();
 			}
+			else
+				rootController.PresentModalViewController (picker, true);
 
 			return ndelegate.Task
 				.ContinueWith (t =>
 				{
+					if (this.popover != null)
+					{
+						this.popover.Dispose();
+						this.popover = null;
+					}
+					
 					Interlocked.Exchange (ref this.pickerDelegate, null);
 					return t;
 				}).Unwrap();

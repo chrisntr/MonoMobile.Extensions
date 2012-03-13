@@ -5,16 +5,32 @@ using System.Threading.Tasks;
 using MonoTouch.AssetsLibrary;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
+using System.Drawing;
 
 namespace Xamarin.Media
 {
 	internal class MediaPickerDelegate
 		: UIImagePickerControllerDelegate
 	{
-		internal MediaPickerDelegate (UIImagePickerControllerSourceType sourceType, StoreCameraMediaOptions options)
+		internal MediaPickerDelegate (UIViewController viewController, UIImagePickerControllerSourceType sourceType, StoreCameraMediaOptions options)
 		{
+			this.viewController = viewController;
 			this.source = sourceType;
 			this.options = options ?? new StoreCameraMediaOptions();
+
+			UIDevice.CurrentDevice.BeginGeneratingDeviceOrientationNotifications();
+			this.observer = NSNotificationCenter.DefaultCenter.AddObserver (UIDevice.OrientationDidChangeNotification, DidRotate);
+		}
+		
+		public UIPopoverController Popover
+		{
+			get;
+			set;
+		}
+		
+		public UIView View
+		{
+			get { return this.viewController.View; }
 		}
 
 		public Task<MediaFile> Task
@@ -58,21 +74,122 @@ namespace Xamarin.Media
 //					picker.Dispose();
 //				});
 //			}
-
-			picker.DismissModalViewControllerAnimated (animated: true);
-			picker.Dispose();
+			
+			Cleanup (picker);
 		}
 
 		public override void Canceled (UIImagePickerController picker)
 		{
 			this.tcs.TrySetCanceled();
-			picker.DismissModalViewControllerAnimated (animated: true);
-			picker.Dispose();
+			
+			Cleanup (picker);
 		}
-		
+
+		public void DisplayPopover (bool hideFirst = false)
+		{
+			if (Popover == null)
+				return;
+
+			float swidth = UIScreen.MainScreen.Bounds.Width * UIScreen.MainScreen.Scale;
+			float sheight= UIScreen.MainScreen.Bounds.Height * UIScreen.MainScreen.Scale;
+
+			float width = 400;
+			float height = 300;
+
+			if (this.orientation == null)
+			{
+				if (IsValidInterfaceOrientation (UIDevice.CurrentDevice.Orientation))
+				    this.orientation = UIDevice.CurrentDevice.Orientation;
+				else
+					this.orientation = GetDeviceOrientation (this.viewController.InterfaceOrientation);
+			}
+
+			float x, y;
+			if (this.orientation == UIDeviceOrientation.LandscapeLeft || this.orientation == UIDeviceOrientation.LandscapeRight)
+			{
+				y = (swidth / 2) - (height / 2);
+				x = (sheight / 2) - (width / 2);
+			}
+			else
+			{
+				x = (swidth / 2) - (width / 2);
+				y = (sheight / 2) - (height / 2);
+			}
+
+			if (hideFirst && Popover.PopoverVisible)
+				Popover.Dismiss (animated: false);
+
+			Popover.PresentFromRect (new RectangleF (x, y, width, height), View, 0, animated: true);
+		}
+
+		private UIDeviceOrientation? orientation;
+		private NSObject observer;
+		private readonly UIViewController viewController;
 		private readonly UIImagePickerControllerSourceType source;
 		private readonly TaskCompletionSource<MediaFile> tcs = new TaskCompletionSource<MediaFile>();
 		private readonly StoreCameraMediaOptions options;
+		
+		private void Cleanup (UIImagePickerController picker)
+		{
+			NSNotificationCenter.DefaultCenter.RemoveObserver (observer);
+			UIDevice.CurrentDevice.EndGeneratingDeviceOrientationNotifications();
+			
+			observer.Dispose();
+			
+			if (Popover != null)
+			{
+				Popover.Dismiss (animated: true);
+				Popover.Dispose();
+				Popover = null;
+			}
+			else
+			{
+				picker.DismissModalViewControllerAnimated (animated: true);
+				picker.Dispose();
+			}
+		}
+
+		private void DidRotate (NSNotification notice)
+		{
+			UIDevice device = (UIDevice)notice.Object;
+			if (!IsValidInterfaceOrientation (device.Orientation) || Popover == null)
+				return;
+			if (this.orientation.HasValue && IsSameOrientationKind (this.orientation.Value, device.Orientation))
+				return;
+
+			UIInterfaceOrientation iorientation = UIInterfaceOrientation.Portrait;
+			switch (device.Orientation)
+			{
+				case UIDeviceOrientation.LandscapeLeft:
+					iorientation = UIInterfaceOrientation.LandscapeLeft;
+					break;
+				
+				case UIDeviceOrientation.LandscapeRight:
+					iorientation = UIInterfaceOrientation.LandscapeRight;
+					break;
+				
+				case UIDeviceOrientation.Portrait:
+					iorientation = UIInterfaceOrientation.Portrait;
+					break;
+				
+				case UIDeviceOrientation.PortraitUpsideDown:
+					iorientation = UIInterfaceOrientation.PortraitUpsideDown;
+					break;
+				
+				default: return;
+			}
+
+			if (!this.viewController.ShouldAutorotateToInterfaceOrientation (iorientation))
+				return;
+
+			UIDeviceOrientation? co = this.orientation;
+			this.orientation = device.Orientation;
+
+			if (co == null)
+				return;
+
+			DisplayPopover (hideFirst: true);
+		}
 
 		private MediaFile GetPictureMediaFile (NSDictionary info, out Task<NSUrl> saveCompleted)
 		{
@@ -228,6 +345,40 @@ namespace Xamarin.Media
 			}
 
 			return Path.Combine (path, GetUniquePath (type, path, name));
+		}
+		
+		private static bool IsValidInterfaceOrientation (UIDeviceOrientation self)
+		{
+			return (self != UIDeviceOrientation.FaceUp && self != UIDeviceOrientation.FaceDown && self != UIDeviceOrientation.Unknown);
+		}
+		
+		private static bool IsSameOrientationKind (UIDeviceOrientation o1, UIDeviceOrientation o2)
+		{
+			if (o1 == UIDeviceOrientation.FaceDown || o1 == UIDeviceOrientation.FaceUp)
+				return (o2 == UIDeviceOrientation.FaceDown || o2 == UIDeviceOrientation.FaceUp);
+			if (o1 == UIDeviceOrientation.LandscapeLeft || o1 == UIDeviceOrientation.LandscapeRight)
+				return (o2 == UIDeviceOrientation.LandscapeLeft || o2 == UIDeviceOrientation.LandscapeRight);
+			if (o1 == UIDeviceOrientation.Portrait || o1 == UIDeviceOrientation.PortraitUpsideDown)
+				return (o2 == UIDeviceOrientation.Portrait || o2 == UIDeviceOrientation.PortraitUpsideDown);
+			
+			return false;
+		}
+		
+		private static UIDeviceOrientation GetDeviceOrientation (UIInterfaceOrientation self)
+		{
+			switch (self)
+			{
+				case UIInterfaceOrientation.LandscapeLeft:
+					return UIDeviceOrientation.LandscapeLeft;
+				case UIInterfaceOrientation.LandscapeRight:
+					return UIDeviceOrientation.LandscapeRight;
+				case UIInterfaceOrientation.Portrait:
+					return UIDeviceOrientation.Portrait;
+				case UIInterfaceOrientation.PortraitUpsideDown:
+					return UIDeviceOrientation.PortraitUpsideDown;
+				default:
+					throw new InvalidOperationException();
+			}
 		}
 	}
 }
