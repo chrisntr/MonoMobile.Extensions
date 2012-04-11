@@ -23,31 +23,56 @@ namespace Xamarin.Media
 
 		internal static event EventHandler<MediaPickedEventArgs> MediaPicked;
 
+		private int id;
 		private string title;
 		private string description;
+		private string type;
 		private Uri path;
 		private bool isPhoto;
 		private string action;
-		//private MediaFileStoreLocation location;
+
+		private int seconds;
+		private VideoQuality quality;
+
+		protected override void OnSaveInstanceState (Bundle outState)
+		{
+			outState.PutBoolean ("ran", true);
+			outState.PutString (MediaStore.MediaColumns.Title, this.title);
+			outState.PutString (MediaStore.Images.ImageColumns.Description, this.description);
+			outState.PutInt (ExtraId, this.id);
+			outState.PutString (ExtraType, this.type);
+			outState.PutString (ExtraAction, this.action);
+			outState.PutInt (MediaStore.ExtraDurationLimit, this.seconds);
+			outState.PutInt (MediaStore.ExtraVideoQuality, (int)this.quality);
+
+			if (this.path != null)
+				outState.PutString (ExtraPath, this.path.Path);
+
+			base.OnSaveInstanceState (outState);
+		}
 
 		protected override void OnCreate (Bundle savedInstanceState)
 		{
 			base.OnCreate (savedInstanceState);
 
-			this.title = this.Intent.GetStringExtra (MediaStore.MediaColumns.Title);
-			this.description = this.Intent.GetStringExtra (MediaStore.Images.ImageColumns.Description);
+			Bundle b = (savedInstanceState ?? Intent.Extras);
 
-			int id = this.Intent.GetIntExtra (ExtraId, 0);
-			string type = this.Intent.GetStringExtra (ExtraType);
-			if (type == "image/*")
+			bool ran = b.GetBoolean ("ran", defaultValue: false);
+
+			this.title = b.GetString (MediaStore.MediaColumns.Title);
+			this.description = b.GetString (MediaStore.Images.ImageColumns.Description);
+
+			this.id = b.GetInt (ExtraId, 0);
+			this.type = b.GetString (ExtraType);
+			if (this.type == "image/*")
 				this.isPhoto = true;
 
-			this.action = this.Intent.GetStringExtra (ExtraAction);
+			this.action = b.GetString (ExtraAction);
 			Intent pickIntent = null;
 			try
 			{
 				pickIntent = new Intent (this.action);
-				if (action == Intent.ActionPick)
+				if (this.action == Intent.ActionPick)
 				{
 					//this.location = MediaFileStoreLocation.CameraRoll;
 					pickIntent.SetType (type);
@@ -56,30 +81,32 @@ namespace Xamarin.Media
 				{
 					if (!this.isPhoto)
 					{
-						int seconds = this.Intent.GetIntExtra (MediaStore.ExtraDurationLimit, 0);
-						if (seconds != 0)
+						this.seconds = b.GetInt (MediaStore.ExtraDurationLimit, 0);
+						if (this.seconds != 0)
 							pickIntent.PutExtra (MediaStore.ExtraDurationLimit, seconds);
 					}
 
-					VideoQuality quality = (VideoQuality)this.Intent.GetIntExtra (MediaStore.ExtraVideoQuality, (int)VideoQuality.High);
-					pickIntent.PutExtra (MediaStore.ExtraVideoQuality, GetVideoQuality (quality));
+					this.quality = (VideoQuality)b.GetInt (MediaStore.ExtraVideoQuality, (int)VideoQuality.High);
+					pickIntent.PutExtra (MediaStore.ExtraVideoQuality, GetVideoQuality (this.quality));
 
-					//this.location = (MediaFileStoreLocation) this.Intent.GetIntExtra (ExtraLocation, 0);
-					//this.path = GetOutputMediaFile (this.location, this.Intent.GetStringExtra (ExtraPath), this.title, this.description);
-					this.path = GetOutputMediaFile (this.Intent.GetStringExtra (ExtraPath), this.title, this.description);
+					if (!ran)
+						this.path = GetOutputMediaFile (b.GetString (ExtraPath), this.title, this.description);
+					else
+						this.path = Uri.Parse (b.GetString (ExtraPath));
 
-					if (this.isPhoto)
+					if (this.isPhoto && !ran)
 					{
 						Touch();
 						pickIntent.PutExtra (MediaStore.ExtraOutput, this.path);
 					}
 				}
 
-				StartActivityForResult (pickIntent, id);
+				if (!ran)
+					StartActivityForResult (pickIntent, this.id);
 			}
 			catch (Exception ex)
 			{
-				OnMediaPicked (new MediaPickedEventArgs (id, ex));
+				OnMediaPicked (new MediaPickedEventArgs (this.id, ex));
 			}
 			finally
 			{ 
