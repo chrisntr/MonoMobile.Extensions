@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using Android.Locations;
 using Android.OS;
 using System.Collections.Generic;
@@ -36,6 +37,7 @@ namespace Xamarin.Geolocation
 					if (pr.Accuracy > this.manager.GetProvider (this.activeProvider).Accuracy
 						&& lapsed < timePeriod.Add (timePeriod))
 					{
+						location.Dispose();
 						return;
 					}
 				}
@@ -43,7 +45,9 @@ namespace Xamarin.Geolocation
 				this.activeProvider = location.Provider;
 			}
 
-			this.lastLocation = location;
+			var previous = Interlocked.Exchange (ref this.lastLocation, location);
+			if (previous != null)
+				previous.Dispose();
 
 			var p = new Position();
 			if (location.HasAccuracy)
