@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Android.App;
+using Android.Content.PM;
 using Android.Graphics;
 using Android.Widget;
 using Android.OS;
@@ -9,7 +10,7 @@ using Path = System.IO.Path;
 
 namespace MediaPickerSample
 {
-	[Activity(Label = "MediaPickerSample", MainLauncher = true, Icon = "@drawable/icon")]
+	[Activity (Label = "MediaPickerSample", MainLauncher = true, Icon = "@drawable/icon", ConfigurationChanges = ConfigChanges.Orientation)]
 	public class MainActivity : Activity
 	{
 		protected override void OnCreate (Bundle bundle)
