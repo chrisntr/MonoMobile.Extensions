@@ -1,4 +1,4 @@
-Xamarin Mobile API Preview 0.3
+Xamarin Mobile API Preview 0.4
 
 At this time, the Windows Phone version of the library requires the
 Visual Studio Async CTP (http://msdn.microsoft.com/en-us/vstudio/gg316360).
@@ -6,6 +6,18 @@ As this CTP installs to a user-specific directory, you'll likely need to
 correct references to this library in the samples to use them.
 
 Changelog
+
+Release 0.4
+
+Features:
+ - Includes a build against Mono for Android 4.2
+
+Fixes:
+ - Fixed memory leaks in Geolocator
+ - Fixed an issue with MediaPicker picking on iPads
+ - Fixed an issue with MediaPicker on iOS devices with no camera
+ - Fixed an issue with cancelling MediaPicker on iOS devices
+ - Fixed an issue with rotation in MediaPicker on ANdroid
 
 Release 0.3
 
