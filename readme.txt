@@ -17,7 +17,7 @@ Fixes:
  - Fixed an issue with MediaPicker picking on iPads
  - Fixed an issue with MediaPicker on iOS devices with no camera
  - Fixed an issue with cancelling MediaPicker on iOS devices
- - Fixed an issue with rotation in MediaPicker on ANdroid
+ - Fixed an issue with rotation in MediaPicker on Android
 
 Release 0.3
 
