@@ -57,7 +57,7 @@ namespace ContactsSample
 			//
 			// When clicked, start a new activity to display more contact details
 			//	
-			ListView.ItemClick += delegate (object sender, ItemEventArgs args) {
+			ListView.ItemClick += delegate (object sender, AdapterView.ItemClickEventArgs args) {
 		        
 				//
 				// to show the contact on the details activity, we
