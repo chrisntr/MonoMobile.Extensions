@@ -80,6 +80,9 @@ namespace Xamarin.Geolocation
 
 		public void StopListening()
 		{
+			if (this.watcher == null)
+				return;
+
 			this.watcher.PositionChanged -= WatcherOnPositionChanged;
 			this.watcher.Stop();
 			this.watcher.Dispose();
