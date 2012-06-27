@@ -18,7 +18,7 @@ namespace Xamarin.Geolocation
 				throw new ArgumentNullException ("context");
 
 			this.manager = (LocationManager)context.GetSystemService (Context.LocationService);
-			this.providers = manager.GetProviders (enabledOnly: false);
+			this.providers = manager.GetProviders (enabledOnly: false).Where (s => s != LocationManager.PassiveProvider).ToArray();
 		}
 
 		public event EventHandler<PositionErrorEventArgs> PositionError;
@@ -65,7 +65,7 @@ namespace Xamarin.Geolocation
 
 		public bool IsGeolocationAvailable
 		{
-			get { return this.providers.Count > 0; }
+			get { return this.providers.Length > 0; }
 		}
 		
 		public bool IsGeolocationEnabled
@@ -96,7 +96,7 @@ namespace Xamarin.Geolocation
 				singleListener = new GeolocationSingleListener ((float)DesiredAccuracy, timeout, this.providers.Where (p => this.manager.IsProviderEnabled (p)),
 					() =>
 				{
-					for (int i = 0; i < this.providers.Count; ++i)
+					for (int i = 0; i < this.providers.Length; ++i)
 						this.manager.RemoveUpdates (singleListener);
 				});
 				
@@ -106,7 +106,7 @@ namespace Xamarin.Geolocation
 					{
 						singleListener.Cancel();
 						
-						for (int i = 0; i < this.providers.Count; ++i)
+						for (int i = 0; i < this.providers.Length; ++i)
 							this.manager.RemoveUpdates (singleListener);
 					}, true);
 				}
@@ -116,7 +116,7 @@ namespace Xamarin.Geolocation
 					Looper looper = Looper.MyLooper() ?? Looper.MainLooper;
 
 					int enabled = 0;
-					for (int i = 0; i < this.providers.Count; ++i)
+					for (int i = 0; i < this.providers.Length; ++i)
 					{
 						if (this.manager.IsProviderEnabled (this.providers[i]))
 							enabled++;
@@ -126,7 +126,7 @@ namespace Xamarin.Geolocation
 					
 					if (enabled == 0)
 					{
-						for (int i = 0; i < this.providers.Count; ++i)
+						for (int i = 0; i < this.providers.Length; ++i)
 							this.manager.RemoveUpdates (singleListener);
 						
 						tcs.SetException (new GeolocationException (GeolocationError.PositionUnavailable));
@@ -189,7 +189,7 @@ namespace Xamarin.Geolocation
 			this.listener.PositionError += OnListenerPositionError;
 
 			Looper looper = Looper.MyLooper() ?? Looper.MainLooper;
-			for (int i = 0; i < this.providers.Count; ++i)
+			for (int i = 0; i < this.providers.Length; ++i)
 				this.manager.RequestLocationUpdates (providers[i], minTime, (float)minDistance, listener, looper);
 		}
 
@@ -201,13 +201,13 @@ namespace Xamarin.Geolocation
 			this.listener.PositionChanged -= OnListenerPositionChanged;
 			this.listener.PositionError -= OnListenerPositionError;
 
-			for (int i = 0; i < this.providers.Count; ++i)
+			for (int i = 0; i < this.providers.Length; ++i)
 				this.manager.RemoveUpdates (this.listener);
 
 			this.listener = null;
 		}
 
-		private readonly IList<string> providers;
+		private readonly string[] providers;
 		private readonly LocationManager manager;
 		private string headingProvider;
 
