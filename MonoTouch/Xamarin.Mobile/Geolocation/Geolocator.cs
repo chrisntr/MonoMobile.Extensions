@@ -44,7 +44,7 @@ namespace Xamarin.Geolocation
 
 		public bool IsGeolocationEnabled
 		{
-			get { return CLLocationManager.LocationServicesEnabled; }
+			get { return CLLocationManager.Status == CLAuthorizationStatus.Authorized; }
 		}
 
 		public Task<Position> GetPositionAsync (int timeout)
