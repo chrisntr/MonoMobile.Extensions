@@ -92,7 +92,7 @@
           <para>
 				If the underlying platform needs to request location access permissions, it will be performed automatically.
 				If all location services are disabled or a fatal error occurs, the future will contain <see cref="T:Xamarin.Geolocation.GeolocationException" />
-				with <see cref="P:Xamarin.Geolocation.GeolocationException.Error" /> of <see cref="F:Xamarin.Geolocation.GeolocationError.PositionUnavailable." />
+				with <see cref="P:Xamarin.Geolocation.GeolocationException.Error" /> of <see cref="F:Xamarin.Geolocation.GeolocationError.PositionUnavailable" />.
 			    If the user has denied location access to the app (iOS), or the app didn't specify location acccess in its manifest (Android), the error will be
 				<see cref="F:Xamarin.Geolocation.GelocationError.Unauthorized" />.
 		  </para>
