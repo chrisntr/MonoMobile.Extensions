@@ -1,11 +1,20 @@
-Xamarin Mobile API Preview 0.4
+Xamarin Mobile API Preview 0.5
 
 At this time, the Windows Phone version of the library requires the
-Visual Studio Async CTP (http://msdn.microsoft.com/en-us/vstudio/gg316360).
+Visual Studio Async CTP (http://www.microsoft.com/en-us/download/details.aspx?id=9983).
 As this CTP installs to a user-specific directory, you'll likely need to
 correct references to this library in the samples to use them.
 
 Changelog
+
+Release 0.5
+
+Fixes:
+ - Fixed issues surrounding Geolocator.IsGeolocationAvailable &
+   IsGeolocationEnabled on all platforms.
+ - Fixed an error on Windows Phone where Geolocator.StopListening
+   was called before StartListening.
+ - Fixed occasional NaNs for Speed on Windows Phone.
 
 Release 0.4
 
