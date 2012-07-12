@@ -14,7 +14,7 @@ namespace GeolocationSample
 			this.geolocator.DesiredAccuracy = 50;
 			this.geolocator.PositionChanged += GeolocatorOnPositionChanged;
 			this.getPosition = new DelegatedCommand (GetPositionHandler, s => true);
-			this.toggleListening = new DelegatedCommand (ToggleListeningHandler, s => this.geolocator.IsGeolocationEnabled);
+			this.toggleListening = new DelegatedCommand (ToggleListeningHandler, s => true);
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -63,6 +63,12 @@ namespace GeolocationSample
 
 		private async void GetPositionHandler (object state)
 		{
+			if (!this.geolocator.IsGeolocationEnabled)
+			{
+				Status = "Location disabled";
+				return;
+			}
+
 			try
 			{
 				Position p = await this.geolocator.GetPositionAsync (10000);
@@ -80,10 +86,22 @@ namespace GeolocationSample
 
 		private void ToggleListeningHandler (object o)
 		{
+			if (!this.geolocator.IsGeolocationEnabled)
+			{
+				Status = "Location disabled";
+				return;
+			}
+
 			if (!this.geolocator.IsListening)
+			{
 				this.geolocator.StartListening (0, 0);
+				Status = "Listening";
+			}
 			else
+			{
 				this.geolocator.StopListening();
+				Status = "Stopped listening";
+			}
 
 			OnPropertyChanged ("Status");
 		}

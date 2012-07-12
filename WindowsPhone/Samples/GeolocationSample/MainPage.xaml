@@ -49,8 +49,8 @@
 				<Button Command="{Binding ToggleListening}">Toggle Listening</Button>
 			</StackPanel>
 
-			<TextBlock Grid.Row="1" Grid.Column="0">Listening:</TextBlock>
-			<TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding IsListening}" />
+			<TextBlock Grid.Row="1" Grid.Column="0">Status:</TextBlock>
+			<TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Status}" />
 
 			<TextBlock Grid.Row="2" Grid.Column="0">Time:</TextBlock>
 			<TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding CurrentPosition.Timestamp}" />
