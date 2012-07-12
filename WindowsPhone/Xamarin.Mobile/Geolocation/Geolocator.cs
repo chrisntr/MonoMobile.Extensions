@@ -9,9 +9,7 @@ namespace Xamarin.Geolocation
 	{
 		public Geolocator()
 		{
-			GeoCoordinateWatcher w = new GeoCoordinateWatcher();
-			IsGeolocationEnabled = (w.Permission == GeoPositionPermission.Granted);
-			w.Dispose();
+			this.isEnabled = GetEnabled();
 		}
 
 		public event EventHandler<PositionErrorEventArgs> PositionError;
@@ -24,8 +22,15 @@ namespace Xamarin.Geolocation
 
 		public bool IsGeolocationEnabled
 		{
-			get;
-			private set;
+			get
+			{
+				if (this.watcher != null)
+					this.isEnabled = (this.watcher.Permission == GeoPositionPermission.Granted && this.watcher.Status != GeoPositionStatus.Disabled);
+				else
+					this.isEnabled = GetEnabled();
+
+				return this.isEnabled;
+			}
 		}
 
 		public double DesiredAccuracy
@@ -84,15 +89,40 @@ namespace Xamarin.Geolocation
 				return;
 
 			this.watcher.PositionChanged -= WatcherOnPositionChanged;
+			this.watcher.StatusChanged -= WatcherOnStatusChanged;
 			this.watcher.Stop();
 			this.watcher.Dispose();
 			this.watcher = null;
 		}
 
 		private GeoCoordinateWatcher watcher;
+		private bool isEnabled;
+
+		private static bool GetEnabled()
+		{
+			GeoCoordinateWatcher w = new GeoCoordinateWatcher();
+			try
+			{
+				w.Start (true);
+				bool enabled = (w.Permission == GeoPositionPermission.Granted && w.Status != GeoPositionStatus.Disabled);
+				w.Stop();
+
+				return enabled;
+			}
+			catch (Exception)
+			{
+				return false;
+			}
+			finally
+			{
+				w.Dispose();
+			}
+		}
 
 		private void WatcherOnStatusChanged (object sender, GeoPositionStatusChangedEventArgs e)
 		{
+			this.isEnabled = (this.watcher.Permission == GeoPositionPermission.Granted && this.watcher.Status != GeoPositionStatus.Disabled);
+
 			GeolocationError error;
 			switch (e.Status)
 			{
@@ -147,18 +177,13 @@ namespace Xamarin.Geolocation
 				p.AltitudeAccuracy = position.Location.VerticalAccuracy;
 				p.Altitude = position.Location.Altitude;
 			}
-			else
-			{
-				p.AltitudeAccuracy = 0;
-				p.Altitude = 0;
-			}
 
 			if (!Double.IsNaN (position.Location.Course))
 				p.Heading = position.Location.Course;
-			else
-				p.Heading = 0;
 
-			p.Speed = position.Location.Speed;
+			if (!Double.IsNaN (position.Location.Speed))
+				p.Speed = position.Location.Speed;
+
 			p.Timestamp = position.Timestamp;
 			
 			return p;
