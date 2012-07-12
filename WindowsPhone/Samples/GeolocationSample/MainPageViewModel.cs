@@ -12,6 +12,7 @@ namespace GeolocationSample
 		public MainPageViewModel()
 		{
 			this.geolocator.DesiredAccuracy = 50;
+			this.geolocator.PositionError += GeolocatorOnPositionError;
 			this.geolocator.PositionChanged += GeolocatorOnPositionChanged;
 			this.getPosition = new DelegatedCommand (GetPositionHandler, s => true);
 			this.toggleListening = new DelegatedCommand (ToggleListeningHandler, s => true);
@@ -94,19 +95,24 @@ namespace GeolocationSample
 
 			if (!this.geolocator.IsListening)
 			{
-				this.geolocator.StartListening (0, 0);
 				Status = "Listening";
+				this.geolocator.StartListening (0, 0);
 			}
 			else
 			{
-				this.geolocator.StopListening();
 				Status = "Stopped listening";
+				this.geolocator.StopListening();
 			}
 
 			OnPropertyChanged ("Status");
 		}
 
-		private void GeolocatorOnPositionChanged(object sender, PositionEventArgs e)
+		private void GeolocatorOnPositionError (object sender, PositionErrorEventArgs e)
+		{
+			Status = e.Error.ToString();
+		}
+
+		private void GeolocatorOnPositionChanged (object sender, PositionEventArgs e)
 		{
 			CurrentPosition = e.Position;
 		}
