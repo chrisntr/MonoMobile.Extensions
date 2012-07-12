@@ -50,7 +50,8 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
-    <Reference Include="Xamarin.Mobile">
+    <Reference Include="Xamarin.Mobile, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Xamarin.Mobile.dll</HintPath>
     </Reference>
   </ItemGroup>
