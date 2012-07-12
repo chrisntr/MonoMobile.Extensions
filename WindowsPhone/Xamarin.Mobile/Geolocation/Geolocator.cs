@@ -138,6 +138,8 @@ namespace Xamarin.Geolocation
 					return;
 			}
 
+			StopListening();
+
 			var perror = PositionError;
 			if (perror != null)
 				perror (this, new PositionErrorEventArgs (error));
