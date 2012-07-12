@@ -58,6 +58,12 @@ namespace GeolocationSample
 		private void OnGetPosition (object sender, EventArgs e)
 		{
 			Setup();
+
+			if (!this.geolocator.IsGeolocationAvailable || !this.geolocator.IsGeolocationEnabled)
+			{
+				Toast.MakeText (this, "Geolocation is unavailable", ToastLength.Long).Show();
+				return;
+			}
 			
 			this.cancelSource = new CancellationTokenSource();
 			
@@ -96,6 +102,12 @@ namespace GeolocationSample
 			
 			if (!this.geolocator.IsListening)
 			{
+				if (!this.geolocator.IsGeolocationAvailable || !this.geolocator.IsGeolocationEnabled)
+				{
+					Toast.MakeText (this, "Geolocation is unavailable", ToastLength.Long).Show();
+					return;
+				}
+
 				this.toggleListenButton.SetText (Resource.String.stopListening);
 				this.geolocator.StartListening (minTime: 30000, minDistance: 0);
 			}
