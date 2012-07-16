@@ -49,9 +49,8 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
-    <Reference Include="Xamarin.Mobile, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Xamarin.Mobile">
       <HintPath>..\Xamarin.Mobile.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
     </Reference>
   </ItemGroup>
   <ItemGroup>
