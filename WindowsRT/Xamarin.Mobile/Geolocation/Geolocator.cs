@@ -39,14 +39,14 @@ namespace Xamarin.Geolocation
 	    public async Task<Position> GetPositionAsync (int timeout)
 		{
 			if (timeout < 0)
-				throw new ArgumentOutOfRangeException("timeout");
+				throw new ArgumentOutOfRangeException ("timeout");
 
 			try
 			{
-				Geoposition pos = await this.locator.GetGeopositionAsync (TimeSpan.FromTicks(0), TimeSpan.FromMilliseconds(timeout));
+				Geoposition pos = await this.locator.GetGeopositionAsync (TimeSpan.FromTicks (0), TimeSpan.FromMilliseconds (timeout));
 				return GetPosition(pos);
 			}
-			catch (UnauthorizedAccessException uaex)
+			catch (UnauthorizedAccessException)
 			{
 				throw new GeolocationException (GeolocationError.Unauthorized);
 			}
@@ -119,23 +119,33 @@ namespace Xamarin.Geolocation
 		private double desiredAccuracy;
 		private readonly Windows.Devices.Geolocation.Geolocator locator = new Windows.Devices.Geolocation.Geolocator();
 
-		private void OnLocatorStatusChanged(Windows.Devices.Geolocation.Geolocator sender, StatusChangedEventArgs e)
+		private void OnLocatorStatusChanged (Windows.Devices.Geolocation.Geolocator sender, StatusChangedEventArgs e)
 		{
+			GeolocationError error;
 			switch (e.Status)
 			{
 				case PositionStatus.Disabled:
-					OnPositionError (new PositionErrorEventArgs(GeolocationError.Unauthorized));
+					error = GeolocationError.Unauthorized;
 					break;
 
 				case PositionStatus.NoData:
-					OnPositionError (new PositionErrorEventArgs(GeolocationError.PositionUnavailable));
+					error = GeolocationError.PositionUnavailable;
 					break;
+
+				default:
+					return;
 			}
+
+			StopListening();
+
+			var perror = PositionError;
+			if (perror != null)
+				perror (this, new PositionErrorEventArgs (error));
 		}
 
-		private void OnLocatorPositionChanged(Windows.Devices.Geolocation.Geolocator sender, PositionChangedEventArgs e)
+		private void OnLocatorPositionChanged (Windows.Devices.Geolocation.Geolocator sender, PositionChangedEventArgs e)
 		{
-			OnPositionChanged (new PositionEventArgs(GetPosition(e.Position)));
+			OnPositionChanged (new PositionEventArgs (GetPosition (e.Position)));
 		}
 
 		private void OnPositionChanged (PositionEventArgs e)
