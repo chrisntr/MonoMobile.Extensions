@@ -10,14 +10,14 @@ namespace GeolocationSample
 	public class MainPageViewModel
 		: INotifyPropertyChanged
 	{
-		public MainPageViewModel (CoreDispatcher dispatcher)
+		public MainPageViewModel (Windows.UI.Core.CoreDispatcher dispatcher)
 		{
 			this.dispatcher = dispatcher;
 			this.geolocator.DesiredAccuracy = 50;
-			this.geolocator.PositionChanged += GeolocatorOnPositionChanged;
 			this.geolocator.PositionError += GeolocatorOnPositionError;
+			this.geolocator.PositionChanged += GeolocatorOnPositionChanged;
 			this.getPosition = new DelegatedCommand (GetPositionHandler, s => true);
-			this.toggleListening = new DelegatedCommand (ToggleListeningHandler, s => this.geolocator.IsGeolocationEnabled);
+			this.toggleListening = new DelegatedCommand (ToggleListeningHandler, s => true);
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -67,6 +67,12 @@ namespace GeolocationSample
 
 		private async void GetPositionHandler (object state)
 		{
+			if (!this.geolocator.IsGeolocationEnabled)
+			{
+				Status = "Location disabled";
+				return;
+			}
+
 			try
 			{
 				Position p = await this.geolocator.GetPositionAsync (10000);
@@ -76,7 +82,7 @@ namespace GeolocationSample
 			{
 				Status = "Error: (" + ex.Error + ") " + ex.Message;
 			}
-			catch (TaskCanceledException cex)
+			catch (TaskCanceledException)
 			{
 				Status = "Canceled";
 			}
@@ -84,21 +90,29 @@ namespace GeolocationSample
 
 		private void ToggleListeningHandler (object o)
 		{
+			if (!this.geolocator.IsGeolocationEnabled)
+			{
+				Status = "Location disabled";
+				return;
+			}
+
 			if (!this.geolocator.IsListening)
 			{
-				this.geolocator.StartListening (0, 0);
 				Status = "Listening";
+				this.geolocator.StartListening (0, 0);
 			}
 			else
 			{
+				Status = "Stopped listening";
 				this.geolocator.StopListening();
-				Status = "Stopped Listening";
 			}
+
+			OnPropertyChanged ("Status");
 		}
 
 		private void GeolocatorOnPositionError (object sender, PositionErrorEventArgs e)
 		{
-			Status = "Error: " + e.Error.ToString();
+			Status = e.Error.ToString();
 		}
 
 		private void GeolocatorOnPositionChanged (object sender, PositionEventArgs e)
