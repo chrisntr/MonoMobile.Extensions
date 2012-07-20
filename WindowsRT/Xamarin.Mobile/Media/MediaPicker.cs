@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Devices.Enumeration;
+using Windows.Foundation;
 using Windows.Media.Capture;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -15,7 +17,29 @@ namespace Xamarin.Media
 	{
 		public MediaPicker()
 		{
-			IsCameraAvailable = true; // TODO
+			this.watcher = DeviceInformation.CreateWatcher (DeviceClass.VideoCapture);
+			this.watcher.Added += OnDeviceAdded;
+			this.watcher.Updated += OnDeviceUpdated;
+			this.watcher.Removed += OnDeviceRemoved;
+			this.watcher.Start();
+			
+			var find = DeviceInformation.FindAllAsync (DeviceClass.VideoCapture);
+			find.Completed = (info, status) =>
+			{
+				if (status != AsyncStatus.Completed)
+					return;
+
+				lock (this.devices)
+				{
+					foreach (DeviceInformation device in info.GetResults())
+					{
+						if (device.IsEnabled)
+							this.devices.Add (device.Id);
+					}
+
+					IsCameraAvailable = (this.devices.Count > 0);
+				}
+			};
 		}
 
 		public bool IsCameraAvailable
@@ -34,19 +58,19 @@ namespace Xamarin.Media
 			get { return true; }
 		}
 
-		public async Task<MediaFile> TakePhotoAsync(StoreCameraMediaOptions options)
+		public async Task<MediaFile> TakePhotoAsync (StoreCameraMediaOptions options)
 		{
 			options.VerifyOptions();
 
 			var capture = new CameraCaptureUI();
 			var result = await capture.CaptureFileAsync (CameraCaptureUIMode.Photo);
 			if (result == null)
-				return null;  // TODO - Need to investigate await task cancellation handling
+				throw new TaskCanceledException();
 
 			IStorageFolder folder = KnownFolders.PicturesLibrary;
 
 			string path = options.GetUniqueFilepath (folder.Path, p => StorageFile.GetFileFromPathAsync(p).AsTask().Result == null);
-			folder = await StorageFolder.GetFolderFromPathAsync (Path.GetDirectoryName(path));
+			folder = await StorageFolder.GetFolderFromPathAsync (Path.GetDirectoryName (path));
 			string filename = Path.GetFileName (path);
 
 			IStorageFile file = await result.CopyAsync (folder, filename);
@@ -64,12 +88,12 @@ namespace Xamarin.Media
 
 			var result = await picker.PickSingleFileAsync();
 			if (result == null)
-				return null; // TODO
+				throw new TaskCanceledException();
 
-			return new MediaFile(result.Path, () => result.OpenStreamForReadAsync().Result);
+			return new MediaFile (result.Path, () => result.OpenStreamForReadAsync().Result);
 		}
 
-		public async Task<MediaFile> TakeVideoAsync(StoreVideoOptions options)
+		public async Task<MediaFile> TakeVideoAsync (StoreVideoOptions options)
 		{
 			options.VerifyOptions();
 
@@ -80,7 +104,7 @@ namespace Xamarin.Media
 
 			var result = await capture.CaptureFileAsync (CameraCaptureUIMode.Video);
 			if (result == null)
-				return null; // TODO
+				throw new TaskCanceledException();
 
 			return new MediaFile (result.Path, () => result.OpenStreamForReadAsync().Result);
 		}
@@ -94,23 +118,66 @@ namespace Xamarin.Media
 
 			var result = await picker.PickSingleFileAsync();
 			if (result == null)
-				return null; // TODO
+				throw new TaskCanceledException();
 
-			return new MediaFile(result.Path, () => result.OpenStreamForReadAsync().Result);
+			return new MediaFile (result.Path, () => result.OpenStreamForReadAsync().Result);
 		}
 
-		private CameraCaptureUIMaxVideoResolution GetResolutionFromQuality(VideoQuality quality)
+		private readonly HashSet<string> devices = new HashSet<string>();
+		private readonly DeviceWatcher watcher;
+
+		private CameraCaptureUIMaxVideoResolution GetResolutionFromQuality (VideoQuality quality)
 		{
 			switch (quality)
 			{
 				case VideoQuality.High:
-					return CameraCaptureUIMaxVideoResolution.HighDefinition;
+					return CameraCaptureUIMaxVideoResolution.HighestAvailable;
 				case VideoQuality.Medium:
 					return CameraCaptureUIMaxVideoResolution.StandardDefinition;
 				case VideoQuality.Low:
 					return CameraCaptureUIMaxVideoResolution.LowDefinition;
 				default:
 					return CameraCaptureUIMaxVideoResolution.HighestAvailable;
+			}
+		}
+
+		private void OnDeviceUpdated (DeviceWatcher sender, DeviceInformationUpdate update)
+		{
+			object value;
+			if (!update.Properties.TryGetValue ("System.Devices.InterfaceEnabled", out value))
+				return;
+
+			lock (this.devices)
+			{
+				if ((bool)value)
+					this.devices.Add (update.Id);
+				else
+					this.devices.Remove (update.Id);
+
+				IsCameraAvailable = this.devices.Count > 0;
+			}
+		}
+
+		private void OnDeviceRemoved (DeviceWatcher sender, DeviceInformationUpdate update)
+		{
+			lock (this.devices)
+			{
+				this.devices.Remove (update.Id);
+				if (this.devices.Count == 0)
+					IsCameraAvailable = false;
+			}
+		}
+
+		private void OnDeviceAdded (DeviceWatcher sender, DeviceInformation device)
+		{
+			if (!device.IsEnabled)
+				return;
+
+			lock (this.devices)
+			{
+				this.devices.Add (device.Id);
+				if (!IsCameraAvailable)
+					IsCameraAvailable = true;
 			}
 		}
 	}
