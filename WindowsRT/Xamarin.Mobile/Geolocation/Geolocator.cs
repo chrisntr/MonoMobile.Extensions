@@ -11,15 +11,15 @@ namespace Xamarin.Geolocation
 		public event EventHandler<PositionEventArgs> PositionChanged;
 	    public event EventHandler<PositionErrorEventArgs> PositionError;
 
-	    public bool IsGeolocationAvailable
-	    {
+		public bool IsGeolocationAvailable
+		{
 			get { return this.locator.LocationStatus != PositionStatus.NotAvailable; }
-	    }
+		}
 
-	    public bool IsGeolocationEnabled
-	    {
+		public bool IsGeolocationEnabled
+		{
 			get { return this.locator.LocationStatus != PositionStatus.Disabled && this.locator.LocationStatus != PositionStatus.NotAvailable; }
-	    }
+		}
 
 		public double DesiredAccuracy
 		{
@@ -31,20 +31,43 @@ namespace Xamarin.Geolocation
 			}
 		}
 
-	    public bool IsListening
-	    {
+		public bool IsListening
+		{
 			get { return this.isListening; }
-	    }
+		}
 
-	    public async Task<Position> GetPositionAsync (int timeout)
+		public Task<Position> GetPositionAsync (int timeout)
 		{
 			if (timeout < 0)
 				throw new ArgumentOutOfRangeException ("timeout");
 
 			try
 			{
-				Geoposition pos = await this.locator.GetGeopositionAsync (TimeSpan.FromTicks (0), TimeSpan.FromMilliseconds (timeout));
-				return GetPosition(pos);
+				// The built in timeout does not cancel, it throws an exception, so we'll setup our own.
+				IAsyncOperation<Geoposition> pos = this.locator.GetGeopositionAsync (TimeSpan.Zero, TimeSpan.FromDays (365));
+				Timeout timer = new Timeout (timeout, pos.Cancel);
+
+				var tcs = new TaskCompletionSource<Position>();
+
+				pos.Completed = (op, s) =>
+				{
+					timer.Cancel();
+
+					switch (s)
+					{
+						case AsyncStatus.Canceled:
+							tcs.SetCanceled();
+							break;
+						case AsyncStatus.Completed:
+							tcs.SetResult (GetPosition (op.GetResults()));
+							break;
+						case AsyncStatus.Error:
+							tcs.SetException (op.ErrorCode);
+							break;
+					}
+				};
+
+				return tcs.Task;
 			}
 			catch (UnauthorizedAccessException)
 			{
@@ -68,18 +91,39 @@ namespace Xamarin.Geolocation
 			}
 		}
 
-		public async Task<Position> GetPositionAsync (int timeout, CancellationToken token)
+		public Task<Position> GetPositionAsync (int timeout, CancellationToken token)
 		{
 			if (timeout < 0)
 				throw new ArgumentOutOfRangeException ("timeout");
 
 			try
 			{
-				IAsyncOperation<Geoposition> op = this.locator.GetGeopositionAsync (TimeSpan.FromTicks (0), TimeSpan.FromMilliseconds (timeout));
-				token.Register (o => ((IAsyncOperation<Geoposition>)o).Cancel(), op);
+				IAsyncOperation<Geoposition> pos = this.locator.GetGeopositionAsync (TimeSpan.FromTicks (0), TimeSpan.FromDays (365));
+				token.Register (o => ((IAsyncOperation<Geoposition>)o).Cancel(), pos);
 
-				Geoposition pos = await op;
-				return GetPosition (pos);
+				Timeout timer = new Timeout (timeout, pos.Cancel);
+
+				var tcs = new TaskCompletionSource<Position>();
+
+				pos.Completed = (op, s) =>
+				{
+					timer.Cancel();
+
+					switch (s)
+					{
+						case AsyncStatus.Canceled:
+							tcs.SetCanceled();
+							break;
+						case AsyncStatus.Completed:
+							tcs.SetResult (GetPosition (op.GetResults()));
+							break;
+						case AsyncStatus.Error:
+							tcs.SetException (op.ErrorCode);
+							break;
+					}
+				};
+
+				return tcs.Task;
 			}
 			catch (UnauthorizedAccessException)
 			{
@@ -138,9 +182,7 @@ namespace Xamarin.Geolocation
 
 			StopListening();
 
-			var perror = PositionError;
-			if (perror != null)
-				perror (this, new PositionErrorEventArgs (error));
+			OnPositionError (new PositionErrorEventArgs (error));
 		}
 
 		private void OnLocatorPositionChanged (Windows.Devices.Geolocation.Geolocator sender, PositionChangedEventArgs e)

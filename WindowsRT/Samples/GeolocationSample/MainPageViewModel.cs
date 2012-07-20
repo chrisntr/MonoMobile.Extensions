@@ -10,7 +10,7 @@ namespace GeolocationSample
 	public class MainPageViewModel
 		: INotifyPropertyChanged
 	{
-		public MainPageViewModel (Windows.UI.Core.CoreDispatcher dispatcher)
+		public MainPageViewModel (CoreDispatcher dispatcher)
 		{
 			this.dispatcher = dispatcher;
 			this.geolocator.DesiredAccuracy = 50;
@@ -82,7 +82,7 @@ namespace GeolocationSample
 			{
 				Status = "Error: (" + ex.Error + ") " + ex.Message;
 			}
-			catch (TaskCanceledException)
+			catch (OperationCanceledException)
 			{
 				Status = "Canceled";
 			}
