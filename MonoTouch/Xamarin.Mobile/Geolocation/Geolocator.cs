@@ -196,7 +196,7 @@ namespace Xamarin.Geolocation
 				OnPositionError (new PositionErrorEventArgs (GeolocationError.PositionUnavailable));
 		}
 
-		private void OnAuthorizationChanged (object sender, CLAuthroziationChangedEventArgs e)
+		private void OnAuthorizationChanged (object sender, CLAuthorizationChangedEventArgs e)
 		{
 			if (e.Status == CLAuthorizationStatus.Denied || e.Status == CLAuthorizationStatus.Restricted)
 				OnPositionError (new PositionErrorEventArgs (GeolocationError.Unauthorized));
