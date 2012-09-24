@@ -3,6 +3,7 @@ using MonoTouch.CoreLocation;
 using System.Threading.Tasks;
 using System.Threading;
 using MonoTouch.Foundation;
+using MonoTouch.UIKit;
 
 namespace Xamarin.Geolocation
 {
@@ -13,7 +14,12 @@ namespace Xamarin.Geolocation
 			this.manager = GetManager();
 			this.manager.AuthorizationChanged += OnAuthorizationChanged;
 			this.manager.Failed += OnFailed;
-			this.manager.UpdatedLocation += OnUpdatedLocation;
+
+			if (UIDevice.CurrentDevice.CheckSystemVersion (6, 0))
+				this.manager.LocationsUpdated += OnLocationsUpdated;
+			else
+				this.manager.UpdatedLocation += OnUpdatedLocation;
+
 			this.manager.UpdatedHeading += OnUpdatedHeading;
 		}
 
@@ -163,31 +169,44 @@ namespace Xamarin.Geolocation
 			OnPositionChanged (new PositionEventArgs (p));
 		}
 
+		private void OnLocationsUpdated (object sender, CLLocationsUpdatedEventArgs e)
+		{
+			foreach (CLLocation location in e.Locations)
+				UpdatePosition (location);
+		}
+
 		private void OnUpdatedLocation (object sender, CLLocationUpdatedEventArgs e)
+		{
+			UpdatePosition (e.NewLocation);
+		}
+
+		private void UpdatePosition (CLLocation location)
 		{
 			Position p = (this.position == null) ? new Position () : new Position (this.position);
 			
-			if (e.NewLocation.HorizontalAccuracy > -1)
+			if (location.HorizontalAccuracy > -1)
 			{
-				p.Accuracy = e.NewLocation.HorizontalAccuracy;
-				p.Latitude = e.NewLocation.Coordinate.Latitude;
-				p.Longitude = e.NewLocation.Coordinate.Longitude;
+				p.Accuracy = location.HorizontalAccuracy;
+				p.Latitude = location.Coordinate.Latitude;
+				p.Longitude = location.Coordinate.Longitude;
 			}
 			
-			if (e.NewLocation.VerticalAccuracy > -1)
+			if (location.VerticalAccuracy > -1)
 			{
-				p.Altitude = e.NewLocation.Altitude;
-				p.AltitudeAccuracy = e.NewLocation.VerticalAccuracy;
+				p.Altitude = location.Altitude;
+				p.AltitudeAccuracy = location.VerticalAccuracy;
 			}
 			
-			if (e.NewLocation.Speed > -1)
-				p.Speed = e.NewLocation.Speed;
+			if (location.Speed > -1)
+				p.Speed = location.Speed;
 			
-			p.Timestamp = new DateTimeOffset (e.NewLocation.Timestamp);
-
+			p.Timestamp = new DateTimeOffset (location.Timestamp);
+			
 			this.position = p;
-
+			
 			OnPositionChanged (new PositionEventArgs (p));
+
+			location.Dispose();
 		}
 		
 		private void OnFailed (object sender, MonoTouch.Foundation.NSErrorEventArgs e)
