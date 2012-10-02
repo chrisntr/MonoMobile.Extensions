@@ -70,6 +70,9 @@ namespace Xamarin.Geolocation
 
 		public void OnProviderDisabled (string provider)
 		{
+			if (provider == LocationManager.PassiveProvider)
+				return;
+
 			lock (this.activeProviders)
 			{
 				if (this.activeProviders.Remove (provider) && this.activeProviders.Count == 0)
@@ -79,6 +82,9 @@ namespace Xamarin.Geolocation
 
 		public void OnProviderEnabled (string provider)
 		{
+			if (provider == LocationManager.PassiveProvider)
+				return;
+
 			lock (this.activeProviders)
 				this.activeProviders.Add (provider);	
 		}
