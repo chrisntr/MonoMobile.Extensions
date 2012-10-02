@@ -10,10 +10,10 @@ namespace Xamarin.Geolocation
 	internal class GeolocationSingleListener
 		: Java.Lang.Object, ILocationListener
 	{
-		public GeolocationSingleListener (float desiredAccuracy, int timeout, IEnumerable<string> activeProviders, Action callback)
+		public GeolocationSingleListener (float desiredAccuracy, int timeout, IEnumerable<string> activeProviders, Action finishedCallback)
 		{
 			this.desiredAccuracy = desiredAccuracy;
-			this.callback = callback;
+			this.finishedCallback = finishedCallback;
 
 			this.activeProviders = new HashSet<string> (activeProviders);
 
@@ -78,7 +78,7 @@ namespace Xamarin.Geolocation
 		private readonly object locationSync = new object();
 		private Location bestLocation;
 		
-		private readonly Action callback;
+		private readonly Action finishedCallback;
 		private readonly float desiredAccuracy;
 		private readonly Timer timer;
 		private readonly TaskCompletionSource<Position> completionSource = new TaskCompletionSource<Position>();
@@ -90,8 +90,8 @@ namespace Xamarin.Geolocation
 			{
 				if (this.bestLocation == null)
 				{
-					if (this.completionSource.TrySetCanceled() && this.callback != null)
-						this.callback();
+					if (this.completionSource.TrySetCanceled() && this.finishedCallback != null)
+						this.finishedCallback();
 				}
 				else
 					Finish (this.bestLocation);
@@ -114,8 +114,8 @@ namespace Xamarin.Geolocation
 			p.Latitude = location.Latitude;
 			p.Timestamp = new DateTimeOffset (new DateTime (TimeSpan.TicksPerMillisecond * location.Time, DateTimeKind.Utc));
 			
-			if (this.callback != null)
-				this.callback();
+			if (this.finishedCallback != null)
+				this.finishedCallback();
 
 			this.completionSource.TrySetResult (p);
 		}

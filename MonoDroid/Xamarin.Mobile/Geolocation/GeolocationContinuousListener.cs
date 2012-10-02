@@ -103,9 +103,9 @@ namespace Xamarin.Geolocation
 			}
 		}
 		
-		private LocationManager manager;
 		private IList<string> providers;
-		private HashSet<string> activeProviders = new HashSet<string>();
+		private readonly HashSet<string> activeProviders = new HashSet<string>();
+		private readonly LocationManager manager;
 		
 		private string activeProvider;
 		private Location lastLocation;

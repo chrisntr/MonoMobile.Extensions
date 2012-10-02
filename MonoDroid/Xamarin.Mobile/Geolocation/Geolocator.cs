@@ -70,7 +70,7 @@ namespace Xamarin.Geolocation
 		
 		public bool IsGeolocationEnabled
 		{
-			get { return this.providers.Any (p => this.manager.IsProviderEnabled (p)); }
+			get { return this.providers.Any (this.manager.IsProviderEnabled); }
 		}
 
 		public Task<Position> GetPositionAsync (CancellationToken cancelToken)
@@ -93,8 +93,8 @@ namespace Xamarin.Geolocation
 			if (!IsListening)
 			{
 				GeolocationSingleListener singleListener = null;
-				singleListener = new GeolocationSingleListener ((float)DesiredAccuracy, timeout, this.providers.Where (p => this.manager.IsProviderEnabled (p)),
-					() =>
+				singleListener = new GeolocationSingleListener ((float)DesiredAccuracy, timeout, this.providers.Where (this.manager.IsProviderEnabled),
+					finishedCallback: () =>
 				{
 					for (int i = 0; i < this.providers.Length; ++i)
 						this.manager.RemoveUpdates (singleListener);
@@ -141,34 +141,29 @@ namespace Xamarin.Geolocation
 
 				return singleListener.Task;
 			}
-			else
+
+			// If we're already listening, just use the current listener
+			lock (this.positionSync)
 			{
-				
-				lock (this.positionSync)
+				if (this.lastPosition == null)
 				{
-					if (this.lastPosition == null)
+					if (cancelToken != CancellationToken.None)
 					{
-						if (cancelToken != CancellationToken.None)
-						{
-							cancelToken.Register (() =>
-							{
-								tcs.TrySetCanceled();
-							});
-						}
-
-						EventHandler<PositionEventArgs> gotPosition = null;
-						gotPosition = (s, e) =>
-						{
-							tcs.TrySetResult (e.Position);
-							PositionChanged -= gotPosition;
-						};
-
-						PositionChanged += gotPosition;
+						cancelToken.Register (() => tcs.TrySetCanceled());
 					}
-					else
+
+					EventHandler<PositionEventArgs> gotPosition = null;
+					gotPosition = (s, e) =>
 					{
-						tcs.SetResult (this.lastPosition);
-					}
+						tcs.TrySetResult (e.Position);
+						PositionChanged -= gotPosition;
+					};
+
+					PositionChanged += gotPosition;
+				}
+				else
+				{
+					tcs.SetResult (this.lastPosition);
 				}
 			}
 
