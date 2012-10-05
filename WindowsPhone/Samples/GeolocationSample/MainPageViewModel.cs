@@ -20,6 +20,20 @@ namespace GeolocationSample
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
+		private bool showProgress;
+		public bool ShowProgress
+		{
+			get { return this.showProgress; }
+			set
+			{
+				if (this.showProgress == value)
+					return;
+
+				this.showProgress = value;
+				OnPropertyChanged ("ShowProgress");
+			}
+		}
+
 		private string status;
 		public string Status
 		{
@@ -64,6 +78,9 @@ namespace GeolocationSample
 
 		private async void GetPositionHandler (object state)
 		{
+			ShowProgress = true;
+			Status = "Getting location..";
+
 			if (!this.geolocator.IsGeolocationEnabled)
 			{
 				Status = "Location disabled";
@@ -74,6 +91,7 @@ namespace GeolocationSample
 			{
 				Position p = await this.geolocator.GetPositionAsync (10000);
 				CurrentPosition = p;
+				Status = "Success";
 			}
 			catch (GeolocationException ex)
 			{
@@ -83,6 +101,8 @@ namespace GeolocationSample
 			{
 				Status = "Canceled";
 			}
+
+			ShowProgress = false;
 		}
 
 		private void ToggleListeningHandler (object o)
