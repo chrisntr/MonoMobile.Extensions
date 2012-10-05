@@ -10,12 +10,7 @@ using Android.Provider;
 
 namespace Xamarin.Contacts
 {
-	/* TODO
-	 * SecurityException bubbling
-	 * Validate contact IDs?
-	 */
-
-	public class AddressBook
+	public sealed class AddressBook
 		: IQueryable<Contact>
 	{
 		public AddressBook (Context context)
