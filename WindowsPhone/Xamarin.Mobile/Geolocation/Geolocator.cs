@@ -7,11 +7,6 @@ namespace Xamarin.Geolocation
 {
 	public class Geolocator
 	{
-		public Geolocator()
-		{
-			this.isEnabled = GetEnabled();
-		}
-
 		public event EventHandler<PositionErrorEventArgs> PositionError;
 		public event EventHandler<PositionEventArgs> PositionChanged;
 
