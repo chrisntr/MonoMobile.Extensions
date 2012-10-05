@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Android.Content;
 using Android.Content.Res;
 using Android.Database;
@@ -47,6 +48,24 @@ namespace Xamarin.Contacts
 		public bool LoadSupported
 		{
 			get { return true; }
+		}
+
+		public Task<bool> RequestPermission()
+		{
+			return Task.Factory.StartNew (() =>
+			{
+				try
+				{
+					ICursor cursor = this.content.Query (ContactsContract.Data.ContentUri, null, null, null, null);
+					cursor.Dispose();
+
+					return true;
+				}
+				catch (Java.Lang.SecurityException)
+				{
+					return false;
+				}
+			});
 		}
 
 		public IEnumerator<Contact> GetEnumerator()
