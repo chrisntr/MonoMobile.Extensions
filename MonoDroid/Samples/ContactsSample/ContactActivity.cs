@@ -34,19 +34,7 @@ namespace ContactsSample
 				contactID = Intent.GetStringExtra("contactID");	
 			}
 			
-			//
-			// Get the address book
-			//
-			var book = new AddressBook (this);
-			
-			//
-			// Important: PreferContactAggregation must be set to the 
-			// the same value as when the ID was generated (from the
-			// previous activity)
-			//
-			book.PreferContactAggregation = true;
-			
-			Contact contact = book.Load (contactID);
+			Contact contact = MainActivity.AddressBook.Load (contactID);
 			
 			//
 			// If the contact is empty, we'll
