@@ -13,6 +13,10 @@
     SupportedOrientations="Portrait" Orientation="Portrait"
     shell:SystemTray.IsVisible="True">
 
+	<shell:SystemTray.ProgressIndicator>
+		<shell:ProgressIndicator x:Name="indicator" IsVisible="{Binding ShowProgress}"  IsIndeterminate="true" />
+	</shell:SystemTray.ProgressIndicator>
+	
     <Grid x:Name="LayoutRoot" Background="Transparent">
 		<controls:Pivot Name="pivot" Title="Xamarin Mobile API Preview Contacts Sample">
 			<controls:PivotItem Header="contacts">

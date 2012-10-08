@@ -18,9 +18,23 @@ namespace ContactsSample
 		public event EventHandler SelectedContact;
 		public event PropertyChangedEventHandler PropertyChanged;
 
+		private bool showProgress = true;
+		public bool ShowProgress
+		{
+			get { return this.showProgress; }
+			set
+			{
+				if (this.showProgress == value)
+					return;
+
+				this.showProgress = value;
+				OnPropertyChanged("ShowProgress");
+			}
+		}
+
 		public IEnumerable<Contact> Contacts
 		{
-			get { return addressBook; }
+			get { return FinishWhenIterated (this.addressBook ?? Enumerable.Empty<Contact>()); }
 		}
 
 		private BitmapImage thumb;
@@ -49,6 +63,14 @@ namespace ContactsSample
 		}
 
 		private readonly AddressBook addressBook = new AddressBook();
+
+		private IEnumerable<Contact> FinishWhenIterated (IEnumerable<Contact> contacts)
+		{
+			foreach (var contact in contacts)
+				yield return contact;
+
+			ShowProgress = false;
+		}
 		
 		private void OnPropertyChanged (string name)
 		{
