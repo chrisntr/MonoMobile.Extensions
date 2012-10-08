@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Media.Imaging;
 using Xamarin.Contacts;
+using System.Threading.Tasks;
 
 namespace ContactsSample
 {
@@ -12,7 +13,13 @@ namespace ContactsSample
 	{
 		public MainPageViewModel()
 		{
-			Contact = Contacts.First();
+			Setup();
+		}
+
+		private async Task Setup()
+		{
+			if (!await this.addressBook.RequestPermission())
+				this.addressBook = null;
 		}
 
 		public event EventHandler SelectedContact;
@@ -40,7 +47,13 @@ namespace ContactsSample
 		private BitmapImage thumb;
 		public BitmapImage Thumbnail
 		{
-			get { return this.thumb ?? (this.thumb = this.contact.GetThumbnail()); }
+			get
+			{
+				if (this.thumb == null && this.contact != null)
+					this.thumb = this.contact.GetThumbnail();
+
+				return this.thumb;
+			}
 		}
 
 		private Contact contact;
@@ -62,7 +75,7 @@ namespace ContactsSample
 			}
 		}
 
-		private readonly AddressBook addressBook = new AddressBook();
+		private AddressBook addressBook = new AddressBook();
 
 		private IEnumerable<Contact> FinishWhenIterated (IEnumerable<Contact> contacts)
 		{
