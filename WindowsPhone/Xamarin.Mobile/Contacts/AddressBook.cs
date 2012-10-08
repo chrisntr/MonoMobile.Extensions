@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace Xamarin.Contacts
 {
-	public class AddressBook
+	public sealed class AddressBook
 		: IQueryable<Contact>
 	{
 		public AddressBook()
