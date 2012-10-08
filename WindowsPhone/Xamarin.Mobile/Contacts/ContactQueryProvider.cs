@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Phone.UserData;
 using Expression = System.Linq.Expressions.Expression;
 using WindowsContacts = Microsoft.Phone.UserData.Contacts;
+using System.Threading;
 
 namespace Xamarin.Contacts
 {
@@ -23,15 +24,10 @@ namespace Xamarin.Contacts
 			{
 				System.Threading.Tasks.Task.Factory.StartNew (() =>
 				{
-					this.contacts.SearchCompleted += ContactsOnSearchCompleted;
-					this.contacts.SearchAsync (filter, filterKind, null);
-				});
-			}
-
-			private void ContactsOnSearchCompleted (object sender, ContactsSearchEventArgs e)
-			{
-				this.tcs.SetResult (e.Results.Select (GetContact));
-				this.contacts.SearchCompleted -= ContactsOnSearchCompleted;
+					WindowsContacts contacts = new WindowsContacts();
+					contacts.SearchCompleted += (s, e) => this.tcs.SetResult (e.Results.Select (GetContact));
+					contacts.SearchAsync (filter, filterKind, null);
+				}, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default);
 			}
 
 			internal Task<IEnumerable<Contact>> Task
@@ -39,7 +35,6 @@ namespace Xamarin.Contacts
 				get { return this.tcs.Task; }
 			}
 
-			private readonly WindowsContacts contacts = new WindowsContacts();
 			private readonly TaskCompletionSource<IEnumerable<Contact>> tcs = new TaskCompletionSource<IEnumerable<Contact>>();
 		}
 

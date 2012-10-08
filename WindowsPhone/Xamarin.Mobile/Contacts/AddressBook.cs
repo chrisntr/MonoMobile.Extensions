@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Xamarin.Contacts
 {
@@ -38,6 +40,23 @@ namespace Xamarin.Contacts
 		public bool LoadSupported
 		{
 			get { return false; }
+		}
+
+		public Task<bool> RequestPermission()
+		{
+			return Task<bool>.Factory.StartNew (() =>
+			{
+				try
+				{
+					var contacts = new Microsoft.Phone.UserData.Contacts();
+					contacts.Accounts.ToArray(); // Will trigger exception if manifest doesn't specify ID_CAP_CONTACTS
+					return true;
+				}
+				catch (Exception)
+				{
+					return false;
+				}
+			}, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default);
 		}
 
 		public Contact Load (string id)
