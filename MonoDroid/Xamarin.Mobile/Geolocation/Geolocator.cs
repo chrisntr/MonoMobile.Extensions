@@ -135,7 +135,7 @@ namespace Xamarin.Geolocation
 				}
 				catch (Java.Lang.SecurityException ex)
 				{
-					tcs.SetException (new GeolocationException (GeolocationError.Unauthorized));
+					tcs.SetException (new GeolocationException (GeolocationError.Unauthorized, ex));
 					return tcs.Task;
 				}
 
