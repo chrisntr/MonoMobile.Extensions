@@ -89,7 +89,7 @@ namespace GeolocationSample
 
 			try
 			{
-				Position p = await this.geolocator.GetPositionAsync (10000);
+				Position p = await this.geolocator.GetPositionAsync (10000, includeHeading: true);
 				CurrentPosition = p;
 				Status = "Success";
 			}
@@ -116,7 +116,7 @@ namespace GeolocationSample
 			if (!this.geolocator.IsListening)
 			{
 				Status = "Listening";
-				this.geolocator.StartListening (0, 0);
+				this.geolocator.StartListening (0, 0, includeHeading: true);
 			}
 			else
 			{
