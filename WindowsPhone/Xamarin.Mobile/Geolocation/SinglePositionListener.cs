@@ -12,6 +12,7 @@ namespace Xamarin.Geolocation
 			cancelToken.Register (HandleTimeout, true);
 			this.desiredAccuracy = accuracy;
 			this.start = DateTime.Now;
+			this.timeout = timeout;
 
 			System.Threading.Tasks.Task.Factory.StartNew (() =>
 			{
@@ -36,8 +37,9 @@ namespace Xamarin.Geolocation
 		private GeoPosition<GeoCoordinate> bestPosition;
 		private GeoCoordinateWatcher watcher;
 		private readonly double desiredAccuracy;
-		private readonly DateTime start;
+		private readonly DateTimeOffset start;
 		private readonly Timer timer;
+		private readonly int timeout;
 		private readonly TaskCompletionSource<Position> tcs = new TaskCompletionSource<Position>();
 
 		private void Cleanup (Task task)
@@ -79,10 +81,12 @@ namespace Xamarin.Geolocation
 
 		private void WatcherOnPositionChanged (object sender, GeoPositionChangedEventArgs<GeoCoordinate> e)
 		{
-			if (e.Position.Location.IsUnknown || e.Position.Timestamp < this.start)
+			if (e.Position.Location.IsUnknown)
 				return;
 
-			if (e.Position.Location.HorizontalAccuracy <= this.desiredAccuracy)
+			bool isRecent = (e.Position.Timestamp - this.start).TotalMilliseconds < this.timeout;
+
+			if (e.Position.Location.HorizontalAccuracy <= this.desiredAccuracy && isRecent)
 				this.tcs.TrySetResult (Geolocator.GetPosition (e.Position));
 
 			if (this.bestPosition == null || e.Position.Location.HorizontalAccuracy < this.bestPosition.Location.HorizontalAccuracy)
