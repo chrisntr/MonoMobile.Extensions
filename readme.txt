@@ -1,4 +1,4 @@
-Xamarin Mobile API Preview 0.5
+Xamarin Mobile API Preview 0.5.1
 
 At this time, the Windows Phone version of the library requires the
 Visual Studio Async CTP (http://www.microsoft.com/en-us/download/details.aspx?id=9983).
@@ -6,6 +6,21 @@ As this CTP installs to a user-specific directory, you'll likely need to
 correct references to this library in the samples to use them.
 
 Changelog
+
+Release 0.5.1
+
+Enhancements:
+ - Geolocator.GetPositionAsync() and StartListening() now optionally support
+   including the heading or not. BREAKING CHANGE: The default is false where
+   previously it was automatically included.
+
+Fixes:
+ - Xamarin.Geolocation has been updated to support iOS6 and MonoTouch 6.
+ - Xamarin.Contacts.AddressBook now provides a Task<bool> RequestPermission()
+   method to support iOS6's new privacy settings on ABAddressBook. This method
+   checks manifest privileges on Android and Windows Phone.
+ - Improved the likelihood of receiving a result from Geolocator.GetPositionAsync()
+   on Windows Phone.
 
 Release 0.5
 
