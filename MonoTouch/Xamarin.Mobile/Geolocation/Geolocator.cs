@@ -55,15 +55,30 @@ namespace Xamarin.Geolocation
 
 		public Task<Position> GetPositionAsync (int timeout)
 		{
-			return GetPositionAsync (timeout, CancellationToken.None);
+			return GetPositionAsync (timeout, CancellationToken.None, false);
+		}
+
+		public Task<Position> GetPositionAsync (int timeout, bool includeHeading)
+		{
+			return GetPositionAsync (timeout, CancellationToken.None, includeHeading);
 		}
 
 		public Task<Position> GetPositionAsync (CancellationToken cancelToken)
 		{
-			return GetPositionAsync (Timeout.Infinite, cancelToken);
+			return GetPositionAsync (Timeout.Infinite, cancelToken, false);
+		}
+
+		public Task<Position> GetPositionAsync (CancellationToken cancelToken, bool includeHeading)
+		{
+			return GetPositionAsync (Timeout.Infinite, cancelToken, includeHeading);
 		}
 
 		public Task<Position> GetPositionAsync (int timeout, CancellationToken cancelToken)
+		{
+			return GetPositionAsync (timeout, cancelToken, false);
+		}
+
+		public Task<Position> GetPositionAsync (int timeout, CancellationToken cancelToken, bool includeHeading)
 		{
 			if (timeout <= 0 && timeout != Timeout.Infinite)
 				throw new ArgumentOutOfRangeException ("timeout", "Timeout must be positive or Timeout.Infinite");
@@ -78,7 +93,7 @@ namespace Xamarin.Geolocation
 				m.Delegate = singleListener;
 
 				m.StartUpdatingLocation ();
-				if (SupportsHeading)
+				if (includeHeading && SupportsHeading)
 					m.StartUpdatingHeading ();
 
 				return singleListener.Task;
@@ -115,6 +130,11 @@ namespace Xamarin.Geolocation
 
 		public void StartListening (int minTime, double minDistance)
 		{
+			StartListening (minTime, minDistance, false);
+		}
+
+		public void StartListening (int minTime, double minDistance, bool includeHeading)
+		{
 			if (minTime < 0)
 				throw new ArgumentOutOfRangeException ("minTime");
 			if (minDistance < 0)
@@ -127,7 +147,7 @@ namespace Xamarin.Geolocation
 			this.manager.DistanceFilter = minDistance;
 			this.manager.StartUpdatingLocation ();
 
-			if (CLLocationManager.HeadingAvailable)
+			if (includeHeading && CLLocationManager.HeadingAvailable)
 				this.manager.StartUpdatingHeading ();
 		}
 
