@@ -31,8 +31,8 @@ namespace Xamarin.Geolocation
 			
 			cancelToken.Register (() =>
 			{
-				this.tcs.TrySetCanceled();
 				StopListening();
+				this.tcs.TrySetCanceled();
 			});
 		}
 		
@@ -46,8 +46,8 @@ namespace Xamarin.Geolocation
 			// If user has services disabled, we're just going to throw an exception for consistency.
 			if (status == CLAuthorizationStatus.Denied || status == CLAuthorizationStatus.Restricted)
 			{
-				this.tcs.TrySetException (new GeolocationException (GeolocationError.Unauthorized));
 				StopListening();
+				this.tcs.TrySetException (new GeolocationException (GeolocationError.Unauthorized));
 			}
 		}
 
@@ -56,8 +56,8 @@ namespace Xamarin.Geolocation
 			switch ((CLError)error.Code)
 			{
 				case CLError.Network:
+					StopListening();	
 					this.tcs.SetException (new GeolocationException (GeolocationError.PositionUnavailable));
-					StopListening();
 					break;
 			}
 		}
