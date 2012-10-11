@@ -3,7 +3,11 @@
   <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit AddressBook extends System.Object implements class System.Collections.Generic.IEnumerable`1&lt;class Xamarin.Contacts.Contact&gt;, class System.Collections.IEnumerable, class System.Linq.IQueryable, class System.Linq.IQueryable`1&lt;class Xamarin.Contacts.Contact&gt;" />
   <AssemblyInfo>
     <AssemblyName>Xamarin.Mobile</AssemblyName>
-    <AssemblyVersion>0.0.0.0</AssemblyVersion>
+    <AssemblyVersion>0.2.0.0</AssemblyVersion>
+    <AssemblyVersion>0.3.0.0</AssemblyVersion>
+    <AssemblyVersion>0.4.0.0</AssemblyVersion>
+    <AssemblyVersion>0.5.0.0</AssemblyVersion>
+    <AssemblyVersion>0.5.1.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -32,33 +36,46 @@
 			"Eric" and has a phone listed. Then it iterates through the contacts, making
 			a list of each person and their phones.
 		</para>
-		<code language="C#">
-			<![CDATA[
-var builder = new StringBuilder();
+      <code language="C#"><![CDATA[
 var abook = new AddressBook();
-foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any()))
+abook.RequestPermissions().ContinueWith (t =>
 {
-	builder.AppendLine (c.DisplayName);
-	foreach (Phone p in c.Phones)
-		builder.AppendLine (String.Format ("{0}: {1}", p.Label, p.Number));
+	if (!t.Result)
+		return; // Permission denied
 
-	builder.AppendLine();
-}
-			]]>
-		</code>
+	var builder = new StringBuilder();
+	
+	// Full LINQ support
+	foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any()))
+	{
+		builder.AppendLine (c.DisplayName);
+		foreach (Phone p in c.Phones)
+			builder.AppendLine (String.Format ("{0}: {1}", p.Label, p.Number));
+
+		builder.AppendLine();
+	}
+	
+	contacts.Text = builder.ToString(); // Update UI
+	
+}, TaskScheduler.FromCurrentSynchronizationContext()); // Ensure we're on the UI Thread
+			]]></code>
     </example>
   </Docs>
   <Members>
-	<Member MemberName=".ctor">
-		<MemberSignature Language="C#" Value="public AddressBook ();" />
-		<MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
-		<MemberType>Constructor</MemberType>
-		<AssemblyInfo>
-			<AssemblyVersion>0.0.0.0</AssemblyVersion>
-		</AssemblyInfo>
-		<Parameters />
-		<Docs>
-			<summary>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public AddressBook ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.2.0.0</AssemblyVersion>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>
 				Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.AddressBook" /> class.
 			</summary>
 			<remarks>Available only on iOS.</remarks>
@@ -69,7 +86,11 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class Android.Content.Context context) cil managed" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+        <AssemblyVersion>0.2.0.0</AssemblyVersion>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="context" Type="Android.Content.Context" />
@@ -85,7 +106,11 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
       <MemberSignature Language="ILAsm" Value=".property instance bool AggregateContactsSupported" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+        <AssemblyVersion>0.2.0.0</AssemblyVersion>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -105,7 +130,11 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Collections.Generic.IEnumerator`1&lt;class Xamarin.Contacts.Contact&gt; GetEnumerator() cil managed" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+        <AssemblyVersion>0.2.0.0</AssemblyVersion>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Collections.Generic.IEnumerator&lt;Xamarin.Contacts.Contact&gt;</ReturnType>
@@ -121,30 +150,20 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
       <MemberSignature Language="ILAsm" Value=".property instance bool IsReadOnly" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+        <AssemblyVersion>0.2.0.0</AssemblyVersion>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>Gets whether this address book is read-only.</summary>
-        <value><c>true</c> if this address book is read-only, <c>false</c> otherwise.</value>
+        <value>
+          <c>true</c> if this address book is read-only, <c>false</c> otherwise.</value>
         <remarks>Currently this will always return <c>true</c>.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="LoadSupported">
-      <MemberSignature Language="C#" Value="public bool LoadSupported { get; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance bool LoadSupported" />
-      <MemberType>Property</MemberType>
-      <AssemblyInfo>
-        <AssemblyVersion>0.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>Gets whether <see cref="M:Xamarin.Contacts.AddressBook.Load" /> is supported or not.</summary>
-        <value><c>true</c> on iOS and Android, <c>false</c> on Windows Phone.</value>
       </Docs>
     </Member>
     <Member MemberName="Load">
@@ -152,7 +171,11 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Xamarin.Contacts.Contact Load(string id) cil managed" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+        <AssemblyVersion>0.2.0.0</AssemblyVersion>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>Xamarin.Contacts.Contact</ReturnType>
@@ -189,8 +212,28 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
           <paramref name="id" /> is <c>null</c>.
         </exception>
         <exception cref="T:System.ArgumentException">
-			<para><paramref name="id" /> is empty.</para>
-		</exception>
+          <para>
+            <paramref name="id" /> is empty.</para>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="LoadSupported">
+      <MemberSignature Language="C#" Value="public bool LoadSupported { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool LoadSupported" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.2.0.0</AssemblyVersion>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets whether <see cref="M:Xamarin.Contacts.AddressBook.Load" /> is supported or not.</summary>
+        <value><c>true</c> on iOS and Android, <c>false</c> on Windows Phone.</value>
       </Docs>
     </Member>
     <Member MemberName="PreferContactAggregation">
@@ -198,7 +241,11 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
       <MemberSignature Language="ILAsm" Value=".property instance bool PreferContactAggregation" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+        <AssemblyVersion>0.2.0.0</AssemblyVersion>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -217,12 +264,42 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
         <altmember cref="P:Xamarin.Contacts.AddressBook.SingleContactsSupported" />
       </Docs>
     </Member>
+    <Member MemberName="RequestPermission">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;bool&gt; RequestPermission ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;bool&gt; RequestPermission() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;System.Boolean&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Requests permission to access the user's contacts.</summary>
+        <returns>A task who's result will be <c>true</c> if given access to the user's contacts, <c>false</c> otherwise.</returns>
+        <remarks>
+            <para>
+                On iOS, calling this method is required before using the <see cref="T:Xamarin.Contacts.AddressBook"/> instance.
+                For it's first call the user will be prompted for permission to access their contacts. On Android and Windows Phone, calling this method will check the manifest based permissions for contacts
+                access on those platforms.
+            </para>
+            <para>
+                It's recommend that you call this method before accessing contacts regardless of platform.
+            </para>
+        </remarks>
+      </Docs>
+    </Member>
     <Member MemberName="SingleContactsSupported">
       <MemberSignature Language="C#" Value="public bool SingleContactsSupported { get; }" />
       <MemberSignature Language="ILAsm" Value=".property instance bool SingleContactsSupported" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+        <AssemblyVersion>0.2.0.0</AssemblyVersion>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -241,7 +318,11 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
       <MemberSignature Language="ILAsm" Value=".method hidebysig newslot virtual instance class System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() cil managed" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+        <AssemblyVersion>0.2.0.0</AssemblyVersion>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Collections.IEnumerator</ReturnType>
@@ -258,7 +339,11 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
       <MemberSignature Language="ILAsm" Value=".property instance class System.Type System.Linq.IQueryable.ElementType" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+        <AssemblyVersion>0.2.0.0</AssemblyVersion>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Type</ReturnType>
@@ -274,7 +359,11 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
       <MemberSignature Language="ILAsm" Value=".property instance class System.Linq.Expressions.Expression System.Linq.IQueryable.Expression" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+        <AssemblyVersion>0.2.0.0</AssemblyVersion>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Linq.Expressions.Expression</ReturnType>
@@ -290,7 +379,11 @@ foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any())
       <MemberSignature Language="ILAsm" Value=".property instance class System.Linq.IQueryProvider System.Linq.IQueryable.Provider" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+        <AssemblyVersion>0.2.0.0</AssemblyVersion>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Linq.IQueryProvider</ReturnType>
