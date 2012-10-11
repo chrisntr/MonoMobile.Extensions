@@ -1,6 +1,6 @@
 <Type Name="AddressBook" FullName="Xamarin.Contacts.AddressBook">
-  <TypeSignature Language="C#" Value="public class AddressBook : System.Collections.Generic.IEnumerable&lt;Xamarin.Contacts.Contact&gt;, System.Linq.IQueryable&lt;Xamarin.Contacts.Contact&gt;" />
-  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit AddressBook extends System.Object implements class System.Collections.Generic.IEnumerable`1&lt;class Xamarin.Contacts.Contact&gt;, class System.Collections.IEnumerable, class System.Linq.IQueryable, class System.Linq.IQueryable`1&lt;class Xamarin.Contacts.Contact&gt;" />
+  <TypeSignature Language="C#" Value="public sealed class AddressBook : System.Collections.Generic.IEnumerable&lt;Xamarin.Contacts.Contact&gt;, System.Linq.IQueryable&lt;Xamarin.Contacts.Contact&gt;" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit AddressBook extends System.Object implements class System.Collections.Generic.IEnumerable`1&lt;class Xamarin.Contacts.Contact&gt;, class System.Collections.IEnumerable, class System.Linq.IQueryable, class System.Linq.IQueryable`1&lt;class Xamarin.Contacts.Contact&gt;" />
   <AssemblyInfo>
     <AssemblyName>Xamarin.Mobile</AssemblyName>
     <AssemblyVersion>0.2.0.0</AssemblyVersion>
