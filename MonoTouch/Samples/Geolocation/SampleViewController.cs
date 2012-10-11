@@ -68,7 +68,7 @@ namespace Sample
 			PositionLatitude.Text = String.Empty;
 			PositionLongitude.Text = String.Empty;
 			
-			this.geolocator.GetPositionAsync (timeout: 10000, cancelToken: this.cancelSource.Token)
+			this.geolocator.GetPositionAsync (timeout: 10000, cancelToken: this.cancelSource.Token, includeHeading: true)
 				.ContinueWith (t =>
 				{
 					if (t.IsFaulted)
@@ -100,7 +100,7 @@ namespace Sample
 			{
 				ToggleListeningButton.SetTitle ("Stop listening", UIControlState.Normal);
 				
-				this.geolocator.StartListening (minTime: 30000, minDistance: 0);
+				this.geolocator.StartListening (minTime: 30000, minDistance: 0, includeHeading: true);
 			}
 			else
 			{
