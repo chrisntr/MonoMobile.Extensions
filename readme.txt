@@ -51,7 +51,7 @@ Features:
  - Windows Phone version of all existing APIs
 
 Enhancements:
- - Improved AddressBook iteration performance on Andriod by 2x
+ - Improved AddressBook iteration performance on Android by 2x
  - Many queries now translate to native queries on Android,
    improving performance on many simple queries.
  - Removed Contact.PhotoThumbnail
