@@ -3,12 +3,12 @@
   <Identity Name="26ce4447-9506-4284-8b0b-715812345606" Publisher="CN=Eric" Version="1.0.0.0" />
   <Properties>
     <DisplayName>MediaPickerSample</DisplayName>
-    <PublisherDisplayName>Eric</PublisherDisplayName>
+    <PublisherDisplayName>Xamarin Inc.</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Prerequisites>
-    <OSMinVersion>6.2.0</OSMinVersion>
-    <OSMaxVersionTested>6.2.0</OSMaxVersionTested>
+    <OSMinVersion>6.2.1</OSMinVersion>
+    <OSMaxVersionTested>6.2.1</OSMaxVersionTested>
   </Prerequisites>
   <Resources>
     <Resource Language="x-generate" />
@@ -25,5 +25,6 @@
     <Capability Name="videosLibrary" />
     <Capability Name="picturesLibrary" />
     <DeviceCapability Name="webcam" />
+    <DeviceCapability Name="microphone" />
   </Capabilities>
 </Package>
