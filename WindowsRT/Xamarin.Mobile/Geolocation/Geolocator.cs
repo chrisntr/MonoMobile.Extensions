@@ -15,7 +15,7 @@ namespace Xamarin.Geolocation
 		}
 
 		public event EventHandler<PositionEventArgs> PositionChanged;
-	    public event EventHandler<PositionErrorEventArgs> PositionError;
+		public event EventHandler<PositionErrorEventArgs> PositionError;
 
 		public bool IsGeolocationAvailable
 		{
