@@ -28,6 +28,7 @@ namespace MediaPickerSample
 					return;
 
 				this.state = value;
+				OnPropertyChanged ("State");
 			}
 		}
 

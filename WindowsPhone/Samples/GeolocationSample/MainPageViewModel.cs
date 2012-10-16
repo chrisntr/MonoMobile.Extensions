@@ -123,8 +123,6 @@ namespace GeolocationSample
 				Status = "Stopped listening";
 				this.geolocator.StopListening();
 			}
-
-			OnPropertyChanged ("Status");
 		}
 
 		private void GeolocatorOnPositionError (object sender, PositionErrorEventArgs e)
