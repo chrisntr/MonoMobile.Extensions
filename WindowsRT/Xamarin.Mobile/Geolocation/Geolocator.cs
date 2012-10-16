@@ -88,7 +88,7 @@ namespace Xamarin.Geolocation
 				IAsyncOperation<Geoposition> op = this.locator.GetGeopositionAsync();
 				token.Register (o => ((IAsyncOperation<Geoposition>)o).Cancel(), op);
 
-				Geoposition pos = await op;
+				Geoposition pos = await op.AsTask (false);
 				return GetPosition (pos);
 			}
 			catch (UnauthorizedAccessException)
