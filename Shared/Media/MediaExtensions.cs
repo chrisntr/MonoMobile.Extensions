@@ -20,7 +20,7 @@ namespace Xamarin.Media
 			//}
 		}
 
-		internal static string GetUniqueFilepath (this StoreMediaOptions self, string rootPath, Func<string, bool> checkExists)
+		internal static string GetFilePath (this StoreMediaOptions self, string rootPath)
 		{
 			bool isPhoto = !(self is StoreVideoOptions);
 
@@ -42,6 +42,16 @@ namespace Xamarin.Media
 
 			string folder = Path.Combine (rootPath ?? String.Empty,
 				(self != null && self.Directory != null) ? self.Directory : String.Empty);
+
+			return Path.Combine (folder, name + ext);
+		}
+
+		internal static string GetUniqueFilepath (this StoreMediaOptions self, string rootPath, Func<string, bool> checkExists)
+		{
+			string path = self.GetFilePath (rootPath);
+			string folder = Path.GetDirectoryName (path);
+			string ext = Path.GetExtension (path);
+			string name = Path.GetFileNameWithoutExtension (path);
 
 			string nname = name + ext;
 			int i = 1;
