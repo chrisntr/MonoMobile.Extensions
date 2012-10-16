@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI.Core;
 using Xamarin.Geolocation;
@@ -67,6 +66,8 @@ namespace GeolocationSample
 
 		private async void GetPositionHandler (object state)
 		{
+			Status = String.Empty;
+
 			if (!this.geolocator.IsGeolocationEnabled)
 			{
 				Status = "Location disabled";
@@ -75,8 +76,8 @@ namespace GeolocationSample
 
 			try
 			{
-				Position p = await this.geolocator.GetPositionAsync (10000);
-				CurrentPosition = p;
+				CurrentPosition = await this.geolocator.GetPositionAsync (10000);
+				Status = "Success";
 			}
 			catch (GeolocationException ex)
 			{
@@ -90,6 +91,8 @@ namespace GeolocationSample
 
 		private void ToggleListeningHandler (object o)
 		{
+			Status = String.Empty;
+
 			if (!this.geolocator.IsGeolocationEnabled)
 			{
 				Status = "Location disabled";
@@ -98,8 +101,8 @@ namespace GeolocationSample
 
 			if (!this.geolocator.IsListening)
 			{
-				Status = "Listening";
 				this.geolocator.StartListening (0, 0);
+				Status = "Listening";
 			}
 			else
 			{

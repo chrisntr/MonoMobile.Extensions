@@ -3,12 +3,12 @@
   <Identity Name="47c6d2c2-e46b-42b9-9f2b-cd109cd3504d" Publisher="CN=Eric" Version="1.0.0.0" />
   <Properties>
     <DisplayName>GeolocationSample</DisplayName>
-    <PublisherDisplayName>Eric</PublisherDisplayName>
+    <PublisherDisplayName>Xamarin Inc.</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Prerequisites>
-    <OSMinVersion>6.2.0</OSMinVersion>
-    <OSMaxVersionTested>6.2.0</OSMaxVersionTested>
+    <OSMinVersion>6.2.1</OSMinVersion>
+    <OSMaxVersionTested>6.2.1</OSMaxVersionTested>
   </Prerequisites>
   <Resources>
     <Resource Language="x-generate" />

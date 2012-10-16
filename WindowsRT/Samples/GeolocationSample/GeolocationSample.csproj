@@ -103,7 +103,7 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <ProjectReference Include="..\..\Xamarin.Mobile\Xamarin.Mobile.csproj">
       <Project>{92076adc-fbd8-4f34-b01a-40d5fa369b8d}</Project>
-      <Name>Xamarin.Mobile %28Windows RT\Xamarin.Mobile%29</Name>
+      <Name>Xamarin.Mobile %28WindowsRT\Xamarin.Mobile%29</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
