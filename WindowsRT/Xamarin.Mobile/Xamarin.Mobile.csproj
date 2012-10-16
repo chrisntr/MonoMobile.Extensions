@@ -114,6 +114,7 @@
     <Compile Include="..\..\Shared\Position.cs">
       <Link>Geolocation\Position.cs</Link>
     </Compile>
+    <Compile Include="Extensions.cs" />
     <Compile Include="Geolocation\Geolocator.cs" />
     <Compile Include="Media\MediaPicker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
