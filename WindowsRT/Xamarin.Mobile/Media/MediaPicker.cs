@@ -76,11 +76,11 @@ namespace Xamarin.Media
 
 			IStorageFolder folder = KnownFolders.PicturesLibrary;
 
-			string path = options.GetUniqueFilepath (folder.Path, p => StorageFile.GetFileFromPathAsync(p).AsTask().Result == null);
+			string path = options.GetFilePath (folder.Path);
 			folder = await StorageFolder.GetFolderFromPathAsync (Path.GetDirectoryName (path));
 			string filename = Path.GetFileName (path);
 
-			IStorageFile file = await result.CopyAsync (folder, filename);
+			IStorageFile file = await result.CopyAsync (folder, filename, NameCollisionOption.GenerateUniqueName).AsTask (false);
 			return new MediaFile (file.Path, () => file.OpenStreamForReadAsync().Result);
 		}
 
