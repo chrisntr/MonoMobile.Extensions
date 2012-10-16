@@ -85,6 +85,7 @@ namespace Xamarin.Media
 			var picker = new FileOpenPicker();
 			picker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
 			picker.ViewMode = PickerViewMode.Thumbnail;
+			picker.FileTypeFilter.Add (".bmp");
 			picker.FileTypeFilter.Add (".jpg");
 			picker.FileTypeFilter.Add (".gif");
 			picker.FileTypeFilter.Add (".png");
