@@ -34,7 +34,7 @@ namespace Xamarin
 			{
 				if (DateTime.Now - start < this.timeout)
 				{
-					Task.Delay (1);
+					Task.Delay (1).Wait();
 					continue;
 				}
 
