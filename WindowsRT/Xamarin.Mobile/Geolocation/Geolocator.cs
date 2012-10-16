@@ -8,6 +8,12 @@ namespace Xamarin.Geolocation
 {
     public class Geolocator
     {
+		public Geolocator()
+		{
+			this.locator.PositionChanged += OnLocatorPositionChanged;
+			this.locator.StatusChanged += OnLocatorStatusChanged;
+		}
+
 		public event EventHandler<PositionEventArgs> PositionChanged;
 	    public event EventHandler<PositionErrorEventArgs> PositionError;
 
@@ -144,9 +150,6 @@ namespace Xamarin.Geolocation
 
 			this.locator.ReportInterval = (uint)minTime;
 			this.locator.MovementThreshold = minDistance;
-
-			this.locator.PositionChanged += OnLocatorPositionChanged;
-			this.locator.StatusChanged += OnLocatorStatusChanged;
 		}
 
 		public void StopListening()
@@ -155,8 +158,6 @@ namespace Xamarin.Geolocation
 				return;
 
 			this.isListening = false;
-			this.locator.PositionChanged -= OnLocatorPositionChanged;
-			this.locator.StatusChanged -= OnLocatorStatusChanged;
 		}
 
 	    private bool isListening;
