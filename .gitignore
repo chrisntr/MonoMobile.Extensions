@@ -16,3 +16,4 @@ _ReSharper.*
 *.userprefs
 *.dotCover
 *.user
+*.ide
