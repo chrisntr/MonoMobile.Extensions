@@ -22,30 +22,37 @@ namespace Xamarin.Media
 			this.watcher.Updated += OnDeviceUpdated;
 			this.watcher.Removed += OnDeviceRemoved;
 			this.watcher.Start();
-			
-			var find = DeviceInformation.FindAllAsync (DeviceClass.VideoCapture);
-			find.Completed = (info, status) =>
-			{
-				if (status != AsyncStatus.Completed)
-					return;
 
-				lock (this.devices)
-				{
-					foreach (DeviceInformation device in info.GetResults())
-					{
-						if (device.IsEnabled)
-							this.devices.Add (device.Id);
-					}
+			this.init = DeviceInformation.FindAllAsync (DeviceClass.VideoCapture).AsTask()
+			                             .ContinueWith (t =>
+			                             {
+				                             if (t.IsFaulted || t.IsCanceled)
+					                             return;
 
-					IsCameraAvailable = (this.devices.Count > 0);
-				}
-			};
+				                             lock (this.devices)
+				                             {
+					                             foreach (DeviceInformation device in t.Result)
+					                             {
+						                             if (device.IsEnabled)
+							                             this.devices.Add (device.Id);
+					                             }
+
+					                             this.isCameraAvailable = (this.devices.Count > 0);
+				                             }
+
+				                             this.init = null;
+			                             });
 		}
 
 		public bool IsCameraAvailable
 		{
-			get;
-			private set;
+			get
+			{
+				if (this.init != null)
+					this.init.Wait();
+
+				return this.isCameraAvailable;
+			}
 		}
 
 		public bool PhotosSupported
@@ -123,8 +130,10 @@ namespace Xamarin.Media
 			return new MediaFile (result.Path, () => result.OpenStreamForReadAsync().Result);
 		}
 
+		private Task init;
 		private readonly HashSet<string> devices = new HashSet<string>();
 		private readonly DeviceWatcher watcher;
+		private bool isCameraAvailable;
 
 		private CameraCaptureUIMaxVideoResolution GetResolutionFromQuality (VideoQuality quality)
 		{
@@ -154,7 +163,7 @@ namespace Xamarin.Media
 				else
 					this.devices.Remove (update.Id);
 
-				IsCameraAvailable = this.devices.Count > 0;
+				this.isCameraAvailable = this.devices.Count > 0;
 			}
 		}
 
@@ -164,7 +173,7 @@ namespace Xamarin.Media
 			{
 				this.devices.Remove (update.Id);
 				if (this.devices.Count == 0)
-					IsCameraAvailable = false;
+					this.isCameraAvailable = false;
 			}
 		}
 
@@ -176,8 +185,7 @@ namespace Xamarin.Media
 			lock (this.devices)
 			{
 				this.devices.Add (device.Id);
-				if (!IsCameraAvailable)
-					IsCameraAvailable = true;
+				this.isCameraAvailable = true;
 			}
 		}
 	}
