@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
-using Windows.Foundation;
 using Windows.Media.Capture;
 using Windows.Storage;
 using Windows.Storage.Pickers;
-using Windows.Storage.Pickers.Provider;
 
 namespace Xamarin.Media
 {
@@ -70,7 +66,7 @@ namespace Xamarin.Media
 			options.VerifyOptions();
 
 			var capture = new CameraCaptureUI();
-			var result = await capture.CaptureFileAsync (CameraCaptureUIMode.Photo);
+			var result = await capture.CaptureFileAsync (CameraCaptureUIMode.Photo).AsTask (false);
 			if (result == null)
 				throw new TaskCanceledException();
 
@@ -109,7 +105,7 @@ namespace Xamarin.Media
 			capture.VideoSettings.MaxDurationInSeconds = (float)options.DesiredLength.TotalSeconds;
 			capture.VideoSettings.Format = CameraCaptureUIVideoFormat.Mp4;
 
-			var result = await capture.CaptureFileAsync (CameraCaptureUIMode.Video);
+			var result = await capture.CaptureFileAsync (CameraCaptureUIMode.Video).AsTask (false);
 			if (result == null)
 				throw new TaskCanceledException();
 
@@ -123,7 +119,7 @@ namespace Xamarin.Media
 			picker.ViewMode = PickerViewMode.Thumbnail;
 			picker.FileTypeFilter.Add (".mp4");
 
-			var result = await picker.PickSingleFileAsync();
+			var result = await picker.PickSingleFileAsync().AsTask (false);
 			if (result == null)
 				throw new TaskCanceledException();
 
