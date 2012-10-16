@@ -74,7 +74,7 @@ namespace Xamarin.Media
 			if (result == null)
 				throw new TaskCanceledException();
 
-			IStorageFolder folder = KnownFolders.PicturesLibrary;
+			StorageFolder folder = ApplicationData.Current.LocalFolder;
 
 			string path = options.GetFilePath (folder.Path);
 			folder = await StorageFolder.GetFolderFromPathAsync (Path.GetDirectoryName (path));
