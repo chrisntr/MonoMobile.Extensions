@@ -112,7 +112,7 @@ namespace Xamarin.Geolocation
 
 			p.Longitude = location.Longitude;
 			p.Latitude = location.Latitude;
-			p.Timestamp = new DateTimeOffset (new DateTime (TimeSpan.TicksPerMillisecond * location.Time, DateTimeKind.Utc));
+			p.Timestamp = Geolocator.GetTimestamp (location);
 			
 			if (this.finishedCallback != null)
 				this.finishedCallback();
