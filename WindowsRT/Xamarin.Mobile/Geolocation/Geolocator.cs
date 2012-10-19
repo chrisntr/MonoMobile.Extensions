@@ -44,6 +44,11 @@ namespace Xamarin.Geolocation
 
 		public Task<Position> GetPositionAsync (int timeout)
 		{
+			return GetPositionAsync (timeout, includeHeading: false);
+		}
+
+		public Task<Position> GetPositionAsync (int timeout, bool includeHeading)
+		{
 			if (timeout < 0)
 				throw new ArgumentOutOfRangeException ("timeout");
 
@@ -81,7 +86,12 @@ namespace Xamarin.Geolocation
 			}
 		}
 
-		public async Task<Position> GetPositionAsync (CancellationToken token)
+		public Task<Position> GetPositionAsync (CancellationToken token)
+		{
+			return GetPositionAsync (token, includeHeading: false);
+		}
+
+		public async Task<Position> GetPositionAsync (CancellationToken token, bool includeHeading)
 		{
 			try
 			{
@@ -98,6 +108,11 @@ namespace Xamarin.Geolocation
 		}
 
 		public Task<Position> GetPositionAsync (int timeout, CancellationToken token)
+		{
+			return GetPositionAsync (timeout, token, includeHeading: false);
+		}
+
+		public Task<Position> GetPositionAsync (int timeout, CancellationToken token, bool includeHeading)
 		{
 			if (timeout < 0)
 				throw new ArgumentOutOfRangeException ("timeout");
@@ -138,6 +153,11 @@ namespace Xamarin.Geolocation
 		}
 
 		public void StartListening (int minTime, double minDistance)
+		{
+			StartListening (minTime, minDistance, includeHeading: false);
+		}
+
+		public void StartListening (int minTime, double minDistance, bool includeHeading)
 		{
 			if (minTime < 0)
 				throw new ArgumentOutOfRangeException ("minTime");
