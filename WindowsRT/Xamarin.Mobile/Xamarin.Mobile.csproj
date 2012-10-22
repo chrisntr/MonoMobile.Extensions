@@ -102,6 +102,9 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\MonoDroid\Xamarin.Mobile\Properties\AssemblyInfo.cs">
+      <Link>Properties\AssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="..\..\Shared\Media\MediaExtensions.cs">
       <Link>Media\MediaExtensions.cs</Link>
     </Compile>
@@ -117,7 +120,6 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Geolocation\Geolocator.cs" />
     <Compile Include="Media\MediaPicker.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Timeout.cs" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
