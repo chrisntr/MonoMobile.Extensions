@@ -105,6 +105,30 @@
     <Compile Include="..\..\MonoDroid\Xamarin.Mobile\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="..\..\Shared\Contacts\Address.cs">
+      <Link>Contacts\Address.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\Contacts\Email.cs">
+      <Link>Contacts\Email.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\Contacts\InstantMessangingAccount.cs">
+      <Link>Contacts\InstantMessangingAccount.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\Contacts\Note.cs">
+      <Link>Contacts\Note.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\Contacts\Organization.cs">
+      <Link>Contacts\Organization.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\Contacts\Phone.cs">
+      <Link>Contacts\Phone.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\Contacts\Relationship.cs">
+      <Link>Contacts\Relationship.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\Contacts\Website.cs">
+      <Link>Contacts\Website.cs</Link>
+    </Compile>
     <Compile Include="..\..\Shared\Media\MediaExtensions.cs">
       <Link>Media\MediaExtensions.cs</Link>
     </Compile>
