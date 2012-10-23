@@ -157,29 +157,12 @@ namespace Xamarin.Media
 			if (this.orientation.HasValue && IsSameOrientationKind (this.orientation.Value, device.Orientation))
 				return;
 
-			UIInterfaceOrientation iorientation = UIInterfaceOrientation.Portrait;
-			switch (device.Orientation)
+			if (UIDevice.CurrentDevice.CheckSystemVersion (6, 0))
 			{
-				case UIDeviceOrientation.LandscapeLeft:
-					iorientation = UIInterfaceOrientation.LandscapeLeft;
-					break;
-				
-				case UIDeviceOrientation.LandscapeRight:
-					iorientation = UIInterfaceOrientation.LandscapeRight;
-					break;
-				
-				case UIDeviceOrientation.Portrait:
-					iorientation = UIInterfaceOrientation.Portrait;
-					break;
-				
-				case UIDeviceOrientation.PortraitUpsideDown:
-					iorientation = UIInterfaceOrientation.PortraitUpsideDown;
-					break;
-				
-				default: return;
+				if (!GetShouldRotate6 (device.Orientation))
+					return;
 			}
-
-			if (!this.viewController.ShouldAutorotateToInterfaceOrientation (iorientation))
+			else if (!GetShouldRotate (device.Orientation))
 				return;
 
 			UIDeviceOrientation? co = this.orientation;
@@ -189,6 +172,60 @@ namespace Xamarin.Media
 				return;
 
 			DisplayPopover (hideFirst: true);
+		}
+
+		private bool GetShouldRotate (UIDeviceOrientation orientation)
+		{
+			UIInterfaceOrientation iorientation = UIInterfaceOrientation.Portrait;
+			switch (orientation)
+			{
+				case UIDeviceOrientation.LandscapeLeft:
+					iorientation = UIInterfaceOrientation.LandscapeLeft;
+					break;
+					
+				case UIDeviceOrientation.LandscapeRight:
+					iorientation = UIInterfaceOrientation.LandscapeRight;
+					break;
+					
+				case UIDeviceOrientation.Portrait:
+					iorientation = UIInterfaceOrientation.Portrait;
+					break;
+					
+				case UIDeviceOrientation.PortraitUpsideDown:
+					iorientation = UIInterfaceOrientation.PortraitUpsideDown;
+					break;
+					
+				default: return false;
+			}
+
+			return this.viewController.ShouldAutorotateToInterfaceOrientation (iorientation);
+		}
+
+		private bool GetShouldRotate6 (UIDeviceOrientation orientation)
+		{
+			UIInterfaceOrientationMask mask = UIInterfaceOrientationMask.Portrait;
+			switch (orientation)
+			{
+				case UIDeviceOrientation.LandscapeLeft:
+					mask = UIInterfaceOrientationMask.LandscapeLeft;
+					break;
+					
+				case UIDeviceOrientation.LandscapeRight:
+					mask = UIInterfaceOrientationMask.LandscapeRight;
+					break;
+					
+				case UIDeviceOrientation.Portrait:
+					mask = UIInterfaceOrientationMask.Portrait;
+					break;
+					
+				case UIDeviceOrientation.PortraitUpsideDown:
+					mask = UIInterfaceOrientationMask.PortraitUpsideDown;
+					break;
+					
+				default: return false; 
+			}
+
+			return this.viewController.GetSupportedInterfaceOrientations().HasFlag (mask);
 		}
 
 		private MediaFile GetPictureMediaFile (NSDictionary info, out Task<NSUrl> saveCompleted)
