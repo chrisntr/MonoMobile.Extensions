@@ -57,9 +57,6 @@
     <Compile Include="..\..\MonoDroid\Xamarin.Mobile\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="..\..\Shared\Contacts\Account.cs">
-      <Link>Contacts\Account.cs</Link>
-    </Compile>
     <Compile Include="..\..\Shared\Contacts\Address.cs">
       <Link>Contacts\Address.cs</Link>
     </Compile>
