@@ -203,6 +203,9 @@ namespace Xamarin.Media
 
 		private bool GetShouldRotate6 (UIDeviceOrientation orientation)
 		{
+			if (!this.viewController.ShouldAutorotate())
+				return false;
+
 			UIInterfaceOrientationMask mask = UIInterfaceOrientationMask.Portrait;
 			switch (orientation)
 			{
