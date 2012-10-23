@@ -1,7 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
-using Windows.UI.Core;
 using Xamarin.Geolocation;
 
 namespace GeolocationSample
@@ -9,9 +10,15 @@ namespace GeolocationSample
 	public class MainPageViewModel
 		: INotifyPropertyChanged
 	{
-		public MainPageViewModel (CoreDispatcher dispatcher)
+		public MainPageViewModel (Geolocator geolocator, SynchronizationContext syncContext)
 		{
-			this.dispatcher = dispatcher;
+			if (geolocator == null)
+				throw new ArgumentNullException ("geolocator");
+			if (syncContext == null)
+				throw new ArgumentNullException ("syncContext");
+
+			this.sync = syncContext;
+			this.geolocator = geolocator;
 			this.geolocator.DesiredAccuracy = 50;
 			this.geolocator.PositionError += GeolocatorOnPositionError;
 			this.geolocator.PositionChanged += GeolocatorOnPositionChanged;
@@ -20,6 +27,20 @@ namespace GeolocationSample
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
+
+		private bool showProgress;
+		public bool ShowProgress
+		{
+			get { return this.showProgress; }
+			set
+			{
+				if (this.showProgress == value)
+					return;
+
+				this.showProgress = value;
+				OnPropertyChanged ("ShowProgress");
+			}
+		}
 
 		private string status;
 		public string Status
@@ -61,12 +82,13 @@ namespace GeolocationSample
 			}
 		}
 
-		private readonly CoreDispatcher dispatcher;
-		private readonly Geolocator geolocator = new Geolocator();
+		private readonly Geolocator geolocator;
+		private readonly SynchronizationContext sync;
 
 		private async void GetPositionHandler (object state)
 		{
-			Status = String.Empty;
+			ShowProgress = true;
+			Status = "Getting location..";
 
 			if (!this.geolocator.IsGeolocationEnabled)
 			{
@@ -76,23 +98,24 @@ namespace GeolocationSample
 
 			try
 			{
-				CurrentPosition = await this.geolocator.GetPositionAsync (10000);
+				Position p = await this.geolocator.GetPositionAsync (10000, includeHeading: true);
+				CurrentPosition = p;
 				Status = "Success";
 			}
 			catch (GeolocationException ex)
 			{
 				Status = "Error: (" + ex.Error + ") " + ex.Message;
 			}
-			catch (OperationCanceledException)
+			catch (TaskCanceledException cex)
 			{
 				Status = "Canceled";
 			}
+
+			ShowProgress = false;
 		}
 
 		private void ToggleListeningHandler (object o)
 		{
-			Status = String.Empty;
-
 			if (!this.geolocator.IsGeolocationEnabled)
 			{
 				Status = "Location disabled";
@@ -101,16 +124,14 @@ namespace GeolocationSample
 
 			if (!this.geolocator.IsListening)
 			{
-				this.geolocator.StartListening (0, 0);
 				Status = "Listening";
+				this.geolocator.StartListening (0, 0, includeHeading: true);
 			}
 			else
 			{
 				Status = "Stopped listening";
 				this.geolocator.StopListening();
 			}
-
-			OnPropertyChanged ("Status");
 		}
 
 		private void GeolocatorOnPositionError (object sender, PositionErrorEventArgs e)
@@ -125,12 +146,9 @@ namespace GeolocationSample
 
 		private void OnPropertyChanged (string name)
 		{
-			this.dispatcher.RunAsync (CoreDispatcherPriority.Normal, () =>
-			{
-				var changed = PropertyChanged;
-				if (changed != null)
-					changed (this, new PropertyChangedEventArgs (name));
-			});
+			var changed = PropertyChanged;
+			if (changed != null)
+				this.sync.Post (n => changed (this, new PropertyChangedEventArgs ((string)n)), name);
 		}
 	}
 }

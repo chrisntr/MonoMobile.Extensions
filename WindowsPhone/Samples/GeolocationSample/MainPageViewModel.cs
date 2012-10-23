@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Geolocation;
@@ -9,8 +10,15 @@ namespace GeolocationSample
 	public class MainPageViewModel
 		: INotifyPropertyChanged
 	{
-		public MainPageViewModel()
+		public MainPageViewModel (Geolocator geolocator, SynchronizationContext syncContext)
 		{
+			if (geolocator == null)
+				throw new ArgumentNullException ("geolocator");
+			if (syncContext == null)
+				throw new ArgumentNullException ("syncContext");
+
+			this.sync = syncContext;
+			this.geolocator = geolocator;
 			this.geolocator.DesiredAccuracy = 50;
 			this.geolocator.PositionError += GeolocatorOnPositionError;
 			this.geolocator.PositionChanged += GeolocatorOnPositionChanged;
@@ -74,7 +82,8 @@ namespace GeolocationSample
 			}
 		}
 
-		private readonly Geolocator geolocator = new Geolocator();
+		private readonly Geolocator geolocator;
+		private readonly SynchronizationContext sync;
 
 		private async void GetPositionHandler (object state)
 		{
@@ -139,7 +148,7 @@ namespace GeolocationSample
 		{
 			var changed = PropertyChanged;
 			if (changed != null)
-				changed (this, new PropertyChangedEventArgs (name));
+				this.sync.Post (n => changed (this, new PropertyChangedEventArgs ((string)n)), name);
 		}
 	}
 }
