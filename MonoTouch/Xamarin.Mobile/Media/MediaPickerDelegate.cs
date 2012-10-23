@@ -90,8 +90,8 @@ namespace Xamarin.Media
 			if (Popover == null)
 				return;
 
-			float swidth = UIScreen.MainScreen.Bounds.Width * UIScreen.MainScreen.Scale;
-			float sheight= UIScreen.MainScreen.Bounds.Height * UIScreen.MainScreen.Scale;
+			float swidth = UIScreen.MainScreen.Bounds.Width;
+			float sheight= UIScreen.MainScreen.Bounds.Height;
 
 			float width = 400;
 			float height = 300;
