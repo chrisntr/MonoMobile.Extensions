@@ -112,12 +112,15 @@ namespace Xamarin.Media
 		private Task<MediaFile> TakeMedia (UIImagePickerControllerSourceType sourceType, string mediaType, StoreCameraMediaOptions options = null)
 		{
 			UIWindow window = UIApplication.SharedApplication.KeyWindow;
-			UIViewController rootController = window.RootViewController;
-			
-			if (rootController == null)
-				throw new Exception ("Could not find root view controller");
-			
-			MediaPickerDelegate ndelegate = new MediaPickerDelegate (rootController, sourceType, options);
+			UIViewController viewController = window.RootViewController;
+
+			if (viewController == null)
+				throw new Exception ("Could not find current view controller");
+
+			while (viewController.PresentedViewController != null)
+				viewController = viewController.PresentedViewController;
+
+			MediaPickerDelegate ndelegate = new MediaPickerDelegate (viewController, sourceType, options);
 			var od = Interlocked.CompareExchange (ref this.pickerDelegate, ndelegate, null);
 			if (od != null)
 				throw new InvalidOperationException ("Only one operation can be active at at time");
@@ -152,7 +155,7 @@ namespace Xamarin.Media
 				ndelegate.DisplayPopover();
 			}
 			else
-				rootController.PresentModalViewController (picker, true);
+				viewController.PresentModalViewController (picker, true);
 
 			return ndelegate.Task
 				.ContinueWith (t =>
