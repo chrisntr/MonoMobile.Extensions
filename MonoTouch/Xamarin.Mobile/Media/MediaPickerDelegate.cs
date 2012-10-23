@@ -99,7 +99,7 @@ namespace Xamarin.Media
 			if (this.orientation == null)
 			{
 				if (IsValidInterfaceOrientation (UIDevice.CurrentDevice.Orientation))
-				    this.orientation = UIDevice.CurrentDevice.Orientation;
+					this.orientation = UIDevice.CurrentDevice.Orientation;
 				else
 					this.orientation = GetDeviceOrientation (this.viewController.InterfaceOrientation);
 			}
@@ -298,7 +298,7 @@ namespace Xamarin.Media
 
 			Func<Stream> streamGetter = () =>
 			{
-			    return File.OpenRead (path);
+				return File.OpenRead (path);
 				//switch (this.options.Location)
 				//{
 				//    case MediaFileStoreLocation.CameraRoll:
