@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Android.Content;
 using Android.Content.PM;
+using Android.OS;
 using Android.Provider;
 
 namespace Xamarin.Media
@@ -14,6 +15,9 @@ namespace Xamarin.Media
 		{
 			this.context = context;
 			IsCameraAvailable = context.PackageManager.HasSystemFeature (PackageManager.FeatureCamera);
+
+			if (Build.VERSION.SdkInt >= BuildVersionCodes.Gingerbread)
+				IsCameraAvailable |= context.PackageManager.HasSystemFeature (PackageManager.FeatureCameraFront);
 		}
 
 		public bool IsCameraAvailable
