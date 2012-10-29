@@ -1,4 +1,4 @@
-Xamarin Mobile API Preview 0.5.1
+Xamarin Mobile API Preview 0.6
 
 At this time, the Windows Phone version of the library requires the
 Visual Studio Async CTP (http://www.microsoft.com/en-us/download/details.aspx?id=9983).
@@ -6,6 +6,18 @@ As this CTP installs to a user-specific directory, you'll likely need to
 correct references to this library in the samples to use them.
 
 Changelog
+
+Release 0.6
+
+Features:
+ - Windows 8 support for Xamarin.Media and Xamarin.Geolocation.
+ - Windows Phone 8 support.
+
+Fixes:
+ - Fixed positioning issues with MediaPicker.Pick* on retina iPads and iOS6.
+ - Fixed MediaPicker presenting under certain view controller hierarchies.
+ - Fixed incorrect Position.Timestamp on Android.
+ - Fixed MediaPicker.Take* for Android devices with front facing cameras only.
 
 Release 0.5.1
 
