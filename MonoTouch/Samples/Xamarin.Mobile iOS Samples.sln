@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactsSample", "ContactsSample\ContactsSample.csproj", "{0F36CBF1-1358-4FD3-8631-2775881B2635}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contacts Sample", "ContactsSample\Contacts Sample.csproj", "{0F36CBF1-1358-4FD3-8631-2775881B2635}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeolocationSample", "Geolocation\GeolocationSample.csproj", "{B110CA48-4524-4E13-B4E1-B4A4C54EC875}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geolocation Sample", "Geolocation\Geolocation Sample.csproj", "{B110CA48-4524-4E13-B4E1-B4A4C54EC875}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaPickerSample", "MediaPickerSample\MediaPickerSample.csproj", "{64565954-31A4-46EE-ACB1-A362405CE6FE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaPicker Sample", "MediaPickerSample\MediaPicker Sample.csproj", "{64565954-31A4-46EE-ACB1-A362405CE6FE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +41,6 @@ Global
 		{B110CA48-4524-4E13-B4E1-B4A4C54EC875}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = ContactsSample\ContactsSample.csproj
+		StartupItem = ContactsSample\Contacts Sample.csproj
 	EndGlobalSection
 EndGlobal
