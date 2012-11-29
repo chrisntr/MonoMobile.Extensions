@@ -34,7 +34,7 @@ namespace Xamarin.Contacts
 			{
 				Number = p.Value,
 				Type = GetPhoneType (p.Label),
-				Label = GetLabel (p.Label)
+				Label = (p.Label != null) ? GetLabel (p.Label) : GetLabel (ABLabel.Other)
 			});
 			
 			Organization[] orgs;
@@ -64,7 +64,7 @@ namespace Xamarin.Contacts
 			contact.Addresses = person.GetAddresses().Select (a => new Address()
 			{
 				Type = GetAddressType (a.Label),
-				Label = GetLabel (a.Label),
+				Label = (a.Label != null) ? GetLabel (a.Label) : GetLabel (ABLabel.Other),
 				StreetAddress = (NSString)a.Value[ABPersonAddressKey.Street],
 				City = (NSString)a.Value[ABPersonAddressKey.City],
 				Region = (NSString)a.Value[ABPersonAddressKey.State],
