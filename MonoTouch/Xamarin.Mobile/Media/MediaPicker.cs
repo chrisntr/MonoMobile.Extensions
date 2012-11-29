@@ -112,10 +112,18 @@ namespace Xamarin.Media
 		private Task<MediaFile> TakeMedia (UIImagePickerControllerSourceType sourceType, string mediaType, StoreCameraMediaOptions options = null)
 		{
 			UIWindow window = UIApplication.SharedApplication.KeyWindow;
+			if (window == null)
+				throw new InvalidOperationException ("There's no current active window");
+
 			UIViewController viewController = window.RootViewController;
 
-			if (viewController == null)
-				throw new Exception ("Could not find current view controller");
+			if (viewController == null) {
+				window = UIApplication.SharedApplication.Windows.OrderByDescending (w => w.WindowLevel).FirstOrDefault (w => w.RootViewController != null);
+				if (window == null)
+					throw new InvalidOperationException ("Could not find current view controller");
+				else
+					viewController = window.RootViewController;	
+			}
 
 			while (viewController.PresentedViewController != null)
 				viewController = viewController.PresentedViewController;
