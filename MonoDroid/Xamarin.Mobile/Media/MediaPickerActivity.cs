@@ -261,7 +261,7 @@ namespace Xamarin.Media
 				if (!mediaStorageDir.Exists())
 				{
 					if (!mediaStorageDir.Mkdirs())
-						return null;
+						throw new IOException ("Couldn't create directory, have you added the WRITE_EXTERNAL_STORAGE permission?");
 
 					Java.IO.File nomedia = new Java.IO.File (mediaStorageDir, ".nomedia");
 					nomedia.CreateNewFile();
