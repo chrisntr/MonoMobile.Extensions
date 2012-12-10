@@ -1,5 +1,3 @@
-# Getting Started
-
 Xamarin.Mobile is an API for accessing common platform features, such as
 reading the user's address book and using the camera, across iOS,
 Android, and Windows Phone.
