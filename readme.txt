@@ -7,6 +7,13 @@ correct references to this library in the samples to use them.
 
 Changelog
 
+Release 0.6.1
+
+Fixes:
+ - Throw a proper exception from inside MediaPicker on Android when writing fails.
+ - Fixed MediaPicker actions launched from a UIAlertView.
+ - Fixed an ArgumentNullException iterating through certain contacts on iOS.
+
 Release 0.6
 
 Features:
