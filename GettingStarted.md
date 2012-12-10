@@ -1,6 +1,10 @@
 # Getting Started
 
-Xamarin.Mobile is a library that exposes a single set of APIs for accessing common mobile device functionality across iOS, Android, and Windows platforms. This increases the amount of code developers can share across mobile platforms, making mobile app development easier and faster.
+Xamarin.Mobile is a library that exposes a single set of APIs for
+accessing common mobile device functionality across iOS, Android, and
+Windows platforms. This increases the amount of code developers can
+share across mobile platforms, making mobile app development easier and
+faster.
 
 Using the Addon
 ================
