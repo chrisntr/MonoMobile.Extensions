@@ -31,7 +31,7 @@ var picker = new MediaPicker ();
 picker.TakePhotoAsync (new StoreCameraMediaOptions {
 	Name = "test.jpg",
 	Directory = "MediaPickerSample"
-}).ContinueWith (t => {
+}).ContinueWith (t => {
 	if (t.IsCanceled) {
 		Console.WriteLine ("User canceled");
 		return;
