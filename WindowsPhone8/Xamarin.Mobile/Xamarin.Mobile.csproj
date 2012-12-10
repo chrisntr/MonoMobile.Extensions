@@ -93,7 +93,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\..\MonoDroid\Xamarin.Mobile\Properties\AssemblyInfo.cs">
-      <Link>AssemblyInfo.cs</Link>
+      <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="..\..\Shared\Contacts\Address.cs">
       <Link>Contacts\Address.cs</Link>
