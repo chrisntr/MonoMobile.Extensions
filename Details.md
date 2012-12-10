@@ -1,18 +1,10 @@
-[[Xamarin.Mobile]] is a library that exposes a single set of APIs for accessing
-common mobile device functionality across iOS, Android, and Windows platforms.
-This increases the amount of code developers can share across mobile platforms,
-making mobile app development easier and faster.
+Xamarin.Mobile is an API for accessing common platform features, such as
+reading the device address book and using the camera, across iOS,
+Android, and Windows Phone.
 
-Developers often find that because mobile feature sets have evolved so quickly,
-services that are common across mobile platforms are not exposed by the .NET
-BCL. This limits the amount of code that could be shared across mobile
-platforms. Developers often resort to creating their own platform abstractions,
-or designing pluggable architectures, just to get access to the system address
-book, the devices’s GPS, the compass, the accelerometer, the notification
-service or the system calendar.
-
-Xamarin.Mobile solves this problem, helping you maximize code sharing while
-still delivering high-performance, beautiful, native user experiences.
+The goal of Xamarin.Mobile is to decrease the amount of
+platform-specific code needed to perform common tasks in multiplatform
+apps, making development simpler and faster.
 
 Quick Samples
 ----------------
