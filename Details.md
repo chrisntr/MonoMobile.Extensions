@@ -6,10 +6,9 @@ The goal of Xamarin.Mobile is to decrease the amount of
 platform-specific code needed to perform common tasks in multiplatform
 apps, making development simpler and faster.
 
-Quick Samples
-----------------
+## Examples
 
-**Contacts:**
+To access the address book:
 
 ```csharp
 var book = new AddressBook ();
@@ -18,7 +17,7 @@ foreach (Contact contact in book.OrderBy (c => c.LastName)) {
 }
 ```
 
-**Geolocation:**
+To get the user's location:
 
 ```csharp
 var geolocator = new Geolocator { DesiredAccuracy = 50 };
@@ -31,7 +30,7 @@ geolocator.GetPositionAsync (timeout: 10000)
 						});
 ```
 
-**Media:**
+To take a photo:
 
 ```csharp
 var picker = new MediaPicker ();

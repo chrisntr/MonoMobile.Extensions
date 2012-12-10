@@ -2,10 +2,9 @@ Xamarin.Mobile is an API for accessing common platform features, such as
 reading the user's address book and using the camera, across iOS,
 Android, and Windows Phone.
 
-Using the Addon
-================
+## Examples
 
-Contacts API:
+To access the address book:
 
 ```csharp
 var book = new AddressBook ();
@@ -14,7 +13,7 @@ foreach (Contact contact in book.OrderBy (c => c.LastName)) {
 }
 ```
 
-Geolocation API:
+To get the user's location:
 
 ```csharp
 var geolocator = new Geolocator { DesiredAccuracy = 50 };
@@ -27,7 +26,7 @@ geolocator.GetPositionAsync (timeout: 10000)
 	});
 ```
 
-MediaPicker API:
+To take a photo:
 
 ```csharp
 var picker = new MediaPicker ();
