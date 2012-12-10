@@ -1,4 +1,4 @@
-Xamarin Mobile API Preview 0.6
+Xamarin Mobile API Preview 0.6.1
 
 At this time, the Windows Phone version of the library requires the
 Visual Studio Async CTP (http://www.microsoft.com/en-us/download/details.aspx?id=9983).
