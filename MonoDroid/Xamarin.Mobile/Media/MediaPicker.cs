@@ -13,6 +13,9 @@ namespace Xamarin.Media
 	{
 		public MediaPicker (Context context)
 		{
+			if (context == null)
+				throw new ArgumentNullException ("context");
+
 			this.context = context;
 			IsCameraAvailable = context.PackageManager.HasSystemFeature (PackageManager.FeatureCamera);
 
