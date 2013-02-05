@@ -7,6 +7,9 @@ Android, and Windows Phone.
 To access the address book:
 
 ```csharp
+using Xamarin.Contacts;
+...
+
 var book = new AddressBook ();
 foreach (Contact contact in book.OrderBy (c => c.LastName)) {
 	Console.WriteLine ("{0} {1}", contact.FirstName, contact.LastName);
@@ -16,6 +19,9 @@ foreach (Contact contact in book.OrderBy (c => c.LastName)) {
 To get the user's location:
 
 ```csharp
+using Xamarin.Geolocation;
+...
+
 var locator = new Geolocator { DesiredAccuracy = 50 };
 locator.GetPositionAsync (timeout: 10000).ContinueWith (t => {
 	Console.WriteLine ("Position Status: {0}", t.Result.Timestamp);
@@ -27,6 +33,9 @@ locator.GetPositionAsync (timeout: 10000).ContinueWith (t => {
 To take a photo:
 
 ```csharp
+using Xamarin.Media;
+...
+
 var picker = new MediaPicker ();
 picker.TakePhotoAsync (new StoreCameraMediaOptions {
 	Name = "test.jpg",
