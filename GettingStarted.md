@@ -4,7 +4,8 @@ Android, and Windows Phone.
 
 ## Examples
 
-To access the address book:
+To access the address book (requires `WRITE_EXTERNAL_STORAGE` permissions
+on Android):
 
 ```csharp
 using Xamarin.Contacts;
@@ -24,7 +25,8 @@ book.RequestPermission().ContinueWith (t => {
 }
 ```
 
-To get the user's location:
+To get the user's location (requires `ACCESS_COARSE_LOCATION` and
+`ACCESS_FINE_LOCATION` permissions on Android):
 
 ```csharp
 using Xamarin.Geolocation;
@@ -39,7 +41,8 @@ locator.GetPositionAsync (timeout: 10000).ContinueWith (t => {
 });
 ```
 
-To take a photo:
+To take a photo (requires `WRITE_EXTERNAL_STORAGE` permissions on
+Android):
 
 ```csharp
 using Xamarin.Media;
