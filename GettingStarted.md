@@ -11,8 +11,16 @@ using Xamarin.Contacts;
 ...
 
 var book = new AddressBook ();
-foreach (Contact contact in book.OrderBy (c => c.LastName)) {
-	Console.WriteLine ("{0} {1}", contact.FirstName, contact.LastName);
+//         new AddressBook (this); on Android
+book.RequestPermission().ContinueWith (t => {
+	if (!t.Result) {
+		Console.WriteLine ("Permission denied by user or manifest");
+		return;
+	}
+
+	foreach (Contact contact in book.OrderBy (c => c.LastName)) {
+		Console.WriteLine ("{0} {1}", contact.FirstName, contact.LastName);
+	}
 }
 ```
 
@@ -23,6 +31,7 @@ using Xamarin.Geolocation;
 ...
 
 var locator = new Geolocator { DesiredAccuracy = 50 };
+//            new Geolocator (this) { ... }; on Android
 locator.GetPositionAsync (timeout: 10000).ContinueWith (t => {
 	Console.WriteLine ("Position Status: {0}", t.Result.Timestamp);
 	Console.WriteLine ("Position Latitude: {0}", t.Result.Latitude);
@@ -37,14 +46,19 @@ using Xamarin.Media;
 ...
 
 var picker = new MediaPicker ();
-picker.TakePhotoAsync (new StoreCameraMediaOptions {
-	Name = "test.jpg",
-	Directory = "MediaPickerSample"
-}).ContinueWith (t => {
-	if (t.IsCanceled) {
-		Console.WriteLine ("User canceled");
-		return;
-	}
-	Console.WriteLine (t.Result.Path);
-});
+//           new MediaPicker (this); on Android
+if (!picker.IsCameraAvailable)
+	Console.WriteLine ("No camera!")
+else {
+	picker.TakePhotoAsync (new StoreCameraMediaOptions {
+		Name = "test.jpg",
+		Directory = "MediaPickerSample"
+	}).ContinueWith (t => {
+		if (t.IsCanceled) {
+			Console.WriteLine ("User canceled");
+			return;
+		}
+		Console.WriteLine (t.Result.Path);
+	});
+}
 ```

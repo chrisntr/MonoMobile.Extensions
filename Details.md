@@ -12,8 +12,15 @@ To access the address book:
 
 ```csharp
 var book = new AddressBook ();
-foreach (Contact contact in book.OrderBy (c => c.LastName)) {
-	Console.WriteLine ("{0} {1}", contact.FirstName, contact.LastName);
+book.RequestPermission().ContinueWith (t => {
+	if (!t.Result) {
+		Console.WriteLine ("Permission denied by user or manifest");
+		return;
+	}
+
+	foreach (Contact contact in book.OrderBy (c => c.LastName)) {
+		Console.WriteLine ("{0} {1}", contact.FirstName, contact.LastName);
+	}
 }
 ```
 
@@ -32,14 +39,18 @@ To take a photo:
 
 ```csharp
 var picker = new MediaPicker ();
-picker.TakePhotoAsync (new StoreCameraMediaOptions {
-	Name = "test.jpg",
-	Directory = "MediaPickerSample"
-}).ContinueWith (t => {
-	if (t.IsCanceled) {
-		Console.WriteLine ("User canceled");
-		return;
-	}
-	Console.WriteLine (t.Result.Path);
-});
+if (!picker.IsCameraAvailable)
+	Console.WriteLine ("No camera!")
+else {
+	picker.TakePhotoAsync (new StoreCameraMediaOptions {
+		Name = "test.jpg",
+		Directory = "MediaPickerSample"
+	}).ContinueWith (t => {
+		if (t.IsCanceled) {
+			Console.WriteLine ("User canceled");
+			return;
+		}
+		Console.WriteLine (t.Result.Path);
+	});
+}
 ```
