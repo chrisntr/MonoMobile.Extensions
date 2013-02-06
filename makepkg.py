@@ -60,9 +60,9 @@ xpkg_args = [
 	"--icon", "component/icon_512x512.png",
 	"--library", "ios:" + IOSDLL,
 	"--library", "android:" + ANDDLL,
-	"--library", "winphone-7.1:" + WPDLL,
+#	"--library", "winphone-7.1:" + WPDLL,
 	"--sample", "Xamarin.Mobile Android Samples. Android samples for the AddressBook, MediaPicker and Geolocator APIs.:MonoDroid/Samples/Xamarin.Mobile.Android.Samples.sln",
 	"--sample", "Xamarin.Mobile iOS Samples. iOS samples for the AddressBook, MediaPicker and Geolocator APIs.:MonoTouch/Samples/Xamarin.Mobile.iOS.Samples.sln",
-	"--sample", "Xamarin.Mobile Windows Phone 7.5 Samples. Windows Phone 7 samples for the AddressBook, MediaPicker and Geolocator APIs.:WindowsPhone/Samples/Xamarin.Mobile.WP.Samples.sln"
+#	"--sample", "Xamarin.Mobile Windows Phone 7.5 Samples. Windows Phone 7 samples for the AddressBook, MediaPicker and Geolocator APIs.:WindowsPhone/Samples/Xamarin.Mobile.WP.Samples.sln"
 ]
 subprocess.call (xpkg_args)
