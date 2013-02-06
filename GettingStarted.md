@@ -4,7 +4,7 @@ Android, and Windows Phone.
 
 ## Examples
 
-To access the address book (requires `WRITE_EXTERNAL_STORAGE` permissions
+To access the address book (requires `READ_CONTACTS` permissions
 on Android):
 
 ```csharp
@@ -22,7 +22,7 @@ book.RequestPermission().ContinueWith (t => {
 	foreach (Contact contact in book.OrderBy (c => c.LastName)) {
 		Console.WriteLine ("{0} {1}", contact.FirstName, contact.LastName);
 	}
-}
+});
 ```
 
 To get the user's location (requires `ACCESS_COARSE_LOCATION` and
@@ -51,7 +51,7 @@ using Xamarin.Media;
 var picker = new MediaPicker ();
 //           new MediaPicker (this); on Android
 if (!picker.IsCameraAvailable)
-	Console.WriteLine ("No camera!")
+	Console.WriteLine ("No camera!");
 else {
 	picker.TakePhotoAsync (new StoreCameraMediaOptions {
 		Name = "test.jpg",
