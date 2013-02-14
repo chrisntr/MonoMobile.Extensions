@@ -176,21 +176,29 @@ namespace Xamarin.Media
 		
 		private void MoveFile (Uri url)
 		{
-			ICursor cursor = null;
-			try
+			if (url.Scheme == "file")
 			{
-	            cursor = ContentResolver.Query (url, null, null, null, null);
-				if (cursor.MoveToFirst())
-				{
-					String filename = cursor.GetString (cursor.GetColumnIndex (MediaStore.Video.Media.InterfaceConsts.Data));
-					File.Move (filename, this.path.EncodedPath);
-					ContentResolver.Delete (url, null, null);
-				}
+				string filename = url.Path;
+				File.Move (filename, this.path.EncodedPath);
 			}
-			finally
+			else
 			{
-				if (cursor != null)
-					cursor.Close();
+				ICursor cursor = null;
+				try
+				{
+					cursor = ContentResolver.Query (url, null, null, null, null);
+					if (cursor != null && cursor.MoveToFirst())
+					{
+						string filename = cursor.GetString (cursor.GetColumnIndex (MediaStore.Video.Media.InterfaceConsts.Data));
+						File.Move (filename, this.path.EncodedPath);
+						ContentResolver.Delete (url, null, null);
+					}
+				}
+				finally
+				{
+					if (cursor != null)
+						cursor.Close();
+				}
 			}
 		}
 
