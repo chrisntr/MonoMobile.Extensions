@@ -155,10 +155,12 @@ namespace Xamarin.Media
 		
 		private void MoveFile (Uri url)
 		{
+			string moveTo = GetLocalPath (this.path);
 			if (url.Scheme == "file")
 			{
 				string filename = url.Path;
-				File.Move (filename, this.path.EncodedPath);
+				File.Delete (moveTo);
+				File.Move (filename, moveTo);
 			}
 			else
 			{
@@ -169,7 +171,8 @@ namespace Xamarin.Media
 					if (cursor != null && cursor.MoveToFirst())
 					{
 						string filename = cursor.GetString (cursor.GetColumnIndex (MediaStore.Video.Media.InterfaceConsts.Data));
-						File.Move (filename, this.path.EncodedPath);
+						File.Delete (moveTo);
+						File.Move (filename, moveTo);
 						ContentResolver.Delete (url, null, null);
 					}
 				}
