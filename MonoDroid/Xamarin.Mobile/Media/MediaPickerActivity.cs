@@ -73,10 +73,7 @@ namespace Xamarin.Media
 			{
 				pickIntent = new Intent (this.action);
 				if (this.action == Intent.ActionPick)
-				{
-					//this.location = MediaFileStoreLocation.CameraRoll;
 					pickIntent.SetType (type);
-				}
 				else
 				{
 					if (!this.isPhoto)
@@ -133,8 +130,6 @@ namespace Xamarin.Media
 			else
 			{
 				string filePath = null;
-				//if (this.location == MediaFileStoreLocation.Local)
-				//{
 				if (this.action != Intent.ActionPick)
 				{
 					if (data != null && data.Data != null)
@@ -148,22 +143,6 @@ namespace Xamarin.Media
 						this.path = data.Data;
 
 				    filePath = GetFilePathForUri (this.path);
-
-				//    ContentValues values = new ContentValues();
-				//    if (this.isPhoto)
-				//    {
-				//        values.Put (MediaStore.Images.ImageColumns.Title, this.title);
-				//        values.Put (MediaStore.Images.ImageColumns.Description, this.description);
-				//        values.Put (MediaStore.Images.ImageColumns.DateTaken, DateTime.Now.ToAndroidTimestamp());
-				//        values.Put (MediaStore.MediaColumns.Data, filePath);
-				//        ContentResolver.Insert (MediaStore.Images.Media.ExternalContentUri, values);
-				//    }
-				//    else
-				//    {
-				//        values.Put (MediaStore.Video.VideoColumns.Title, this.title);
-				//        values.Put (MediaStore.Video.VideoColumns.Description, this.description);
-				//        ContentResolver.Update (this.path, values, null, null);
-				//    }
 				}
 
 				var mf = new MediaFile (filePath, () => File.OpenRead (filePath));
@@ -244,39 +223,18 @@ namespace Xamarin.Media
 					name = "VID_" + timestamp + ".mp4";
 			}
 
-			//if (loc == MediaFileStoreLocation.CameraRoll)
-			//{
-			//    ContentValues values = new ContentValues();
-			//    if (this.isPhoto)
-			//    {
-			//        values.Put (MediaStore.Images.ImageColumns.Title, name);
-			//        values.Put (MediaStore.Images.ImageColumns.Description, description);
-			//        values.Put (MediaStore.Images.ImageColumns.DateTaken, DateTime.Now.ToAndroidTimestamp());
-			//        return ContentResolver.Insert (MediaStore.Images.Media.ExternalContentUri, values);
-			//    }
-			//    else
-			//    {
-			//        values.Put (MediaStore.Video.VideoColumns.Title, name);
-			//        values.Put (MediaStore.Video.VideoColumns.Description, description);
-			//        values.Put (MediaStore.Video.VideoColumns.DateTaken, DateTime.Now.ToAndroidTimestamp());
-			//        return ContentResolver.Insert (MediaStore.Video.Media.ExternalContentUri, values);
-			//    }
-			//}
-			//else
-			//{
-				string type = (this.isPhoto) ? Environment.DirectoryPictures : Environment.DirectoryMovies;
-				Java.IO.File mediaStorageDir = new Java.IO.File (GetExternalFilesDir (type), subdir);
-				if (!mediaStorageDir.Exists())
-				{
-					if (!mediaStorageDir.Mkdirs())
-						throw new IOException ("Couldn't create directory, have you added the WRITE_EXTERNAL_STORAGE permission?");
+			string type = (this.isPhoto) ? Environment.DirectoryPictures : Environment.DirectoryMovies;
+			Java.IO.File mediaStorageDir = new Java.IO.File (GetExternalFilesDir (type), subdir);
+			if (!mediaStorageDir.Exists())
+			{
+				if (!mediaStorageDir.Mkdirs())
+					throw new IOException ("Couldn't create directory, have you added the WRITE_EXTERNAL_STORAGE permission?");
 
-					Java.IO.File nomedia = new Java.IO.File (mediaStorageDir, ".nomedia");
-					nomedia.CreateNewFile();
-				}
+				Java.IO.File nomedia = new Java.IO.File (mediaStorageDir, ".nomedia");
+				nomedia.CreateNewFile();
+			}
 
-				return Uri.FromFile (new Java.IO.File (GetUniquePath (mediaStorageDir.Path, name)));
-			//}
+			return Uri.FromFile (new Java.IO.File (GetUniquePath (mediaStorageDir.Path, name)));
 		}
 
 		private string GetFilePathForUri (Uri uri)
