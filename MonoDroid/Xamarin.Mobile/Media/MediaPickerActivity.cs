@@ -27,6 +27,10 @@ namespace Xamarin.Media
 		private string title;
 		private string description;
 		private string type;
+
+		/// <summary>
+		/// The user's destination path.
+		/// </summary>
 		private Uri path;
 		private bool isPhoto;
 		private string action;
@@ -135,6 +139,8 @@ namespace Xamarin.Media
 				{
 					originalPath = this.path.Path;
 
+					// Not all camera apps respect EXTRA_OUTPUT, some will instead
+					// return a content or file uri from data.
 					if (data != null && data.Data != null)
 					{
 						originalPath = data.DataString;
@@ -229,6 +235,7 @@ namespace Xamarin.Media
 				if (!mediaStorageDir.Mkdirs())
 					throw new IOException ("Couldn't create directory, have you added the WRITE_EXTERNAL_STORAGE permission?");
 
+				// Ensure this media doesn't show up in gallery apps
 				Java.IO.File nomedia = new Java.IO.File (mediaStorageDir, ".nomedia");
 				nomedia.CreateNewFile();
 			}
