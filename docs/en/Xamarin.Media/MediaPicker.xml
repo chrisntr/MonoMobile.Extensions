@@ -174,6 +174,11 @@
 				be <c>true</c> and <see cref="P:System.Threading.Tasks.Task.Exception" /> will contain the errors. It's important to check
 				for any exceptions as otherwise the exception will be rethrown when the task's finalizer runs.
 			</para>
+			<para>
+				In the event that the system provides media that MediaPicker can not find or understand, a <see cref="T:Xamarin.Media.MediaFileNotFoundException" />
+				will be raised with the original path to the media supplied by the system. This is only a concern on Android where any camera or gallery app can
+				be used to retrieve media.
+			</para>
 		</remarks>
 		  <exception cref="T:System.NotSupportedException">
 			  <see cref="P:Xamarin.Media.MediaPicker.PhotosAvailable" /> is <c>false</c>.
@@ -223,6 +228,11 @@
 					be <c>true</c> and <see cref="P:System.Threading.Tasks.Task.Exception" /> will contain the errors. It's important to check
 					for any exceptions as otherwise the exception will be rethrown when the task's finalizer runs.
 				</para>
+				<para>
+					In the event that the system provides media that MediaPicker can not find or understand, a <see cref="T:Xamarin.Media.MediaFileNotFoundException" />
+					will be raised with the original path to the media supplied by the system. This is only a concern on Android where any camera or gallery app can
+					be used to retrieve media.
+				</para>
 			</remarks>
 			<exception cref="T:System.NotSupportedException">
 				<see cref="P:Xamarin.Media.MediaPicker.PhotosAvailable" /> is <c>false</c>.
@@ -269,8 +279,9 @@
 					for any exceptions as otherwise the exception will be rethrown when the task's finalizer runs.
 				</para>
 				<para>
-					It's important to <see cref="M:Xamarin.Media.MediaFile.Dispose" /> the returned <see cref="T:Xamarin.Media.MediaFile" /> when
-					you're done with it to release any memory and temporary file resources being used for it.
+					In the event that the system provides media that MediaPicker can not find or understand, a <see cref="T:Xamarin.Media.MediaFileNotFoundException" />
+					will be raised with the original path to the media supplied by the system. This is only a concern on Android where any camera or gallery app can
+					be used to retrieve media.
 				</para>
 			</remarks>
 			<exception cref="T:System.ArgumentNullException">
@@ -326,8 +337,9 @@
 					for any exceptions as otherwise the exception will be rethrown when the task's finalizer runs.
 				</para>
 				<para>
-					It's important to <see cref="M:Xamarin.Media.MediaFile.Dispose" /> the returned <see cref="T:Xamarin.Media.MediaFile" /> when
-					you're done with it to release any memory and temporary file resources being used for it.
+					In the event that the system provides media that MediaPicker can not find or understand, a <see cref="T:Xamarin.Media.MediaFileNotFoundException" />
+					will be raised with the original path to the media supplied by the system. This is only a concern on Android where any camera or gallery app can
+					be used to retrieve media.
 				</para>
 			</remarks>
 			<exception cref="T:System.ArgumentNullException">
@@ -354,6 +366,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
