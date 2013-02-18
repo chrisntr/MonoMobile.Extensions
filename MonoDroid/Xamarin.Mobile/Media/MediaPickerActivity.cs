@@ -145,8 +145,13 @@ namespace Xamarin.Media
 				    filePath = GetFilePathForUri (this.path);
 				}
 
-				var mf = new MediaFile (filePath, () => File.OpenRead (filePath));
-				args = new MediaPickedEventArgs (requestCode, false, mf);
+				if (filePath != null)
+				{
+					var mf = new MediaFile (filePath, () => File.OpenRead (filePath));
+					args = new MediaPickedEventArgs (requestCode, false, mf);
+				}
+				else
+					args = new MediaPickedEventArgs (requestCode, new MediaFileNotFoundException (this.path.Path));
 			}
 
 			OnMediaPicked (args);

@@ -135,6 +135,9 @@
     <Compile Include="..\..\Shared\Media\MediaFile.cs">
       <Link>Media\MediaFile.cs</Link>
     </Compile>
+    <Compile Include="..\..\Shared\Media\MediaFileNotFoundException.cs">
+      <Link>Media\MediaFileNotFoundException.cs</Link>
+    </Compile>
     <Compile Include="..\..\Shared\Media\StoreMediaOptions.cs">
       <Link>Media\StoreMediaOptions.cs</Link>
     </Compile>

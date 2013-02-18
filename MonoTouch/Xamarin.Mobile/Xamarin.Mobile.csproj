@@ -72,6 +72,9 @@
     <Compile Include="..\..\Shared\Contacts\Relationship.cs">
       <Link>Contacts\Relationship.cs</Link>
     </Compile>
+    <Compile Include="..\..\Shared\Media\MediaFileNotFoundException.cs">
+      <Link>Media\MediaFileNotFoundException.cs</Link>
+    </Compile>
     <Compile Include="NSErrorException.cs" />
     <Compile Include="Geolocation\GeolocationSingleUpdateDelegate.cs" />
     <Compile Include="Geolocation\Geolocator.cs" />
