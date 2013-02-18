@@ -11,8 +11,16 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>CFBundleDisplayName</key>
+	<string></string>
+	<key>CFBundleIdentifier</key>
+	<string></string>
+	<key>CFBundleVersion</key>
+	<string></string>
+	<key>NSMainNibFile</key>
+	<string></string>
+	<key>MKDirectionsApplicationSupportedModes</key>
+	<array/>
 </dict>
 </plist>

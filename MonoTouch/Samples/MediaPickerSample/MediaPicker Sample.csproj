@@ -61,6 +61,7 @@
     <CodesignKey>iPhone Developer</CodesignKey>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MonoTouch.Dialog-1" />
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -75,13 +76,11 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="MediaPickerSampleViewController.cs" />
-    <Compile Include="MediaPickerSampleViewController.designer.cs">
-      <DependentUpon>MediaPickerSampleViewController.cs</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <InterfaceDefinition Include="MediaPickerSampleViewController.xib" />
+    <Content Include="Default%402x.png" />
+    <Content Include="Default-568h%402x.png" />
+    <Content Include="Default.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
