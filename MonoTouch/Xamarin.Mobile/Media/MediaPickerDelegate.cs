@@ -40,40 +40,22 @@ namespace Xamarin.Media
 
 		public override void FinishedPickingMedia (UIImagePickerController picker, NSDictionary info)
 		{
-			Task<NSUrl> saved = null;
-			MediaFile mediaFile = null;
+			MediaFile mediaFile;
 			switch ((NSString)info[UIImagePickerController.MediaType])
 			{
 				case MediaPicker.TypeImage:
-					mediaFile = GetPictureMediaFile (info, out saved);
+					mediaFile = GetPictureMediaFile (info);
 					break;
 
 				case MediaPicker.TypeMovie:
-					mediaFile = GetMovieMediaFile (info, out saved);
+					mediaFile = GetMovieMediaFile (info);
 					break;
 
 				default:
 					throw new NotSupportedException();
 			}
 
-			//if (saved == null)
-			//{
 				this.tcs.TrySetResult (mediaFile);
-			//}
-//			else
-//			{
-//				saved.ContinueWith (t =>
-//				{
-//					if (t.IsCanceled)
-//						this.tcs.TrySetCanceled();
-//					else if (t.IsFaulted)
-//						this.tcs.TrySetException (t.Exception);
-//					else
-//						this.tcs.TrySetResult (mediaFile);
-//					
-//					picker.Dispose();
-//				});
-//			}
 			
 			Cleanup (picker);
 		}
@@ -231,126 +213,36 @@ namespace Xamarin.Media
 			return this.viewController.GetSupportedInterfaceOrientations().HasFlag (mask);
 		}
 
-		private MediaFile GetPictureMediaFile (NSDictionary info, out Task<NSUrl> saveCompleted)
+		private MediaFile GetPictureMediaFile (NSDictionary info)
 		{
-			saveCompleted = null;
-
 			var image = (UIImage)info[UIImagePickerController.EditedImage];
 			if (image == null)
 				image = (UIImage)info[UIImagePickerController.OriginalImage];
 
-			string path = null;
-			//if (this.options.Location == MediaFileStoreLocation.Local)
-			//{
-				path = GetOutputPath (MediaPicker.TypeImage, options.Directory ?? String.Empty, options.Name);
+			string path = GetOutputPath (MediaPicker.TypeImage, options.Directory ?? String.Empty, options.Name);
 
-				using (FileStream fs = File.OpenWrite (path))
-				using (Stream s = new NSDataStream (image.AsJPEG()))
-				{
-					byte[] buffer = new byte[20480];
-					int len;
-					while ((len = s.Read (buffer, 0, buffer.Length)) > 0)
-						fs.Write (buffer, 0, len);
-
-					fs.Flush();
-				}
-//			}
-//			else if (this.options.Location == MediaFileStoreLocation.CameraRoll)
-//			{
-//				var saveTcs = new TaskCompletionSource<NSUrl>();
-//				saveCompleted = saveTcs.Task;
-//
-//				ALAssetsLibrary library = new ALAssetsLibrary();
-//				library.WriteImageToSavedPhotosAlbum (image.AsJPEG(), (NSDictionary)info[UIImagePickerController.MediaMetadata],
-//					(u, e) =>
-//					{
-//						if (e != null)
-//							saveTcs.SetException (new NSErrorException (e));
-//						else
-//							saveTcs.SetResult (u);
-//
-//						library.Dispose();
-//					});
-//			}
-
-			Func<Stream> streamGetter = () =>
+			using (FileStream fs = File.OpenWrite (path))
+			using (Stream s = new NSDataStream (image.AsJPEG()))
 			{
-				return File.OpenRead (path);
-				//switch (this.options.Location)
-				//{
-				//    case MediaFileStoreLocation.CameraRoll:
-				//        return new NSDataStream (image.AsJPEG());
+				byte[] buffer = new byte[20480];
+				int len;
+				while ((len = s.Read (buffer, 0, buffer.Length)) > 0)
+					fs.Write (buffer, 0, len);
 
-				//    case MediaFileStoreLocation.Local:
-				//        return File.OpenRead (path);
-				//        break;
+				fs.Flush();
+			}
 
-				//    default:
-				//        throw new NotSupportedException();
-				//}
-			};
-
-			return new MediaFile (path, streamGetter);
+			return new MediaFile (path, () => File.OpenRead (path));
 		}
 
-		private MediaFile GetMovieMediaFile (NSDictionary info, out Task<NSUrl> saveCompleted)
+		private MediaFile GetMovieMediaFile (NSDictionary info)
 		{
-			saveCompleted = null;
 			NSUrl url = (NSUrl)info[UIImagePickerController.MediaURL];
 		
-			string path = null;
-			//if (this.options.Location == MediaFileStoreLocation.Local)
-			//{
-				path = GetOutputPath (MediaPicker.TypeMovie, options.Directory ?? String.Empty, this.options.Name);
-				File.Move (url.Path, path);
-//			}
-//			else if (this.options.Location == MediaFileStoreLocation.CameraRoll)
-//			{
-//				var saveTcs = new TaskCompletionSource<NSUrl>();
-//				saveCompleted = saveTcs.Task;
-//
-//				ALAssetsLibrary library = new ALAssetsLibrary();
-//				library.WriteVideoToSavedPhotosAlbum (url, (u, e) =>
-//				{
-//					url.Dispose();
-//					url = u;
-//					
-//					if (e == null)
-//					{
-//						library.AssetForUrl (url,
-//							a =>
-//							{
-//								path = a.RepresentationForUti ("public.movie").Filename;
-//								saveTcs.SetResult (u);
-//							
-//								library.Dispose();
-//							},
-//							ae =>
-//							{
-//								saveTcs.SetException (new NSErrorException (ae));
-//								library.Dispose();
-//							});
-//					}
-//					else
-//						saveTcs.SetException (new NSErrorException (e));					
-//				});
-//			}
+			string path = GetOutputPath (MediaPicker.TypeMovie, options.Directory ?? String.Empty, this.options.Name);
+			File.Move (url.Path, path);
 
-			Func<Stream> streamGetter = () =>
-			{
-				return File.OpenRead (path);
-				//switch (this.options.Location)
-				//{
-				//    case MediaFileStoreLocation.CameraRoll:
-				//    case MediaFileStoreLocation.Local:
-				//        return File.OpenRead (path);
-
-				//    default:
-				//        throw new NotSupportedException();
-				//}
-			};
-			
-			return new MediaFile (path, streamGetter);
+			return new MediaFile (path, () => File.OpenRead (path));
 		}
 		
 		private static string GetUniquePath (string type, string path, string name)
