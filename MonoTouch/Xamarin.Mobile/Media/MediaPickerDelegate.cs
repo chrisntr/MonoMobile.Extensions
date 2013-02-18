@@ -55,16 +55,12 @@ namespace Xamarin.Media
 					throw new NotSupportedException();
 			}
 
-				this.tcs.TrySetResult (mediaFile);
-			
-			Cleanup (picker);
+			Dismiss (picker, () => this.tcs.TrySetResult (mediaFile));
 		}
 
 		public override void Canceled (UIImagePickerController picker)
 		{
-			this.tcs.TrySetCanceled();
-			
-			Cleanup (picker);
+			Dismiss (picker, () => this.tcs.TrySetCanceled());
 		}
 
 		public void DisplayPopover (bool hideFirst = false)
@@ -111,7 +107,7 @@ namespace Xamarin.Media
 		private readonly TaskCompletionSource<MediaFile> tcs = new TaskCompletionSource<MediaFile>();
 		private readonly StoreCameraMediaOptions options;
 		
-		private void Cleanup (UIImagePickerController picker)
+		private void Dismiss (UIImagePickerController picker, NSAction onDismiss)
 		{
 			NSNotificationCenter.DefaultCenter.RemoveObserver (observer);
 			UIDevice.CurrentDevice.EndGeneratingDeviceOrientationNotifications();
@@ -123,10 +119,12 @@ namespace Xamarin.Media
 				Popover.Dismiss (animated: true);
 				Popover.Dispose();
 				Popover = null;
+
+				onDismiss();
 			}
 			else
 			{
-				picker.DismissModalViewControllerAnimated (animated: true);
+				picker.DismissViewController (true, onDismiss);
 				picker.Dispose();
 			}
 		}
