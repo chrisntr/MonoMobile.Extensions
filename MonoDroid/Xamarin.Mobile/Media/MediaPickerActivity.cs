@@ -249,7 +249,7 @@ namespace Xamarin.Media
 			try
 			{
 				c = ContentResolver.Query (uri, null, null, null, null);
-				if (!c.MoveToNext())
+				if (c == null || !c.MoveToNext())
 					return null;
 
 				return c.GetString (c.GetColumnIndex (MediaStore.MediaColumns.Data));
