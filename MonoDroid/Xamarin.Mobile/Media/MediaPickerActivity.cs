@@ -295,11 +295,20 @@ namespace Xamarin.Media
 								copied = true;
 								Uri outputPath = GetOutputMediaFile ("temp", null);
 
-								using (Stream input = ContentResolver.OpenInputStream (uri))
-								using (Stream output = File.Create (outputPath.Path))
-									input.CopyTo (output);
+								try
+								{
+									using (Stream input = ContentResolver.OpenInputStream (uri))
+									using (Stream output = File.Create (outputPath.Path))
+										input.CopyTo (output);
 
-								contentPath = outputPath.Path;
+									contentPath = outputPath.Path;
+								}
+								catch (Java.IO.FileNotFoundException)
+								{
+									// If there's no data associated with the uri, we don't know
+									// how to open this. contentPath will be null which will trigger
+									// MediaFileNotFoundException.
+								}
 							}
 
 							tcs.SetResult (new Tuple<string, bool> (contentPath, copied));
