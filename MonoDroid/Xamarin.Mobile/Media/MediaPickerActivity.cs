@@ -293,7 +293,7 @@ namespace Xamarin.Media
 							if (contentPath == null || !contentPath.StartsWith ("file"))
 							{
 								copied = true;
-								Uri outputPath = GetOutputMediaFile (null, null);
+								Uri outputPath = GetOutputMediaFile ("temp", null);
 
 								using (Stream input = ContentResolver.OpenInputStream (uri))
 								using (Stream output = File.Create (outputPath.Path))
