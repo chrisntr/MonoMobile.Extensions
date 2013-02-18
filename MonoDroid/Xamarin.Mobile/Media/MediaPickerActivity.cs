@@ -162,7 +162,7 @@ namespace Xamarin.Media
 				File.Delete (moveTo);
 				File.Move (filename, moveTo);
 			}
-			else
+			else if (url.Scheme == "content")
 			{
 				ICursor cursor = null;
 				try
@@ -244,21 +244,29 @@ namespace Xamarin.Media
 		{
 			if (uri.Scheme == "file")
 				return new System.Uri (uri.ToString()).LocalPath;
-
-			ICursor c = null;
-			try
+			else if (uri.Scheme == "content")
 			{
-				c = ContentResolver.Query (uri, null, null, null, null);
-				if (c == null || !c.MoveToNext())
-					return null;
+				ICursor c = null;
+				try
+				{
+					c = ContentResolver.Query (uri, null, null, null, null);
+					if (c == null || !c.MoveToNext())
+						return null;
 
-				return c.GetString (c.GetColumnIndex (MediaStore.MediaColumns.Data));
+					int column = c.GetColumnIndex (MediaStore.MediaColumns.Data);
+					if (column == -1)
+						return null;
+
+					return c.GetString (column);
+				}
+				finally
+				{
+					if (c != null)
+						c.Close();
+				}
 			}
-			finally
-			{
-				if (c != null)
-					c.Close();
-			}
+
+			return null;
 		}
 
 		private string GetLocalPath (Uri uri)
