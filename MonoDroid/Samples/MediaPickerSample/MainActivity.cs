@@ -119,7 +119,7 @@ namespace MediaPickerSample
 					if (t.IsCanceled)
 						return;
 
-					Bitmap b = BitmapFactory.DecodeFile (t.Result.Path);
+					this.bitmap = BitmapFactory.DecodeFile (t.Result.Path);
 					RunOnUiThread (() =>
 					{
 						//
@@ -131,7 +131,7 @@ namespace MediaPickerSample
 						//
 						// Display the bitmap
 						//
-						image.SetImageBitmap (b);
+						image.SetImageBitmap (this.bitmap);
 
 						// Cleanup any resources held by the MediaFile instance
 						t.Result.Dispose();
