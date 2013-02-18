@@ -224,11 +224,7 @@ namespace Xamarin.Media
 			using (FileStream fs = File.OpenWrite (path))
 			using (Stream s = new NSDataStream (image.AsJPEG()))
 			{
-				byte[] buffer = new byte[20480];
-				int len;
-				while ((len = s.Read (buffer, 0, buffer.Length)) > 0)
-					fs.Write (buffer, 0, len);
-
+				s.CopyTo (fs);
 				fs.Flush();
 			}
 
