@@ -226,7 +226,11 @@ namespace Xamarin.Media
 				fs.Flush();
 			}
 
-			return new MediaFile (path, () => File.OpenRead (path));
+			Action<bool> dispose = null;
+			if (this.source != UIImagePickerControllerSourceType.Camera)
+				dispose = d => File.Delete (path);
+
+			return new MediaFile (path, () => File.OpenRead (path), dispose);
 		}
 
 		private MediaFile GetMovieMediaFile (NSDictionary info)
@@ -239,7 +243,11 @@ namespace Xamarin.Media
 
 			File.Move (url.Path, path);
 
-			return new MediaFile (path, () => File.OpenRead (path));
+			Action<bool> dispose = null;
+			if (this.source != UIImagePickerControllerSourceType.Camera)
+				dispose = d => File.Delete (path);
+
+			return new MediaFile (path, () => File.OpenRead (path), dispose);
 		}
 		
 		private static string GetUniquePath (string type, string path, string name)
