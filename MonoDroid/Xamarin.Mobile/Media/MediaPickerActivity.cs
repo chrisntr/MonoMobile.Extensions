@@ -1,5 +1,7 @@
 using System;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.Database;
@@ -128,13 +130,16 @@ namespace Xamarin.Media
 		{
 			base.OnActivityResult (requestCode, resultCode, data);
 
-			MediaPickedEventArgs args;
+			Task<MediaPickedEventArgs> future;
+
 			if (resultCode == Result.Canceled)
-				args = new MediaPickedEventArgs (requestCode, isCanceled: true);
+				future = TaskFromResult (new MediaPickedEventArgs (requestCode, isCanceled: true));
 			else
 			{
+				Task<Tuple<string, bool>> pathFuture;
+
 				string originalPath = null;
-				string filePath = null;
+
 				if (this.action != Intent.ActionPick)
 				{
 					originalPath = this.path.Path;
@@ -144,46 +149,59 @@ namespace Xamarin.Media
 					if (data != null && data.Data != null)
 					{
 						originalPath = data.DataString;
-						if (TryMoveFile (data.Data))
-							filePath = this.path.Path;
+						pathFuture = TryMoveFileAsync (data.Data).ContinueWith (t =>
+							new Tuple<string, bool> (t.Result ? this.path.Path : null, false));
 					}
 					else
-						filePath = this.path.Path;
+						pathFuture = TaskFromResult (new Tuple<string, bool> (this.path.Path, false));
 				}
 				else if (data != null && data.Data != null)
 				{
 					originalPath = data.DataString;
 					this.path = data.Data;
-					filePath = GetFilePathForUri (this.path);
-				}
-
-				if (filePath != null && File.Exists (filePath))
-				{
-					var mf = new MediaFile (filePath, () => File.OpenRead (filePath));
-					args = new MediaPickedEventArgs (requestCode, false, mf);
+					pathFuture = GetFileForUriAsync (this.path);
 				}
 				else
-					args = new MediaPickedEventArgs (requestCode, new MediaFileNotFoundException (originalPath));
+					pathFuture = TaskFromResult<Tuple<string, bool>> (null);
+
+				future = pathFuture.ContinueWith (t =>
+				{
+					string resultPath = t.Result.Item1;
+					if (resultPath != null && File.Exists (t.Result.Item1))
+					{
+						Action<bool> dispose = null;
+						if (t.Result.Item2)
+							dispose = d => File.Delete (resultPath);
+
+						var mf = new MediaFile (t.Result.Item1, () => File.OpenRead (resultPath), dispose);
+						return new MediaPickedEventArgs (requestCode, false, mf);
+					}
+					else
+						return new MediaPickedEventArgs (requestCode, new MediaFileNotFoundException (originalPath));
+				});
 			}
 
-			OnMediaPicked (args);
 			Finish();
+
+			future.ContinueWith (t => OnMediaPicked (t.Result));
 		}
 		
-		private bool TryMoveFile (Uri url)
+		private Task<bool> TryMoveFileAsync (Uri url)
 		{
 			string moveTo = GetLocalPath (this.path);
-			string filename = GetFilePathForUri (url);
-			if (filename == null)
-				return false;
+			return GetFileForUriAsync (url).ContinueWith (t =>
+			{
+				if (t.Result.Item1 == null)
+					return false;
 
-			File.Delete (moveTo);
-			File.Move (filename, moveTo);
+				File.Delete (moveTo);
+				File.Move (t.Result.Item1, moveTo);
 
-			if (url.Scheme == "content")
-				ContentResolver.Delete (url, null, null);
+				if (url.Scheme == "content")
+					ContentResolver.Delete (url, null, null);
 
-			return true;
+				return true;
+			});
 		}
 
 		private int GetVideoQuality (VideoQuality videoQuality)
@@ -229,66 +247,90 @@ namespace Xamarin.Media
 			}
 
 			string mediaType = (this.isPhoto) ? Environment.DirectoryPictures : Environment.DirectoryMovies;
-			Java.IO.File mediaStorageDir = new Java.IO.File (GetExternalFilesDir (mediaType), subdir);
-			if (!mediaStorageDir.Exists())
+			using (Java.IO.File mediaStorageDir = new Java.IO.File (GetExternalFilesDir (mediaType), subdir))
 			{
-				if (!mediaStorageDir.Mkdirs())
-					throw new IOException ("Couldn't create directory, have you added the WRITE_EXTERNAL_STORAGE permission?");
+				if (!mediaStorageDir.Exists())
+				{
+					if (!mediaStorageDir.Mkdirs())
+						throw new IOException ("Couldn't create directory, have you added the WRITE_EXTERNAL_STORAGE permission?");
 
-				// Ensure this media doesn't show up in gallery apps
-				Java.IO.File nomedia = new Java.IO.File (mediaStorageDir, ".nomedia");
-				nomedia.CreateNewFile();
+					// Ensure this media doesn't show up in gallery apps
+					using (Java.IO.File nomedia = new Java.IO.File (mediaStorageDir, ".nomedia"))
+						nomedia.CreateNewFile();
+				}
+
+				return Uri.FromFile (new Java.IO.File (GetUniquePath (mediaStorageDir.Path, name)));
 			}
-
-			return Uri.FromFile (new Java.IO.File (GetUniquePath (mediaStorageDir.Path, name)));
 		}
 
-		private string GetFilePathForUri (Uri uri)
+		private Task<Tuple<string, bool>> GetFileForUriAsync (Uri uri)
 		{
+			var tcs = new TaskCompletionSource<Tuple<string, bool>>();
+
 			if (uri.Scheme == "file")
-				return new System.Uri (uri.ToString()).LocalPath;
+				tcs.SetResult (new Tuple<string, bool> (new System.Uri (uri.ToString()).LocalPath, false));
 			else if (uri.Scheme == "content")
 			{
-				ICursor c = null;
-				try
+				Task.Factory.StartNew (() =>
 				{
-					c = ContentResolver.Query (uri, null, null, null, null);
-					if (c == null || !c.MoveToNext())
-						return null;
-
-					int column = c.GetColumnIndex (MediaStore.MediaColumns.Data);
-					string contentPath = null;
-
-					if (column != -1)
-						contentPath = c.GetString (column);
-
-					// If they don't follow the "rules", try to copy the file locally
-					if (contentPath == null || !contentPath.StartsWith ("file"))
+					ICursor cursor = null;
+					try
 					{
-						Uri outputPath = GetOutputMediaFile (null, null);
+						cursor = ContentResolver.Query (uri, null, null, null, null);
+						if (cursor == null || !cursor.MoveToNext())
+							tcs.SetResult (new Tuple<string, bool> (null, false));
+						else
+						{
+							int column = cursor.GetColumnIndex (MediaStore.MediaColumns.Data);
+							string contentPath = null;
 
-						using (Stream input = ContentResolver.OpenInputStream (uri))
-						using (Stream output = File.Create (outputPath.Path))
-							input.CopyTo (output);
+							if (column != -1)
+								contentPath = cursor.GetString (column);
 
-						contentPath = outputPath.Path;
+							bool copied = false;
+
+							// If they don't follow the "rules", try to copy the file locally
+							if (contentPath == null || !contentPath.StartsWith ("file"))
+							{
+								copied = true;
+								Uri outputPath = GetOutputMediaFile (null, null);
+
+								using (Stream input = ContentResolver.OpenInputStream (uri))
+								using (Stream output = File.Create (outputPath.Path))
+									input.CopyTo (output);
+
+								contentPath = outputPath.Path;
+							}
+
+							tcs.SetResult (new Tuple<string, bool> (contentPath, copied));
+						}
 					}
-
-					return contentPath;
-				}
-				finally
-				{
-					if (c != null)
-						c.Close();
-				}
+					finally
+					{
+						if (cursor != null)
+						{
+							cursor.Close();
+							cursor.Dispose();
+						}
+					}
+				}, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default);
 			}
+			else
+				tcs.SetResult (new Tuple<string, bool> (null, false));
 
-			return null;
+			return tcs.Task;
 		}
 
 		private string GetLocalPath (Uri uri)
 		{
 			return new System.Uri (uri.ToString()).LocalPath;
+		}
+
+		private static Task<T> TaskFromResult<T> (T result)
+		{
+			var tcs = new TaskCompletionSource<T>();
+			tcs.SetResult (result);
+			return tcs.Task;
 		}
 
 		private static void OnMediaPicked (MediaPickedEventArgs e)
