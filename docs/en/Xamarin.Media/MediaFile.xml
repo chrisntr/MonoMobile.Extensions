@@ -20,14 +20,10 @@
     <summary>Represents a media file newly taken or picked from the gallery.</summary>
     <remarks>
 		<para>
-			It's important to <see cref="M:Xamarin.Media.MediaFile.Dispose" /> this <see cref="T:Xamarin.Media.MediaFile" /> when
-			you're done with it to release any memory and temporary file resources being used for it.
-		</para>
-		<para>
-			On Windows Phone, file paths returned from the photo picker can not be easily reused. As such, they are
-			copied locally under a "temp" directory in isolated storage for use with <see cref="T:Xamarin.Media.MediaFile" />.
-			Call <see cref="M:Xamarin.Media.MediaFile.Dispose" /> to remove this file, but keep in mind that if your app crashes before
-			you have a chance to dispose, this file will not be automatically reclaimed.
+			When picking media, the returned file should be considered temporary. If you wish to persist this file, you should copy
+			the file before calling <see cref="M:Xamarin.Media.MediaFile.Dispose" />. Once you've persisted the file, or finished
+			viewing it, calling <see cref="M:Xamarin.Media.MediaFile.Dispose" /> will cleanup any temporary files that may have been
+			created.
 		</para>
 	</remarks>
 	<altmember cref="T:Xamarin.Media.MediaPicker" />

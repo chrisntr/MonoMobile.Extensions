@@ -147,6 +147,12 @@
         <returns>A <see cref="T:System.Threading.Tasks.Task{T}" /> of <see cref="T:Xamarin.Media.MediaFile" />.</returns>
         <remarks>
 			<para>
+				When picking media, the returned file should be considered temporary. If you wish to persist this file, you should copy
+				the file before calling <see cref="M:Xamarin.Media.MediaFile.Dispose" />. Once you've persisted the file, or finished
+				viewing it, calling <see cref="M:Xamarin.Media.MediaFile.Dispose" /> will cleanup any temporary files that may have been
+				created.
+			</para>
+			<para>
 				Avoid blocking on the resulting task (by using <see cref="P:System.Threading.Tasks.Task{T}.Result" />
 				or <see cref="M:System.Threading.Tasks.Task.Wait" />). As this operation invokes the system UI for picking a photo,
 				the operation occurs on the current UI thread and may deadlock the application. Instead, use
@@ -157,16 +163,6 @@
 				as <c>true</c>. If an error occured during the operation, <see cref="P:System.Threading.Tasks.Task.IsFaulted" /> will
 				be <c>true</c> and <see cref="P:System.Threading.Tasks.Task.Exception" /> will contain the errors. It's important to check
 				for any exceptions as otherwise the exception will be rethrown when the task's finalizer runs.
-			</para>
-			<para>
-				It's important to <see cref="M:Xamarin.Media.MediaFile.Dispose" /> the returned <see cref="T:Xamarin.Media.MediaFile" /> when
-				you're done with it to release any memory and temporary file resources being used for it.
-			</para>
-			<para>
-				On Windows Phone, file paths returned from the photo picker can not be easily reused. As such, they are
-				copied locally under a "temp" directory in isolated storage for use with <see cref="T:Xamarin.Media.MediaFile" />.
-				Call <see cref="M:Xamarin.Media.MediaFile.Dispose" /> to remove this file, but keep in mind that if your app crashes before
-				you have a chance to dispose, this file will not be automatically reclaimed.
 			</para>
 		</remarks>
 		  <exception cref="T:System.NotSupportedException">
@@ -198,6 +194,12 @@
 			</returns>
 			<remarks>
 				<para>
+					When picking media, the returned file should be considered temporary. If you wish to persist this file, you should copy
+					the file before calling <see cref="M:Xamarin.Media.MediaFile.Dispose" />. Once you've persisted the file, or finished
+					viewing it, calling <see cref="M:Xamarin.Media.MediaFile.Dispose" /> will cleanup any temporary files that may have been
+					created.
+				</para>
+				<para>
 					Avoid blocking on the resulting task (by using <see cref="P:System.Threading.Tasks.Task{T}.Result" />
 					or <see cref="M:System.Threading.Tasks.Task.Wait" />). As this operation invokes the system UI for picking a video,
 					the operation occurs on the current UI thread and may deadlock the application. Instead, use
@@ -208,10 +210,6 @@
 					as <c>true</c>. If an error occured during the operation, <see cref="P:System.Threading.Tasks.Task.IsFaulted" /> will
 					be <c>true</c> and <see cref="P:System.Threading.Tasks.Task.Exception" /> will contain the errors. It's important to check
 					for any exceptions as otherwise the exception will be rethrown when the task's finalizer runs.
-				</para>
-				<para>
-					It's important to <see cref="M:Xamarin.Media.MediaFile.Dispose" /> the returned <see cref="T:Xamarin.Media.MediaFile" /> when
-					you're done with it to release any memory and temporary file resources being used for it.
 				</para>
 			</remarks>
 			<exception cref="T:System.NotSupportedException">
