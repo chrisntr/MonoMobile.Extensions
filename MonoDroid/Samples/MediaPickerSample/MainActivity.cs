@@ -13,11 +13,12 @@ namespace MediaPickerSample
 	[Activity (Label = "MediaPickerSample", MainLauncher = true, Icon = "@drawable/icon", ConfigurationChanges = ConfigChanges.Orientation)]
 	public class MainActivity : Activity
 	{
+		private ImageView image;
 		protected override void OnCreate (Bundle bundle)
 		{
 			base.OnCreate (bundle);
 			SetContentView (Resource.Layout.Main);
-			ImageView image = FindViewById<ImageView> (Resource.Id.image);
+			image = FindViewById<ImageView> (Resource.Id.image);
 			VideoView videoView  = FindViewById<VideoView>(Resource.Id.surfacevideoview);
 			
 			
@@ -98,6 +99,8 @@ namespace MediaPickerSample
 			Button photoButton = FindViewById<Button> (Resource.Id.takePhotoButton);
 			photoButton.Click += delegate
 			{
+				Cleanup();
+
 				var picker = new MediaPicker (this);
 
 				if (!picker.IsCameraAvailable || !picker.PhotosSupported)
@@ -206,6 +209,8 @@ namespace MediaPickerSample
 			Button pickPhotoButton = FindViewById<Button> (Resource.Id.pickPhotoButton);
 			pickPhotoButton.Click += delegate
 			{
+				Cleanup();
+
 				var picker = new MediaPicker (this);
 
 				if (!picker.PhotosSupported)
@@ -220,7 +225,7 @@ namespace MediaPickerSample
 					if (t.IsCanceled)
 						return;
 
-					Bitmap b = BitmapFactory.DecodeFile (t.Result.Path);
+					this.bitmap = BitmapFactory.DecodeFile (t.Result.Path);
 					RunOnUiThread (() =>
 					{
 						//
@@ -232,13 +237,21 @@ namespace MediaPickerSample
 						//
 						// Display the bitmap
 						//
-						image.SetImageBitmap (b);
+						image.SetImageBitmap (this.bitmap);
 
 						// Cleanup any resources held by the MediaFile instance
 						t.Result.Dispose();
 					});
 				});
 			};
+		}
+
+		private Bitmap bitmap;
+		private void Cleanup()
+		{
+			image.SetImageBitmap (null);
+			if (this.bitmap != null)
+				this.bitmap.Dispose();
 		}
 
 		private Toast unsupportedToast;
