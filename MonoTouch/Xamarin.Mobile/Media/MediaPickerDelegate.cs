@@ -233,7 +233,10 @@ namespace Xamarin.Media
 		{
 			NSUrl url = (NSUrl)info[UIImagePickerController.MediaURL];
 		
-			string path = GetOutputPath (MediaPicker.TypeMovie, options.Directory ?? String.Empty, this.options.Name);
+			string path = GetOutputPath (MediaPicker.TypeMovie,
+				options.Directory ?? String.Empty,
+				this.options.Name ?? Path.GetFileName (url.Path));
+
 			File.Move (url.Path, path);
 
 			return new MediaFile (path, () => File.OpenRead (path));
