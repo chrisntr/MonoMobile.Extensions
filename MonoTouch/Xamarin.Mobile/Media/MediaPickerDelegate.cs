@@ -106,6 +106,11 @@ namespace Xamarin.Media
 		private readonly UIImagePickerControllerSourceType source;
 		private readonly TaskCompletionSource<MediaFile> tcs = new TaskCompletionSource<MediaFile>();
 		private readonly StoreCameraMediaOptions options;
+
+		private bool IsCaptured
+		{
+			get { return this.source == UIImagePickerControllerSourceType.Camera; }
+		}
 		
 		private void Dismiss (UIImagePickerController picker, NSAction onDismiss)
 		{
@@ -217,7 +222,9 @@ namespace Xamarin.Media
 			if (image == null)
 				image = (UIImage)info[UIImagePickerController.OriginalImage];
 
-			string path = GetOutputPath (MediaPicker.TypeImage, options.Directory ?? String.Empty, options.Name);
+			string path = GetOutputPath (MediaPicker.TypeImage,
+				options.Directory ?? ((IsCaptured) ? String.Empty : "temp"),
+				options.Name);
 
 			using (FileStream fs = File.OpenWrite (path))
 			using (Stream s = new NSDataStream (image.AsJPEG()))
@@ -236,9 +243,9 @@ namespace Xamarin.Media
 		private MediaFile GetMovieMediaFile (NSDictionary info)
 		{
 			NSUrl url = (NSUrl)info[UIImagePickerController.MediaURL];
-		
+
 			string path = GetOutputPath (MediaPicker.TypeMovie,
-				options.Directory ?? String.Empty,
+				options.Directory ?? ((IsCaptured) ? String.Empty : "temp"),
 				this.options.Name ?? Path.GetFileName (url.Path));
 
 			File.Move (url.Path, path);
