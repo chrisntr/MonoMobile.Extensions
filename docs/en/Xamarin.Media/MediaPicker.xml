@@ -7,6 +7,8 @@
     <AssemblyVersion>0.4.0.0</AssemblyVersion>
     <AssemblyVersion>0.5.0.0</AssemblyVersion>
     <AssemblyVersion>0.5.1.0</AssemblyVersion>
+    <AssemblyVersion>0.6.1.0</AssemblyVersion>
+    <AssemblyVersion>0.6.2.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -64,6 +66,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="context" Type="Android.Content.Context" />
@@ -83,6 +87,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -110,6 +116,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -137,6 +145,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task&lt;Xamarin.Media.MediaFile&gt;</ReturnType>
@@ -182,6 +192,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task&lt;Xamarin.Media.MediaFile&gt;</ReturnType>
@@ -229,6 +241,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task&lt;Xamarin.Media.MediaFile&gt;</ReturnType>
@@ -284,6 +298,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task&lt;Xamarin.Media.MediaFile&gt;</ReturnType>

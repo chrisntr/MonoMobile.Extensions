@@ -9,6 +9,8 @@
     <AssemblyVersion>0.4.0.0</AssemblyVersion>
     <AssemblyVersion>0.5.0.0</AssemblyVersion>
     <AssemblyVersion>0.5.1.0</AssemblyVersion>
+    <AssemblyVersion>0.6.1.0</AssemblyVersion>
+    <AssemblyVersion>0.6.2.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -48,6 +50,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="context" Type="Android.Content.Context" />
@@ -69,6 +73,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Double</ReturnType>
@@ -96,6 +102,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task&lt;Xamarin.Geolocation.Position&gt;</ReturnType>
@@ -135,6 +143,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task&lt;Xamarin.Geolocation.Position&gt;</ReturnType>
@@ -167,6 +177,8 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task&lt;Xamarin.Geolocation.Position&gt;</ReturnType>
@@ -207,6 +219,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task&lt;Xamarin.Geolocation.Position&gt;</ReturnType>
@@ -242,6 +256,8 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task&lt;Xamarin.Geolocation.Position&gt;</ReturnType>
@@ -276,6 +292,8 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task&lt;Xamarin.Geolocation.Position&gt;</ReturnType>
@@ -318,6 +336,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -349,6 +369,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -385,6 +407,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -407,6 +431,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.EventHandler&lt;Xamarin.Geolocation.PositionEventArgs&gt;</ReturnType>
@@ -437,6 +463,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.EventHandler&lt;Xamarin.Geolocation.PositionErrorEventArgs&gt;</ReturnType>
@@ -465,6 +493,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -510,6 +540,8 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -562,6 +594,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -583,6 +617,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>

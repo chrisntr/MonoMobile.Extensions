@@ -9,6 +9,8 @@
     <AssemblyVersion>0.4.0.0</AssemblyVersion>
     <AssemblyVersion>0.5.0.0</AssemblyVersion>
     <AssemblyVersion>0.5.1.0</AssemblyVersion>
+    <AssemblyVersion>0.6.1.0</AssemblyVersion>
+    <AssemblyVersion>0.6.2.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.EventArgs</BaseTypeName>
@@ -29,6 +31,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="position" Type="Xamarin.Geolocation.Position" />
@@ -49,6 +53,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>Xamarin.Geolocation.Position</ReturnType>

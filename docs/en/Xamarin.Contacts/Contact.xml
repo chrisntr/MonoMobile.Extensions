@@ -8,6 +8,8 @@
     <AssemblyVersion>0.4.0.0</AssemblyVersion>
     <AssemblyVersion>0.5.0.0</AssemblyVersion>
     <AssemblyVersion>0.5.1.0</AssemblyVersion>
+    <AssemblyVersion>0.6.1.0</AssemblyVersion>
+    <AssemblyVersion>0.6.2.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -28,6 +30,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters />
       <Docs>
@@ -46,6 +50,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Collections.Generic.IEnumerable&lt;Xamarin.Contacts.Address&gt;</ReturnType>
@@ -67,6 +73,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
@@ -96,6 +104,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Collections.Generic.IEnumerable&lt;Xamarin.Contacts.Email&gt;</ReturnType>
@@ -117,6 +127,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
@@ -135,6 +147,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>Android.Graphics.Bitmap</ReturnType>
@@ -156,6 +170,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
@@ -189,6 +205,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Collections.Generic.IEnumerable&lt;Xamarin.Contacts.InstantMessagingAccount&gt;</ReturnType>
@@ -210,6 +228,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -243,6 +263,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
@@ -262,6 +284,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
@@ -281,6 +305,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
@@ -300,6 +326,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Collections.Generic.IEnumerable&lt;Xamarin.Contacts.Note&gt;</ReturnType>
@@ -321,6 +349,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Collections.Generic.IEnumerable&lt;Xamarin.Contacts.Organization&gt;</ReturnType>
@@ -342,6 +372,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Collections.Generic.IEnumerable&lt;Xamarin.Contacts.Phone&gt;</ReturnType>
@@ -363,6 +395,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
@@ -385,6 +419,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Collections.Generic.IEnumerable&lt;Xamarin.Contacts.Relationship&gt;</ReturnType>
@@ -406,6 +442,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task&lt;Xamarin.Media.MediaFile&gt;</ReturnType>
@@ -434,6 +472,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
@@ -456,6 +496,8 @@
         <AssemblyVersion>0.4.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.0.0</AssemblyVersion>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Collections.Generic.IEnumerable&lt;Xamarin.Contacts.Website&gt;</ReturnType>

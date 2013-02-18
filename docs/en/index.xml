@@ -1,21 +1,21 @@
 <Overview>
   <Assemblies>
-    <Assembly Name="Xamarin.Mobile" Version="0.0.0.0">
+    <Assembly Name="Xamarin.Mobile" Version="0.6.2.0">
       <Attributes>
         <Attribute>
-          <AttributeName>System.Reflection.AssemblyCompany("Xamarin Inc")</AttributeName>
+          <AttributeName>System.Reflection.AssemblyCompany("Xamarin Inc.")</AttributeName>
         </Attribute>
         <Attribute>
           <AttributeName>System.Reflection.AssemblyConfiguration("")</AttributeName>
         </Attribute>
         <Attribute>
-          <AttributeName>System.Reflection.AssemblyCopyright("Copyright � Xamarin Inc 2011")</AttributeName>
+          <AttributeName>System.Reflection.AssemblyCopyright("Copyright � 2011-2013 Xamarin Inc.")</AttributeName>
         </Attribute>
         <Attribute>
           <AttributeName>System.Reflection.AssemblyDescription("")</AttributeName>
         </Attribute>
         <Attribute>
-          <AttributeName>System.Reflection.AssemblyFileVersion("0.0.0.0")</AttributeName>
+          <AttributeName>System.Reflection.AssemblyFileVersion("0.6.2.0")</AttributeName>
         </Attribute>
         <Attribute>
           <AttributeName>System.Reflection.AssemblyProduct("Xamarin.Mobile")</AttributeName>
@@ -67,6 +67,7 @@
     <Namespace Name="Xamarin.Media">
       <Type Name="CameraDevice" Kind="Enumeration" />
       <Type Name="MediaFile" Kind="Class" />
+      <Type Name="MediaFileNotFoundException" Kind="Class" />
       <Type Name="MediaPicker" Kind="Class" />
       <Type Name="StoreCameraMediaOptions" Kind="Class" />
       <Type Name="StoreMediaOptions" Kind="Class" />
