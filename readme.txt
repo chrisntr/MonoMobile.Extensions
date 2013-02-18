@@ -18,6 +18,11 @@ Known Issues:
 
 Changelog
 
+Release 0.6.2
+
+Fixes:
+ - Fixed presenting UIViewControllers in the continuation of a MediaPicker call.
+
 Release 0.6.1
 
 Fixes:
