@@ -196,9 +196,6 @@ namespace MediaPickerSample
 						// Start playing the video
 						//	
 	        			videoView.Start();
-
-						// Cleanup any resources held by the MediaFile instance
-						t.Result.Dispose();
 					});
 				});
 			};
