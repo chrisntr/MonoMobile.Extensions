@@ -1,9 +1,20 @@
 Xamarin Mobile API Preview 0.6.1
 
-At this time, the Windows Phone version of the library requires the
-Visual Studio Async CTP (http://www.microsoft.com/en-us/download/details.aspx?id=9983).
-As this CTP installs to a user-specific directory, you'll likely need to
-correct references to this library in the samples to use them.
+SDK Requirements:
+
+ - Xamarin.Mobile for Android requires a minimum Android version of 2.3 (API Level 9).
+ - Xamarin.Mobile for iOS requires a minimum iOS version of 5.0.
+ - Xamarin.Mobile for Windows Phone requires a minimum SDK version of 7.1.
+
+Known Issues:
+
+ - Windows Phone 7.1 version of the library requires the
+ Visual Studio Async CTP (http://www.microsoft.com/en-us/download/details.aspx?id=9983).
+ As this CTP installs to a user-specific directory, you'll likely need to
+ correct references to this library in the samples to use them.
+ - On Android, Tasks returned from MediaPicker may fail to fire if the
+ holding Activity is killed.
+
 
 Changelog
 
