@@ -257,10 +257,24 @@ namespace Xamarin.Media
 						return null;
 
 					int column = c.GetColumnIndex (MediaStore.MediaColumns.Data);
-					if (column == -1)
-						return null;
+					string contentPath = null;
 
-					return c.GetString (column);
+					if (column != -1)
+						contentPath = c.GetString (column);
+
+					// If they don't follow the "rules", try to copy the file locally
+					if (contentPath == null || !contentPath.StartsWith ("file"))
+					{
+						Uri outputPath = GetOutputMediaFile (null, null);
+
+						using (Stream input = ContentResolver.OpenInputStream (uri))
+						using (Stream output = File.Create (outputPath.Path))
+							input.CopyTo (output);
+
+						contentPath = outputPath.Path;
+					}
+
+					return contentPath;
 				}
 				finally
 				{
