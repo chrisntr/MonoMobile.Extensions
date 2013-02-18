@@ -87,7 +87,7 @@ namespace Xamarin.Media
 					pickIntent.PutExtra (MediaStore.ExtraVideoQuality, GetVideoQuality (this.quality));
 
 					if (!ran)
-						this.path = GetOutputMediaFile (b.GetString (ExtraPath), this.title, this.description);
+						this.path = GetOutputMediaFile (b.GetString (ExtraPath), this.title);
 					else
 						this.path = Uri.Parse (b.GetString (ExtraPath));
 
@@ -129,7 +129,7 @@ namespace Xamarin.Media
 				args = new MediaPickedEventArgs (requestCode, isCanceled: true);
 			else
 			{
-				string filePath = null;
+				string filePath;
 				if (this.action != Intent.ActionPick)
 				{
 					if (data != null && data.Data != null)
@@ -184,9 +184,9 @@ namespace Xamarin.Media
 			}
 		}
 
-		private int GetVideoQuality (VideoQuality quality)
+		private int GetVideoQuality (VideoQuality videoQuality)
 		{
-			switch (quality)
+			switch (videoQuality)
 			{
 				case VideoQuality.Medium:
 				case VideoQuality.High:
@@ -213,7 +213,7 @@ namespace Xamarin.Media
 			return Path.Combine (folder, nname);
 		}
 
-		private Uri GetOutputMediaFile (string subdir, string name, string description)
+		private Uri GetOutputMediaFile (string subdir, string name)
 		{
 			subdir = subdir ?? String.Empty;
 
@@ -226,8 +226,8 @@ namespace Xamarin.Media
 					name = "VID_" + timestamp + ".mp4";
 			}
 
-			string type = (this.isPhoto) ? Environment.DirectoryPictures : Environment.DirectoryMovies;
-			Java.IO.File mediaStorageDir = new Java.IO.File (GetExternalFilesDir (type), subdir);
+			string mediaType = (this.isPhoto) ? Environment.DirectoryPictures : Environment.DirectoryMovies;
+			Java.IO.File mediaStorageDir = new Java.IO.File (GetExternalFilesDir (mediaType), subdir);
 			if (!mediaStorageDir.Exists())
 			{
 				if (!mediaStorageDir.Mkdirs())
@@ -261,22 +261,9 @@ namespace Xamarin.Media
 			}
 		}
 
-		private Stream GetStreamForUri (Uri uri)
-		{
-			return File.OpenRead (GetFilePathForUri (uri));
-		}
-
 		private string GetLocalPath (Uri uri)
 		{
 			return new System.Uri (uri.ToString()).LocalPath;
-		}
-
-		private void DeleteFileAtUri (Uri uri)
-		{
-			if (uri.Scheme == "file")
-				File.Delete (GetLocalPath (uri));
-			else
-				ContentResolver.Delete (uri, null, null);
 		}
 
 		private static void OnMediaPicked (MediaPickedEventArgs e)
