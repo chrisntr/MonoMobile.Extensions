@@ -129,20 +129,26 @@ namespace Xamarin.Media
 				args = new MediaPickedEventArgs (requestCode, isCanceled: true);
 			else
 			{
-				string filePath;
+				string originalPath = null;
+				string filePath = null;
 				if (this.action != Intent.ActionPick)
 				{
+					originalPath = this.path.Path;
+
 					if (data != null && data.Data != null)
-						MoveFile (data.Data);
-
-					filePath = this.path.Path;
+					{
+						originalPath = data.DataString;
+						if (TryMoveFile (data.Data))
+							filePath = this.path.Path;
+					}
+					else
+						filePath = this.path.Path;
 				}
-				else
+				else if (data != null && data.Data != null)
 				{
-				    if (data != null && data.Data != null)
-						this.path = data.Data;
-
-				    filePath = GetFilePathForUri (this.path);
+					originalPath = data.DataString;
+					this.path = data.Data;
+					filePath = GetFilePathForUri (this.path);
 				}
 
 				if (filePath != null)
@@ -151,42 +157,27 @@ namespace Xamarin.Media
 					args = new MediaPickedEventArgs (requestCode, false, mf);
 				}
 				else
-					args = new MediaPickedEventArgs (requestCode, new MediaFileNotFoundException (this.path.Path));
+					args = new MediaPickedEventArgs (requestCode, new MediaFileNotFoundException (originalPath));
 			}
 
 			OnMediaPicked (args);
 			Finish();
 		}
 		
-		private void MoveFile (Uri url)
+		private bool TryMoveFile (Uri url)
 		{
 			string moveTo = GetLocalPath (this.path);
-			if (url.Scheme == "file")
-			{
-				string filename = url.Path;
-				File.Delete (moveTo);
-				File.Move (filename, moveTo);
-			}
-			else if (url.Scheme == "content")
-			{
-				ICursor cursor = null;
-				try
-				{
-					cursor = ContentResolver.Query (url, null, null, null, null);
-					if (cursor != null && cursor.MoveToFirst())
-					{
-						string filename = cursor.GetString (cursor.GetColumnIndex (MediaStore.Video.Media.InterfaceConsts.Data));
-						File.Delete (moveTo);
-						File.Move (filename, moveTo);
-						ContentResolver.Delete (url, null, null);
-					}
-				}
-				finally
-				{
-					if (cursor != null)
-						cursor.Close();
-				}
-			}
+			string filename = GetFilePathForUri (url);
+			if (filename == null)
+				return false;
+
+			File.Delete (moveTo);
+			File.Move (filename, moveTo);
+
+			if (url.Scheme == "content")
+				ContentResolver.Delete (url, null, null);
+
+			return true;
 		}
 
 		private int GetVideoQuality (VideoQuality videoQuality)
