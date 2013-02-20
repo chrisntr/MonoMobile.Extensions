@@ -18,10 +18,9 @@ Known Issues:
 
 Changelog
 
-Release 0.6.2
+Release 0.6.3
 
 Fixes:
- - Fixed presenting UIViewControllers in the continuation of a MediaPicker call.
  - MediaPicker now throws MediaFileNotFoundException on Android when the camera
  or gallery app returns a media file that it can not understand.
  - Fixed an IOException of ERROR_ALREADY_EXISTS in MediaPicker on Android when
@@ -31,6 +30,11 @@ Fixes:
  - Fixed MediaPicker.Pick* files not cleaning up on iOS.
  - Temporary files created by MediaPicker are now consistently in temp/ on all
  platforms.
+
+Release 0.6.2
+
+Fixes:
+ - Fixed presenting UIViewControllers in the continuation of a MediaPicker call.
 
 Release 0.6.1
 
