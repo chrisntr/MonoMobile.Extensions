@@ -1,4 +1,4 @@
-Xamarin Mobile API Preview 0.6.2
+Xamarin Mobile API Preview 0.6.3
 
 SDK Requirements:
 
