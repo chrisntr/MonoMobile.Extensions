@@ -69,7 +69,7 @@ xpkg_args = [
 	"--library", "winrt:" + W8DLL,
 	"--sample", "Xamarin.Mobile Android Samples. Android samples for the AddressBook, MediaPicker and Geolocator APIs.:MonoDroid/Samples/Xamarin.Mobile.Android.Samples.sln",
 	"--sample", "Xamarin.Mobile iOS Samples. iOS samples for the AddressBook, MediaPicker and Geolocator APIs.:MonoTouch/Samples/Xamarin.Mobile.iOS.Samples.sln",
-	"--sample", "Xamarin.Mobile Windows Phone 7.5 Samples. Windows Phone 7 samples for the AddressBook, MediaPicker and Geolocator APIs.:WindowsPhone/Samples/Xamarin.Mobile.WP.Samples.sln"
+	"--sample", "Xamarin.Mobile Windows Phone 7.5 Samples. Windows Phone 7 samples for the AddressBook, MediaPicker and Geolocator APIs.:WindowsPhone/Samples/Xamarin.Mobile.WP.Samples.sln",
 	"--sample", "Xamarin.Mobile Windows Phone 8 Samples. Windows Phone 8 Samples for the AddressBook, MediaPicker and Geolocator APIs.:WindowsPhone8/Samples/Samples.sln",
 	"--sample", "Xamarin.Mobile Windows 8 Samples. Windows 8 Samples for the MediaPicker and Geolocator APIs.:WindowsRT/Samples/Samples.sln"
 ]
