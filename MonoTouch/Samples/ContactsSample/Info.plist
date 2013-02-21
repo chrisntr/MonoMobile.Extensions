@@ -13,6 +13,15 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+	</array>
+	<key>CFBundleDisplayName</key>
+	<string>Contacts</string>
+	<key>CFBundleIconFiles</key>
+	<array>
+		<string>Resources/Default.png</string>
+		<string>Resources/Default@2x.png</string>
+		<string>Resources/Default-568h@2x.png</string>
 	</array>
 </dict>
 </plist>

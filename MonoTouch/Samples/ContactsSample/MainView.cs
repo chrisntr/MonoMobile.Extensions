@@ -1,64 +1,29 @@
 using System;
-using MonoTouch.UIKit;
-using System.Drawing;
-using Xamarin.Contacts;
-using System.Text;
-using System.Linq;
 using System.Collections.Generic;
-using MonoTouch.Foundation;
+using System.Drawing;
 using System.Globalization;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using MonoTouch.Dialog;
+using MonoTouch.Foundation;
+using MonoTouch.UIKit;
+using Xamarin.Contacts;
 
 namespace ContactsSample
 {
 	public class MainView : UIViewController
 	{
-		UITableView tableView;
-		List<Contact> list;
-		private UIAlertView alert;
-
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-			
-			Title = "Contacts";
-			//
-			// create a tableview and use the list as the datasource
-			//
-			tableView = new UITableView()
-			{
-				Delegate = new TableViewDelegate(this),
-				AutoresizingMask =
-				UIViewAutoresizing.FlexibleHeight|
-				UIViewAutoresizing.FlexibleWidth,
-			};
-			
-			//
-			// size the tableview and add it to the parent view
-			//
-			tableView.SizeToFit();
-			tableView.Frame = new RectangleF (
-				0, 0, this.View.Frame.Width,
-				this.View.Frame.Height);
-			this.View.AddSubview(tableView);
+			SetupUI();
 
-
-			list = new List<Contact>();
-
-			//
-			// get the address book, which gives us access to the
-			// the contacts store
-			//
 			var book = new AddressBook ();
 
-			//
-			// important: PreferContactAggregation must be set to the 
-			// the same value when looking up contacts by ID
-			// since we look up contacts by ID on the subsequent 
-			// ContactsActivity in this sample, we will set to false
-			//
-			book.PreferContactAggregation = true;
-
+			// We must request permission to access the user's address book
+			// This will prompt the user on platforms that ask, or it will validate
+			// manifest permissions on platforms that declare their required permissions.
 			book.RequestPermission().ContinueWith (t =>
 			{
 				if (!t.Result)
@@ -68,84 +33,158 @@ namespace ContactsSample
 				}
 				else
 				{
+					// Contacts can be selected and sorted using LINQ!
 					//
-					// loop through the contacts and put them into a List
-					//
-					// contacts can be selected and sorted using linq!
-					//
-					// In this sample, we'll just use LINQ to grab the first 10 users with mobile phone entries
-					//
-					foreach (Contact contact in book.Where(c => c.Phones.Any(p => p.Type == PhoneType.Mobile)).Take(10))
-					{
-						list.Add(contact);
-					}
+					// In this sample, we'll just use LINQ to sort contacts by
+					// their last name in reverse order.
+					list = book.OrderByDescending (c => c.LastName).ToList();
 
-					tableView.DataSource = new TableViewDataSource (list);
+					tableView.Source = new TableViewDataSource (list);
 					tableView.ReloadData();
 				}
 			}, TaskScheduler.FromCurrentSynchronizationContext());
 		}
-		
-		private class TableViewDelegate : UITableViewDelegate
-		{
-			private MainView parent;
 
-			public TableViewDelegate (MainView mainView)
-			{
-				parent = mainView;
-			}
-			
+		// Simple table view data source using the List<Contact> as the datasource
+		private class TableViewDataSource : UITableViewSource
+		{
 			public override void RowSelected (UITableView tableView, NSIndexPath indexPath)
 			{
-				//
-				// called when a specific row is selected, so
-				// push a detail view to show the complete contact
-				//
-				DetailContactView detailView = new DetailContactView(parent.list[indexPath.Row]);
-				parent.NavigationController.PushViewController(detailView, true);
-			}	
-		}
-		
-		//
-		// simple table view data source using the List<Contact> as the datasource
-		//
-		private class TableViewDataSource : UITableViewDataSource
-		{
-			static NSString cellIdentifier =
-				new NSString ("contactIdentifier");
-			private List<Contact> list;
+				Contact contact = this.list[indexPath.Row];
+				
+				RootElement root = new RootElement ("Info");
+
+				UIView title = new UIView (new RectangleF (0, 0, UIScreen.MainScreen.Bounds.Width, 64)) {
+					AutoresizingMask = UIViewAutoresizing.FlexibleWidth,
+				};
+
+				title.AddSubview (new UIImageView (new RectangleF (0, 0, 64, 64)) {
+					Image = contact.GetThumbnail(),
+					BackgroundColor = UIColor.White
+				});
+
+				title.AddSubview (new UITextView (new RectangleF (64, -10, title.Bounds.Width, 36)) {
+					Text = contact.DisplayName,
+					AutoresizingMask = UIViewAutoresizing.FlexibleWidth,
+					BackgroundColor = UIColor.Clear,
+					Font = UIFont.SystemFontOfSize (22)
+				});
+
+				var org = contact.Organizations.FirstOrDefault();
+				if (org != null) {
+					title.AddSubview (new UITextView (new RectangleF (65, 13, title.Bounds.Width, 25)) {
+						Text = org.ContactTitle,
+						AutoresizingMask = UIViewAutoresizing.FlexibleWidth,
+						BackgroundColor = UIColor.Clear,
+						TextColor = UIColor.DarkGray,
+					});
+
+					title.AddSubview (new UITextView (new RectangleF (65, 28, title.Bounds.Width, 25)) {
+						Text = org.Name,
+						AutoresizingMask = UIViewAutoresizing.FlexibleWidth,
+						BackgroundColor = UIColor.Clear,
+						TextColor = UIColor.DarkGray
+					});
+				}
+
+				root.Add (new Section { new UIViewElement (String.Empty, title, true) });
+
+				var phoneElements = contact.Phones.Select (p =>
+					new StringElement (p.Label.ToLower(), p.Number)).ToArray();
+
+				if (phoneElements.Length > 0) {
+					Section phones = new Section();
+					phones.AddAll (phoneElements);
+					root.Add (phones);
+				}
+
+				var emailElements = contact.Emails.Select (e =>
+					new StringElement ((e.Label == "Other") ? "Email" : e.Label, e.Address)).ToArray();
+
+				if (emailElements.Length > 0) {
+					Section emails = new Section();
+					emails.AddAll (emailElements);
+					root.Add (emails);
+				}
+
+				var addressElements = contact.Addresses.Select (a => {
+					StringBuilder address = new StringBuilder();
+					if (!String.IsNullOrEmpty (a.StreetAddress))
+						address.Append (a.StreetAddress);
+
+					if (!(String.IsNullOrEmpty (a.City) && String.IsNullOrEmpty (a.Region) && String.IsNullOrEmpty (a.PostalCode)))
+						address.AppendFormat("{3}{0} {1} {2}", a.City, a.Region, a.PostalCode, (address.Length > 0) ? Environment.NewLine : String.Empty);
+
+					if (!String.IsNullOrEmpty (a.Country))
+						address.AppendFormat ("{1}{0}", a.Country, (address.Length > 0) ? Environment.NewLine : String.Empty);
+
+					return new StyledMultilineElement (
+						(a.Label == "Other") ? "Address" : a.Label,
+						address.ToString());
+				}).ToArray();
+
+				if (addressElements.Length > 0) {
+					Section addresses = new Section();
+					addresses.AddAll (addressElements);
+					root.Add (addresses);
+				}
+
+				var dialog = new DialogViewController (root, pushing: true);
+				
+				AppDelegate appDelegate = (AppDelegate)UIApplication.SharedApplication.Delegate;
+				appDelegate.NavigationController.PushViewController (dialog, true);
+			}
+
+			public override int RowsInSection (UITableView tableview, int section)
+			{
+				return list.Count;
+			}
+
+			static readonly NSString CellIdentifier = new NSString ("contactIdentifier");
+			private readonly List<Contact> list;
 
 			public TableViewDataSource (List<Contact> list)
 			{
 				this.list = list;
 			}
 
-			public override int RowsInSection (
-				UITableView tableview, int section)
+			public override UITableViewCell GetCell (UITableView tableView, NSIndexPath indexPath)
 			{
-				return list.Count;
-			}
-
-			public override UITableViewCell GetCell (
-				UITableView tableView, NSIndexPath indexPath)
-			{
-				UITableViewCell cell =
-					tableView.DequeueReusableCell (cellIdentifier);
+				UITableViewCell cell = tableView.DequeueReusableCell (CellIdentifier);
 				if (cell == null)
-				{
-					cell = new UITableViewCell (
-						UITableViewCellStyle.Subtitle,
-						cellIdentifier);
-				}
-				cell.TextLabel.Text = list[indexPath.Row].DisplayName;
-				Email firstEmail = list[indexPath.Row].Emails.FirstOrDefault();
-				if(firstEmail != null)
-				{
-					cell.DetailTextLabel.Text = String.Format("{0}: {1}", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(firstEmail.Label), firstEmail.Address);
-				}
+					cell = new UITableViewCell (UITableViewCellStyle.Subtitle, CellIdentifier);
+
+				Contact contact = list[indexPath.Row];
+
+				cell.TextLabel.Text = contact.DisplayName;
+				Email firstEmail = contact.Emails.FirstOrDefault();
+				if (firstEmail != null)
+					cell.DetailTextLabel.Text = String.Format ("{0}: {1}", firstEmail.Label.ToLower(), firstEmail.Address);
 				
 				return cell;
 			}
+		}
+		
+		UITableView tableView;
+		List<Contact> list;
+		private UIAlertView alert;
+
+		public override void ViewDidAppear (bool animated)
+		{
+			base.ViewDidAppear (animated);
+			this.tableView.DeselectRow (this.tableView.IndexPathForSelectedRow, animated: true);
+		}
+
+		private void SetupUI()
+		{
+			Title = "Contacts";
+
+			this.tableView = new UITableView {
+				AutoresizingMask = UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleWidth,
+				Frame = new RectangleF (0, 0, View.Frame.Width, View.Frame.Height)
+			};
+
+			View.AddSubview (this.tableView);
 		}
 	}
 }

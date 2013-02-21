@@ -12,10 +12,14 @@ namespace ContactsSample
 	[Register ("AppDelegate")]
 	public partial class AppDelegate : UIApplicationDelegate
 	{
-		// class-level declarations
 		UIWindow window;
 		MainView viewController;
-		UINavigationController navController;
+
+		public UINavigationController NavigationController
+		{
+			get;
+			private set;
+		}
 		
 		//
 		// This method is invoked when the application has loaded and is ready to run. In this 
@@ -28,11 +32,11 @@ namespace ContactsSample
 		{
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
 		
-			navController = new UINavigationController();
+			NavigationController = new UINavigationController();
 			
 			viewController = new MainView ();
-			navController.PushViewController(viewController, false);
-			window.RootViewController = navController;
+			NavigationController.PushViewController (viewController, false);
+			window.RootViewController = this.NavigationController;
 			window.MakeKeyAndVisible ();
 			
 			return true;
