@@ -21,7 +21,7 @@ book.RequestPermission().ContinueWith (t => {
 	foreach (Contact contact in book.OrderBy (c => c.LastName)) {
 		Console.WriteLine ("{0} {1}", contact.FirstName, contact.LastName);
 	}
-}
+}, TaskScheduler.FromCurrentSynchronizationContext());
 ```
 
 To get the user's location:
@@ -51,6 +51,6 @@ else {
 			return;
 		}
 		Console.WriteLine (t.Result.Path);
-	});
+	}, TaskScheduler.FromCurrentSynchronizationContext());
 }
 ```
