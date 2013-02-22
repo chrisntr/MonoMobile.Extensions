@@ -55,6 +55,8 @@ namespace Xamarin.Contacts
 			string[] ids = new string[batchSize];
 			int columnIndex = cursor.GetColumnIndex (column);
 
+			HashSet<string> uniques = new HashSet<string>();
+
 			int i = 0;
 			while (cursor.MoveToNext())
 			{
@@ -65,7 +67,12 @@ namespace Xamarin.Contacts
 				        yield return c;
 				}
 
-				ids[i++] = cursor.GetString (columnIndex);
+				string id = cursor.GetString (columnIndex);
+				if (uniques.Contains (id))
+					continue;
+
+				uniques.Add (id);
+				ids[i++] = id;
 			}
 
 			if (i > 0)
