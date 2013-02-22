@@ -30,8 +30,8 @@ namespace Xamarin.Contacts
 			try
 			{
 				cursor = content.Query (curi, null, null, null, null);
-				//while (cursor.MoveToNext())
-				//    yield return GetContact (rawContacts, content, resources, cursor);
+				if (cursor == null)
+					yield break;
 				
 				foreach (Contact contact in GetContacts (cursor, rawContacts, content, resources, 20))
 				    yield return contact;
@@ -45,6 +45,9 @@ namespace Xamarin.Contacts
 
 		internal static IEnumerable<Contact> GetContacts (ICursor cursor, bool rawContacts, ContentResolver content, Resources resources, int batchSize)
 		{
+			if (cursor == null)
+				yield break;
+
 			string column = (rawContacts)
 								? ContactsContract.RawContactsColumns.ContactId
 								: ContactsContract.ContactsColumns.LookupKey;
@@ -95,6 +98,9 @@ namespace Xamarin.Contacts
 				Contact currentContact = null;
 
 				c = content.Query (ContactsContract.Data.ContentUri, null, whereb.ToString(), ids, ContactsContract.ContactsColumns.LookupKey);
+				if (c == null)
+					yield break;
+
 				int idIndex = c.GetColumnIndex (column);
 				int dnIndex = c.GetColumnIndex (ContactsContract.ContactsColumns.DisplayName);
 				while (c.MoveToNext())
