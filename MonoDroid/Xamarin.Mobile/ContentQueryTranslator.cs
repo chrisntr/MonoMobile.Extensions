@@ -343,7 +343,7 @@ namespace Xamarin
 						break;
 
 					case ExpressionType.NotEqual:
-						this.builder.Append (" != ");
+						this.builder.Append (" IS NOT ");
 						break;
 
 					default:
