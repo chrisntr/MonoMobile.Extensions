@@ -160,10 +160,11 @@ namespace Xamarin.Contacts
 			try
 			{
 				c = content.Query (ContactsContract.Data.ContentUri, null, column + " = ?", new[] { recordId }, null);
+				if (c == null)
+					return;
+
 				while (c.MoveToNext())
-				{
 					FillContactWithRow (resources, contact, c);
-				}
 			}
 			finally
 			{
