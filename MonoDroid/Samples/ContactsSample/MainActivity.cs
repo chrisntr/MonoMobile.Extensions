@@ -26,47 +26,39 @@ namespace ContactsSample
 		{
 			base.OnCreate(bundle);
 
+			// We must request permission to access the user's address book
+			// This will prompt the user on platforms that ask, or it will validate
+			// manifest permissions on platforms that declare their required permissions.
 			AddressBook.RequestPermission().ContinueWith (t =>
 			{
-				if (!t.Result)
-				{
+				if (!t.Result) {
 					Toast.MakeText (this, "Permission denied, check your manifest", ToastLength.Long).Show();
 					return;
 				}
 
+				// Contacts can be selected and sorted using LINQ!
 				//
-				// Loop through the contacts and put them into a List<String>
-				//
-				// Note that the contacts are ordered by last name - contacts can be selected and sorted using LINQ!
-				// A better performing solution would create a custom adapter to lazily pull the contacts
-				//
-				// In this sample, we'll just use LINQ to grab the first 10 users with mobile phone entries
-				//
-				foreach (Contact contact in AddressBook.Where(c => c.Phones.Any(p => p.Type == PhoneType.Mobile)).Take(10))
-				{
-					contacts.Add(contact.DisplayName);
-					contactIDs.Add(contact.Id); //save the ID in a parallel list
+				// In this sample, we'll just use LINQ to sort contacts by
+				// their last name in reverse order.
+				foreach (Contact contact in AddressBook.Where (c => c.FirstName != null).OrderBy (c => c.FirstName)) {
+					contacts.Add (contact.DisplayName);
+					contactIDs.Add (contact.Id); // Save the ID in a parallel list
 				}
-			
+
 				ListAdapter = new ArrayAdapter<string> (this, Resource.Layout.list_item, contacts.ToArray());
 				ListView.TextFilterEnabled = true;
-			
-				//
+
 				// When clicked, start a new activity to display more contact details
-				//	
 				ListView.ItemClick += delegate (object sender, AdapterView.ItemClickEventArgs args) {
 
-					//
-					// to show the contact on the details activity, we
+					// To show the contact on the details activity, we
 					// need to send that activity the contacts ID
-					//
-					String contactID = contactIDs[args.Position];
-					Intent showContactDetails = new Intent(this, typeof(ContactActivity));
-					showContactDetails.PutExtra("contactID", contactID);
-					StartActivity(showContactDetails);
+					string contactId = contactIDs[args.Position];
+					Intent showContactDetails = new Intent (this, typeof(ContactActivity));
+					showContactDetails.PutExtra ("contactID", contactId);
+					StartActivity (showContactDetails);
 				
-					//
-					// alternatively, show a toast with the name of the contact selected
+					// Alternatively, show a toast with the name of the contact selected
 					//
 					//Toast.MakeText (Application, ((TextView)args.View).Text, ToastLength.Short).Show ();
 				};
