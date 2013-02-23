@@ -77,6 +77,9 @@ namespace Xamarin.Contacts
 			try
 			{
 				cursor = this.content.Query (table, projections, query, parameters, sortString);
+				if (cursor == null)
+					yield break;
+
 				foreach (Contact contact in ContactHelper.GetContacts (cursor, this.rawContacts, this.content, this.resources, BatchSize))
 				    yield return contact;
 			}
