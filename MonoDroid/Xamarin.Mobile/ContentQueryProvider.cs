@@ -51,7 +51,7 @@ namespace Xamarin
 			                                : null;
 
 			        cursor = this.content.Query (translator.Table, projections, translator.QueryString,
-			                                        translator.ClauseParameters, translator.QueryString);
+			                                        translator.ClauseParameters, translator.SortString);
 
 			        if (translator.IsCount)
 			            return cursor.Count;
