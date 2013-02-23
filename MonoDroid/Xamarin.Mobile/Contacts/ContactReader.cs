@@ -23,56 +23,54 @@ namespace Xamarin.Contacts
 
 		public IEnumerator<Contact> GetEnumerator()
 		{
-			Android.Net.Uri table = (this.translator != null) 
-										? this.translator.Table
-										: ((this.rawContacts)
-											? ContactsContract.RawContacts.ContentUri
-											: ContactsContract.Contacts.ContentUri);
-
-			string[] projections = null;
-			if (this.translator != null && this.translator.Projections != null)
-			{
-				projections = this.translator.Projections
-								.Where (p => p.Columns != null)
-								.SelectMany (t => t.Columns)
-								.ToArray();
-
-				if (projections.Length == 0)
-					projections = null;
-			}
+			Android.Net.Uri table = (this.rawContacts)
+										? ContactsContract.RawContacts.ContentUri
+										: ContactsContract.Contacts.ContentUri;
 
 			string query = null;
-			if (this.translator != null)
-				query = this.translator.QueryString;
-
 			string[] parameters = null;
-			if (this.translator != null)
-				parameters = this.translator.ClauseParameters;
-
 			string sortString = null;
+			string[] projections = null;
+
 			if (this.translator != null)
+			{
+				table = this.translator.Table;
+				query = this.translator.QueryString;
+				parameters = this.translator.ClauseParameters;
 				sortString = this.translator.SortString;
 
-			if (this.translator != null && (this.translator.Skip > 0 || this.translator.Take > 0))
-			{
-				StringBuilder limitb = new StringBuilder();
-
-				if (sortString == null)
-					limitb.Append (ContactsContract.ContactsColumns.LookupKey);
-
-				limitb.Append (" LIMIT ");
-
-				if (this.translator.Skip > 0)
+				if (this.translator.Projections != null)
 				{
-					limitb.Append (this.translator.Skip);
-					if (this.translator.Take > 0)
-						limitb.Append (",");
+					projections = this.translator.Projections
+									.Where (p => p.Columns != null)
+									.SelectMany (t => t.Columns)
+									.ToArray();
+
+					if (projections.Length == 0)
+						projections = null;
 				}
 
-				if (this.translator.Take > 0)
-					limitb.Append (this.translator.Take);
+				if (this.translator.Skip > 0 || this.translator.Take > 0)
+				{
+					StringBuilder limitb = new StringBuilder();
 
-				sortString = (sortString == null) ? limitb.ToString() : sortString + limitb;
+					if (sortString == null)
+						limitb.Append (ContactsContract.ContactsColumns.LookupKey);
+
+					limitb.Append (" LIMIT ");
+
+					if (this.translator.Skip > 0)
+					{
+						limitb.Append (this.translator.Skip);
+						if (this.translator.Take > 0)
+							limitb.Append (",");
+					}
+
+					if (this.translator.Take > 0)
+						limitb.Append (this.translator.Take);
+
+					sortString = (sortString == null) ? limitb.ToString() : sortString + limitb;
+				}
 			}
 
 			ICursor cursor = null;
