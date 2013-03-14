@@ -13,7 +13,7 @@ changes. Current known issues:
  Visual Studio Async CTP (http://www.microsoft.com/en-us/download/details.aspx?id=9983).
  As this CTP installs to a user-specific directory, you'll likely need to
  correct references to this library in the samples to use them.
- - On Android, Tasks returned from MediaPicker may fail to fire if the
+ - On Android, Tasks returned from MediaPicker may fail to continue if the
  holding Activity is killed.
 
 ## Examples
