@@ -6,6 +6,16 @@ The goal of Xamarin.Mobile is to decrease the amount of
 platform-specific code needed to perform common tasks in multiplatform
 apps, making development simpler and faster.
 
+Xamarin.Mobile is currently a preview release and is subject to API
+changes. Current known issues:
+
+ - Windows Phone 7.1 version of the library requires the
+ Visual Studio Async CTP (http://www.microsoft.com/en-us/download/details.aspx?id=9983).
+ As this CTP installs to a user-specific directory, you'll likely need to
+ correct references to this library in the samples to use them.
+ - On Android, Tasks returned from MediaPicker may fail to fire if the
+ holding Activity is killed.
+
 ## Examples
 
 To access the address book:
