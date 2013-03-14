@@ -22,7 +22,7 @@ book.RequestPermission().ContinueWith (t => {
 	foreach (Contact contact in book.OrderBy (c => c.LastName)) {
 		Console.WriteLine ("{0} {1}", contact.FirstName, contact.LastName);
 	}
-});
+}, TaskScheduler.FromCurrentSynchronizationContext());
 ```
 
 To get the user's location (requires `ACCESS_COARSE_LOCATION` and
@@ -38,7 +38,7 @@ locator.GetPositionAsync (timeout: 10000).ContinueWith (t => {
 	Console.WriteLine ("Position Status: {0}", t.Result.Timestamp);
 	Console.WriteLine ("Position Latitude: {0}", t.Result.Latitude);
 	Console.WriteLine ("Position Longitude: {0}", t.Result.Longitude);
-});
+}, TaskScheduler.FromCurrentSynchronizationContext());
 ```
 
 To take a photo (requires `WRITE_EXTERNAL_STORAGE` permissions on
@@ -62,6 +62,6 @@ else {
 			return;
 		}
 		Console.WriteLine (t.Result.Path);
-	});
+	}, TaskScheduler.FromCurrentSynchronizationContext());
 }
 ```

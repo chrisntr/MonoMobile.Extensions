@@ -42,7 +42,7 @@ locator.GetPositionAsync (timeout: 10000).ContinueWith (t => {
 	Console.WriteLine ("Position Status: {0}", t.Result.Timestamp);
 	Console.WriteLine ("Position Latitude: {0}", t.Result.Latitude);
 	Console.WriteLine ("Position Longitude: {0}", t.Result.Longitude);
-});
+}, TaskScheduler.FromCurrentSynchronizationContext());
 ```
 
 To take a photo:
