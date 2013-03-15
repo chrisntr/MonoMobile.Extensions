@@ -21,6 +21,7 @@ Changelog
 Release 0.6.3
 
 Fixes:
+ - Fixed some Contact queries using != on Android.
  - MediaPicker now throws MediaFileNotFoundException on Android when the camera
  or gallery app returns a media file that it can not understand.
  - Fixed an IOException of ERROR_ALREADY_EXISTS in MediaPicker on Android when
