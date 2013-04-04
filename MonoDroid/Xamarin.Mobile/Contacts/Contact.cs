@@ -180,8 +180,8 @@ namespace Xamarin.Contacts
 					return null;
 
 				File.WriteAllBytes (path, t.Result);
-				return new MediaFile (path, () => File.OpenRead (path));
-			});
+				return new MediaFile (path, deletePathOnDispose: false);
+			}, TaskScheduler.Default);
 		}
 
 		private readonly ContentResolver content;

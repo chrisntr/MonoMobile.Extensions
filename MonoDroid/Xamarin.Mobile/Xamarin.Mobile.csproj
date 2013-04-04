@@ -82,9 +82,6 @@
     <Compile Include="..\..\Shared\ExpressionVisitor.cs">
       <Link>ExpressionVisitor.cs</Link>
     </Compile>
-    <Compile Include="..\..\Shared\Media\MediaFile.cs">
-      <Link>Media\MediaFile.cs</Link>
-    </Compile>
     <Compile Include="..\..\Shared\Media\MediaFileNotFoundException.cs">
       <Link>Media\MediaFileNotFoundException.cs</Link>
     </Compile>
@@ -106,6 +103,7 @@
     <Compile Include="Contacts\ContactTableFinder.cs" />
     <Compile Include="ContentResolverColumnMapping.cs" />
     <Compile Include="GenericQueryReader.cs" />
+    <Compile Include="Media\MediaFile.cs" />
     <Compile Include="MemberExpressionFinder.cs" />
     <Compile Include="ProjectionReader.cs" />
     <Compile Include="ContentQueryProvider.cs" />

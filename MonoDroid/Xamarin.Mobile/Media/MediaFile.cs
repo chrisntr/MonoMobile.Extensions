@@ -19,15 +19,6 @@ namespace Xamarin.Media
 			return MediaPickerActivity.GetMediaFileAsync (context, 0, action, isPhoto, ref path, uri)
 				.ContinueWith (t => t.Result.ToTask()).Unwrap();
 		}
-
-		public static MediaFile GetMediaFileExtra (this Intent self)
-		{
-			string content = self.GetStringExtra (MediaFile.ExtraName);
-			bool deletePathOnDispose = (content[0] == '1');
-			string path = content.Substring (1);
-
-			return new MediaFile (path, deletePathOnDispose);
-		}
 	}
 
 	public sealed class MediaFile
@@ -69,11 +60,6 @@ namespace Xamarin.Media
 		private readonly string path;
 
 		internal const string ExtraName = "MediaFile";
-		internal void WriteToIntent (Intent data)
-		{
-			char delete = (this.deletePathOnDispose) ? '1' : '0';
-			data.PutExtra (ExtraName, delete + this.path);
-		}
 		
 		private void Dispose (bool disposing)
 		{
