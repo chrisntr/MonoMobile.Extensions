@@ -18,8 +18,10 @@ namespace Xamarin.Media
 			this.source = sourceType;
 			this.options = options ?? new StoreCameraMediaOptions();
 
-			UIDevice.CurrentDevice.BeginGeneratingDeviceOrientationNotifications();
-			this.observer = NSNotificationCenter.DefaultCenter.AddObserver (UIDevice.OrientationDidChangeNotification, DidRotate);
+			if (viewController != null) {
+				UIDevice.CurrentDevice.BeginGeneratingDeviceOrientationNotifications();
+				this.observer = NSNotificationCenter.DefaultCenter.AddObserver (UIDevice.OrientationDidChangeNotification, DidRotate);
+			}
 		}
 		
 		public UIPopoverController Popover
@@ -114,23 +116,24 @@ namespace Xamarin.Media
 		
 		private void Dismiss (UIImagePickerController picker, NSAction onDismiss)
 		{
-			NSNotificationCenter.DefaultCenter.RemoveObserver (observer);
-			UIDevice.CurrentDevice.EndGeneratingDeviceOrientationNotifications();
-			
-			observer.Dispose();
-			
-			if (Popover != null)
-			{
-				Popover.Dismiss (animated: true);
-				Popover.Dispose();
-				Popover = null;
-
+			if (this.viewController == null)
 				onDismiss();
-			}
-			else
-			{
-				picker.DismissViewController (true, onDismiss);
-				picker.Dispose();
+			else {
+				NSNotificationCenter.DefaultCenter.RemoveObserver (this.observer);
+				UIDevice.CurrentDevice.EndGeneratingDeviceOrientationNotifications();
+
+				this.observer.Dispose();
+
+				if (Popover != null) {
+					Popover.Dismiss (animated: true);
+					Popover.Dispose();
+					Popover = null;
+
+					onDismiss();
+				} else {
+					picker.DismissViewController (true, onDismiss);
+					picker.Dispose();
+				}
 			}
 		}
 

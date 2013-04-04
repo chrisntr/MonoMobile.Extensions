@@ -75,6 +75,7 @@
     <Compile Include="..\..\Shared\Media\MediaFileNotFoundException.cs">
       <Link>Media\MediaFileNotFoundException.cs</Link>
     </Compile>
+    <Compile Include="Media\MediaPickerController.cs" />
     <Compile Include="NSErrorException.cs" />
     <Compile Include="Geolocation\GeolocationSingleUpdateDelegate.cs" />
     <Compile Include="Geolocation\Geolocator.cs" />

@@ -44,12 +44,34 @@ namespace Xamarin.Media
 			private set;
 		}
 
+		public MediaPickerController GetPickPhotoUI()
+		{
+			if (!PhotosSupported)
+				throw new NotSupportedException();
+
+			var d = new MediaPickerDelegate (null, UIImagePickerControllerSourceType.PhotoLibrary, null);
+			return SetupController (d, UIImagePickerControllerSourceType.PhotoLibrary, TypeImage);
+		}
+
 		public Task<MediaFile> PickPhotoAsync()
 		{
 			if (!PhotosSupported)
 				throw new NotSupportedException();
 			
 			return TakeMedia (UIImagePickerControllerSourceType.PhotoLibrary, TypeImage);
+		}
+
+		public MediaPickerController GetTakePhotoUI (StoreCameraMediaOptions options)
+		{
+			if (!PhotosSupported)
+				throw new NotSupportedException();
+			if (!IsCameraAvailable)
+				throw new NotSupportedException();
+			
+			VerifyCameraOptions (options);
+
+			var d = new MediaPickerDelegate (null, UIImagePickerControllerSourceType.PhotoLibrary, options);
+			return SetupController (d, UIImagePickerControllerSourceType.Camera, TypeImage, options);
 		}
 
 		public Task<MediaFile> TakePhotoAsync (StoreCameraMediaOptions options)
@@ -64,12 +86,34 @@ namespace Xamarin.Media
 			return TakeMedia (UIImagePickerControllerSourceType.Camera, TypeImage, options);
 		}
 
+		public MediaPickerController GetPickVideoUI()
+		{
+			if (!VideosSupported)
+				throw new NotSupportedException();
+
+			var d = new MediaPickerDelegate (null, UIImagePickerControllerSourceType.PhotoLibrary, null);
+			return SetupController (d, UIImagePickerControllerSourceType.PhotoLibrary, TypeMovie);
+		}
+
 		public Task<MediaFile> PickVideoAsync()
 		{
 			if (!VideosSupported)
 				throw new NotSupportedException();
 			
 			return TakeMedia (UIImagePickerControllerSourceType.PhotoLibrary, TypeMovie);
+		}
+
+		public MediaPickerController GetTakeVideoUI (StoreVideoOptions options)
+		{
+			if (!VideosSupported)
+				throw new NotSupportedException();
+			if (!IsCameraAvailable)
+				throw new NotSupportedException();
+			
+			VerifyCameraOptions (options);
+
+			var d = new MediaPickerDelegate (null, UIImagePickerControllerSourceType.Camera, options);
+			return SetupController (d, UIImagePickerControllerSourceType.Camera, TypeMovie, options);
 		}
 
 		public Task<MediaFile> TakeVideoAsync (StoreVideoOptions options)
@@ -109,6 +153,29 @@ namespace Xamarin.Media
 				throw new ArgumentException ("options.Camera is not a member of CameraDevice");
 		}
 
+		private static MediaPickerController SetupController (MediaPickerDelegate mpDelegate, UIImagePickerControllerSourceType sourceType, string mediaType, StoreCameraMediaOptions options = null)
+		{
+			var picker = new MediaPickerController (mpDelegate);
+			picker.MediaTypes = new[] { mediaType };
+			picker.SourceType = sourceType;
+
+			if (sourceType == UIImagePickerControllerSourceType.Camera) {
+				picker.CameraDevice = GetUICameraDevice (options.DefaultCamera);
+				
+				if (mediaType == TypeImage)
+					picker.CameraCaptureMode = UIImagePickerControllerCameraCaptureMode.Photo;
+				else if (mediaType == TypeMovie) {
+					StoreVideoOptions voptions = (StoreVideoOptions)options;
+					
+					picker.CameraCaptureMode = UIImagePickerControllerCameraCaptureMode.Video;
+					picker.VideoQuality = GetQuailty (voptions.Quality);
+					picker.VideoMaximumDuration = voptions.DesiredLength.TotalSeconds;
+				}
+			}
+
+			return picker;
+		}
+
 		private Task<MediaFile> TakeMedia (UIImagePickerControllerSourceType sourceType, string mediaType, StoreCameraMediaOptions options = null)
 		{
 			UIWindow window = UIApplication.SharedApplication.KeyWindow;
@@ -133,56 +200,29 @@ namespace Xamarin.Media
 			if (od != null)
 				throw new InvalidOperationException ("Only one operation can be active at at time");
 
-			var picker = new UIImagePickerController();
-			picker.Delegate = ndelegate;
-			picker.MediaTypes = new[] { mediaType };
-			picker.SourceType = sourceType;
+			var picker = SetupController (ndelegate, sourceType, mediaType);
 
-			if (sourceType == UIImagePickerControllerSourceType.Camera)
-			{
-				picker.CameraDevice = GetUICameraDevice (options.DefaultCamera);
-				
-				if (mediaType == TypeImage)
-				{
-					picker.CameraCaptureMode = UIImagePickerControllerCameraCaptureMode.Photo;
-				}
-				else if (mediaType == TypeMovie)
-				{
-					StoreVideoOptions voptions = (StoreVideoOptions)options;
-					
-					picker.CameraCaptureMode = UIImagePickerControllerCameraCaptureMode.Video;
-					picker.VideoQuality = GetQuailty (voptions.Quality);
-					picker.VideoMaximumDuration = voptions.DesiredLength.TotalSeconds;
-				}
-			}
-
-			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad)
-			{	
+			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {	
 				ndelegate.Popover = new UIPopoverController (picker);
 				ndelegate.Popover.Delegate = new MediaPickerPopoverDelegate (ndelegate, picker);
 				ndelegate.DisplayPopover();
-			}
-			else
+			} else
 				viewController.PresentModalViewController (picker, true);
 
-			return ndelegate.Task
-				.ContinueWith (t =>
-				{
-					if (this.popover != null)
-					{
-						this.popover.Dispose();
-						this.popover = null;
-					}
+			return ndelegate.Task.ContinueWith (t => {
+				if (this.popover != null) {
+					this.popover.Dispose();
+					this.popover = null;
+				}
 					
-					Interlocked.Exchange (ref this.pickerDelegate, null);
-					return t;
-				}).Unwrap();
+				Interlocked.Exchange (ref this.pickerDelegate, null);
+				return t;
+			}).Unwrap();
 		}
 		
-		private UIImagePickerControllerCameraDevice GetUICameraDevice (CameraDevice device)
+		private static UIImagePickerControllerCameraDevice GetUICameraDevice (CameraDevice device)
 		{
-			switch (device)
-			{
+			switch (device) {
 				case CameraDevice.Front:
 					return UIImagePickerControllerCameraDevice.Front;
 				case CameraDevice.Rear:
@@ -192,10 +232,9 @@ namespace Xamarin.Media
 			}
 		}
 
-		private UIImagePickerControllerQualityType GetQuailty (VideoQuality quality)
+		private static UIImagePickerControllerQualityType GetQuailty (VideoQuality quality)
 		{
-			switch (quality)
-			{
+			switch (quality) {
 				case VideoQuality.Low:
 					return UIImagePickerControllerQualityType.Low;
 				case VideoQuality.Medium:
