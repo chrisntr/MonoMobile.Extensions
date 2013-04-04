@@ -22,6 +22,7 @@ namespace Xamarin.Media
 		internal const string ExtraType = "type";
 		internal const string ExtraId = "id";
 		internal const string ExtraAction = "action";
+		internal const string ExtraTasked = "tasked";
 
 		internal static event EventHandler<MediaPickedEventArgs> MediaPicked;
 
@@ -40,6 +41,8 @@ namespace Xamarin.Media
 		private int seconds;
 		private VideoQuality quality;
 
+		private bool tasked;
+
 		protected override void OnSaveInstanceState (Bundle outState)
 		{
 			outState.PutBoolean ("ran", true);
@@ -50,6 +53,7 @@ namespace Xamarin.Media
 			outState.PutString (ExtraAction, this.action);
 			outState.PutInt (MediaStore.ExtraDurationLimit, this.seconds);
 			outState.PutInt (MediaStore.ExtraVideoQuality, (int)this.quality);
+			outState.PutBoolean (ExtraTasked, this.tasked);
 
 			if (this.path != null)
 				outState.PutString (ExtraPath, this.path.Path);
@@ -68,6 +72,7 @@ namespace Xamarin.Media
 			this.title = b.GetString (MediaStore.MediaColumns.Title);
 			this.description = b.GetString (MediaStore.Images.ImageColumns.Description);
 
+			this.tasked = b.GetBoolean (ExtraTasked);
 			this.id = b.GetInt (ExtraId, 0);
 			this.type = b.GetString (ExtraType);
 			if (this.type == "image/*")
