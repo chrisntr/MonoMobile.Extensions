@@ -9,7 +9,7 @@ on Android):
 
 ```csharp
 using Xamarin.Contacts;
-...
+// ...
 
 var book = new AddressBook ();
 //         new AddressBook (this); on Android
@@ -30,7 +30,7 @@ To get the user's location (requires `ACCESS_COARSE_LOCATION` and
 
 ```csharp
 using Xamarin.Geolocation;
-...
+// ...
 
 var locator = new Geolocator { DesiredAccuracy = 50 };
 //            new Geolocator (this) { ... }; on Android
@@ -41,15 +41,13 @@ locator.GetPositionAsync (timeout: 10000).ContinueWith (t => {
 }, TaskScheduler.FromCurrentSynchronizationContext());
 ```
 
-To take a photo (requires `WRITE_EXTERNAL_STORAGE` permissions on
-Android):
+To take a photo:
 
 ```csharp
 using Xamarin.Media;
-...
+// ...
 
 var picker = new MediaPicker ();
-//           new MediaPicker (this); on Android
 if (!picker.IsCameraAvailable)
 	Console.WriteLine ("No camera!");
 else {
@@ -61,6 +59,38 @@ else {
 			Console.WriteLine ("User canceled");
 			return;
 		}
+		Console.WriteLine (t.Result.Path);
+	}, TaskScheduler.FromCurrentSynchronizationContext());
+}
+```
+
+On Android (requires `WRITE_EXTERNAL_STORAGE` permissions):
+
+```csharp
+using Xamarin.Media;
+// ...
+
+protected override void OnCreate (Bundle bundle)
+{
+	var picker = new MediaPicker (this);
+	if (!picker.IsCameraAvailable)
+		Console.WriteLine ("No camera!");
+	else {
+		var intent = picker.GetTakePhotoUI (new StoreCameraMediaOptions {
+			Name = "test.jpg",
+			Directory = "MediaPickerSample"
+		});
+		StartActivityForResult (intent, 1);
+	}
+}
+
+protected override void OnActivityResult (int requestCode, Result resultCode, Intent data)
+{
+	// User canceled
+	if (resultCode == Result.Canceled)
+		return;
+
+	data.GetMediaFileExtraAsync (this).ContinueWith (t => {
 		Console.WriteLine (t.Result.Path);
 	}, TaskScheduler.FromCurrentSynchronizationContext());
 }
