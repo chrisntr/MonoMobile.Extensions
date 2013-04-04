@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
@@ -18,7 +19,7 @@ namespace MediaPickerSample
 			
 			Button videoButton = FindViewById<Button> (Resource.Id.takeVideoButton);
 			videoButton.Click += delegate {
-				// The MediaPicker is the class used to invoke the
+				// MediaPicker is the class used to invoke the
 				// camera and gallery picker for selecting and
 				// taking photos and videos
 				var picker = new MediaPicker (this);
@@ -30,27 +31,19 @@ namespace MediaPickerSample
 					return;
 				}
 				
-				// TakeVideoAsync is an async API that takes a 
-				// StoreVideoOptions object with various 
-				// properties, such as the name and folder to
-				// store the resulting video. You can
-				// also limit the length of the video
-				picker.TakeVideoAsync (new StoreVideoOptions {
+				// The GetTakeVideoUI method returns an Intent to start
+				// the native camera app to record a video.
+				Intent intent = picker.GetTakeVideoUI (new StoreVideoOptions {
 					Name = "MyVideo",
 					Directory = "MyVideos",
 					DesiredLength = TimeSpan.FromSeconds (10)
-				})
-				.ContinueWith (t => {
-					if (t.IsCanceled)
-						return;
-
-					RunOnUiThread (() => ShowVideo (t.Result.Path));
 				});
+
+				StartActivityForResult (intent, 1);
 			};
 			
 			Button photoButton = FindViewById<Button> (Resource.Id.takePhotoButton);
-			photoButton.Click += delegate
-			{
+			photoButton.Click += delegate {
 				var picker = new MediaPicker (this);
 
 				if (!picker.IsCameraAvailable || !picker.PhotosSupported) {
@@ -58,24 +51,16 @@ namespace MediaPickerSample
 					return;
 				}
 
-				picker.TakePhotoAsync (new StoreCameraMediaOptions {
+				Intent intent = picker.GetTakePhotoUI (new StoreCameraMediaOptions {
 					Name = "test.jpg",
 					Directory = "MediaPickerSample"
-				})
-				.ContinueWith (t => {
-					if (t.IsCanceled)
-						return;
-
-					RunOnUiThread (() => ShowImage (t.Result.Path));
 				});
+
+				StartActivityForResult (intent, 2);
 			};
 			
 			Button pickVideoButton = FindViewById<Button> (Resource.Id.pickVideoButton);
-			pickVideoButton.Click += delegate
-			{
-				// The MediaPicker is the class used to  invoke the camera
-				// and gallery picker for selecting and taking photos
-				// and videos
+			pickVideoButton.Click += delegate {
 				var picker = new MediaPicker (this);
 				
 				if (!picker.VideosSupported) {
@@ -83,14 +68,10 @@ namespace MediaPickerSample
 					return;
 				}
 
-				// PickVideoAsync is an async API that invokes
-				// the native gallery
-				picker.PickVideoAsync ().ContinueWith (t => {
-					if (t.IsCanceled)
-						return;
-
-					RunOnUiThread (() => ShowVideo (t.Result.Path));
-				});
+				// The GetPickVideoUI() method returns an Intent to start
+				// the native gallery app to select a video.
+				Intent intent = picker.GetPickVideoUI();
+				StartActivityForResult (intent, 1);
 			};
 
 			Button pickPhotoButton = FindViewById<Button> (Resource.Id.pickPhotoButton);
@@ -102,13 +83,24 @@ namespace MediaPickerSample
 					return;
 				}
 
-				picker.PickPhotoAsync ().ContinueWith (t => {
-					if (t.IsCanceled)
-						return;
-
-					RunOnUiThread (() => ShowImage (t.Result.Path));
-				});
+				Intent intent = picker.GetPickPhotoUI();
+				StartActivityForResult (intent, 2);
 			};
+		}
+
+		protected override void OnActivityResult (int requestCode, Result resultCode, Intent data)
+		{
+			// User canceled
+			if (resultCode == Result.Canceled)
+				return;
+
+			data.GetMediaFileExtraAsync (this).ContinueWith (t => {
+				if (requestCode == 1) { // Video request
+					ShowVideo (t.Result.Path);
+				} else if (requestCode == 2) { // Image request
+					ShowImage (t.Result.Path);				
+				}
+			}, TaskScheduler.FromCurrentSynchronizationContext());
 		}
 
 		private void ShowVideo (string path)
