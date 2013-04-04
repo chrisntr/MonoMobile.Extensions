@@ -14,25 +14,30 @@ namespace MediaPickerSample
 		readonly MediaPicker mediaPicker = new MediaPicker();
 		readonly TaskScheduler uiScheduler = TaskScheduler.FromCurrentSynchronizationContext();
 
+		private MediaPickerController mediaPickerController;
 		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
 		{
 			pickPhoto = new StringElement ("Pick Photo");
 			pickPhoto.Tapped += () => {
-				mediaPicker.PickPhotoAsync().ContinueWith (t => {
-					// User canceled or something went wrong
-					if (t.IsCanceled || t.IsFaulted)
-						return;
+				mediaPickerController = mediaPicker.GetPickPhotoUI();
+				mediaPickerController.GetResultAsync().ContinueWith (t => {
+					// We need to dismiss the controller ourselves
+					mediaPickerController.DismissViewController (true, () => {
+						// User canceled or something went wrong
+						if (t.IsCanceled || t.IsFaulted)
+							return;
 
-					// We get back a MediaFile
-					MediaFile media = t.Result;
-					ShowPhoto (media);
-
+						// We get back a MediaFile
+						MediaFile media = t.Result;
+						ShowPhoto (media);
+					});
 				}, uiScheduler); // Make sure we use the UI thread to show our photo.
+
+				dialogController.PresentViewController (mediaPickerController, true, null);
 			};
 
 			takePhoto = new StringElement ("Take Photo");
 			takePhoto.Tapped += () => {
-
 				// Make sure we actually have a camera
 				if (!mediaPicker.IsCameraAvailable) {
 					ShowUnsupported();
@@ -40,21 +45,29 @@ namespace MediaPickerSample
 				}
 
 				// When capturing new media, we can specify it's name and location
-				mediaPicker.TakePhotoAsync (new StoreCameraMediaOptions {
+				mediaPickerController = mediaPicker.GetTakePhotoUI (new StoreCameraMediaOptions {
 					Name = "test.jpg",
 					Directory = "MediaPickerSample"
-				})
-				.ContinueWith (t => {
-					if (t.IsCanceled || t.IsFaulted)
-						return;
+				});
 
-					ShowPhoto (t.Result);
-				}, uiScheduler);
+				mediaPickerController.GetResultAsync().ContinueWith (t => {
+					// We need to dismiss the controller ourselves
+					mediaPickerController.DismissViewController (true, () => {
+						// User canceled or something went wrong
+						if (t.IsCanceled || t.IsFaulted)
+							return;
+
+						// We get back a MediaFile
+						MediaFile media = t.Result;
+						ShowPhoto (media);
+					});
+				}, uiScheduler); // Make sure we use the UI thread to show our photo.
+
+				dialogController.PresentViewController (mediaPickerController, true, null);
 			};
 
 			takeVideo = new StringElement ("Take Video");
 			takeVideo.Tapped += () => {
-
 				// Make sure video is supported and a camera is available
 				if (!mediaPicker.VideosSupported || !mediaPicker.IsCameraAvailable) {
 					ShowUnsupported();
@@ -64,18 +77,27 @@ namespace MediaPickerSample
 				// When capturing video, we can hint at the desired quality and length.
 				// DesiredLength is only a hint, however, and the resulting video may
 				// be longer than desired.
-				mediaPicker.TakeVideoAsync (new StoreVideoOptions {
+				mediaPickerController = mediaPicker.GetTakeVideoUI (new StoreVideoOptions {
 					Quality = VideoQuality.Medium,
 					DesiredLength = TimeSpan.FromSeconds (10),
 					Directory = "MediaPickerSample",
 					Name = "test.mp4"
-				})
-				.ContinueWith (t => {
-					if (t.IsCanceled || t.IsFaulted)
-						return;
+				});
 
-					ShowVideo (t.Result);
-				}, uiScheduler);
+				mediaPickerController.GetResultAsync().ContinueWith (t => {
+					// We need to dismiss the controller ourselves
+					mediaPickerController.DismissViewController (true, () => {
+						// User canceled or something went wrong
+						if (t.IsCanceled || t.IsFaulted)
+							return;
+
+						// We get back a MediaFile
+						MediaFile media = t.Result;
+						ShowVideo (media);
+					});
+				}, uiScheduler); // Make sure we use the UI thread to show our video.
+
+				dialogController.PresentViewController (mediaPickerController, true, null);
 			};
 
 			pickVideo = new StringElement ("Pick Video");
@@ -85,27 +107,35 @@ namespace MediaPickerSample
 					return;
 				}
 
-				mediaPicker.PickVideoAsync().ContinueWith (t => {
-					if (t.IsCanceled || t.IsFaulted)
-						return;
+				mediaPickerController = mediaPicker.GetPickVideoUI();
+				mediaPickerController.GetResultAsync().ContinueWith (t => {
+					// We need to dismiss the controller ourselves
+					mediaPickerController.DismissViewController (true, () => {
+						// User canceled or something went wrong
+						if (t.IsCanceled || t.IsFaulted)
+							return;
 
-					ShowVideo (t.Result);
-				}, uiScheduler);
+						// We get back a MediaFile
+						MediaFile media = t.Result;
+						ShowVideo (media);
+					});
+				}, uiScheduler); // Make sure we use the UI thread to show our video.
+
+				dialogController.PresentViewController (mediaPickerController, true, null);
 			};
 
-			var root = new RootElement("Xamarin.Media Sample")
-			{
+			var root = new RootElement("Xamarin.Media Sample") {
 				new Section ("Picking media") { pickPhoto, pickVideo },
 				new Section ("Capturing media") { takePhoto, takeVideo }
 			};
 
 			dialogController = new DisposingMediaViewController (root);
 			viewController = new UINavigationController (dialogController);
-			
+
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
 			window.RootViewController = viewController;
 			window.MakeKeyAndVisible ();
-			
+
 			return true;
 		}
 
