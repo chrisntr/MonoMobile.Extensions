@@ -1,9 +1,6 @@
-Xamarin.Mobile is an API for accessing common platform features, such as
-reading the user's address book and using the camera, across iOS,
-Android, and Windows Phone.
-
 ## Examples
 
+### Contacts
 To access the address book (requires `READ_CONTACTS` permissions
 on Android):
 
@@ -12,7 +9,6 @@ using Xamarin.Contacts;
 // ...
 
 var book = new AddressBook ();
-//         new AddressBook (this); on Android
 book.RequestPermission().ContinueWith (t => {
 	if (!t.Result) {
 		Console.WriteLine ("Permission denied by user or manifest");
@@ -24,6 +20,8 @@ book.RequestPermission().ContinueWith (t => {
 	}
 }, TaskScheduler.FromCurrentSynchronizationContext());
 ```
+
+### Geolocation
 
 To get the user's location (requires `ACCESS_COARSE_LOCATION` and
 `ACCESS_FINE_LOCATION` permissions on Android):
@@ -41,30 +39,28 @@ locator.GetPositionAsync (timeout: 10000).ContinueWith (t => {
 }, TaskScheduler.FromCurrentSynchronizationContext());
 ```
 
-To take a photo:
+### Media
+
+`MediaPicker` allows you to invoke the native UI to take or select photos or video. Given
+that there is this UI interaction, the code (while simpler than doing it manually) will not
+be completely cross-platform.
+
+To take a photo on iOS, Windows Phone or WinRT:
 
 ```csharp
 using Xamarin.Media;
 // ...
 
-var picker = new MediaPicker ();
-if (!picker.IsCameraAvailable)
-	Console.WriteLine ("No camera!");
-else {
-	picker.TakePhotoAsync (new StoreCameraMediaOptions {
-		Name = "test.jpg",
-		Directory = "MediaPickerSample"
-	}).ContinueWith (t => {
-		if (t.IsCanceled) {
-			Console.WriteLine ("User canceled");
-			return;
-		}
-		Console.WriteLine (t.Result.Path);
-	}, TaskScheduler.FromCurrentSynchronizationContext());
-}
+var picker = new MediaPicker();
+picker.PickPhotoAsync().ContinueWith (t => {
+	MediaFile file = t.Result;
+	Console.WriteLine (file.Path);
+}, TaskScheduler.FromCurrentSynchronizationContext());
 ```
 
-On Android (requires `WRITE_EXTERNAL_STORAGE` permissions):
+On Android and optionally on iOS, you control the UI.
+
+To take a photo on Android (requires `WRITE_EXTERNAL_STORAGE` permissions):
 
 ```csharp
 using Xamarin.Media;
@@ -94,4 +90,28 @@ protected override void OnActivityResult (int requestCode, Result resultCode, In
 		Console.WriteLine (t.Result.Path);
 	}, TaskScheduler.FromCurrentSynchronizationContext());
 }
+```
+
+To take a photo on iOS controlling the UI:
+
+```csharp
+using Xamarin.Media;
+// ...
+
+var picker = new MediaPicker();
+MediaPickerController controller = picker.GetTakePhotoUI (new StoreCameraMediaOptions {
+	Name = "test.jpg",
+	Directory = "MediaPickerSample"
+});
+
+// On iPad, you'll use UIPopoverController to present the controller
+PresentViewController (controller, true, null);
+
+controller.GetResultAsync().ContinueWith (t => {
+	// Dismiss the UI yourself
+	controller.DismissViewController (true, () => {
+		MediaFile file = t.Result;
+	});
+	
+}, TaskScheduler.FromCurrentSynchronizationContext());
 ```
