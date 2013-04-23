@@ -80,7 +80,7 @@ namespace Xamarin.Geolocation
 
 		public Task<Position> GetPositionAsync (CancellationToken cancelToken, bool includeHeading)
 		{
-			return GetPositionAsync (0, cancelToken);
+			return GetPositionAsync (Timeout.Infinite, cancelToken);
 		}
 
 		public Task<Position> GetPositionAsync (int timeout)
