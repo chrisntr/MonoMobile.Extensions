@@ -62,9 +62,9 @@ namespace Xamarin.Contacts
 			{
 				if (i == batchSize)
 				{
-				    i = 0;
-				    foreach (Contact c in GetContacts (rawContacts, content, resources, ids))
-				        yield return c;
+					i = 0;
+					foreach (Contact c in GetContacts (rawContacts, content, resources, ids))
+						yield return c;
 				}
 
 				string id = cursor.GetString (columnIndex);
@@ -78,7 +78,7 @@ namespace Xamarin.Contacts
 			if (i > 0)
 			{
 				foreach (Contact c in GetContacts (rawContacts, content, resources, ids.Take(i).ToArray()))
-				    yield return c;
+					yield return c;
 			}
 		}
 
@@ -100,6 +100,9 @@ namespace Xamarin.Contacts
 				whereb.Append ("=?");
 			}
 
+			int x = 0;
+			var map = new Dictionary<string, Contact> (ids.Length);
+
 			try
 			{
 				Contact currentContact = null;
@@ -115,8 +118,15 @@ namespace Xamarin.Contacts
 					string id = c.GetString (idIndex);
 					if (currentContact == null || currentContact.Id != id)
 					{
-						if (currentContact != null)
-							yield return currentContact;
+						// We need to yield these in the original ID order
+						if (currentContact != null) {
+							if (currentContact.Id == ids[x]) {
+								yield return currentContact;
+								x++;
+							}
+							else
+								map.Add (currentContact.Id, currentContact);
+						}
 
 						currentContact = new Contact (id, !rawContacts, content);
 						currentContact.DisplayName = c.GetString (dnIndex);
@@ -126,7 +136,10 @@ namespace Xamarin.Contacts
 				}
 
 				if (currentContact != null)
-					yield return currentContact;
+					map.Add (currentContact.Id, currentContact);
+
+				for (; x < ids.Length; x++)
+					yield return map[ids[x]];
 			}
 			finally
 			{
