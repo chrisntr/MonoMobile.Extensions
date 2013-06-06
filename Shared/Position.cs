@@ -10,10 +10,13 @@ namespace Xamarin.Geolocation
 
 		public Position (Position position)
 		{
+			if (position == null)
+				throw new ArgumentNullException ("position");
+
 			Timestamp = position.Timestamp;
 			Latitude = position.Latitude;
 			Longitude = position.Longitude;
-			Altitude = position.AltitudeAccuracy;
+			Altitude = position.Altitude;
 			AltitudeAccuracy = position.AltitudeAccuracy;
 			Accuracy = position.Accuracy;
 			Heading = position.Heading;
