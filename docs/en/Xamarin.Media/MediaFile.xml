@@ -22,15 +22,15 @@
   <Docs>
     <summary>Represents a media file newly taken or picked from the gallery.</summary>
     <remarks>
-		<para>
+      <para>
 			When picking media, the returned file should be considered temporary. If you wish to persist this file, you should copy
 			the file before calling <see cref="M:Xamarin.Media.MediaFile.Dispose" />. Once you've persisted the file, or finished
 			viewing it, calling <see cref="M:Xamarin.Media.MediaFile.Dispose" /> will cleanup any temporary files that may have been
 			created.
 		</para>
-	</remarks>
-	<altmember cref="T:Xamarin.Media.MediaPicker" />
-	<altmember cref="M:Xamarin.Contacts.Contact.SaveThumbnail" />
+    </remarks>
+    <altmember cref="T:Xamarin.Media.MediaPicker" />
+    <altmember cref="M:Xamarin.Contacts.Contact.SaveThumbnail" />
   </Docs>
   <Members>
     <Member MemberName="Dispose">
@@ -96,14 +96,14 @@
         <summary>Gets a stream to the media file.</summary>
         <returns>A <see cref="T:System.IO.Stream" /> for reading the file.</returns>
         <remarks>
-			<para>
+          <para>
 				Disposing the returned stream is separate from disposing the containing <see cref="T:Xamarin.Media.MediaFile" />,
 				ensure that you dispose both.
 			</para>
-			<para>
+          <para>
 				Where possible, this method will return a stream from memory instead of reading from storage.
 			</para>
-		</remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Path">
@@ -123,15 +123,15 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-		<summary>Gets the path to the file.</summary>
-		<value>The path to the file.</value>
+        <summary>Gets the path to the file.</summary>
+        <value>The path to the file.</value>
         <remarks>
-			<para>
+          <para>
 				On iOS and Android, this is the full path to the file. On Windows Phone, it's a relative path
 				under isolated storage.
 			</para>
-		</remarks>
-		<altmember cref="M:Xamarin.Media.MediaFile.GetStream" />
+        </remarks>
+        <altmember cref="M:Xamarin.Media.MediaFile.GetStream" />
       </Docs>
     </Member>
   </Members>

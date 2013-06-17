@@ -21,7 +21,7 @@
     <summary>A class providing the ability to get or listen to the device's current geo-location.</summary>
   </Docs>
   <Members>
-	<Member MemberName=".ctor">
+    <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public Geolocator ();" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
       <MemberType>Constructor</MemberType>
@@ -486,7 +486,7 @@
       <Docs>
         <summary>Raised when there is an error retrieving position information while listening.</summary>
         <remarks>
-		  <para>
+          <para>
 			  Errors are raised only when listening (<see cref="M:Xamarin.Geolocation.Geolocator.StartListening" />). If the app was suspended, there is
 			  no guarantee that this event will be raised upon resume if the user has disabled location services inbetween suspending and resuming. It's
 			  recommended that you stop listening on suspension and start again when the app is resumed.

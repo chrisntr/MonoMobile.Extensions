@@ -18,8 +18,8 @@
   <Docs>
     <summary>Holds options for camera-based capturing operations.</summary>
     <remarks />
-	<altmember cref="M:Xamarin.Media.MediaPicker.TakeVideoAsync" />
-	<altmember cref="M:Xamarin.Media.MediaPicker.TakePhotoAsync" />
+    <altmember cref="M:Xamarin.Media.MediaPicker.TakeVideoAsync" />
+    <altmember cref="M:Xamarin.Media.MediaPicker.TakePhotoAsync" />
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -61,11 +61,11 @@
         <summary>Gets or sets the default camera to use for the operation.</summary>
         <value>The default camera to use for the operation.</value>
         <remarks>
-			<para>
+          <para>
 				This only serves as a hint to the host system to use the specified camera. If setting the default
 				camera - or the camera selected - is unsupported, this property will be ignored.
 			</para>
-		</remarks>
+        </remarks>
       </Docs>
     </Member>
   </Members>

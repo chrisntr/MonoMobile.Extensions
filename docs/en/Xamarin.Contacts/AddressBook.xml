@@ -24,17 +24,17 @@
     </Interface>
   </Interfaces>
   <Docs>
-		<summary>Represents the address book of the user.</summary>
-		<remarks>
-			<para>
+    <summary>Represents the address book of the user.</summary>
+    <remarks>
+      <para>
 				For storing and retrieving contacts, use the most uniquely identifying information for a contact
 				that is available, such as mobile phone numbers or personal email addresses. Even for platforms
 				that provide <see cref="P:Xamarin.Contacts.Contact.Id" />, it is not neccessarily stable long term,
 				as records can be removed and readded or merged.
 			</para>
-		</remarks>
+    </remarks>
     <example>
-		<para>
+      <para>
 			This example shows how you can retrieve all contacts with the first name of
 			"Eric" and has a phone listed. Then it iterates through the contacts, making
 			a list of each person and their phones.
@@ -207,7 +207,7 @@ abook.RequestPermissions().ContinueWith (t =>
         <summary>Attempts to load a contact for the specified <paramref name="id" />.</summary>
         <returns>The <see cref="T:Xamarin.Contacts.Contact" /> if found, <c>null</c> otherwise.</returns>
         <remarks>
-			<para>
+          <para>
 				If <see cref="P:Xamarin.Contacts.AddressBook.PreferContactAggregation" /> and
 				<see cref="P:Xamarin.Contacts.AddressBook.AggregateContactsSupported" /> are <c>true</c>,
 				this will attempt to load the contact using <paramref name="id" /> as an aggregate ID.
@@ -215,7 +215,7 @@ abook.RequestPermissions().ContinueWith (t =>
 				<see cref="P:Xamarin.Contacts.Contact.Id" /> is an aggregate ID or not when you originally
 				obtained the contact.
 			</para>
-			<para>
+          <para>
 				On Android, with <see cref="P:Xamarin.Contacts.AddressBook.PreferContactAggregation" /> enabled,
 				this can be used to retrieve <see cref="T:Xamarin.Contacts.Contact" /> instances from an Android
 				contact lookup key.
@@ -255,7 +255,9 @@ abook.RequestPermissions().ContinueWith (t =>
       </ReturnValue>
       <Docs>
         <summary>Gets whether <see cref="M:Xamarin.Contacts.AddressBook.Load" /> is supported or not.</summary>
-        <value><c>true</c> on iOS and Android, <c>false</c> on Windows Phone.</value>
+        <value>
+          <c>true</c> on iOS and Android, <c>false</c> on Windows Phone.</value>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="PreferContactAggregation">
@@ -307,12 +309,12 @@ abook.RequestPermissions().ContinueWith (t =>
         <summary>Requests permission to access the user's contacts.</summary>
         <returns>A task who's result will be <c>true</c> if given access to the user's contacts, <c>false</c> otherwise.</returns>
         <remarks>
-            <para>
-                On iOS, calling this method is required before using the <see cref="T:Xamarin.Contacts.AddressBook"/> instance.
+          <para>
+                On iOS, calling this method is required before using the <see cref="T:Xamarin.Contacts.AddressBook" /> instance.
                 For it's first call the user will be prompted for permission to access their contacts. On Android and Windows Phone, calling this method will check the manifest based permissions for contacts
                 access on those platforms.
             </para>
-            <para>
+          <para>
                 It's recommend that you call this method before accessing contacts regardless of platform.
             </para>
         </remarks>

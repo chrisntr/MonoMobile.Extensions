@@ -18,8 +18,8 @@
   <Docs>
     <summary>Base class for media storing operations.</summary>
     <remarks />
-	<altmember cref="T:Xamarin.Media.StoreVideoOptions" />
-	<altmember cref="T:Xamarin.Media.StoreCameraMediaOptions" />
+    <altmember cref="T:Xamarin.Media.StoreVideoOptions" />
+    <altmember cref="T:Xamarin.Media.StoreCameraMediaOptions" />
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -61,16 +61,16 @@
         <summary>Gets or sets the directory to store the media in.</summary>
         <value>The directory to store the media in.</value>
         <remarks>
-			<para>
+          <para>
 				The media store operations have specific root folders they will store media in. This property
 				acts as a sub-directory to those directories. If <c>null</c>, the operation will just use
 				the root of it's specific directory.
 			</para>
-			<para>
+          <para>
 				On iOS and Windows Phone, the root directory is just the root of the application-specific storage
 				area. On Android, the external storage folder most relevant to the operation will be used.
 			</para>
-		</remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Name">
@@ -93,11 +93,11 @@
         <summary>Gets or sets the name of the file.</summary>
         <value>The name of the file to store the media as.</value>
         <remarks>
-			<para>
+          <para>
 				If this is <c>null</c>, the operation will generate a unique filename automatically. If
 				a name without an extension is specified, an appropriate one will be added by the operation.
 			</para>
-		</remarks>
+        </remarks>
       </Docs>
     </Member>
   </Members>

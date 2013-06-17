@@ -18,7 +18,7 @@
   <Docs>
     <summary>Holds options for storing videos.</summary>
     <remarks />
-	<altmember cref="M:Xamarin.Media.MediaPicker.TakeVideoAsync" />
+    <altmember cref="M:Xamarin.Media.MediaPicker.TakeVideoAsync" />
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -60,11 +60,11 @@
         <summary>Gets or sets the desired length of the video recording.</summary>
         <value>A <see cref="T:System.TimeSpan" /> representing the desired elngth of the recording.</value>
         <remarks>
-			<para>
+          <para>
 				Not all camera implementations on Android respect this property, as such it should
 				be considered only a hint and not a guarantee of result length.
 			</para>
-		</remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Quality">
@@ -87,11 +87,11 @@
         <summary>Gets or sets the quality level for the video.</summary>
         <value>Video quality level.</value>
         <remarks>
-			<para>
+          <para>
 				Not all host systems support three settings. On Android, <see cref="F:Xamarin.Media.VideoQuality.Medium" /> is
 				interpreted as <see cref="F:Xamarin.Media.VideoQuality.High" />.
 			</para>
-		</remarks>
+        </remarks>
       </Docs>
     </Member>
   </Members>

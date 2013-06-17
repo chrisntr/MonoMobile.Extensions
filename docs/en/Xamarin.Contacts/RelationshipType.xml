@@ -18,12 +18,11 @@
   <Docs>
     <summary>Represents the type of a relationship.</summary>
     <remarks>
-		<para>
+      <para>
 			Only the common subset of relationships across all three platforms (iOS, Android and Windows Phone) is present.
 			Any relationship types that do not fall under specific categorizations will be defined as
-			<see cref="F:Xamarin.Contacts.RelationshipType.Other" />
-		</para>
-	</remarks>
+			<see cref="F:Xamarin.Contacts.RelationshipType.Other" /></para>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName="Child">

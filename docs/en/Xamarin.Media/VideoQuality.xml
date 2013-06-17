@@ -17,11 +17,11 @@
   <Docs>
     <summary>Represents a video quality setting.</summary>
     <remarks>
-		<para>
+      <para>
 			Not all host systems support three settings. On Android, <see cref="F:Xamarin.Media.VideoQuality.Medium" /> is
 			interpreted as <see cref="F:Xamarin.Media.VideoQuality.High" />.
 		</para>
-	</remarks>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName="High">

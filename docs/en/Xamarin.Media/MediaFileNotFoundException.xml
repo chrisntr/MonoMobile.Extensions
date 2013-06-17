@@ -12,7 +12,8 @@
   <Interfaces />
   <Docs>
     <summary>Represents an error raised when media supplied by the system could not be found.</summary>
-    <remarks></remarks>
+    <remarks>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
