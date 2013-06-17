@@ -11,7 +11,15 @@ namespace Xamarin.Media
 	{
 		public static Task<MediaFile> GetMediaFileExtraAsync (this Intent self, Context context)
 		{
+			if (self == null)
+				throw new ArgumentNullException ("self");
+			if (context == null)
+				throw new ArgumentNullException ("context");
+
 			var uri = (Android.Net.Uri)self.GetParcelableExtra (MediaFile.ExtraName);
+			if (uri == null)
+				throw new ArgumentException ("Intent was not results from MediaPicker", "self");
+
 			bool isPhoto = self.GetBooleanExtra ("isPhoto", false);
 			string action = self.GetStringExtra ("action");
 			var path = (Android.Net.Uri)self.GetParcelableExtra ("path");
