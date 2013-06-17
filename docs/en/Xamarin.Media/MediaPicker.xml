@@ -9,6 +9,7 @@
     <AssemblyVersion>0.5.1.0</AssemblyVersion>
     <AssemblyVersion>0.6.1.0</AssemblyVersion>
     <AssemblyVersion>0.6.2.0</AssemblyVersion>
+    <AssemblyVersion>0.7.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -68,6 +69,7 @@
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="context" Type="Android.Content.Context" />
@@ -76,6 +78,80 @@
         <param name="context">The context to use for operations.</param>
         <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Media.MediaPicker" /> class.</summary>
         <remarks>This constructor is only available on Android.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetPickPhotoUI">
+      <MemberSignature Language="C#" Value="public Android.Content.Intent GetPickPhotoUI ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Android.Content.Intent GetPickPhotoUI() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Android.Content.Intent</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetPickVideoUI">
+      <MemberSignature Language="C#" Value="public Android.Content.Intent GetPickVideoUI ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Android.Content.Intent GetPickVideoUI() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Android.Content.Intent</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetTakePhotoUI">
+      <MemberSignature Language="C#" Value="public Android.Content.Intent GetTakePhotoUI (Xamarin.Media.StoreCameraMediaOptions options);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Android.Content.Intent GetTakePhotoUI(class Xamarin.Media.StoreCameraMediaOptions options) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Android.Content.Intent</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="options" Type="Xamarin.Media.StoreCameraMediaOptions" />
+      </Parameters>
+      <Docs>
+        <param name="options">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetTakeVideoUI">
+      <MemberSignature Language="C#" Value="public Android.Content.Intent GetTakeVideoUI (Xamarin.Media.StoreVideoOptions options);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Android.Content.Intent GetTakeVideoUI(class Xamarin.Media.StoreVideoOptions options) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Android.Content.Intent</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="options" Type="Xamarin.Media.StoreVideoOptions" />
+      </Parameters>
+      <Docs>
+        <param name="options">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="IsCameraAvailable">
@@ -89,6 +165,7 @@
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -118,6 +195,7 @@
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -147,7 +225,13 @@
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.Obsolete("On Android, use GetPickPhotoUI instead.")</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task&lt;Xamarin.Media.MediaFile&gt;</ReturnType>
       </ReturnValue>
@@ -368,6 +452,7 @@
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>

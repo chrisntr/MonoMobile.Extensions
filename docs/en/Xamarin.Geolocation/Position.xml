@@ -11,6 +11,7 @@
     <AssemblyVersion>0.5.1.0</AssemblyVersion>
     <AssemblyVersion>0.6.1.0</AssemblyVersion>
     <AssemblyVersion>0.6.2.0</AssemblyVersion>
+    <AssemblyVersion>0.7.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -33,6 +34,7 @@
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters />
       <Docs>
@@ -52,6 +54,7 @@
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="position" Type="Xamarin.Geolocation.Position" />
@@ -74,6 +77,7 @@
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Double</ReturnType>
@@ -97,6 +101,7 @@
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Double</ReturnType>
@@ -119,6 +124,7 @@
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Double</ReturnType>
@@ -142,6 +148,7 @@
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Double</ReturnType>
@@ -165,6 +172,7 @@
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Double</ReturnType>
@@ -187,6 +195,7 @@
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Double</ReturnType>
@@ -209,6 +218,7 @@
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Double</ReturnType>
@@ -232,6 +242,7 @@
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.DateTimeOffset</ReturnType>

@@ -11,6 +11,7 @@
     <AssemblyVersion>0.5.1.0</AssemblyVersion>
     <AssemblyVersion>0.6.1.0</AssemblyVersion>
     <AssemblyVersion>0.6.2.0</AssemblyVersion>
+    <AssemblyVersion>0.7.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Exception</BaseTypeName>
@@ -33,6 +34,7 @@
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="error" Type="Xamarin.Geolocation.GeolocationError" />
@@ -51,6 +53,7 @@
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="error" Type="Xamarin.Geolocation.GeolocationError" />
@@ -75,6 +78,7 @@
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>Xamarin.Geolocation.GeolocationError</ReturnType>

@@ -1,6 +1,6 @@
 <Overview>
   <Assemblies>
-    <Assembly Name="Xamarin.Mobile" Version="0.6.2.0">
+    <Assembly Name="Xamarin.Mobile" Version="0.7.0.0">
       <Attributes>
         <Attribute>
           <AttributeName>System.Reflection.AssemblyCompany("Xamarin Inc.")</AttributeName>
@@ -15,7 +15,7 @@
           <AttributeName>System.Reflection.AssemblyDescription("")</AttributeName>
         </Attribute>
         <Attribute>
-          <AttributeName>System.Reflection.AssemblyFileVersion("0.6.2.0")</AttributeName>
+          <AttributeName>System.Reflection.AssemblyFileVersion("0.7.0.0")</AttributeName>
         </Attribute>
         <Attribute>
           <AttributeName>System.Reflection.AssemblyProduct("Xamarin.Mobile")</AttributeName>
@@ -67,6 +67,7 @@
     <Namespace Name="Xamarin.Media">
       <Type Name="CameraDevice" Kind="Enumeration" />
       <Type Name="MediaFile" Kind="Class" />
+      <Type Name="MediaFileExtensions" Kind="Class" />
       <Type Name="MediaFileNotFoundException" Kind="Class" />
       <Type Name="MediaPicker" Kind="Class" />
       <Type Name="StoreCameraMediaOptions" Kind="Class" />
@@ -76,4 +77,29 @@
     </Namespace>
   </Types>
   <Title>Xamarin.Mobile</Title>
+  <ExtensionMethods>
+    <ExtensionMethod>
+      <Targets>
+        <Target Type="T:Android.Content.Intent" />
+      </Targets>
+      <Member MemberName="GetMediaFileExtraAsync">
+        <MemberSignature Language="C#" Value="public static System.Threading.Tasks.Task&lt;Xamarin.Media.MediaFile&gt; GetMediaFileExtraAsync (this Android.Content.Intent self, Android.Content.Context context);" />
+        <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Threading.Tasks.Task`1&lt;class Xamarin.Media.MediaFile&gt; GetMediaFileExtraAsync(class Android.Content.Intent self, class Android.Content.Context context) cil managed" />
+        <MemberType>ExtensionMethod</MemberType>
+        <ReturnValue>
+          <ReturnType>System.Threading.Tasks.Task&lt;Xamarin.Media.MediaFile&gt;</ReturnType>
+        </ReturnValue>
+        <Parameters>
+          <Parameter Name="self" Type="Android.Content.Intent" RefType="this" />
+          <Parameter Name="context" Type="Android.Content.Context" />
+        </Parameters>
+        <Docs>
+          <param name="self">To be added.</param>
+          <param name="context">To be added.</param>
+          <summary>To be added.</summary>
+        </Docs>
+        <Link Type="Xamarin.Media.MediaFileExtensions" Member="M:Xamarin.Media.MediaFileExtensions.GetMediaFileExtraAsync(Android.Content.Intent,Android.Content.Context)" />
+      </Member>
+    </ExtensionMethod>
+  </ExtensionMethods>
 </Overview>
