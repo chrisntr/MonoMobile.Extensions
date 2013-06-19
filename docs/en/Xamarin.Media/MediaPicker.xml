@@ -99,9 +99,9 @@
         <returns>The UI object for you to display.</returns>
         <remarks>
           <para>This method is only present on the iOS and Android versions of Xamarin.Mobile.</para>
-         </remarks>
+        </remarks>
         <example>
-          <para>On Android, this method returns an <see cref="T:Android.Content.Intent"/> to be used with <see cref="M:Android.App.Activity.StartActivityForResult"/>.</para>
+          <para>On Android, this method returns an <see cref="T:Android.Content.Intent" /> to be used with <see cref="M:Android.App.Activity.StartActivityForResult" />.</para>
           <code language="C#"><![CDATA[
 void PickPhoto()
 {
@@ -122,11 +122,10 @@ protected override void OnActivityResult (int requestCode, Result resultCode, In
         </example>
         <example>
           <para>
-            On iOS, this method returns a <see cref="T:Xamarin.Media.MediaPickerController"/>. Use <see cref="M:Xamarin.Media.MediaPickerController.GetResultAsync"/> 
+            On iOS, this method returns a <see cref="T:Xamarin.Media.MediaPickerController" />. Use <see cref="M:Xamarin.Media.MediaPickerController.GetResultAsync" /> 
             to get the result. As you are controlling the display of the view controller, you must also dismiss it yourself.
           </para>
-          <code language="C#">
-  <![CDATA[
+          <code language="C#"><![CDATA[
 async Task PickPhoto()
 {
   var picker = new MediaPicker();
@@ -162,16 +161,15 @@ async Task PickPhoto()
       <Parameters />
       <Docs>
         <summary>Gets a UI object for the system video picker UI.</summary>
-        <returns>A UI object for you to display. <see cref="T:Android.Content.Intent"/> on Android, <see cref="T:Xamarin.Media.MediaPickerController"/> on iOS.</returns>
+        <returns>A UI object for you to display. <see cref="T:Android.Content.Intent" /> on Android, <see cref="T:Xamarin.Media.MediaPickerController" /> on iOS.</returns>
         <remarks>
           <para>This method is only present on the iOS and Android versions of Xamarin.Mobile.</para>
         </remarks>
         <example>
           <para>
-            On Android, this method returns an <see cref="T:Android.Content.Intent"/> to be used with <see cref="M:Android.App.Activity.StartActivityForResult"/>.
+            On Android, this method returns an <see cref="T:Android.Content.Intent" /> to be used with <see cref="M:Android.App.Activity.StartActivityForResult" />.
           </para>
-          <code language="C#">
-            <![CDATA[
+          <code language="C#"><![CDATA[
 void PickVideo()
 {
   var picker = new MediaPicker (this);
@@ -187,16 +185,14 @@ protected override void OnActivityResult (int requestCode, Result resultCode, In
     // Do stuff with file
   }, TaskScheduler.FromCurrentSynchronizationContext());
 }
-]]>
-          </code>
+]]></code>
         </example>
         <example>
           <para>
-            On iOS, this method returns a <see cref="T:Xamarin.Media.MediaPickerController"/>. Use <see cref="M:Xamarin.Media.MediaPickerController.GetResultAsync"/>
+            On iOS, this method returns a <see cref="T:Xamarin.Media.MediaPickerController" />. Use <see cref="M:Xamarin.Media.MediaPickerController.GetResultAsync" />
             to get the result. As you are controlling the display of the view controller, you must also dismiss it yourself.
           </para>
-          <code language="C#">
-            <![CDATA[
+          <code language="C#"><![CDATA[
 async Task PickVideo()
 {
   var picker = new MediaPicker();
@@ -213,8 +209,7 @@ async Task PickVideo()
 
   // Do stuff with file
 }
-]]>
-          </code>
+]]></code>
         </example>
         <altmember cref="M:Xamarin.Media.MediaFileExtensions.GetMediaFileExtraAsync" />
         <altmember cref="M:Xamarin.Media.MediaPickerController.GetResultAsync" />
@@ -236,16 +231,15 @@ async Task PickVideo()
       <Docs>
         <param name="options">Options such as which camera to default to and where to store the photo.</param>
         <summary>Gets a UI object for the system photo camera UI.</summary>
-        <returns>A UI object for you to display. <see cref="T:Android.Content.Intent"/> on Android, <see cref="T:Xamarin.Media.MediaPickerController"/> on iOS.</returns>
+        <returns>A UI object for you to display. <see cref="T:Android.Content.Intent" /> on Android, <see cref="T:Xamarin.Media.MediaPickerController" /> on iOS.</returns>
         <remarks>
           <para>This method is only present on the iOS and Android versions of Xamarin.Mobile.</para>
         </remarks>
         <example>
           <para>
-            On Android, this method returns an <see cref="T:Android.Content.Intent"/> to be used with <see cref="M:Android.App.Activity.StartActivityForResult"/>.
+            On Android, this method returns an <see cref="T:Android.Content.Intent" /> to be used with <see cref="M:Android.App.Activity.StartActivityForResult" />.
           </para>
-          <code language="C#">
-            <![CDATA[
+          <code language="C#"><![CDATA[
 void TakePhoto()
 {
   var picker = new MediaPicker (this);
@@ -265,16 +259,14 @@ protected override void OnActivityResult (int requestCode, Result resultCode, In
     // Do stuff with file
   }, TaskScheduler.FromCurrentSynchronizationContext());
 }
-]]>
-          </code>
+]]></code>
         </example>
         <example>
           <para>
-            On iOS, this method returns a <see cref="T:Xamarin.Media.MediaPickerController"/>. Use <see cref="M:Xamarin.Media.MediaPickerController.GetResultAsync"/>
+            On iOS, this method returns a <see cref="T:Xamarin.Media.MediaPickerController" />. Use <see cref="M:Xamarin.Media.MediaPickerController.GetResultAsync" />
             to get the result. As you are controlling the display of the view controller, you must also dismiss it yourself.
           </para>
-          <code language="C#">
-            <![CDATA[
+          <code language="C#"><![CDATA[
 async Task TakePhoto()
 {
   var picker = new MediaPicker();
@@ -294,8 +286,7 @@ async Task TakePhoto()
 
   // Do stuff with file
 }
-]]>
-          </code>
+]]></code>
         </example>
         <altmember cref="M:Xamarin.Media.MediaFileExtensions.GetMediaFileExtraAsync" />
         <altmember cref="M:Xamarin.Media.MediaPickerController.GetResultAsync" />
@@ -318,17 +309,16 @@ async Task TakePhoto()
         <param name="options">Options such as which camera to default to, quality, length and where to store the photo.</param>
         <summary>Gets a UI object for the system photo camera UI.</summary>
         <returns>
-          A UI object for you to display. <see cref="T:Android.Content.Intent"/> on Android, <see cref="T:Xamarin.Media.MediaPickerController"/> on iOS.
+          A UI object for you to display. <see cref="T:Android.Content.Intent" /> on Android, <see cref="T:Xamarin.Media.MediaPickerController" /> on iOS.
         </returns>
         <remarks>
           <para>This method is only present on the iOS and Android versions of Xamarin.Mobile.</para>
         </remarks>
         <example>
           <para>
-            On Android, this method returns an <see cref="T:Android.Content.Intent"/> to be used with <see cref="M:Android.App.Activity.StartActivityForResult"/>.
+            On Android, this method returns an <see cref="T:Android.Content.Intent" /> to be used with <see cref="M:Android.App.Activity.StartActivityForResult" />.
           </para>
-          <code language="C#">
-            <![CDATA[
+          <code language="C#"><![CDATA[
 void TakeVideo()
 {
   var picker = new MediaPicker (this);
@@ -350,16 +340,14 @@ protected override void OnActivityResult (int requestCode, Result resultCode, In
     // Do stuff with file
   }, TaskScheduler.FromCurrentSynchronizationContext());
 }
-]]>
-          </code>
+]]></code>
         </example>
         <example>
           <para>
-            On iOS, this method returns a <see cref="T:Xamarin.Media.MediaPickerController"/>. Use <see cref="M:Xamarin.Media.MediaPickerController.GetResultAsync"/>
+            On iOS, this method returns a <see cref="T:Xamarin.Media.MediaPickerController" />. Use <see cref="M:Xamarin.Media.MediaPickerController.GetResultAsync" />
             to get the result. As you are controlling the display of the view controller, you must also dismiss it yourself.
           </para>
-          <code language="C#">
-            <![CDATA[
+          <code language="C#"><![CDATA[
 async Task TakeVideo()
 {
   var picker = new MediaPicker();
@@ -381,8 +369,7 @@ async Task TakeVideo()
 
   // Do stuff with file
 }
-]]>
-          </code>
+]]></code>
         </example>
       </Docs>
     </Member>

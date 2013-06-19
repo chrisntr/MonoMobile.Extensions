@@ -84,7 +84,8 @@ abook.RequestPermissions().ContinueWith (t =>
         <summary>
           Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.AddressBook" /> class.
         </summary>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -158,6 +159,7 @@ abook.RequestPermissions().ContinueWith (t =>
       <Docs>
         <summary>Returns an enumerator that iterates through the <see href="T:Xamarin.Contacts.AddressBook" />.</summary>
         <returns>An enumerator for the <see cref="T:Xamarin.Contacts.AddressBook" />.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="IsReadOnly">

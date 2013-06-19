@@ -18,6 +18,7 @@
   <Interfaces />
   <Docs>
     <summary>Represents an email address belonging to a <see cref="T:Xamarin.Contacts.Contact" />. </summary>
+    <remarks />
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -37,6 +38,7 @@
       <Parameters />
       <Docs>
         <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.Email" /> class.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Address">
@@ -59,6 +61,7 @@
       <Docs>
         <summary>Gets or sets the e-mail address.</summary>
         <value>The email address.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Label">
@@ -109,6 +112,7 @@
       <Docs>
         <summary>Gets or sets the type of this email address.</summary>
         <value>The type of this email address.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>

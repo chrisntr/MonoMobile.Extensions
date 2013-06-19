@@ -19,6 +19,7 @@
   <Interfaces />
   <Docs>
     <summary>Provides data for <see cref="M:Xamarin.Geolocation.Geolocator.PositionChanged" /> events.</summary>
+    <remarks />
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -42,6 +43,7 @@
       <Docs>
         <param name="position">A <see cref="T:Xamarin.Geolocation.Position" /></param>
         <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Geolocation.PositionEventArgs" /> class by specifying the <see cref="T:Xamarin.Geolocation.Position" />.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Position">
@@ -65,6 +67,7 @@
       <Docs>
         <summary>Gets the <see cref="T:Xamarin.Geolocation.Position" /> for the event.</summary>
         <value>The position for the event.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>

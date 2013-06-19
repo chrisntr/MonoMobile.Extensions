@@ -19,6 +19,7 @@
   <Interfaces />
   <Docs>
     <summary>Represents a geolocation error.</summary>
+    <remarks />
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -42,7 +43,8 @@
       <Docs>
         <param name="error">The type of error that occured.</param>
         <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Geolocation.GeolocationException" /> class.</summary>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -63,6 +65,7 @@
         <param name="error">The type of error that occured.</param>
         <param name="innerException">The original exception causing this error.</param>
         <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Geolocation.GeolocationException" /> class.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Error">
@@ -86,6 +89,7 @@
       <Docs>
         <summary>Gets the type of error that occured.</summary>
         <value>The type of error that occred.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>

@@ -30,6 +30,7 @@
       <Docs>
         <param name="path">The original path of the media.</param>
         <summary>Constructs and initializles a new instance of the <see cref="T:Xamarin.Media.MediaFileNotFoundException" /> class.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -48,6 +49,7 @@
         <param name="path">The original path of the media.</param>
         <param name="innerException">An exception that was raised trying to locate the media.</param>
         <summary>Constructs and initializles a new instance of the <see cref="T:Xamarin.Media.MediaFileNotFoundException" /> class.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Path">
@@ -64,6 +66,7 @@
       <Docs>
         <summary>The original path of the media that could not be located.</summary>
         <value>A <see cref="T:System.String" /> containing the original path of the media.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>

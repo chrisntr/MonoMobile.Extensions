@@ -19,6 +19,7 @@
   <Interfaces />
   <Docs>
     <summary>A class providing the ability to get or listen to the device's current geo-location.</summary>
+    <remarks />
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -429,7 +430,8 @@
         <summary>Gets whether the position is currently being listened to.</summary>
         <value>
           <c>true</c> if this geolocator is currently listening to position updates; otherwise, <c>false</c>.</value>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="PositionChanged">
@@ -620,6 +622,7 @@
       <Parameters />
       <Docs>
         <summary>Stops listening to position changes.</summary>
+        <remarks />
         <altmember cref="M:Xamarin.Geolocation.Geolocator.StartListening(System.Int32,System.Double)" />
       </Docs>
     </Member>
@@ -646,6 +649,7 @@
         <value>
           <c>true</c> if supports heading; otherwise, <c>false</c>.
         </value>
+        <remarks />
       </Docs>
     </Member>
   </Members>

@@ -35,7 +35,8 @@
       </Attributes>
     </Assembly>
   </Assemblies>
-  <Remarks></Remarks>
+  <Remarks>
+  </Remarks>
   <Copyright>Copyright Xamarin Inc 2011-2013</Copyright>
   <Types>
     <Namespace Name="Xamarin.Contacts">
@@ -95,9 +96,9 @@
           <Parameter Name="context" Type="Android.Content.Context" />
         </Parameters>
         <Docs>
-          <param name="self">To be added.</param>
-          <param name="context">To be added.</param>
-          <summary>To be added.</summary>
+          <param name="self">The <see cref="T:Android.Content.Intent" /> to retrieve the <see cref="T:Xamarin.Media.MediaFile" /> from.</param>
+          <param name="context">The current <see cref="T:Android.Content.Context" />, typically your <see cref="T:Android.App.Activity" />.</param>
+          <summary>Asynchronously retrieves a <see cref="T:Xamarin.Media.MediaFile" /> from the </summary>
         </Docs>
         <Link Type="Xamarin.Media.MediaFileExtensions" Member="M:Xamarin.Media.MediaFileExtensions.GetMediaFileExtraAsync(Android.Content.Intent,Android.Content.Context)" />
       </Member>

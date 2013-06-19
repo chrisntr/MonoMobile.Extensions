@@ -52,6 +52,7 @@
       <Parameters />
       <Docs>
         <summary>Releases all resources used by the <see cref="T:Xamarin.Media.MediaFile" />.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Finalize">
@@ -73,6 +74,7 @@
       <Parameters />
       <Docs>
         <summary>Deconstructs the MediaFile releasing all resources.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="GetStream">

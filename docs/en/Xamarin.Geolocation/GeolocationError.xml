@@ -18,6 +18,7 @@
   </Base>
   <Docs>
     <summary>Specifies what type of error occured.</summary>
+    <remarks />
   </Docs>
   <Members>
     <Member MemberName="PositionUnavailable">

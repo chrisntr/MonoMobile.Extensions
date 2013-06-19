@@ -19,6 +19,7 @@
   <Interfaces />
   <Docs>
     <summary>Represents an obtained location at a specific time.</summary>
+    <remarks />
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -39,6 +40,7 @@
       <Parameters />
       <Docs>
         <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Geolocation.Position" /> class.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -62,6 +64,7 @@
       <Docs>
         <param name="position">The position to copy from.</param>
         <summary>Constructs and copies a new instance of the <see cref="T:Xamarin.Geolocation.Position" /> class from the given <paramref name="position" />.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Accuracy">
@@ -109,6 +112,7 @@
       <Docs>
         <summary>Gets or sets the altitude in meters relative to sea level.</summary>
         <value>The altitude in meters, relative to seal level.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="AltitudeAccuracy">
@@ -180,6 +184,7 @@
       <Docs>
         <summary>Gets or sets the latitude.</summary>
         <value>The latitude.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Longitude">
@@ -203,6 +208,7 @@
       <Docs>
         <summary>Gets or sets the longitude.</summary>
         <value>The longitude.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Speed">
@@ -250,6 +256,7 @@
       <Docs>
         <summary>Gets or sets the timestamp of the position.</summary>
         <value>A <see cref="T:System.DateTimeOffset" /> representing the timestmap of the position.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>
