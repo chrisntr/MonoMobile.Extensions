@@ -155,7 +155,7 @@
       </ReturnValue>
       <Docs>
         <summary>Gets or sets the heading in degrees relative to true North.</summary>
-        <value>To be added.</value>
+        <value>Heading relative to true north.</value>
         <remarks>Use <see cref="M:Xamarin.Geolocation.Geolocator.SupportsHeading" /> to determine whether this property will contain a value.</remarks>
       </Docs>
     </Member>

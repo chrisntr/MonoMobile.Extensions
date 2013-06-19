@@ -77,12 +77,14 @@ abook.RequestPermissions().ContinueWith (t =>
         <AssemblyVersion>0.5.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.1.0</AssemblyVersion>
         <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters />
       <Docs>
         <summary>
           Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.AddressBook" /> class.
         </summary>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -155,7 +157,7 @@ abook.RequestPermissions().ContinueWith (t =>
       <Parameters />
       <Docs>
         <summary>Returns an enumerator that iterates through the <see href="T:Xamarin.Contacts.AddressBook" />.</summary>
-        <returns>An enumerator for the <see href="T:Xamarin.Contacts.AddressBook" />.</returns>
+        <returns>An enumerator for the <see cref="T:Xamarin.Contacts.AddressBook" />.</returns>
       </Docs>
     </Member>
     <Member MemberName="IsReadOnly">
@@ -203,7 +205,7 @@ abook.RequestPermissions().ContinueWith (t =>
         <Parameter Name="id" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="id">The <see href="P:Xamarin.Contacts.Contact.Id" /> of the contact to load.</param>
+        <param name="id">The <see cref="P:Xamarin.Contacts.Contact.Id" /> of the contact to load.</param>
         <summary>Attempts to load a contact for the specified <paramref name="id" />.</summary>
         <returns>The <see cref="T:Xamarin.Contacts.Contact" /> if found, <c>null</c> otherwise.</returns>
         <remarks>
@@ -257,7 +259,8 @@ abook.RequestPermissions().ContinueWith (t =>
         <summary>Gets whether <see cref="M:Xamarin.Contacts.AddressBook.Load" /> is supported or not.</summary>
         <value>
           <c>true</c> on iOS and Android, <c>false</c> on Windows Phone.</value>
-        <remarks>To be added.</remarks>
+        <remarks>Whether or not <see cref="M:Xamarin.Contacts.AddressBook.Load" /> is supported. Currently Windows Phone does not support this.</remarks>
+        <altmember cref="M:Xamarin.Contacts.AddressBook.Load" />
       </Docs>
     </Member>
     <Member MemberName="PreferContactAggregation">
@@ -344,99 +347,6 @@ abook.RequestPermissions().ContinueWith (t =>
         <remarks>
           <para>This will return <c>true</c> on iOS and Android, <c>false</c> on Windows Phone.</para>
         </remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="System.Collections.IEnumerable.GetEnumerator">
-      <MemberSignature Language="C#" Value="System.Collections.IEnumerator IEnumerable.GetEnumerator ();" />
-      <MemberSignature Language="ILAsm" Value=".method hidebysig newslot virtual instance class System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() cil managed" />
-      <MemberType>Method</MemberType>
-      <AssemblyInfo>
-        <AssemblyVersion>0.2.0.0</AssemblyVersion>
-        <AssemblyVersion>0.3.0.0</AssemblyVersion>
-        <AssemblyVersion>0.4.0.0</AssemblyVersion>
-        <AssemblyVersion>0.5.0.0</AssemblyVersion>
-        <AssemblyVersion>0.5.1.0</AssemblyVersion>
-        <AssemblyVersion>0.6.1.0</AssemblyVersion>
-        <AssemblyVersion>0.6.2.0</AssemblyVersion>
-        <AssemblyVersion>0.7.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Collections.IEnumerator</ReturnType>
-      </ReturnValue>
-      <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="System.Linq.IQueryable.ElementType">
-      <MemberSignature Language="C#" Value="Type System.Linq.IQueryable.ElementType { get; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance class System.Type System.Linq.IQueryable.ElementType" />
-      <MemberType>Property</MemberType>
-      <AssemblyInfo>
-        <AssemblyVersion>0.2.0.0</AssemblyVersion>
-        <AssemblyVersion>0.3.0.0</AssemblyVersion>
-        <AssemblyVersion>0.4.0.0</AssemblyVersion>
-        <AssemblyVersion>0.5.0.0</AssemblyVersion>
-        <AssemblyVersion>0.5.1.0</AssemblyVersion>
-        <AssemblyVersion>0.6.1.0</AssemblyVersion>
-        <AssemblyVersion>0.6.2.0</AssemblyVersion>
-        <AssemblyVersion>0.7.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Type</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="System.Linq.IQueryable.Expression">
-      <MemberSignature Language="C#" Value="System.Linq.Expressions.Expression System.Linq.IQueryable.Expression { get; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance class System.Linq.Expressions.Expression System.Linq.IQueryable.Expression" />
-      <MemberType>Property</MemberType>
-      <AssemblyInfo>
-        <AssemblyVersion>0.2.0.0</AssemblyVersion>
-        <AssemblyVersion>0.3.0.0</AssemblyVersion>
-        <AssemblyVersion>0.4.0.0</AssemblyVersion>
-        <AssemblyVersion>0.5.0.0</AssemblyVersion>
-        <AssemblyVersion>0.5.1.0</AssemblyVersion>
-        <AssemblyVersion>0.6.1.0</AssemblyVersion>
-        <AssemblyVersion>0.6.2.0</AssemblyVersion>
-        <AssemblyVersion>0.7.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Linq.Expressions.Expression</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="System.Linq.IQueryable.Provider">
-      <MemberSignature Language="C#" Value="System.Linq.IQueryProvider System.Linq.IQueryable.Provider { get; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance class System.Linq.IQueryProvider System.Linq.IQueryable.Provider" />
-      <MemberType>Property</MemberType>
-      <AssemblyInfo>
-        <AssemblyVersion>0.2.0.0</AssemblyVersion>
-        <AssemblyVersion>0.3.0.0</AssemblyVersion>
-        <AssemblyVersion>0.4.0.0</AssemblyVersion>
-        <AssemblyVersion>0.5.0.0</AssemblyVersion>
-        <AssemblyVersion>0.5.1.0</AssemblyVersion>
-        <AssemblyVersion>0.6.1.0</AssemblyVersion>
-        <AssemblyVersion>0.6.2.0</AssemblyVersion>
-        <AssemblyVersion>0.7.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Linq.IQueryProvider</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>

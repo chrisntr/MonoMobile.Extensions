@@ -429,7 +429,7 @@
         <summary>Gets whether the position is currently being listened to.</summary>
         <value>
           <c>true</c> if this geolocator is currently listening to position updates; otherwise, <c>false</c>.</value>
-        <remarks>To be added.</remarks>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName="PositionChanged">

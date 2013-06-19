@@ -42,7 +42,7 @@
       <Docs>
         <param name="error">The type of error that occured.</param>
         <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Geolocation.GeolocationException" /> class.</summary>
-        <remarks>To be added.</remarks>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
