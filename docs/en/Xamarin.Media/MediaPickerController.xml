@@ -1,0 +1,42 @@
+﻿<Type xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mono-project.com https://raw.github.com/mono/mono/master/mcs/tools/mdoc/Resources/monodoc-ecma.xsd"
+	  Name="MediaPickerController" FullName="Xamarin.Media.MediaPickerController">
+  <TypeSignature Language="C#" Value="public sealed class MediaPickerController" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit MediaPickerController extends MonoTouch.UIKit.UIImagePickerController" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.Mobile</AssemblyName>
+    <AssemblyVersion>0.7.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>MonoTouch.UIKit.UIImagePickerController</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>
+      A subclass of <see cref="MonoTouch.UIKit.UIImagePickerController"/> providing a method to retrieve the <see cref="T:Xamarin.Media.MediaFile"/>.
+    </summary>
+    <remarks>This class is only present in the iOS version of Xamarin.Mobile.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="GetResultAsync">
+      <MemberSignature Language="C#" Value="public static System.Threading.Tasks.Task&lt;Xamarin.Media.MediaFile&gt; GetResultAsync ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig class System.Threading.Tasks.Task`1&lt;class Xamarin.Media.MediaFile&gt; GetResultAsync() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;Xamarin.Media.MediaFile&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters/>
+      <Docs>
+        <summary>
+          Asynchronously retrieves a <see cref="T:Xamarin.Media.MediaFile" /> from the picker.
+        </summary>
+        <returns>
+          A <see cref="T:Xamarin.Media.MediaFile" /> representing the media selected or taken.
+        </returns>
+        <remarks></remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>
