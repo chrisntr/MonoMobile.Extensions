@@ -22,8 +22,8 @@ using Windows.Foundation;
 
 namespace Xamarin.Geolocation
 {
-    public class Geolocator
-    {
+	public class Geolocator
+	{
 		public Geolocator()
 		{
 			this.locator.StatusChanged += OnLocatorStatusChanged;
@@ -214,7 +214,7 @@ namespace Xamarin.Geolocation
 			this.isListening = false;
 		}
 
-	    private bool isListening;
+		private bool isListening;
 		private double desiredAccuracy;
 		private Windows.Devices.Geolocation.Geolocator locator = new Windows.Devices.Geolocation.Geolocator();
 
@@ -306,5 +306,5 @@ namespace Xamarin.Geolocation
 
 			return pos;
 		}
-    }
+	}
 }

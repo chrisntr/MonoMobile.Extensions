@@ -36,11 +36,5 @@ namespace Xamarin.Contacts
 			get;
 			set;
 		}
-
-//		public string Label
-//		{
-//			get;
-//			set;
-//		}
 	}
 }

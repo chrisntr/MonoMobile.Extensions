@@ -18,23 +18,11 @@ using System;
 
 namespace Xamarin.Media
 {
-	//public enum MediaFileStoreLocation
-	//{
-	//    CameraRoll,
-	//    Local
-	//}
-
 	public class StoreMediaOptions
 	{
 		protected StoreMediaOptions()
 		{
 		}
-
-		//public MediaFileStoreLocation Location
-		//{
-		//    get;
-		//    set;
-		//}
 
 		public string Directory
 		{
@@ -47,18 +35,6 @@ namespace Xamarin.Media
 			get;
 			set;
 		}
-
-		//public string Description
-		//{
-		//    get;
-		//    set;
-		//}
-
-		//public bool AllowEditing
-		//{
-		//    get;
-		//    set;
-		//}
 	}
 
 	public enum CameraDevice
