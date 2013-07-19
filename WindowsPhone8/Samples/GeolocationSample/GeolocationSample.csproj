@@ -135,10 +135,10 @@
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Xamarin.Mobile, Version=0.6.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Xamarin.Mobile.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\..\Xamarin.Mobile\Xamarin.Mobile.csproj">
+      <Project>{2F184B4A-9A80-4097-92C4-2F93DCB0D6E4}</Project>
+      <Name>Xamarin.Mobile %28Windows Phone 8\Xamarin.Mobile%29</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
