@@ -74,9 +74,9 @@
     <Compile Include="MainView.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Xamarin.Mobile\Xamarin.Mobile.csproj">
+    <ProjectReference Include="..\..\Xamarin.Mobile\Xamarin.Mobile.iOS.csproj">
       <Project>{87c4e91e-8215-46e6-bc21-41650eeb8c92}</Project>
-      <Name>Xamarin.Mobile %28iOS\Xamarin.Mobile%29</Name>
+      <Name>Xamarin.Mobile.iOS</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

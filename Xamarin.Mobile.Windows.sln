@@ -5,7 +5,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Android", "Android", "{993B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windows Phone", "Windows Phone", "{75F60B02-3B8C-44D6-8930-57D840BB91F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Mobile", "MonoDroid\Xamarin.Mobile\Xamarin.Mobile.csproj", "{32DFF77E-AE38-48D6-B067-CF555798EA32}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Mobile.Android", "MonoDroid\Xamarin.Mobile\Xamarin.Mobile.Android.csproj", "{32DFF77E-AE38-48D6-B067-CF555798EA32}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Mobile", "WindowsPhone\Xamarin.Mobile\Xamarin.Mobile.csproj", "{075AA9A6-A76F-482D-B504-BA0A224B0480}"
 EndProject
@@ -114,7 +114,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{F579
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contacts Sample", "MonoTouch\Samples\ContactsSample\Contacts Sample.csproj", "{0F36CBF1-1358-4FD3-8631-2775881B2635}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Mobile", "MonoTouch\Xamarin.Mobile\Xamarin.Mobile.csproj", "{87C4E91E-8215-46E6-BC21-41650EEB8C92}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Mobile.iOS", "MonoTouch\Xamarin.Mobile\Xamarin.Mobile.iOS.csproj", "{87C4E91E-8215-46E6-BC21-41650EEB8C92}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geolocation Sample", "MonoTouch\Samples\Geolocation\Geolocation Sample.csproj", "{B110CA48-4524-4E13-B4E1-B4A4C54EC875}"
 EndProject

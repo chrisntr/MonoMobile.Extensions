@@ -69,9 +69,9 @@
     <Content Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Xamarin.Mobile\Xamarin.Mobile.csproj">
+    <ProjectReference Include="..\..\Xamarin.Mobile\Xamarin.Mobile.Android.csproj">
       <Project>{32dff77e-ae38-48d6-b067-cf555798ea32}</Project>
-      <Name>Xamarin.Mobile %28Android\Xamarin.Mobile%29</Name>
+      <Name>Xamarin.Mobile.Android</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
