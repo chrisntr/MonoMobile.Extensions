@@ -1,92 +1,174 @@
-## Xamarin Mobile API Preview 0.7
-### Xamarin&#8482; Software License Agreement
+# Apache License
+Version 2.0, January 2004<br />
+[http://www.apache.org/licenses/](http://www.apache.org/licenses/)
 
-**PLEASE READ THIS AGREEMENT CAREFULLY.  BY INSTALLING, DOWNLOADING OR OTHERWISE USING THE SOFTWARE (INCLUDING ITS COMPONENTS), YOU AGREE TO THE TERMS OF THIS AGREEMENT.  IF YOU DO NOT AGREE WITH THESE TERMS, DO NOT DOWNLOAD, INSTALL OR USE THE SOFTWARE.**
+TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
 
-**YOU MUST HAVE A SEPARATE VALID XAMARIN SOFTWARE LICENSE AGREEMENT FOR MONOTOUCH OR MONO FOR ANDROID (WHICH MUST BE AN ENTERPRISE OR PROFESSIONAL LICENSE) IN ORDER TO USE THE SOFTWARE COVERED BY THIS AGREEMENT.**
+1. Definitions.
 
-**1. RIGHTS AND LICENSES**
+   "License" shall mean the terms and conditions for use, reproduction,
+   and distribution as defined by Sections 1 through 9 of this document.
 
-1.1.	This Xamarin Software License Agreement (&#8220;Agreement&#8221;) is a legal agreement between You (an entity or a person) and Xamarin Inc. (&#8220;Xamarin&#8221;).  The software product identified in the title of this Agreement, any media and accompanying documentation (collectively the &#8220;Software&#8221;) is protected by the copyright laws and treaties of the United States (&#8220;U.S.&#8221;) and other countries and is subject to the terms of this Agreement.  Any update or support release to the Software that You may download or receive that is not accompanied by a license agreement expressly superseding this Agreement is Software and governed by this Agreement.  If the Software is an update or support release, then You must have validly licensed the version and quantity of the Software being updated or supported in order to install or use the update or support release. If Software You download or receive hereunder is an update or support release for a prior version of Xamarin Mobile API Preview software You had that was subject to the terms of a prior Xamarin software license agreement that differs from this Agreement and may apply to such Software You download or receive hereunder, then this Agreement supersedes such prior license agreement but only with respect to such Software downloaded or received hereunder.
+   "Licensor" shall mean the copyright owner or entity authorized by
+   the copyright owner that is granting the License.
 
-You may only use the Software, as expressly permitted herein, in conjunction with Your Primary Mono Software.  As used herein, &#8220;Your Primary Mono Software&#8221; means Xamarin MonoTouch software or Xamarin Mono for Android software that is both (a) covered by a separate valid Xamarin software license agreement under which You are the licensee (Your &#8220;Primary Mono License&#8221;) and (b) for which You have acquired an Enterprise license or Professional license under Your Primary Mono License.
+   "Legal Entity" shall mean the union of the acting entity and all
+   other entities that control, are controlled by, or are under common
+   control with that entity. For the purposes of this definition,
+   "control" means (i) the power, direct or indirect, to cause the
+   direction or management of such entity, whether by contract or
+   otherwise, or (ii) ownership of fifty percent (50%) or more of the
+   outstanding shares, or (iii) beneficial ownership of such entity.
 
-1.2.	<u>Components; Other License Terms.</u>  The Software may be comprised of numerous components that may be accompanied by separate license terms.  In that case, the Software is a collective work of Xamarin; although Xamarin may not own the copyright to every component of the Software, Xamarin owns the collective work copyright for the Software.
+   "You" (or "Your") shall mean an individual or Legal Entity
+   exercising permissions granted by this License.
 
-Some of the components may be open source packages, developed independently, and accompanied by separate license terms.  Your license rights with respect to any individual components accompanied by separate license terms are defined by those terms; nothing in this agreement shall restrict, limit, or otherwise affect any rights or obligations You may have, or conditions to which You may be subject, under such license terms.
+   "Source" form shall mean the preferred form for making modifications,
+   including but not limited to software source code, documentation
+   source, and configuration files.
 
-1.3.	<u>Instances.</u>  "Instance" means the initial copy of the Software necessary for use of the Software in conjunction with Your use of Your Primary Mono Software under Your Primary Mono License, and each additional copy (or partial copy) of the Software stored or loaded in memory or virtual memory.  Each Instance of the Software (excluding the Redistributables) must be associated with a Professional Instance license or Enterprise Instance license of Your Primary Mono Software (as &#8220;Professional Instance&#8221; and &#8220;Enterprise Instance&#8221; are used in Your Primary Mono License) you have acquired, and may only be used by the individual that is permitted to use such Professional Instance or Enterprise Instance under Your Primary Mono License.  
+   "Object" form shall mean any form resulting from mechanical
+   transformation or translation of a Source form, including but
+   not limited to compiled object code, generated documentation,
+   and conversions to other media types.
 
-1.4.	<u>Software License Grant.</u>  Subject to the terms and conditions of this Agreement, Xamarin hereby grants to You a world-wide, nonexclusive, non-transferable license to internally use the Software, during the term of this Agreement, solely in conjunction with Your Primary Mono Software to develop software applications as permitted in Your Primary Mono License (these applications may be referred to as &#8220;Apps&#8221; herein).
+   "Work" shall mean the work of authorship, whether in Source or
+   Object form, made available under the License, as indicated by a
+   copyright notice that is included in or attached to the work
+   (an example is provided in the Appendix below).
 
-1.5.	<u>Redistributables License Grant.</u>  Subject to (a) the terms and conditions of this Agreement and (b) the terms and conditions of Your Primary Mono License that restrict or limit Your reproduction and distribution of Primary Redistributables (as defined below) (which terms and conditions, for clarity, will vary depending on whether you have an Enterprise or Professional license thereunder), which terms and conditions are hereby incorporated into this Agreement by reference and shall apply to Redistributables herein as if they were Primary Redistributables, Xamarin hereby grants to You a world-wide, nonexclusive, non-transferable license to reproduce and distribute the Redistributables (as defined below), during the term of this Agreement, in binary code form only and solely in combination with or in support of Your associated App You developed under Your Primary Mono License using the Software in conjunction with Your Primary Mono Software.  In the course of Your using the Software in conjunction with Your Primary Mono Software, Your Primary Mono Software will provide You versions of the following files for Your distribution in combination with or in support of Your associated App: Xamarin.mobile.dll (each a &#8220;Redistributable&#8221; and together, the &#8220;Redistributables&#8221;).  For clarity, the version of each Redistributable that is provided to You for distribution as described above may differ from the version of such file that is present with or in the Software generally or that is provided for distribution with other Apps, and so only the version provided by Your Primary Mono Software expressly for distribution with Your associated App as described above will be a &#8220;Redistributable&#8221; hereunder.  For clarity, the Redistributables are included in the term &#8220;Software&#8221; hereunder.  As used herein, &#8220;Primary Redistributables&#8221; shall mean the &#8220;Redistributables&#8221; or &#8220;Non-Modifiable Redistributables,&#8221; as applicable, in either case as defined in Your Primary Mono License.
+   "Derivative Works" shall mean any work, whether in Source or Object
+   form, that is based on (or derived from) the Work and for which the
+   editorial revisions, annotations, elaborations, or other modifications
+   represent, as a whole, an original work of authorship. For the purposes
+   of this License, Derivative Works shall not include works that remain
+   separable from, or merely link (or bind by name) to the interfaces of,
+   the Work and Derivative Works thereof.
 
-1.6.  	<u>Other License Terms and Restrictions.</u>
+   "Contribution" shall mean any work of authorship, including
+   the original version of the Work and any modifications or additions
+   to that Work or Derivative Works thereof, that is intentionally
+   submitted to Licensor for inclusion in the Work by the copyright owner
+   or by an individual or Legal Entity authorized to submit on behalf of
+   the copyright owner. For the purposes of this definition, "submitted"
+   means any form of electronic, verbal, or written communication sent
+   to the Licensor or its representatives, including but not limited to
+   communication on electronic mailing lists, source code control systems,
+   and issue tracking systems that are managed by, or on behalf of, the
+   Licensor for the purpose of discussing and improving the Work, but
+   excluding communication that is conspicuously marked or otherwise
+   designated in writing by the copyright owner as "Not a Contribution."
 
-The Software is protected by the copyright laws and treaties of the United States ("U.S.") and other countries and is subject to the terms of this Agreement.  The Software is licensed to You, not sold.
+   "Contributor" shall mean Licensor and any individual or Legal Entity
+   on behalf of whom a Contribution has been received by Licensor and
+   subsequently incorporated within the Work.
 
-The Software may be bundled with other software programs ("Bundled Programs").  Your license rights with respect to Bundled Programs accompanied by separate license terms are defined by those terms; nothing in this Agreement shall restrict, limit, or otherwise affect any rights or obligations You may have, or conditions to which You may be subject, under such license terms.  
+2. Grant of Copyright License. Subject to the terms and conditions of
+   this License, each Contributor hereby grants to You a perpetual,
+   worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+   copyright license to reproduce, prepare Derivative Works of,
+   publicly display, publicly perform, sublicense, and distribute the
+   Work and such Derivative Works in Source or Object form.
 
-Xamarin reserves all rights not expressly granted to You.  You may not:  
-(1) reverse engineer, decompile, or disassemble any Software except and only to the extent it is expressly permitted by applicable law;  
-(2) assign, sublicense, distribute (except as expressly permitted in Section 1.5 for Redistributables), or otherwise transfer any Software to any third party (without limitation, this prohibits You from (a) bundling any Software (including any Xamarin tools, libraries, or runtime) into a competing platform and (b) distributing Xamarin tools, libraries, or runtimes as library, source project, or other unfinished work (i.e., distribution is only permitted for Redistributables and as completely built App that is compiled, signed, and ready for distribution in accordance with Your Primary Mono License));  
-(3) reproduce any Software (except as expressly permitted in Section 1.5 for Redistributables);  
-(4) create derivative works of, modify, adapt or translate any Software;  
-(5) use any Software to provide services for any third party;  
-(6) lease, rent, loan, share or otherwise use, or permit use of, any Software by or for any third party;  
-(7) use, or permit use of, a single Instance by or for more than one individual;  
-(8) remove any proprietary notices on or in any Software;  
-(9) use any Software in a manner not in accordance with its documentation; or  
-(10) use any Software in an illegal or fraudulent manner.
+3. Grant of Patent License. Subject to the terms and conditions of
+   this License, each Contributor hereby grants to You a perpetual,
+   worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+   (except as stated in this section) patent license to make, have made,
+   use, offer to sell, sell, import, and otherwise transfer the Work,
+   where such license applies only to those patent claims licensable
+   by such Contributor that are necessarily infringed by their
+   Contribution(s) alone or by combination of their Contribution(s)
+   with the Work to which such Contribution(s) was submitted. If You
+   institute patent litigation against any entity (including a
+   cross-claim or counterclaim in a lawsuit) alleging that the Work
+   or a Contribution incorporated within the Work constitutes direct
+   or contributory patent infringement, then any patent licenses
+   granted to You under this License for that Work shall terminate
+   as of the date such litigation is filed.
 
-1.7.	<u>Evaluation Software</u>.  If the Software is an evaluation version or is provided to You for evaluation purposes, then Your license to use the Software is limited solely to internal evaluation purposes and in accordance with the terms of the evaluation offering under which You received the Software, including any limited evaluation period that may apply (which may also be indicated within the Software).  Upon expiration of the evaluation period, You must discontinue use of the Software, return to an original state any actions performed by the Software, and delete the Software entirely from Your system.  The Software may contain an automatic disabling mechanism that prevents its use after a certain period of time, so You should back up Your system and take other measures to prevent any loss of files or data.  Without limiting the above, You may not use Evaluation Software to create an App.
+4. Redistribution. You may reproduce and distribute copies of the
+   Work or Derivative Works thereof in any medium, with or without
+   modifications, and in Source or Object form, provided that You
+   meet the following conditions:
 
-**2. MAINTENANCE AND SUPPORT**
+   (a) You must give any other recipients of the Work or
+       Derivative Works a copy of this License; and
 
-Xamarin has no obligation to provide support or maintenance for the Software.  If Xamarin does provide any such support or maintenance and no separate agreement specifically applies to such support or maintenance, then the terms of this Agreement will govern the provision of such support or maintenance services (&#8220;Services&#8220;) and Xamarin may cease Services, in whole or part, at any time.  For more information on Xamarin's current support offerings, see http://support.xamarin.com.
+   (b) You must cause any modified files to carry prominent notices
+       stating that You changed the files; and
 
-**3. OWNERSHIP** 
+   (c) You must retain, in the Source form of any Derivative Works
+       that You distribute, all copyright, patent, trademark, and
+       attribution notices from the Source form of the Work,
+       excluding those notices that do not pertain to any part of
+       the Derivative Works; and
 
-No title to or ownership of the Software is transferred to You.  Xamarin and/or its licensors retain all right, title and interest in and to all intellectual property rights in the Software and Services, including any adaptations or copies thereof.  You acquire only a conditional license to use the Software.
+   (d) If the Work includes a "NOTICE" text file as part of its
+       distribution, then any Derivative Works that You distribute must
+       include a readable copy of the attribution notices contained
+       within such NOTICE file, excluding those notices that do not
+       pertain to any part of the Derivative Works, in at least one
+       of the following places: within a NOTICE text file distributed
+       as part of the Derivative Works; within the Source form or
+       documentation, if provided along with the Derivative Works; or,
+       within a display generated by the Derivative Works, if and
+       wherever such third-party notices normally appear. The contents
+       of the NOTICE file are for informational purposes only and
+       do not modify the License. You may add Your own attribution
+       notices within Derivative Works that You distribute, alongside
+       or as an addendum to the NOTICE text from the Work, provided
+       that such additional attribution notices cannot be construed
+       as modifying the License.
 
-**4. WARRANTY DISCLAIMER**
+   You may add Your own copyright statement to Your modifications and
+   may provide additional or different license terms and conditions
+   for use, reproduction, or distribution of Your modifications, or
+   for any such Derivative Works as a whole, provided Your use,
+   reproduction, and distribution of the Work otherwise complies with
+   the conditions stated in this License.
 
-4.1.	<u>Software.</u>  THE SOFTWARE IS PROVIDED &#8220;AS IS&#8221; WITHOUT ANY WARRANTIES OF ANY KIND.
+5. Submission of Contributions. Unless You explicitly state otherwise,
+   any Contribution intentionally submitted for inclusion in the Work
+   by You to the Licensor shall be under the terms and conditions of
+   this License, without any additional terms or conditions.
+   Notwithstanding the above, nothing herein shall supersede or modify
+   the terms of any separate license agreement you may have executed
+   with Licensor regarding such Contributions.
 
-THE SOFTWARE IS NOT DESIGNED, MANUFACTURED OR INTENDED FOR USE OR DISTRIBUTION WITH ON-LINE CONTROL EQUIPMENT IN HAZARDOUS ENVIRONMENTS REQUIRING FAIL-SAFE PERFORMANCE, SUCH AS IN THE OPERATION OF NUCLEAR FACILITIES, AIRCRAFT NAVIGATION, COMMUNICATION, OR CONTROL SYSTEMS, DIRECT LIFE SUPPORT MACHINES, WEAPONS SYSTEMS, OR OTHER USES IN WHICH FAILURE OF THE SOFTWARE COULD LEAD DIRECTLY TO DEATH, PERSONAL INJURY, OR SEVERE PHYSICAL OR ENVIRONMENTAL DAMAGE.
+6. Trademarks. This License does not grant permission to use the trade
+   names, trademarks, service marks, or product names of the Licensor,
+   except as required for reasonable and customary use in describing the
+   origin of the Work and reproducing the content of the NOTICE file.
 
-THE SOFTWARE IS ONLY COMPATIBLE WITH CERTAIN COMPUTERS, OPERATING SYSTEMS AND VERSIONS OF YOUR PRIMARY MONO SOFTWARE. Call Xamarin or Your reseller for information about compatibility.
+7. Disclaimer of Warranty. Unless required by applicable law or
+   agreed to in writing, Licensor provides the Work (and each
+   Contributor provides its Contributions) on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+   implied, including, without limitation, any warranties or conditions
+   of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+   PARTICULAR PURPOSE. You are solely responsible for determining the
+   appropriateness of using or redistributing the Work and assume any
+   risks associated with Your exercise of permissions under this License.
 
-4.2.	<u>Services.</u>  THE SERVICES (IF ANY) ARE PROVIDED &#8220;AS IS&#8221; WITHOUT ANY WARRANTIES OF ANY KIND.  As files may be altered or damaged in the course of Xamarin providing technical services, You agree to take appropriate measures to isolate and back up Your systems.
+8. Limitation of Liability. In no event and under no legal theory,
+   whether in tort (including negligence), contract, or otherwise,
+   unless required by applicable law (such as deliberate and grossly
+   negligent acts) or agreed to in writing, shall any Contributor be
+   liable to You for damages, including any direct, indirect, special,
+   incidental, or consequential damages of any character arising as a
+   result of this License or out of the use or inability to use the
+   Work (including but not limited to damages for loss of goodwill,
+   work stoppage, computer failure or malfunction, or any and all
+   other commercial damages or losses), even if such Contributor
+   has been advised of the possibility of such damages.
 
-4.3.	<u>Non-Xamarin Products</u>.  The Software may include or be bundled with hardware or other software programs or services licensed or sold by an entity other than Xamarin.  XAMARIN DOES NOT WARRANT NON-XAMARIN PRODUCTS OR SERVICES.  ANY SUCH PRODUCTS OR SERVICES ARE PROVIDED ON AN &#8220;AS IS&#8221; BASIS.  WARRANTY SERVICE IF ANY FOR NON-XAMARIN PRODUCTS IS PROVIDED BY THE PRODUCT LICENSOR IN ACCORDANCE WITH THE APPLICABLE LICENSOR WARRANTY.
-
-4.4.	<u>General Disclaimer</u>.  EXCEPT AS OTHERWISE RESTRICTED BY LAW, XAMARIN DISCLAIMS AND EXCLUDES ANY AND ALL IMPLIED WARRANTIES, INCLUDING ANY WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE OR NON-INFRINGEMENT.  XAMARIN MAKES NO WARRANTIES, REPRESENTATIONS OR PROMISES.  XAMARIN DOES NOT WARRANT THAT THE SOFTWARE OR SERVICES WILL SATISFY YOUR REQUIREMENTS OR THAT THE OPERATION OF THE SOFTWARE OR SERVICES WILL BE UNINTERRUPTED.  Some jurisdictions do not allow certain disclaimers and limitations of warranties, so portions of the above limitations may not apply to You.  You may also have other rights which vary by state or jurisdiction.  
-
-**5.  LIMITATION OF LIABILITY**
-
-5.1.	<u>Consequential Losses</u>.  NEITHER XAMARIN NOR ANY OF ITS LICENSORS, SUBSIDIARIES, OR EMPLOYEES WILL IN ANY CASE BE LIABLE FOR ANY SPECIAL, INCIDENTAL, CONSEQUENTIAL, INDIRECT, TORT, ECONOMIC OR PUNITIVE DAMAGES ARISING OUT OF OR RELATING TO THIS AGREEMENT OR THE USE OF OR INABILITY TO USE THE SOFTWARE OR SERVICES, INCLUDING LOSS OF PROFITS, BUSINESS OR DATA, EVEN IF ADVISED OF THE POSSIBILITY OF THOSE DAMAGES.
-
-5.2.	<u>Direct Damages</u>.  IN NO EVENT WILL XAMARIN'S AGGREGATE LIABILITY FOR DIRECT DAMAGES ARISING OUT OF OR RELATING TO THIS AGREEMENT OR THE USE OF OR INABILITY TO USE THE SOFTWARE OR SERVICES (WHETHER IN ONE INSTANCE OR A SERIES OF INSTANCES) EXCEED FIFTY UNITED STATES DOLLARS ($50 (U.S.)).  
-
-5.3.	<u>Exclusions</u>.  The above exclusions and limitations will not apply to claims relating to death or personal injury.  In those jurisdictions that do not allow the exclusion or limitation of damages, Xamarin's liability shall be limited or excluded to the maximum extent allowed within those jurisdictions.
-
-**6.  GENERAL TERMS**
-
-6.1.	<u>Term</u>.  This Agreement becomes effective on the date You legally acquire the Software and will automatically terminate if You breach any of its terms.  
-6.2.	<u>Benchmark Testing</u>.  This benchmark testing restriction applies to You if You are a software developer or licensor or if You are performing testing on the Software at the direction of or on behalf of a software developer or licensor.  You may not, without Xamarin's prior written consent not to be unreasonably withheld, publish or disclose to any third party the results of any benchmark test of the Software.  If You are a licensor of products that are functionally similar to or compete with the Software (&#8220;Similar Products&#8221;), or are acting on behalf of such a licensor, and You publish or disclose benchmark information on the Software in violation of this restriction, then notwithstanding anything to the contrary in the Similar Product's end user license agreement, and in addition to any other remedies Xamarin may have, Xamarin shall have the right to perform benchmark testing on Similar Products and to disclose and publish that benchmark information and You hereby represent that You have authority to grant such right to Xamarin.  
-6.3.	<u>Open Source</u>.  Nothing in this Agreement shall restrict, limit or otherwise affect any rights or obligations You may have, or conditions to which You may be subject, under any applicable open source licenses to any open source code contained in the Software.  
-6.4.	<u>Assignment; Transfer</u>.  Neither this Agreement, nor any rights or obligations hereunder, may be transferred, assigned or delegated without the prior written approval of Xamarin.  Any such transfer, assignment or delegation made in contravention of this paragraph shall be null and void.  
-6.5.	<u>Law and Jurisdiction</u>.  This Agreement is and will be governed by and construed under the laws of the Commonwealth of Massachusetts, U.S., without giving effect to any conflicts of laws provision thereof or of any other jurisdiction that would produce a contrary result.  Any action arising out of or relating to this Agreement may be brought before the courts of competent jurisdiction of the Commonwealth of Massachusetts, U.S., and You consent to the jurisdiction of such courts and waive any objections of improper venue or inconvenient forum.  You consent to service of process by mail, nationally-recognized courier service, fax or email, to the contact information you provided to Xamarin at the time of your acquisition of the Software or thereafter.  
-6.6.	<u>Entire Agreement</u>.  This Agreement sets forth the entire understanding and agreement between You and Xamarin and may be amended or modified only by a written agreement agreed to by You and an authorized representative of Xamarin.  NO LICENSOR, DISTRIBUTOR, DEALER, RETAILER, RESELLER, SALES PERSON, OR EMPLOYEE IS AUTHORIZED TO MODIFY THIS AGREEMENT OR TO MAKE ANY REPRESENTATION OR PROMISE THAT IS DIFFERENT FROM, OR IN ADDITION TO, THE TERMS OF THIS AGREEMENT.  
-6.7.	<u>Waiver</u>.  No waiver of any right under this Agreement will be effective unless in writing, signed by a duly authorized representative of the party to be bound.  No waiver of any past or present right arising from any breach or failure to perform will be deemed to be a waiver of any future right arising under this Agreement.  
-6.8.	<u>Severability</u>.  If any provision in this Agreement is invalid or unenforceable, that provision will be construed, limited, modified or, if necessary, severed, to the extent necessary, to eliminate its invalidity or unenforceability, and the other provisions of this Agreement will remain unaffected.  
-6.9.	<u>Export Compliance</u>.  Any Software or technical information received under this Agreement (collectively, &#8220;Received Items&#8221;) may be subject to U.S. export controls and the trade laws of other countries.  You agree to comply with all applicable export control regulations and to obtain any required licenses or classification to export, re-export or import Received Items.  You may not use or otherwise export or re-export the Received Items except as authorized by U.S. law and the law of each jurisdiction that applies to Your activities.  Without limiting the foregoing, You agree not to export or re-export any Received Items to (a) entities or persons on the then-current U.S. Treasury Department's list of Specially Designated Nationals, the then-current U.S. Department of Commerce Denied Person’s List or Entity List, or any other U.S. export exclusion list that is then applicable or (b) any embargoed or terrorist country as specified in the U.S. export laws.  By installing, downloading or otherwise using the Received Items, You represent and warrant that You are not located in any such embargoed or terrorist country or on any such exclusion list.  In addition, You agree not to use any Received Items for any purposes prohibited by United States law, including the development, design, manufacture or production of nuclear, missile, or chemical or biological weapons.  Upon request, Xamarin will provide You specific information regarding applicable restrictions.  However, Xamarin assumes no responsibility for Your failure to obtain any necessary export approvals.  
-6.10.	<u>U.S. Government Restricted Rights</u>.  Use, duplication, or disclosure by the U.S. Government is subject to the restrictions in FAR 52.227-14 (June 1987) Alternate III (June 1987), FAR 52.227-19 (June 1987), or DFARS 252.227-7013 (b) (3) (Nov 1995), or applicable successor clauses.  Contractor/Manufacturer is Xamarin Inc., 1 Mifflin Place, Suite 400, Cambridge, Massachusetts 02138.  
-6.11.	<u>Headings</u>; Interpretation.  Headings are provided for convenience only and will not be used to interpret the substance of this Agreement.  The use of &#8220;include,&#8221; &#8220;includes,&#8221; or &#8220;including&#8221; herein will be read as if followed by the phrase &#8220;without limitation.&#8221;  
-6.12.	<u>Trademarks</u>.  Nothing in this Agreement shall be construed as conferring any right to You to use any name, logo, or other trademark of Xamarin, its affiliates or licensors.  
-6.13.	<u>Other</u>.  The application of the United Nations Convention of Contracts for the International Sale of Goods is expressly excluded.
-
-&copy; 2011 Xamarin Inc. All Rights Reserved.
-
-Xamarin is a trademark of Xamarin Inc. in the United States and other countries.  
+9. Accepting Warranty or Additional Liability. While redistributing
+   the Work or Derivative Works thereof, You may choose to offer,
+   and charge a fee for, acceptance of support, warranty, indemnity,
+   or other liability obligations and/or rights consistent with this
+   License. However, in accepting such obligations, You may act only
+   on Your own behalf and on Your sole responsibility, not on behalf
+   of any other Contributor, and only if You agree to indemnify,
+   defend, and hold each Contributor harmless for any liability
+   incurred by, or claims asserted against, such Contributor by reason
+   of your accepting any such warranty or additional liability.
