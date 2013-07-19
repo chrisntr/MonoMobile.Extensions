@@ -20,9 +20,11 @@ namespace MediaPickerSample
 			pickPhoto = new StringElement ("Pick Photo");
 			pickPhoto.Tapped += () => {
 				mediaPickerController = mediaPicker.GetPickPhotoUI();
+				dialogController.PresentViewController (mediaPickerController, true, null);
+
 				mediaPickerController.GetResultAsync().ContinueWith (t => {
 					// We need to dismiss the controller ourselves
-					mediaPickerController.DismissViewController (true, () => {
+					dialogController.DismissViewController (true, () => {
 						// User canceled or something went wrong
 						if (t.IsCanceled || t.IsFaulted)
 							return;
@@ -32,8 +34,6 @@ namespace MediaPickerSample
 						ShowPhoto (media);
 					});
 				}, uiScheduler); // Make sure we use the UI thread to show our photo.
-
-				dialogController.PresentViewController (mediaPickerController, true, null);
 			};
 
 			takePhoto = new StringElement ("Take Photo");
@@ -50,9 +50,11 @@ namespace MediaPickerSample
 					Directory = "MediaPickerSample"
 				});
 
+				dialogController.PresentViewController (mediaPickerController, true, null);
+
 				mediaPickerController.GetResultAsync().ContinueWith (t => {
 					// We need to dismiss the controller ourselves
-					mediaPickerController.DismissViewController (true, () => {
+					dialogController.DismissViewController (true, () => {
 						// User canceled or something went wrong
 						if (t.IsCanceled || t.IsFaulted)
 							return;
@@ -62,8 +64,6 @@ namespace MediaPickerSample
 						ShowPhoto (media);
 					});
 				}, uiScheduler); // Make sure we use the UI thread to show our photo.
-
-				dialogController.PresentViewController (mediaPickerController, true, null);
 			};
 
 			takeVideo = new StringElement ("Take Video");
@@ -84,9 +84,11 @@ namespace MediaPickerSample
 					Name = "test.mp4"
 				});
 
+				dialogController.PresentViewController (mediaPickerController, true, null);
+
 				mediaPickerController.GetResultAsync().ContinueWith (t => {
 					// We need to dismiss the controller ourselves
-					mediaPickerController.DismissViewController (true, () => {
+					dialogController.DismissViewController (true, () => {
 						// User canceled or something went wrong
 						if (t.IsCanceled || t.IsFaulted)
 							return;
@@ -96,8 +98,6 @@ namespace MediaPickerSample
 						ShowVideo (media);
 					});
 				}, uiScheduler); // Make sure we use the UI thread to show our video.
-
-				dialogController.PresentViewController (mediaPickerController, true, null);
 			};
 
 			pickVideo = new StringElement ("Pick Video");
@@ -108,9 +108,11 @@ namespace MediaPickerSample
 				}
 
 				mediaPickerController = mediaPicker.GetPickVideoUI();
+				dialogController.PresentViewController (mediaPickerController, true, null);
+
 				mediaPickerController.GetResultAsync().ContinueWith (t => {
 					// We need to dismiss the controller ourselves
-					mediaPickerController.DismissViewController (true, () => {
+					dialogController.DismissViewController (true, () => {
 						// User canceled or something went wrong
 						if (t.IsCanceled || t.IsFaulted)
 							return;
@@ -120,8 +122,6 @@ namespace MediaPickerSample
 						ShowVideo (media);
 					});
 				}, uiScheduler); // Make sure we use the UI thread to show our video.
-
-				dialogController.PresentViewController (mediaPickerController, true, null);
 			};
 
 			var root = new RootElement("Xamarin.Media Sample") {
