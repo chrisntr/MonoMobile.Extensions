@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geolocation Sample", "Sampl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaPicker Sample", "Samples\MediaPickerSample\MediaPicker Sample.csproj", "{35CF5239-F77C-40B0-B3A7-14AF989A19C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Mobile", "Xamarin.Mobile\Xamarin.Mobile.csproj", "{32DFF77E-AE38-48D6-B067-CF555798EA32}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Mobile.Android", "Xamarin.Mobile\Xamarin.Mobile.Android.csproj", "{32DFF77E-AE38-48D6-B067-CF555798EA32}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
