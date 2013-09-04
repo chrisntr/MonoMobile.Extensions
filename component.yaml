@@ -29,7 +29,7 @@ samples:
     path: WindowsPhone/Samples/Xamarin.Mobile.WP.Samples.sln
     no_manifest: true
   - name: "Windows Phone 8 Samples"
-    path: WindowsPhone8/Samples/Xamarin.Mobile.WP.Samples.sln
+    path: WindowsPhone8/Samples/Xamarin.Mobile.WP8.Samples.sln
     no_manifest: true
   - name: "WinRT Samples"
     path: WindowsRT/Samples/Xamarin.Mobile.WinRT.Samples.sln
