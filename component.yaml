@@ -11,7 +11,7 @@ monodocs: docs/en/
 no_build: true
 libraries:
   ios:
-    - MonoTouch/Xamarin.Mobile/iPhoneSimulator/Release/Xamarin.Mobile.dll
+    - MonoTouch/Xamarin.Mobile/bin/iPhoneSimulator/Release/Xamarin.Mobile.dll
   android:
     - MonoDroid/Xamarin.Mobile/bin/Release/Xamarin.Mobile.dll
   winphone-7.1:
