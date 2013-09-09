@@ -7,12 +7,12 @@ platform-specific code needed to perform common tasks in multiplatform
 apps, making development simpler and faster.
 
 Xamarin.Mobile is currently a preview release and is subject to API
-changes. Current known issues:
+changes.
 
- - Windows Phone 7.1 version of the library requires the
- Visual Studio Async CTP (http://www.microsoft.com/en-us/download/details.aspx?id=9983).
- As this CTP installs to a user-specific directory, you'll likely need to
- correct references to this library in the samples to use them.
+**Note:** The Windows Phone 7.1 version of the library requires the
+Microsoft.Bcl.Async NuGet package. You'll need to restore this package
+to use the samples or download this package to any WP7 app using
+Xamarin.Mobile.
 
 ## Examples
 
@@ -25,16 +25,15 @@ using Xamarin.Contacts;
 
 var book = new AddressBook ();
 //         new AddressBook (this); on Android
-book.RequestPermission().ContinueWith (t => {
- if (!t.Result) {
-		Console.WriteLine ("Permission denied by user or manifest");
-		return;
-	}
 
-	foreach (Contact contact in book.OrderBy (c => c.LastName)) {
-		Console.WriteLine ("{0} {1}", contact.FirstName, contact.LastName);
-	}
-}, TaskScheduler.FromCurrentSynchronizationContext());
+if (!await book.RequestPermission()) {
+	Console.WriteLine ("Permission denied by user or manifest");
+	return;
+}
+
+foreach (Contact contact in book.OrderBy (c => c.LastName)) {
+	Console.WriteLine ("{0} {1}", contact.FirstName, contact.LastName);
+}
 ```
 
 To get the user's location (requires `ACCESS_COARSE_LOCATION` and
@@ -46,11 +45,12 @@ using Xamarin.Geolocation;
 
 var locator = new Geolocator { DesiredAccuracy = 50 };
 //            new Geolocator (this) { ... }; on Android
-locator.GetPositionAsync (timeout: 10000).ContinueWith (t => {
-	Console.WriteLine ("Position Status: {0}", t.Result.Timestamp);
-	Console.WriteLine ("Position Latitude: {0}", t.Result.Latitude);
-	Console.WriteLine ("Position Longitude: {0}", t.Result.Longitude);
-}, TaskScheduler.FromCurrentSynchronizationContext());
+
+Position position = await locator.GetPositionAsync (timeout: 10000);
+
+Console.WriteLine ("Position Status: {0}", position.Timestamp);
+Console.WriteLine ("Position Latitude: {0}", position.Latitude);
+Console.WriteLine ("Position Longitude: {0}", position.Longitude);
 ```
 
 To take a photo:
@@ -63,16 +63,16 @@ var picker = new MediaPicker ();
 if (!picker.IsCameraAvailable)
 	Console.WriteLine ("No camera!");
 else {
-	picker.TakePhotoAsync (new StoreCameraMediaOptions {
-		Name = "test.jpg",
-		Directory = "MediaPickerSample"
-	}).ContinueWith (t => {
-		if (t.IsCanceled) {
-			Console.WriteLine ("User canceled");
-			return;
-		}
-		Console.WriteLine (t.Result.Path);
-	}, TaskScheduler.FromCurrentSynchronizationContext());
+	try {
+		MediaFile file = await picker.TakePhotoAsync (new StoreCameraMediaOptions {
+			Name = "test.jpg",
+			Directory = "MediaPickerSample"
+		});
+
+		Console.WriteLine (file.Path);
+	} catch (OperationCanceledException) {
+		Console.WriteLine ("Canceled");
+	}
 }
 ```
 
@@ -96,14 +96,13 @@ protected override void OnCreate (Bundle bundle)
 	}
 }
 
-protected override void OnActivityResult (int requestCode, Result resultCode, Intent data)
+protected override async void OnActivityResult (int requestCode, Result resultCode, Intent data)
 {
 	// User canceled
 	if (resultCode == Result.Canceled)
 		return;
 
-	data.GetMediaFileExtraAsync (this).ContinueWith (t => {
-		Console.WriteLine (t.Result.Path);
-	}, TaskScheduler.FromCurrentSynchronizationContext());
+	MediaFile file = await data.GetMediaFileExtraAsync (this);
+	Console.WriteLine (file.Path);
 }
 ```
