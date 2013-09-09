@@ -14,9 +14,9 @@ libraries:
     - MonoTouch/Xamarin.Mobile/bin/iPhoneSimulator/Release/Xamarin.Mobile.dll
   android:
     - MonoDroid/Xamarin.Mobile/bin/Release/Xamarin.Mobile.dll
-  winphone-7.1:
+  wp7:
     - WindowsPhone/Xamarin.Mobile/bin/Release/Xamarin.Mobile.dll
-  winphone-8:
+  wp8:
     - WindowsPhone8/Xamarin.Mobile/bin/Release/Xamarin.Mobile.dll
   winrt:
     - WindowsRT/Xamarin.Mobile/bin/Release/Xamarin.Mobile.dll
