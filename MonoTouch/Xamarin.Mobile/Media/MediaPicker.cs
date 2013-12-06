@@ -74,7 +74,7 @@ namespace Xamarin.Media
 			if (!PhotosSupported)
 				throw new NotSupportedException();
 			
-			return TakeMedia (UIImagePickerControllerSourceType.PhotoLibrary, TypeImage);
+			return GetMediaAsync (UIImagePickerControllerSourceType.PhotoLibrary, TypeImage);
 		}
 
 		public MediaPickerController GetTakePhotoUI (StoreCameraMediaOptions options)
@@ -99,7 +99,7 @@ namespace Xamarin.Media
 			
 			VerifyCameraOptions (options);
 
-			return TakeMedia (UIImagePickerControllerSourceType.Camera, TypeImage, options);
+			return GetMediaAsync (UIImagePickerControllerSourceType.Camera, TypeImage, options);
 		}
 
 		public MediaPickerController GetPickVideoUI()
@@ -116,7 +116,7 @@ namespace Xamarin.Media
 			if (!VideosSupported)
 				throw new NotSupportedException();
 			
-			return TakeMedia (UIImagePickerControllerSourceType.PhotoLibrary, TypeMovie);
+			return GetMediaAsync (UIImagePickerControllerSourceType.PhotoLibrary, TypeMovie);
 		}
 
 		public MediaPickerController GetTakeVideoUI (StoreVideoOptions options)
@@ -141,7 +141,7 @@ namespace Xamarin.Media
 			
 			VerifyCameraOptions (options);
 
-			return TakeMedia (UIImagePickerControllerSourceType.Camera, TypeMovie, options);
+			return GetMediaAsync (UIImagePickerControllerSourceType.Camera, TypeMovie, options);
 		}
 
 		private UIPopoverController popover;
@@ -187,7 +187,7 @@ namespace Xamarin.Media
 			return picker;
 		}
 
-		private Task<MediaFile> TakeMedia (UIImagePickerControllerSourceType sourceType, string mediaType, StoreCameraMediaOptions options = null)
+		private Task<MediaFile> GetMediaAsync (UIImagePickerControllerSourceType sourceType, string mediaType, StoreCameraMediaOptions options = null)
 		{
 			UIWindow window = UIApplication.SharedApplication.KeyWindow;
 			if (window == null)
