@@ -25,5 +25,7 @@
 	<string></string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array/>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 </dict>
 </plist>
