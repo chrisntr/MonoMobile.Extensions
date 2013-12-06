@@ -153,13 +153,8 @@ namespace Xamarin.Media
 		{
 			if (options == null)
 				throw new ArgumentNullException ("options");
-			//if (!Enum.IsDefined (typeof(MediaFileStoreLocation), options.Location))
-			//	throw new ArgumentException ("options.Location is not a member of MediaFileStoreLocation");
-			//if (options.Location == MediaFileStoreLocation.Local)
-			//{
-				if (options.Directory != null && Path.IsPathRooted (options.Directory))
-					throw new ArgumentException ("options.Directory must be a relative path", "options");
-			//}
+			if (options.Directory != null && Path.IsPathRooted (options.Directory))
+				throw new ArgumentException ("options.Directory must be a relative path", "options");
 		}
 
 		private void VerifyCameraOptions (StoreCameraMediaOptions options)
@@ -218,12 +213,12 @@ namespace Xamarin.Media
 
 			var picker = SetupController (ndelegate, sourceType, mediaType, options);
 
-			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {	
+			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad && sourceType == UIImagePickerControllerSourceType.PhotoLibrary) {	
 				ndelegate.Popover = new UIPopoverController (picker);
 				ndelegate.Popover.Delegate = new MediaPickerPopoverDelegate (ndelegate, picker);
 				ndelegate.DisplayPopover();
 			} else
-				viewController.PresentModalViewController (picker, true);
+				viewController.PresentViewController (picker, true, null);
 
 			return ndelegate.Task.ContinueWith (t => {
 				if (this.popover != null) {
