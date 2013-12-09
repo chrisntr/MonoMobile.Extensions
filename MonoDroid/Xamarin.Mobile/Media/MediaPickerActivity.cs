@@ -158,7 +158,7 @@ namespace Xamarin.Media
 
 				// Not all camera apps respect EXTRA_OUTPUT, some will instead
 				// return a content or file uri from data.
-				if (data != null && !data.Equals (path)) {
+				if (data != null && data.Path != originalPath) {
 					originalPath = data.ToString();
 					string currentPath = path.Path;
 					pathFuture = TryMoveFileAsync (context, data, path, isPhoto).ContinueWith (t =>
