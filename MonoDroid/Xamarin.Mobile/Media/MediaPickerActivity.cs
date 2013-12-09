@@ -113,16 +113,13 @@ namespace Xamarin.Media
 					this.quality = (VideoQuality)b.GetInt (MediaStore.ExtraVideoQuality, (int)VideoQuality.High);
 					pickIntent.PutExtra (MediaStore.ExtraVideoQuality, GetVideoQuality (this.quality));
 
-					if (!ran)
+					if (!ran) {
 						this.path = GetOutputMediaFile (this, b.GetString (ExtraPath), this.title, this.isPhoto);
-					else
-						this.path = Uri.Parse (b.GetString (ExtraPath));
 
-					if (this.isPhoto && !ran)
-					{
 						Touch();
 						pickIntent.PutExtra (MediaStore.ExtraOutput, this.path);
-					}
+					} else
+						this.path = Uri.Parse (b.GetString (ExtraPath));
 				}
 
 				if (!ran)
