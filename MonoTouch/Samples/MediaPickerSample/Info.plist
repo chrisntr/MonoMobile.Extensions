@@ -14,7 +14,7 @@
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
 	<key>CFBundleDisplayName</key>
-	<string>X.M MP Sample</string>
+	<string>X.M MediaPicker</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.xamarin.mobile.mediapickersample</string>
 	<key>CFBundleVersion</key>
