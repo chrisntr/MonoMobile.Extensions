@@ -1,5 +1,5 @@
 //
-//  Copyright 2011-2013, Xamarin Inc.
+//  Copyright 2011-2014, Xamarin Inc.
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -62,11 +62,6 @@ namespace Xamarin
 			get { return this.projections; }
 		}
 
-		public string[] Columns
-		{
-			get { return (this.columns != null) ? this.columns.ToArray() : null; }
-		}
-
 		public string QueryString
 		{
 			get { return (this.queryBuilder.Length > 0) ? this.queryBuilder.ToString() : null; }
@@ -108,7 +103,6 @@ namespace Xamarin
 		private readonly ITableFinder tableFinder;
 		private bool fallback = false;
 		private List<ContentResolverColumnMapping> projections;
-		private List<string> columns;
 		private StringBuilder sortBuilder;
 		private readonly List<string> arguments = new List<string>();
 		private readonly StringBuilder queryBuilder = new StringBuilder();
