@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using Android.Provider;
 
 namespace Xamarin
 {
@@ -225,13 +226,23 @@ namespace Xamarin
 			public WhereEvaluator (ITableFinder tableFinder, Android.Net.Uri existingTable)
 			{
 				this.tableFinder = tableFinder;
-				this.table = existingTable;
+				if (existingTable != null)
+					this.table = new TableFindResult (existingTable, null);
 			}
 
-			public TableFindResult Result
+			public Android.Net.Uri Table
 			{
-				get;
-				private set;
+				get { return this.table.Table; }
+			}
+
+			public string QueryString
+			{
+				get { return this.builder.ToString(); }
+			}
+
+			public List<string> Arguments
+			{
+				get { return this.arguments; }
 			}
 
 			public bool Fallback
@@ -244,14 +255,19 @@ namespace Xamarin
 			{
 				expression = Visit (expression);
 
-				Result = new TableFindResult (this.table, this.builder.ToString(), this.arguments);
+				if (this.table != null && this.table.MimeType != null) {
+					this.builder.Insert (0, String.Format ("(({0} = ?) AND ", ContactsContract.DataColumns.Mimetype));
+					this.builder.Append (")");
+
+					this.arguments.Insert (0, this.table.MimeType);
+				}
 
 				return expression;
 			}
 
 			private readonly ITableFinder tableFinder;
-			private Android.Net.Uri table;
-			private readonly StringBuilder builder = new StringBuilder();
+			private TableFindResult table;
+			private StringBuilder builder = new StringBuilder();
 			private readonly List<string> arguments = new List<string>();
 			private ContentResolverColumnMapping currentMap;
 
@@ -259,13 +275,8 @@ namespace Xamarin
 			{
 				TableFindResult result = this.tableFinder.Find (memberExpression);
 				if (this.table == null)
-				{
-					this.table = result.Table;
-					this.builder.Append (result.QueryString);
-					this.arguments.AddRange (result.Arguments);
-				}
-				else if (this.table != result.Table)
-				{
+					this.table = result;
+				else if (Table != result.Table || result.MimeType != this.table.MimeType) {
 					Fallback = true;
 					return memberExpression;
 				}
@@ -278,9 +289,6 @@ namespace Xamarin
 				}
 
 				this.currentMap = cmap;
-
-				if (this.builder.Length > 0)
-					this.builder.Append (" AND ");
 
 				if (cmap.Columns.Length == 1)
 					this.builder.Append (cmap.Columns[0]);
@@ -326,34 +334,41 @@ namespace Xamarin
 
 			protected override Expression VisitBinary (BinaryExpression binary)
 			{
-				this.builder.Append ("(");
-
+				string current = this.builder.ToString();
+				this.builder = new StringBuilder();
+				
 				Visit (binary.Left);
+				if (Fallback)
+					return binary;
 
+				string left = this.builder.ToString();
+				this.builder = new StringBuilder();
+
+				string joiner;
 				switch (binary.NodeType)
 				{
-					case ExpressionType.And:
-						this.builder.Append (" AND ");
+					case ExpressionType.AndAlso:
+						joiner = " AND ";
 						break;
 
-					case ExpressionType.Or:
-						this.builder.Append (" OR ");
+					case ExpressionType.OrElse:
+						joiner = " OR ";
 						break;
 
 					case ExpressionType.Equal:
-						this.builder.Append (" = ");
+						joiner = " = ";
 						break;
 
 					case ExpressionType.GreaterThan:
-						this.builder.Append (" > ");
+						joiner = " > ";
 						break;
 
 					case ExpressionType.LessThan:
-						this.builder.Append (" < ");
+						joiner = " < ";
 						break;
 
 					case ExpressionType.NotEqual:
-						this.builder.Append (" IS NOT ");
+						joiner = " IS NOT ";
 						break;
 
 					default:
@@ -362,7 +377,22 @@ namespace Xamarin
 				}
 
 				Visit (binary.Right);
+				if (Fallback) {
+					Fallback = false;
+					this.builder = new StringBuilder (current);
+					this.builder.Append ("(");
+					this.builder.Append (left);
+					this.builder.Append (")");
+					return binary.Right;
+				}
 
+				string right = this.builder.ToString();
+
+				this.builder = new StringBuilder (current);
+				this.builder.Append ("(");
+				this.builder.Append (left);
+				this.builder.Append (joiner);
+				this.builder.Append (right);
 				this.builder.Append (")");
 
 				return binary;
@@ -376,21 +406,20 @@ namespace Xamarin
 			var eval = new WhereEvaluator (this.tableFinder, Table);
 			expression = eval.Evaluate (expression);
 
-			TableFindResult result = eval.Result;
 			if (Table == null)
-				Table = result.Table;
+				Table = eval.Table;
 
-			if (eval.Fallback || result.Table == null || result.Table != Table)
+			if (eval.Fallback || eval.Table == null || eval.Table != Table)
 			{
 				this.fallback = true;
 				return methodCall;
 			}
 
-			this.arguments.AddRange (result.Arguments);
+			this.arguments.AddRange (eval.Arguments);
 			if (this.queryBuilder.Length > 0)
 				this.queryBuilder.Append (" AND ");
 
-			this.queryBuilder.Append (result.QueryString);
+			this.queryBuilder.Append (eval.QueryString);
 
 			return methodCall.Arguments[0];
 		}
@@ -554,10 +583,10 @@ namespace Xamarin
 
 			Table = presult.Table;
 
-			if (presult.QueryString != null)
-				this.queryBuilder.Append (presult.QueryString);
+			if (presult.MimeType != null)
+				this.queryBuilder.Append (String.Format ("({0} = ?)", ContactsContract.DataColumns.Mimetype));
 
-			this.arguments.AddRange (presult.Arguments);
+			this.arguments.Add (presult.MimeType);
 
 			return true;
 		}
@@ -571,10 +600,10 @@ namespace Xamarin
 			}
 
 			TableFindResult result = this.tableFinder.Find (me);
-			if (result.QueryString != null)
-				this.queryBuilder.Append (result.QueryString);
+			if (result.MimeType != null)
+				this.queryBuilder.Append (String.Format ("({0} = ?)", ContactsContract.DataColumns.Mimetype));
 			
-			this.arguments.AddRange (result.Arguments);
+			this.arguments.Add (result.MimeType);
 
 			if (Table == null)
 				Table = result.Table;

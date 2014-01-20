@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Xamarin Inc.")]
 [assembly: AssemblyProduct("Xamarin.Mobile")]
-[assembly: AssemblyCopyright("Copyright © 2011-2013 Xamarin Inc.")]
+[assembly: AssemblyCopyright("Copyright © 2011-2014 Xamarin Inc.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
@@ -27,3 +27,5 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("0.7.1.0")]
 [assembly: AssemblyFileVersion("0.7.1.0")]
+
+[assembly: InternalsVisibleTo("Xamarin.Mobile.Android.Tests")]
