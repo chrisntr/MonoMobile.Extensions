@@ -255,7 +255,7 @@ namespace Xamarin
 			{
 				expression = Visit (expression);
 
-				if (this.table != null && this.table.MimeType != null) {
+				if (!Fallback && this.table != null && this.table.MimeType != null) {
 					this.builder.Insert (0, String.Format ("(({0} = ?) AND ", ContactsContract.DataColumns.Mimetype));
 					this.builder.Append (")");
 
@@ -378,12 +378,15 @@ namespace Xamarin
 
 				Visit (binary.Right);
 				if (Fallback) {
-					Fallback = false;
-					this.builder = new StringBuilder (current);
-					this.builder.Append ("(");
-					this.builder.Append (left);
-					this.builder.Append (")");
-					return binary.Right;
+					if (binary.NodeType == ExpressionType.AndAlso) {
+						Fallback = false;
+						this.builder = new StringBuilder (current);
+						this.builder.Append ("(");
+						this.builder.Append (left);
+						this.builder.Append (")");
+						return binary.Right;
+					} else
+						return binary;
 				}
 
 				string right = this.builder.ToString();
@@ -406,14 +409,13 @@ namespace Xamarin
 			var eval = new WhereEvaluator (this.tableFinder, Table);
 			expression = eval.Evaluate (expression);
 
-			if (Table == null)
-				Table = eval.Table;
-
-			if (eval.Fallback || eval.Table == null || eval.Table != Table)
-			{
+			if (eval.Fallback || eval.Table == null || (Table != null && eval.Table != Table)) {
 				this.fallback = true;
 				return methodCall;
 			}
+
+			if (Table == null)
+				Table = eval.Table;
 
 			this.arguments.AddRange (eval.Arguments);
 			if (this.queryBuilder.Length > 0)
