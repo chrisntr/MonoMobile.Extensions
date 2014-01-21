@@ -307,6 +307,13 @@ namespace Xamarin.Mobile.Tests.Tests
 		}
 
 		[Test]
+		public void WhereWithOrClauseFromSameTableDifferentMimeType()
+		{
+			Queryable.Where (c => c.FirstName == "Foo" || c.DisplayName == "Foo Bar").ToArray();
+			AssertFallback();
+		}
+
+		[Test]
 		public void WhereFallback()
 		{
 			Queryable.Where (c => c.Organizations.Any()).ToArray();
