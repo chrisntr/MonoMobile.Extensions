@@ -1,9 +1,9 @@
 using System;
 using System.Threading.Tasks;
 using MonoTouch.Dialog;
-using MonoTouch.Foundation;
-using MonoTouch.MediaPlayer;
-using MonoTouch.UIKit;
+using Foundation;
+using MediaPlayer;
+using UIKit;
 using Xamarin.Media;
 
 namespace MediaPickerSample
@@ -158,7 +158,7 @@ namespace MediaPickerSample
 			mediaController = new UIViewController();
 			mediaController.View.AddSubview (image);
 			mediaController.NavigationItem.LeftBarButtonItem = 
-				new UIBarButtonItem (UIBarButtonSystemItem.Done, (s, e) => viewController.PopViewControllerAnimated (true));
+				new UIBarButtonItem (UIBarButtonSystemItem.Done, (s, e) => viewController.PopViewController (true));
 
 			viewController.PushViewController (mediaController, true);
 		}

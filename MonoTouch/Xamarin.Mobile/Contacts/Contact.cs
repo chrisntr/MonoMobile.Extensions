@@ -17,12 +17,21 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using System;
+using System.Runtime.InteropServices;
+
+#if __UNIFIED__
+using AddressBook;
+using CoreGraphics;
+using Foundation;
+using UIKit;
+#else
 using MonoTouch.AddressBook;
 using MonoTouch.CoreGraphics;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
-using System;
-using System.Runtime.InteropServices;
+#endif
+
 using Xamarin.Media;
 
 namespace Xamarin.Contacts

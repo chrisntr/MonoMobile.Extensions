@@ -1,7 +1,6 @@
-using MonoTouch.UIKit;
-using System.Drawing;
+using UIKit;
 using System;
-using MonoTouch.Foundation;
+using Foundation;
 using System.Threading;
 using Xamarin.Geolocation;
 using System.Threading.Tasks;

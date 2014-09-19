@@ -16,9 +16,15 @@
 
 using System;
 using System.Linq;
+using System.Globalization;
+
+#if __UNIFIED__
+using AddressBook;
+using Foundation;
+#else
 using MonoTouch.AddressBook;
 using MonoTouch.Foundation;
-using System.Globalization;
+#endif
 
 namespace Xamarin.Contacts
 {

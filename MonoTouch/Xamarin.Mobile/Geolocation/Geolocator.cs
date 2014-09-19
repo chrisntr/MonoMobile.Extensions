@@ -15,11 +15,18 @@
 //
 
 using System;
-using MonoTouch.CoreLocation;
 using System.Threading.Tasks;
 using System.Threading;
+
+#if __UNIFIED__
+using CoreLocation;
+using Foundation;
+using UIKit;
+#else
+using MonoTouch.CoreLocation;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
+#endif
 
 namespace Xamarin.Geolocation
 {
@@ -245,9 +252,9 @@ namespace Xamarin.Geolocation
 			location.Dispose();
 		}
 		
-		private void OnFailed (object sender, MonoTouch.Foundation.NSErrorEventArgs e)
+		private void OnFailed (object sender, NSErrorEventArgs e)
 		{
-			if ((CLError)e.Error.Code == CLError.Network)
+			if ((CLError)(int)e.Error.Code == CLError.Network)
 				OnPositionError (new PositionErrorEventArgs (GeolocationError.PositionUnavailable));
 		}
 

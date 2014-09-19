@@ -16,7 +16,13 @@
 
 using System;
 using System.Threading.Tasks;
+#if __UNIFIED__
+using UIKit;
+using Foundation;
+#else
 using MonoTouch.UIKit;
+using MonoTouch.Foundation;
+#endif
 
 namespace Xamarin.Media
 {
@@ -28,7 +34,7 @@ namespace Xamarin.Media
 			base.Delegate = mpDelegate;
 		}
 
-		public override MonoTouch.Foundation.NSObject Delegate
+		public override NSObject Delegate
 		{
 			get { return base.Delegate; }
 			set { throw new NotSupportedException(); }

@@ -15,9 +15,16 @@
 //
 
 using System;
-using MonoTouch.CoreLocation;
 using System.Threading.Tasks;
 using System.Threading;
+
+#if __UNIFIED__
+using CoreLocation;
+using Foundation;
+#else
+using MonoTouch.CoreLocation;
+using MonoTouch.Foundation;
+#endif
 
 namespace Xamarin.Geolocation
 {
@@ -68,9 +75,9 @@ namespace Xamarin.Geolocation
 			}
 		}
 
-		public override void Failed (CLLocationManager manager, MonoTouch.Foundation.NSError error)
+		public override void Failed (CLLocationManager manager, NSError error)
 		{
-			switch ((CLError)error.Code)
+			switch ((CLError)(int)error.Code)
 			{
 				case CLError.Network:
 					StopListening();	

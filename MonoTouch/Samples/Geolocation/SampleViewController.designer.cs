@@ -4,7 +4,7 @@
 // actions made in the Xcode designer. If it is removed, they will be lost.
 // Manual changes to this file may not be handled correctly.
 //
-using MonoTouch.Foundation;
+using Foundation;
 
 namespace Sample
 {
@@ -12,39 +12,39 @@ namespace Sample
 	partial class SampleViewController
 	{
 		[Outlet]
-		MonoTouch.UIKit.UIButton PositionButton { get; set; }
+		UIKit.UIButton PositionButton { get; set; }
 
 		[Outlet]
-		MonoTouch.UIKit.UIButton CancelButton { get; set; }
+		UIKit.UIButton CancelButton { get; set; }
 
 		[Outlet]
-		MonoTouch.UIKit.UIButton ToggleListeningButton { get; set; }
+		UIKit.UIButton ToggleListeningButton { get; set; }
 
 		[Outlet]
-		MonoTouch.UIKit.UILabel PositionStatus { get; set; }
+		UIKit.UILabel PositionStatus { get; set; }
 
 		[Outlet]
-		MonoTouch.UIKit.UILabel PositionLatitude { get; set; }
+		UIKit.UILabel PositionLatitude { get; set; }
 
 		[Outlet]
-		MonoTouch.UIKit.UILabel PositionLongitude { get; set; }
+		UIKit.UILabel PositionLongitude { get; set; }
 
 		[Outlet]
-		MonoTouch.UIKit.UILabel ListenStatus { get; set; }
+		UIKit.UILabel ListenStatus { get; set; }
 
 		[Outlet]
-		MonoTouch.UIKit.UILabel ListenLongitude { get; set; }
+		UIKit.UILabel ListenLongitude { get; set; }
 
 		[Outlet]
-		MonoTouch.UIKit.UILabel ListenLatitude { get; set; }
+		UIKit.UILabel ListenLatitude { get; set; }
 
 		[Action ("GetPosition:")]
-		partial void GetPosition (MonoTouch.Foundation.NSObject sender);
+		partial void GetPosition (Foundation.NSObject sender);
 
 		[Action ("CancelPosition:")]
-		partial void CancelPosition (MonoTouch.Foundation.NSObject sender);
+		partial void CancelPosition (Foundation.NSObject sender);
 
 		[Action ("ToggleListening:")]
-		partial void ToggleListening (MonoTouch.Foundation.NSObject sender);
+		partial void ToggleListening (Foundation.NSObject sender);
 	}
 }

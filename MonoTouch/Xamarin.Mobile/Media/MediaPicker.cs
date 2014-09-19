@@ -16,11 +16,17 @@
 
 using System;
 using System.Threading.Tasks;
-using MonoTouch.UIKit;
 using System.Threading;
 using System.IO;
 using System.Linq;
-using System.Drawing;
+
+#if __UNIFIED__
+using UIKit;
+using CoreGraphics;
+#else
+using MonoTouch.UIKit;
+using CGRect = global::System.Drawing.RectangleF;
+#endif
 
 namespace Xamarin.Media
 {

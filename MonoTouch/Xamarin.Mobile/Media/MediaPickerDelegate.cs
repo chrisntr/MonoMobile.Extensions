@@ -18,10 +18,21 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+
+#if __UNIFIED__
+using CoreGraphics;
+using AssetsLibrary;
+using Foundation;
+using UIKit;
+using NSAction = global::System.Action;
+#else
 using MonoTouch.AssetsLibrary;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
-using System.Drawing;
+
+using CGRect = global::System.Drawing.RectangleF;
+using nfloat = global::System.Single;
+#endif
 
 namespace Xamarin.Media
 {
@@ -86,11 +97,11 @@ namespace Xamarin.Media
 			if (Popover == null)
 				return;
 
-			float swidth = UIScreen.MainScreen.Bounds.Width;
-			float sheight= UIScreen.MainScreen.Bounds.Height;
+			var swidth = UIScreen.MainScreen.Bounds.Width;
+			var sheight= UIScreen.MainScreen.Bounds.Height;
 
-			float width = 400;
-			float height = 300;
+			nfloat width = 400;
+			nfloat height = 300;
 
 			if (this.orientation == null)
 			{
@@ -100,7 +111,7 @@ namespace Xamarin.Media
 					this.orientation = GetDeviceOrientation (this.viewController.InterfaceOrientation);
 			}
 
-			float x, y;
+			nfloat x, y;
 			if (this.orientation == UIDeviceOrientation.LandscapeLeft || this.orientation == UIDeviceOrientation.LandscapeRight)
 			{
 				y = (swidth / 2) - (height / 2);
@@ -115,7 +126,7 @@ namespace Xamarin.Media
 			if (hideFirst && Popover.PopoverVisible)
 				Popover.Dismiss (animated: false);
 
-			Popover.PresentFromRect (new RectangleF (x, y, width, height), View, 0, animated: true);
+			Popover.PresentFromRect (new CGRect (x, y, width, height), View, 0, animated: true);
 		}
 
 		private UIDeviceOrientation? orientation;
