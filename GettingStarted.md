@@ -39,6 +39,8 @@ locator.GetPositionAsync (timeout: 10000).ContinueWith (t => {
 }, TaskScheduler.FromCurrentSynchronizationContext());
 ```
 
+NOTE: On iOS 8.0+ you must set either `NSLocationWhenInUseUsageDescription` or `NSLocationAlwaysUsageDescription` in your `Info.plist` file so that Xamarin.Mobile will request the appropriate permission from the user.
+
 ### Media
 
 `MediaPicker` allows you to invoke the native UI to take or select photos or video. Given
