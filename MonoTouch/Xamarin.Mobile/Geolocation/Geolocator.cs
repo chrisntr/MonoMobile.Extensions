@@ -45,22 +45,22 @@ namespace Xamarin.Geolocation
 
 			this.manager.UpdatedHeading += OnUpdatedHeading;
 
-            RequestAuthorization ();
+			RequestAuthorization ();
 		}
 
-        public void RequestAuthorization ()
-        {
-            var info = NSBundle.MainBundle.InfoDictionary;
+		private void RequestAuthorization ()
+		{
+			var info = NSBundle.MainBundle.InfoDictionary;
 
-            if (UIDevice.CurrentDevice.CheckSystemVersion (8, 0)) {
-                if (info.ContainsKey (new NSString ("NSLocationWhenInUseUsageDescription")))
-                    this.manager.RequestWhenInUseAuthorization ();
-                else if (info.ContainsKey (new NSString ("NSLocationAlwaysUsageDescription")))
-                    this.manager.RequestAlwaysAuthorization ();
-                else
-                    throw new UnauthorizedAccessException ("On iOS 8.0 and higher you must set either NSLocationWhenInUseUsageDescription or NSLocationAlwaysUsageDescription in your Info.plist file to enable Authorization Requests for Location updates!");
-            }
-        }
+			if (UIDevice.CurrentDevice.CheckSystemVersion (8, 0)) {
+				if (info.ContainsKey (new NSString ("NSLocationWhenInUseUsageDescription")))
+					this.manager.RequestWhenInUseAuthorization ();
+				else if (info.ContainsKey (new NSString ("NSLocationAlwaysUsageDescription")))
+					this.manager.RequestAlwaysAuthorization ();
+				else
+					throw new UnauthorizedAccessException ("On iOS 8.0 and higher you must set either NSLocationWhenInUseUsageDescription or NSLocationAlwaysUsageDescription in your Info.plist file to enable Authorization Requests for Location updates!");
+			}
+		}
 
 		public event EventHandler<PositionErrorEventArgs> PositionError;
 
