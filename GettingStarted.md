@@ -117,3 +117,7 @@ controller.GetResultAsync().ContinueWith (t => {
 	
 }, TaskScheduler.FromCurrentSynchronizationContext());
 ```
+#####Note to iOS 8 Developers
+Showing a `MediaPicker` in response to a `UIActionSheet.Clicked` event will cause unexpected behavior on iOS 8.  Apps should be updated to conditionally use an `UIAlertController` with a style of `UIAlertControllerStyle.ActionSheet.`  See the iOS sample for more info. 
+
+
