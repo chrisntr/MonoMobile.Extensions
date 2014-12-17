@@ -17,9 +17,9 @@ libraries:
   android:
     - MonoDroid/Xamarin.Mobile/bin/Release/Xamarin.Mobile.dll
   wp8:
-    - WindowsPhone8/Xamarin.Mobile/bin/Release/Xamarin.Mobile.dll
+    - WindowsPhone8/Xamarin.Mobile/bin/x86/Release/Xamarin.Mobile.dll
   winrt:
-    - WindowsRT/Xamarin.Mobile/bin/Release/Xamarin.Mobile.dll
+    - WindowsRT/Xamarin.Mobile/bin/x86/Release/Xamarin.Mobile.dll
 samples:
   - name: "Android Samples"
     path: MonoDroid/Samples/Xamarin.Mobile.Android.Samples.sln
