@@ -23,7 +23,12 @@ namespace Xamarin.Contacts
 		Yahoo,
 		Icq,
 		Jabber,
-		Other
+		Other,
+        Skype,
+        Facebook,
+        Google,
+        GaduGadu,
+        QQ
 	}
 
 	public class InstantMessagingAccount

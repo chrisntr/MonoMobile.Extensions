@@ -163,7 +163,17 @@ namespace Xamarin.Contacts
 				return InstantMessagingService.Msn;
 			if (service == ABPersonInstantMessageService.Yahoo)
 				return InstantMessagingService.Yahoo;
-			
+			if (service == ABPersonInstantMessageService.Facebook)
+                return InstantMessagingService.Facebook;
+            if (service == ABPersonInstantMessageService.Skype)
+                return InstantMessagingService.Skype;
+            if (service == ABPersonInstantMessageService.GoogleTalk)
+                return InstantMessagingService.Google;
+            if (service == ABPersonInstantMessageService.GaduGadu)
+                return InstantMessagingService.GaduGadu;
+            if (service == ABPersonInstantMessageService.QQ)
+                return InstantMessagingService.QQ;
+
 			return InstantMessagingService.Other;
 		}
 		
