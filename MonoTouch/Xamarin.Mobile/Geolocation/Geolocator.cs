@@ -268,7 +268,7 @@ namespace Xamarin.Geolocation
 			if (location.Speed > -1)
 				p.Speed = location.Speed;
 			
-			p.Timestamp = new DateTimeOffset (location.Timestamp);
+			p.Timestamp = new DateTimeOffset ((DateTime)location.Timestamp);
 			
 			this.position = p;
 			

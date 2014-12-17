@@ -76,6 +76,25 @@ namespace Xamarin.Contacts
 
 			contact.Organizations = orgs;
 
+			#if __UNIFIED__
+			contact.InstantMessagingAccounts = person.GetInstantMessageServices().Select (ima => new InstantMessagingAccount()
+			{
+                Service = GetImService ((NSString)ima.Value.Dictionary[ABPersonInstantMessageKey.Service]),
+				ServiceLabel = ima.Value.ServiceName,
+				Account = ima.Value.Username
+			});
+
+			contact.Addresses = person.GetAllAddresses().Select (a => new Address()
+			{
+				Type = GetAddressType (a.Label),
+				Label = (a.Label != null) ? GetLabel (a.Label) : GetLabel (ABLabel.Other),
+				StreetAddress = a.Value.Street,
+				City = a.Value.City,
+				Region = a.Value.State,
+				Country = a.Value.Country,
+				PostalCode = a.Value.Zip
+			});
+			#else
 			contact.InstantMessagingAccounts = person.GetInstantMessages().Select (ima => new InstantMessagingAccount()
 			{
 				Service = GetImService ((NSString)ima.Value[ABPersonInstantMessageKey.Service]),
@@ -93,6 +112,7 @@ namespace Xamarin.Contacts
 				Country = (NSString)a.Value[ABPersonAddressKey.Country],
 				PostalCode = (NSString)a.Value[ABPersonAddressKey.Zip]
 			});
+			#endif
 			
 			contact.Websites = person.GetUrls().Select (url => new Website
 			{

@@ -163,14 +163,14 @@ namespace Xamarin.Contacts
 			if (!this.person.HasImage)
 				return null;
 
-			IntPtr data;
-			lock (this.person)
-				data = ABPersonCopyImageDataWithFormat (person.Handle, ABPersonImageFormat.Thumbnail);
+			NSData data;
+            lock (this.person)
+                data = this.person.GetImage (ABPersonImageFormat.Thumbnail);
 
-			if (data == IntPtr.Zero)
+			if (data == null)
 				return null;
 
-			return new UIImage (new NSData (data));
+            return UIImage.LoadFromData (data);
 		}
 
 		public Task<MediaFile> SaveThumbnailAsync (string path)
