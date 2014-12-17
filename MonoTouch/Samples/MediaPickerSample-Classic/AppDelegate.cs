@@ -124,9 +124,78 @@ namespace MediaPickerSample
 				}, uiScheduler); // Make sure we use the UI thread to show our video.
 			};
 
+			Action pickPhotoAction = async () => {
+				try {
+					var mediaFile = await mediaPicker.PickPhotoAsync ();
+					ShowPhoto (mediaFile);
+				} catch (TaskCanceledException) {
+				}
+			};
+
+			Action takePhotoAction = async () => {
+				if (!mediaPicker.VideosSupported || !mediaPicker.IsCameraAvailable) {
+					ShowUnsupported();
+					return;
+				}
+
+				try {
+					var mediaFile = await mediaPicker.TakePhotoAsync (new StoreCameraMediaOptions {
+						Name = "test.jpg",
+						Directory = "MediaPickerSample"
+					});
+					ShowPhoto (mediaFile);
+				} catch (TaskCanceledException) {
+				}
+			};
+
+			useActionSheet = new StringElement ("Use Action Sheet");
+			useActionSheet.Tapped += () => {
+
+				if (UIDevice.CurrentDevice.CheckSystemVersion (8, 0)) {
+
+					var alertContoller = UIAlertController.Create ("Show Photo From?", string.Empty, UIAlertControllerStyle.ActionSheet);
+					alertContoller.AddAction (UIAlertAction.Create ("Pick Photo", UIAlertActionStyle.Default, (action) => pickPhotoAction ()));
+					alertContoller.AddAction (UIAlertAction.Create ("Take Photo", UIAlertActionStyle.Default, (action) => takePhotoAction ()));
+
+					if (UIDevice.CurrentDevice.UserInterfaceIdiom != UIUserInterfaceIdiom.Pad)
+						alertContoller.AddAction (UIAlertAction.Create ("Cancel", UIAlertActionStyle.Cancel, null));
+
+					if (alertContoller.PopoverPresentationController != null) {
+						alertContoller.PopoverPresentationController.PermittedArrowDirections = 0;
+
+						var rect = viewController.View.Bounds;
+						alertContoller.PopoverPresentationController.SourceRect = rect;
+						alertContoller.PopoverPresentationController.SourceView = viewController.View;
+					}
+
+					viewController.PresentViewController (alertContoller, true, null);
+				}
+				else {
+
+					var actionSheet = new UIActionSheet("Show Photo From?"); 
+					actionSheet.AddButton("Pick Photo");
+					actionSheet.AddButton("Take Photo");
+
+					if (UIDevice.CurrentDevice.UserInterfaceIdiom != UIUserInterfaceIdiom.Pad) {
+						actionSheet.AddButton("Cancel");
+						actionSheet.CancelButtonIndex = 2;
+					}
+
+					actionSheet.Clicked += (object sender, UIButtonEventArgs e) => {
+						if (e.ButtonIndex == 0)
+							pickPhotoAction ();
+						if (e.ButtonIndex == 1)
+							takePhotoAction ();
+					};
+
+					actionSheet.ShowInView(viewController.View);
+				}
+			};
+
 			var root = new RootElement("Xamarin.Media Sample") {
 				new Section ("Picking media") { pickPhoto, pickVideo },
-				new Section ("Capturing media") { takePhoto, takeVideo }
+				new Section ("Capturing media") { takePhoto, takeVideo },
+				new Section ("Action Sheets") {useActionSheet}
 			};
 
 			dialogController = new DisposingMediaViewController (root);
@@ -208,7 +277,7 @@ namespace MediaPickerSample
 		UINavigationController viewController;
 		DisposingMediaViewController dialogController;
 
-		StringElement pickPhoto, pickVideo, takePhoto, takeVideo;
+		StringElement pickPhoto, pickVideo, takePhoto, takeVideo, useActionSheet;
 	}
 }
 
