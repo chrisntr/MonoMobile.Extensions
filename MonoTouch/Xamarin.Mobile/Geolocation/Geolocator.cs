@@ -15,11 +15,18 @@
 //
 
 using System;
-using MonoTouch.CoreLocation;
 using System.Threading.Tasks;
 using System.Threading;
+
+#if __UNIFIED__
+using CoreLocation;
+using Foundation;
+using UIKit;
+#else
+using MonoTouch.CoreLocation;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
+#endif
 
 namespace Xamarin.Geolocation
 {
@@ -37,6 +44,22 @@ namespace Xamarin.Geolocation
 				this.manager.UpdatedLocation += OnUpdatedLocation;
 
 			this.manager.UpdatedHeading += OnUpdatedHeading;
+
+			RequestAuthorization ();
+		}
+
+		private void RequestAuthorization ()
+		{
+			var info = NSBundle.MainBundle.InfoDictionary;
+
+			if (UIDevice.CurrentDevice.CheckSystemVersion (8, 0)) {
+				if (info.ContainsKey (new NSString ("NSLocationWhenInUseUsageDescription")))
+					this.manager.RequestWhenInUseAuthorization ();
+				else if (info.ContainsKey (new NSString ("NSLocationAlwaysUsageDescription")))
+					this.manager.RequestAlwaysAuthorization ();
+				else
+					throw new UnauthorizedAccessException ("On iOS 8.0 and higher you must set either NSLocationWhenInUseUsageDescription or NSLocationAlwaysUsageDescription in your Info.plist file to enable Authorization Requests for Location updates!");
+			}
 		}
 
 		public event EventHandler<PositionErrorEventArgs> PositionError;
@@ -66,7 +89,16 @@ namespace Xamarin.Geolocation
 
 		public bool IsGeolocationEnabled
 		{
-			get { return CLLocationManager.Status == CLAuthorizationStatus.Authorized; }
+			get { 
+				var status = CLLocationManager.Status;
+
+				if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0)) {
+					return status == CLAuthorizationStatus.AuthorizedAlways
+					|| status == CLAuthorizationStatus.AuthorizedWhenInUse;
+				} else {
+					return status == CLAuthorizationStatus.Authorized;
+				}
+			}
 		}
 
 		public Task<Position> GetPositionAsync (int timeout)
@@ -236,7 +268,7 @@ namespace Xamarin.Geolocation
 			if (location.Speed > -1)
 				p.Speed = location.Speed;
 			
-			p.Timestamp = new DateTimeOffset (location.Timestamp);
+			p.Timestamp = new DateTimeOffset ((DateTime)location.Timestamp);
 			
 			this.position = p;
 			
@@ -245,9 +277,9 @@ namespace Xamarin.Geolocation
 			location.Dispose();
 		}
 		
-		private void OnFailed (object sender, MonoTouch.Foundation.NSErrorEventArgs e)
+		private void OnFailed (object sender, NSErrorEventArgs e)
 		{
-			if ((CLError)e.Error.Code == CLError.Network)
+			if ((CLError)(int)e.Error.Code == CLError.Network)
 				OnPositionError (new PositionErrorEventArgs (GeolocationError.PositionUnavailable));
 		}
 

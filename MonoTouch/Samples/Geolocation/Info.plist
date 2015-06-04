@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>MinimumOSVersion</key>
-	<string>5.0</string>
+	<string>5.2</string>
 	<key>UIDeviceFamily</key>
 	<array>
 		<integer>1</integer>
@@ -22,5 +22,7 @@
 	<string></string>
 	<key>NSMainNibFile</key>
 	<string></string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Please allow the sample app to access Location!</string>
 </dict>
 </plist>

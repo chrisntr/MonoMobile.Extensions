@@ -15,7 +15,14 @@
 //
 
 using System.IO;
+
+#if __UNIFIED__
+using Foundation;
+#else
 using MonoTouch.Foundation;
+
+using nuint = global::System.UInt32;
+#endif
 
 namespace Xamarin
 {
@@ -23,7 +30,7 @@ namespace Xamarin
 		: UnmanagedMemoryStream
 	{
 		public NSDataStream (NSData data)
-			: base ((byte*)data.Bytes, data.Length)
+			: base ((byte*)data.Bytes, (uint)data.Length)
 		{
 			this.data = data;
 		}

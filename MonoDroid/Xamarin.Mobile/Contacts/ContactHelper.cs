@@ -479,6 +479,12 @@ namespace Xamarin.Contacts
 					return InstantMessagingService.Jabber;
 				case IMProtocolDataKind.Icq:
 					return InstantMessagingService.Icq;
+                case IMProtocolDataKind.Skype:
+                    return InstantMessagingService.Skype;
+                case IMProtocolDataKind.GoogleTalk:
+                    return InstantMessagingService.Google;
+                case IMProtocolDataKind.Qq:
+                    return InstantMessagingService.QQ;
 				default:
 					return InstantMessagingService.Other;
 			}

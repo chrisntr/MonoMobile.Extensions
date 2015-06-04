@@ -6,9 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MonoTouch.Dialog;
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+using Foundation;
+using UIKit;
 using Xamarin.Contacts;
+using CoreGraphics;
 
 namespace ContactsSample
 {
@@ -19,7 +20,7 @@ namespace ContactsSample
 			base.ViewDidLoad ();
 			SetupUI();
 
-			var book = new AddressBook ();
+			var book = new Xamarin.Contacts.AddressBook ();
 
 			// We must request permission to access the user's address book
 			// This will prompt the user on platforms that ask, or it will validate
@@ -54,16 +55,16 @@ namespace ContactsSample
 				
 				RootElement root = new RootElement ("Info");
 
-				UIView title = new UIView (new RectangleF (0, 0, UIScreen.MainScreen.Bounds.Width, 64)) {
+				UIView title = new UIView (new CGRect (0, 0, UIScreen.MainScreen.Bounds.Width, 64)) {
 					AutoresizingMask = UIViewAutoresizing.FlexibleWidth,
 				};
 
-				title.AddSubview (new UIImageView (new RectangleF (0, 0, 64, 64)) {
+				title.AddSubview (new UIImageView (new CGRect (0, 0, 64, 64)) {
 					Image = contact.GetThumbnail(),
 					BackgroundColor = UIColor.White
 				});
 
-				title.AddSubview (new UITextView (new RectangleF (64, -10, title.Bounds.Width, 36)) {
+				title.AddSubview (new UITextView (new CGRect (64, -10, title.Bounds.Width, 36)) {
 					Text = contact.DisplayName,
 					AutoresizingMask = UIViewAutoresizing.FlexibleWidth,
 					BackgroundColor = UIColor.Clear,
@@ -72,14 +73,14 @@ namespace ContactsSample
 
 				var org = contact.Organizations.FirstOrDefault();
 				if (org != null) {
-					title.AddSubview (new UITextView (new RectangleF (65, 13, title.Bounds.Width, 25)) {
+					title.AddSubview (new UITextView (new CGRect (65, 13, title.Bounds.Width, 25)) {
 						Text = org.ContactTitle,
 						AutoresizingMask = UIViewAutoresizing.FlexibleWidth,
 						BackgroundColor = UIColor.Clear,
 						TextColor = UIColor.DarkGray,
 					});
 
-					title.AddSubview (new UITextView (new RectangleF (65, 28, title.Bounds.Width, 25)) {
+					title.AddSubview (new UITextView (new CGRect (65, 28, title.Bounds.Width, 25)) {
 						Text = org.Name,
 						AutoresizingMask = UIViewAutoresizing.FlexibleWidth,
 						BackgroundColor = UIColor.Clear,
@@ -135,7 +136,7 @@ namespace ContactsSample
 				appDelegate.NavigationController.PushViewController (dialog, true);
 			}
 
-			public override int RowsInSection (UITableView tableview, int section)
+			public override nint RowsInSection (UITableView tableview, nint section)
 			{
 				return list.Count;
 			}
@@ -181,7 +182,7 @@ namespace ContactsSample
 
 			this.tableView = new UITableView {
 				AutoresizingMask = UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleWidth,
-				Frame = new RectangleF (0, 0, View.Frame.Width, View.Frame.Height)
+				Frame = new CGRect (0, 0, View.Frame.Width, View.Frame.Height)
 			};
 
 			View.AddSubview (this.tableView);

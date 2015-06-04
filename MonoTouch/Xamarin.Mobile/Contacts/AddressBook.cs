@@ -17,11 +17,18 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
-using MonoTouch.AddressBook;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+
+#if __UNIFIED__
+using AddressBook;
+using UIKit;
+using Foundation;
+#else
+using MonoTouch.AddressBook;
 using MonoTouch.UIKit;
 using MonoTouch.Foundation;
+#endif
 
 namespace Xamarin.Contacts
 {

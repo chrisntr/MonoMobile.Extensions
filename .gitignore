@@ -1,6 +1,7 @@
 bin
 Bin
 obj
+packages
 TestResults
 .DS_Store
 _ReSharper.*
