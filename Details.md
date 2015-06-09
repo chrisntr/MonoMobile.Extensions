@@ -23,7 +23,7 @@ on Android):
 using Xamarin.Contacts;
 // ...
 
-var book = new AddressBook ();
+var book = new Xamarin.Contacts.AddressBook ();
 //         new AddressBook (this); on Android
 if (!await book.RequestPermission()) {
 	Console.WriteLine ("Permission denied by user or manifest");

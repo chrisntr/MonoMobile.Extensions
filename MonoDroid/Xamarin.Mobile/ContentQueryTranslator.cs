@@ -585,8 +585,12 @@ namespace Xamarin
 
 			Table = presult.Table;
 
-			if (presult.MimeType != null)
+			if (presult.MimeType != null) {
+				if (this.queryBuilder.Length > 0)
+					this.queryBuilder.Append (" AND ");
+
 				this.queryBuilder.Append (String.Format ("({0} = ?)", ContactsContract.DataColumns.Mimetype));
+			}
 
 			this.arguments.Add (presult.MimeType);
 
@@ -602,8 +606,12 @@ namespace Xamarin
 			}
 
 			TableFindResult result = this.tableFinder.Find (me);
-			if (result.MimeType != null)
+			if (result.MimeType != null) {
+				if (this.queryBuilder.Length > 0)
+					this.queryBuilder.Append (" AND ");
+
 				this.queryBuilder.Append (String.Format ("({0} = ?)", ContactsContract.DataColumns.Mimetype));
+			}
 			
 			this.arguments.Add (result.MimeType);
 
