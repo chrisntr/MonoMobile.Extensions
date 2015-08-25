@@ -1,0 +1,70 @@
+<Type Name="Note" FullName="Xamarin.Contacts.Note">
+  <TypeSignature Language="C#" Value="public class Note" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit Note extends System.Object" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.Mobile</AssemblyName>
+    <AssemblyVersion>0.2.0.0</AssemblyVersion>
+    <AssemblyVersion>0.3.0.0</AssemblyVersion>
+    <AssemblyVersion>0.4.0.0</AssemblyVersion>
+    <AssemblyVersion>0.5.0.0</AssemblyVersion>
+    <AssemblyVersion>0.5.1.0</AssemblyVersion>
+    <AssemblyVersion>0.6.1.0</AssemblyVersion>
+    <AssemblyVersion>0.6.2.0</AssemblyVersion>
+    <AssemblyVersion>0.7.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>Represents a note made on a <see cref="T:Xamarin.Contacts.Contact" />.</summary>
+    <remarks />
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Note ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.2.0.0</AssemblyVersion>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>
+			Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.Note" /> class.
+		</summary>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="Contents">
+      <MemberSignature Language="C#" Value="public string Contents { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string Contents" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.2.0.0</AssemblyVersion>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets the contents of the note.</summary>
+        <value>The content of the note.</value>
+        <remarks />
+      </Docs>
+    </Member>
+  </Members>
+</Type>

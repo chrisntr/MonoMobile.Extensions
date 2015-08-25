@@ -1,0 +1,66 @@
+<Type Name="OrganizationType" FullName="Xamarin.Contacts.OrganizationType">
+  <TypeSignature Language="C#" Value="public enum OrganizationType" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed OrganizationType extends System.Enum" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.Mobile</AssemblyName>
+    <AssemblyVersion>0.2.0.0</AssemblyVersion>
+    <AssemblyVersion>0.3.0.0</AssemblyVersion>
+    <AssemblyVersion>0.4.0.0</AssemblyVersion>
+    <AssemblyVersion>0.5.0.0</AssemblyVersion>
+    <AssemblyVersion>0.5.1.0</AssemblyVersion>
+    <AssemblyVersion>0.6.1.0</AssemblyVersion>
+    <AssemblyVersion>0.6.2.0</AssemblyVersion>
+    <AssemblyVersion>0.7.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Docs>
+    <summary>Specifies the relationship between a <see cref="T:Xamarin.Contacts.Contact" /> and an <see cref="T:Xamarin.Contacts.Organization" />.</summary>
+    <remarks />
+  </Docs>
+  <Members>
+    <Member MemberName="Other">
+      <MemberSignature Language="C#" Value="Other" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Contacts.OrganizationType Other = int32(1)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.2.0.0</AssemblyVersion>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Contacts.OrganizationType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>The contact has some other relationship with this organization.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Work">
+      <MemberSignature Language="C#" Value="Work" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Contacts.OrganizationType Work = int32(0)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.2.0.0</AssemblyVersion>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Contacts.OrganizationType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>The contact works for this organization.</summary>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

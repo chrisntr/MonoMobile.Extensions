@@ -1,0 +1,72 @@
+<Type Name="StoreCameraMediaOptions" FullName="Xamarin.Media.StoreCameraMediaOptions">
+  <TypeSignature Language="C#" Value="public class StoreCameraMediaOptions : Xamarin.Media.StoreMediaOptions" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit StoreCameraMediaOptions extends Xamarin.Media.StoreMediaOptions" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.Mobile</AssemblyName>
+    <AssemblyVersion>0.3.0.0</AssemblyVersion>
+    <AssemblyVersion>0.4.0.0</AssemblyVersion>
+    <AssemblyVersion>0.5.0.0</AssemblyVersion>
+    <AssemblyVersion>0.5.1.0</AssemblyVersion>
+    <AssemblyVersion>0.6.1.0</AssemblyVersion>
+    <AssemblyVersion>0.6.2.0</AssemblyVersion>
+    <AssemblyVersion>0.7.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>Xamarin.Media.StoreMediaOptions</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>Holds options for camera-based capturing operations.</summary>
+    <remarks />
+    <altmember cref="M:Xamarin.Media.MediaPicker.TakeVideoAsync" />
+    <altmember cref="M:Xamarin.Media.MediaPicker.TakePhotoAsync" />
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public StoreCameraMediaOptions ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Media.StoreCameraMediaOptions" /> class.</summary>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="DefaultCamera">
+      <MemberSignature Language="C#" Value="public Xamarin.Media.CameraDevice DefaultCamera { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Xamarin.Media.CameraDevice DefaultCamera" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Media.CameraDevice</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets or sets the default camera to use for the operation.</summary>
+        <value>The default camera to use for the operation.</value>
+        <remarks>
+          <para>
+				This only serves as a hint to the host system to use the specified camera. If setting the default
+				camera - or the camera selected - is unsupported, this property will be ignored.
+			</para>
+        </remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

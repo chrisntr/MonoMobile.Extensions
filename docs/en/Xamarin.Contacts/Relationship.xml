@@ -1,0 +1,91 @@
+<Type Name="Relationship" FullName="Xamarin.Contacts.Relationship">
+  <TypeSignature Language="C#" Value="public class Relationship" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit Relationship extends System.Object" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.Mobile</AssemblyName>
+    <AssemblyVersion>0.2.0.0</AssemblyVersion>
+    <AssemblyVersion>0.3.0.0</AssemblyVersion>
+    <AssemblyVersion>0.4.0.0</AssemblyVersion>
+    <AssemblyVersion>0.5.0.0</AssemblyVersion>
+    <AssemblyVersion>0.5.1.0</AssemblyVersion>
+    <AssemblyVersion>0.6.1.0</AssemblyVersion>
+    <AssemblyVersion>0.6.2.0</AssemblyVersion>
+    <AssemblyVersion>0.7.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>Represents a defined relationship of a <see cref="T:Xamarin.Contacts.Contact" />.</summary>
+    <remarks />
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Relationship ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.2.0.0</AssemblyVersion>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.Relationship" /> class.</summary>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="Name">
+      <MemberSignature Language="C#" Value="public string Name { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string Name" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.2.0.0</AssemblyVersion>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets or sets the name of the person being related to the contact.</summary>
+        <value>The name of the person being related to the contact.</value>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="Type">
+      <MemberSignature Language="C#" Value="public Xamarin.Contacts.RelationshipType Type { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Xamarin.Contacts.RelationshipType Type" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.2.0.0</AssemblyVersion>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Contacts.RelationshipType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets or sets the relationship type.</summary>
+        <value>The relationship type.</value>
+        <remarks />
+      </Docs>
+    </Member>
+  </Members>
+</Type>

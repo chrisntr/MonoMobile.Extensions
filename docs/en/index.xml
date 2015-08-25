@@ -1,0 +1,107 @@
+<Overview>
+  <Assemblies>
+    <Assembly Name="Xamarin.Mobile" Version="0.7.0.0">
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyCompany("Xamarin Inc.")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyConfiguration("")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyCopyright("Copyright � 2011-2013 Xamarin Inc.")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyDescription("")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyFileVersion("0.7.0.0")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyProduct("Xamarin.Mobile")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyTitle("Xamarin.Mobile")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyTrademark("")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Runtime.InteropServices.ComVisible(false)</AttributeName>
+        </Attribute>
+      </Attributes>
+    </Assembly>
+  </Assemblies>
+  <Remarks>
+  </Remarks>
+  <Copyright>Copyright Xamarin Inc 2011-2013</Copyright>
+  <Types>
+    <Namespace Name="Xamarin.Contacts">
+      <Type Name="Address" Kind="Class" />
+      <Type Name="AddressBook" Kind="Class" />
+      <Type Name="AddressType" Kind="Enumeration" />
+      <Type Name="Contact" Kind="Class" />
+      <Type Name="Email" Kind="Class" />
+      <Type Name="EmailType" Kind="Enumeration" />
+      <Type Name="InstantMessagingAccount" Kind="Class" />
+      <Type Name="InstantMessagingService" Kind="Enumeration" />
+      <Type Name="Note" Kind="Class" />
+      <Type Name="Organization" Kind="Class" />
+      <Type Name="OrganizationType" Kind="Enumeration" />
+      <Type Name="Phone" Kind="Class" />
+      <Type Name="PhoneType" Kind="Enumeration" />
+      <Type Name="Relationship" Kind="Class" />
+      <Type Name="RelationshipType" Kind="Enumeration" />
+      <Type Name="Website" Kind="Class" />
+    </Namespace>
+    <Namespace Name="Xamarin.Geolocation">
+      <Type Name="GeolocationError" Kind="Enumeration" />
+      <Type Name="GeolocationException" Kind="Class" />
+      <Type Name="Geolocator" Kind="Class" />
+      <Type Name="Position" Kind="Class" />
+      <Type Name="PositionErrorEventArgs" Kind="Class" />
+      <Type Name="PositionEventArgs" Kind="Class" />
+    </Namespace>
+    <Namespace Name="Xamarin.Media">
+      <Type Name="CameraDevice" Kind="Enumeration" />
+      <Type Name="MediaFile" Kind="Class" />
+      <Type Name="MediaFileExtensions" Kind="Class" />
+      <Type Name="MediaFileNotFoundException" Kind="Class" />
+      <Type Name="MediaPicker" Kind="Class" />
+      <Type Name="MediaPickerController" Kind="Class" />
+      <Type Name="StoreCameraMediaOptions" Kind="Class" />
+      <Type Name="StoreMediaOptions" Kind="Class" />
+      <Type Name="StoreVideoOptions" Kind="Class" />
+      <Type Name="VideoQuality" Kind="Enumeration" />
+    </Namespace>
+  </Types>
+  <Title>Xamarin.Mobile</Title>
+  <ExtensionMethods>
+    <ExtensionMethod>
+      <Targets>
+        <Target Type="T:Android.Content.Intent" />
+      </Targets>
+      <Member MemberName="GetMediaFileExtraAsync">
+        <MemberSignature Language="C#" Value="public static System.Threading.Tasks.Task&lt;Xamarin.Media.MediaFile&gt; GetMediaFileExtraAsync (this Android.Content.Intent self, Android.Content.Context context);" />
+        <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Threading.Tasks.Task`1&lt;class Xamarin.Media.MediaFile&gt; GetMediaFileExtraAsync(class Android.Content.Intent self, class Android.Content.Context context) cil managed" />
+        <MemberType>ExtensionMethod</MemberType>
+        <ReturnValue>
+          <ReturnType>System.Threading.Tasks.Task&lt;Xamarin.Media.MediaFile&gt;</ReturnType>
+        </ReturnValue>
+        <Parameters>
+          <Parameter Name="self" Type="Android.Content.Intent" RefType="this" />
+          <Parameter Name="context" Type="Android.Content.Context" />
+        </Parameters>
+        <Docs>
+          <param name="self">The <see cref="T:Android.Content.Intent" /> to retrieve the <see cref="T:Xamarin.Media.MediaFile" /> from.</param>
+          <param name="context">The current <see cref="T:Android.Content.Context" />, typically your <see cref="T:Android.App.Activity" />.</param>
+          <summary>Asynchronously retrieves a <see cref="T:Xamarin.Media.MediaFile" /> from the </summary>
+        </Docs>
+        <Link Type="Xamarin.Media.MediaFileExtensions" Member="M:Xamarin.Media.MediaFileExtensions.GetMediaFileExtraAsync(Android.Content.Intent,Android.Content.Context)" />
+      </Member>
+    </ExtensionMethod>
+  </ExtensionMethods>
+</Overview>

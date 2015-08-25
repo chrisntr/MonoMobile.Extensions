@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{32DFF77E-AE38-48D6-B067-CF555798EA32}</ProjectGuid>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Xamarin</RootNamespace>
+    <AssemblyName>Xamarin.Mobile</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <AndroidSupportedAbis>armeabi</AndroidSupportedAbis>
+    <AndroidStoreUncompressedFileExtensions />
+    <MandroidI18n />
+    <TargetFrameworkVersion>v2.3</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Release\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <Optimize>true</Optimize>
+    <DebugType>full</DebugType>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugType>full</DebugType>
+    <AndroidLinkMode>None</AndroidLinkMode>
+    <WarningLevel>4</WarningLevel>
+    <Optimize>false</Optimize>
+    <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Mono.Android" />
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Shared\Contacts\Address.cs">
+      <Link>Contacts\Address.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\Contacts\Email.cs">
+      <Link>Contacts\Email.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\Contacts\InstantMessangingAccount.cs">
+      <Link>Contacts\InstantMessangingAccount.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\Contacts\Note.cs">
+      <Link>Contacts\Note.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\Contacts\Organization.cs">
+      <Link>Contacts\Organization.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\Contacts\Phone.cs">
+      <Link>Contacts\Phone.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\Contacts\Relationship.cs">
+      <Link>Contacts\Relationship.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\Contacts\Website.cs">
+      <Link>Contacts\Website.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\EvaluationNominator.cs">
+      <Link>EvaluationNominator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\ExpressionEvaluator.cs">
+      <Link>ExpressionEvaluator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\ExpressionVisitor.cs">
+      <Link>ExpressionVisitor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\Media\MediaFileNotFoundException.cs">
+      <Link>Media\MediaFileNotFoundException.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\Media\StoreMediaOptions.cs">
+      <Link>Media\StoreMediaOptions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\Position.cs">
+      <Link>Geolocation\Position.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\Query.cs">
+      <Link>Query.cs</Link>
+    </Compile>
+    <Compile Include="AsyncQuery.cs" />
+    <Compile Include="Contacts\AddressBook.cs" />
+    <Compile Include="Contacts\Contact.cs" />
+    <Compile Include="Contacts\ContactQueryProvider.cs" />
+    <Compile Include="Contacts\ContactHelper.cs" />
+    <Compile Include="Contacts\ContactReader.cs" />
+    <Compile Include="Contacts\ContactTableFinder.cs" />
+    <Compile Include="ContentResolverColumnMapping.cs" />
+    <Compile Include="GenericQueryReader.cs" />
+    <Compile Include="Media\MediaFile.cs" />
+    <Compile Include="MemberExpressionFinder.cs" />
+    <Compile Include="ProjectionReader.cs" />
+    <Compile Include="ContentQueryProvider.cs" />
+    <Compile Include="ContentQueryTranslator.cs" />
+    <Compile Include="Geolocation\GeolocationContinuousListener.cs" />
+    <Compile Include="Geolocation\GeolocationSingleListener.cs" />
+    <Compile Include="Geolocation\Geolocator.cs" />
+    <Compile Include="ITableFinder.cs" />
+    <Compile Include="DateTimeExtensions.cs" />
+    <Compile Include="Media\MediaPicker.cs" />
+    <Compile Include="Media\MediaPickerActivity.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

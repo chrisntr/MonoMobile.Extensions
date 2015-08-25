@@ -1,0 +1,40 @@
+version: 0.7.5
+id: xamarin.mobile
+name: Xamarin.Mobile
+publisher: Xamarin Inc.
+publisher-url: http://xamarin.com/
+summary: Xamarin.Mobile is a library that exposes a single set of APIs for accessing common mobile device functionality across iOS, Android and Windows platforms.
+details: Details.md
+license: LICENSE.md
+getting-started: GettingStarted.md
+#monodocs: docs/en/
+no_build: true
+libraries:
+  ios:
+    - MonoTouch/Xamarin.Mobile/bin/classic/iPhoneSimulator/Release/Xamarin.Mobile.dll
+  ios-unified:
+    - MonoTouch/Xamarin.Mobile/bin/unified/iPhoneSimulator/Release/Xamarin.Mobile.dll
+  android:
+    - MonoDroid/Xamarin.Mobile/bin/Release/Xamarin.Mobile.dll
+  wp8:
+    - WindowsPhone8/Xamarin.Mobile/bin/x86/Release/Xamarin.Mobile.dll
+  winrt:
+    - WindowsRT/Xamarin.Mobile/bin/x86/Release/Xamarin.Mobile.dll
+samples:
+  - name: "Android Samples"
+    path: MonoDroid/Samples/Xamarin.Mobile.Android.Samples.sln
+  - name: "iOS Classic API Samples"
+    path: MonoTouch/Samples/Xamarin.Mobile.iOS-Classic.Samples.sln
+  - name: "iOS Unified API Samples"
+    path: MonoTouch/Samples/Xamarin.Mobile.iOS.Samples.sln
+  - name: "Windows Phone 8 Samples"
+    path: WindowsPhone8/Samples/Xamarin.Mobile.WP8.Samples.sln
+    no_manifest: true
+  - name: "WinRT Samples"
+    path: WindowsRT/Samples/Xamarin.Mobile.WinRT.Samples.sln
+    no_manifest: true
+screenshots:
+  - component/screenshots/screenshot1.jpg
+icons:
+  - component/xamarin.mobile_128x128.png
+  - component/xamarin.mobile_512x512.png
