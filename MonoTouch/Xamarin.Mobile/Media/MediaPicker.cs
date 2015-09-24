@@ -32,8 +32,10 @@ namespace Xamarin.Media
 {
 	public class MediaPicker
 	{
+        public static UIStatusBarStyle StatusBarStyle { get; set; }
 		public MediaPicker ()
 		{
+            StatusBarStyle = UIApplication.SharedApplication.StatusBarStyle;
 			IsCameraAvailable = UIImagePickerController.IsSourceTypeAvailable (UIImagePickerControllerSourceType.Camera);
 
 			string[] availableCameraMedia = UIImagePickerController.AvailableMediaTypes (UIImagePickerControllerSourceType.Camera) ?? new string[0];

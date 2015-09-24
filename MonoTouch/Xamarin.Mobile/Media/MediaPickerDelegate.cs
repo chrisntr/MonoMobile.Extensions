@@ -84,11 +84,21 @@ namespace Xamarin.Media
 					throw new NotSupportedException();
 			}
 
+            if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Phone)
+            {
+                UIApplication.SharedApplication.SetStatusBarStyle(MediaPicker.StatusBarStyle, false);
+            }
+
 			Dismiss (picker, () => this.tcs.TrySetResult (mediaFile));
 		}
 
 		public override void Canceled (UIImagePickerController picker)
 		{
+            if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Phone)
+            {
+                UIApplication.SharedApplication.SetStatusBarStyle(MediaPicker.StatusBarStyle, false);
+            }
+
 			Dismiss (picker, () => this.tcs.TrySetCanceled());
 		}
 
