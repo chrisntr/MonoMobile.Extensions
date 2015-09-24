@@ -179,21 +179,32 @@ namespace Xamarin.Media
 			});
 		}
 
-		protected override void OnActivityResult (int requestCode, Result resultCode, Intent data)
+		protected override async void OnActivityResult (int requestCode, Result resultCode, Intent data)
 		{
 			base.OnActivityResult (requestCode, resultCode, data);
 
 			if (this.tasked) {
 				Task<MediaPickedEventArgs> future;
 
-				if (resultCode == Result.Canceled)
-					future = TaskFromResult (new MediaPickedEventArgs (requestCode, isCanceled: true));
-				else
-					future = GetMediaFileAsync (this, requestCode, this.action, this.isPhoto, ref this.path, (data != null ) ? data.Data : null);
-
-				Finish();
-
-				future.ContinueWith (t => OnMediaPicked (t.Result));
+                if (resultCode == Result.Canceled) {
+                    future = TaskFromResult(new MediaPickedEventArgs(requestCode, isCanceled: true));
+                    Finish();
+                    future.ContinueWith (t => OnMediaPicked (t.Result));
+                }
+                else{
+                    //Handle android 5.1.1 as you now must access file on 
+                    //the same activity that launched it.
+                    if ((int)Build.VERSION.SdkInt >= 22) {
+                        var e = await GetMediaFileAsync(this, requestCode, this.action, this.isPhoto, ref this.path, (data != null) ? data.Data : null);
+                        OnMediaPicked(e);
+                        Finish();
+                    }
+                    else {
+                        future = GetMediaFileAsync(this, requestCode, this.action, this.isPhoto, ref this.path, (data != null) ? data.Data : null);
+                        Finish();
+                        future.ContinueWith(t => OnMediaPicked(t.Result));
+                    }
+                }
 			} else {
 				if (resultCode == Result.Canceled)
 					SetResult (Result.Canceled);
@@ -302,7 +313,11 @@ namespace Xamarin.Media
 					{
 						string contentPath = null;
 						try {
-							cursor = context.ContentResolver.Query (uri, null, null, null, null);
+							string[] proj = null;
+                        	//Android 5.1.1 requires projection
+                        	if((int)Build.VERSION.SdkInt >= 22)
+                            	proj = new[] { MediaStore.MediaColumns.Data };
+							cursor = context.ContentResolver.Query (uri, proj, null, null, null);
 						} catch (Exception) {
 						}
 						if (cursor != null && cursor.MoveToNext()) {
