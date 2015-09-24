@@ -74,7 +74,7 @@ namespace Xamarin.Contacts
 					if (this.addressBook == null)
 					{
 						this.addressBook = new ABAddressBook();
-						this.provider = new ContactQueryProvider (this.addressBook);
+						//this.provider = new ContactQueryProvider (this.addressBook);
 					}
 
 					if (status == ABAuthorizationStatus.NotDetermined)
@@ -86,7 +86,7 @@ namespace Xamarin.Contacts
 							{
 								this.addressBook.Dispose();
 								this.addressBook = null;
-								this.provider = null;
+								//this.provider = null;
 							}
 						});
 					}
@@ -126,7 +126,7 @@ namespace Xamarin.Contacts
 		}
 		
 		private ABAddressBook addressBook;
-		private IQueryProvider provider;
+		//private IQueryProvider provider;
 
 		private void CheckStatus()
 		{
@@ -140,7 +140,7 @@ namespace Xamarin.Contacts
 			if (this.addressBook == null)
 			{
 				this.addressBook = new ABAddressBook();
-				this.provider = new ContactQueryProvider (this.addressBook);
+				//this.provider = new ContactQueryProvider (this.addressBook);
 			}
 		}
 		
