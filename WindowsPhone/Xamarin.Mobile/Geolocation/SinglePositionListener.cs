@@ -26,6 +26,7 @@ namespace Xamarin.Geolocation
 		internal SinglePositionListener (double accuracy, int timeout, CancellationToken cancelToken)
 		{
 			cancelToken.Register (HandleTimeout, true);
+			this.cancelToken = cancelToken;
 			this.desiredAccuracy = accuracy;
 			this.start = DateTime.Now;
 			this.timeout = timeout;
@@ -57,6 +58,7 @@ namespace Xamarin.Geolocation
 		private readonly Timer timer;
 		private readonly int timeout;
 		private readonly TaskCompletionSource<Position> tcs = new TaskCompletionSource<Position>();
+		private readonly CancellationToken cancelToken;
 
 		private void Cleanup (Task task)
 		{
@@ -100,7 +102,8 @@ namespace Xamarin.Geolocation
 			if (e.Position.Location.IsUnknown)
 				return;
 
-			bool isRecent = (e.Position.Timestamp - this.start).TotalMilliseconds < this.timeout;
+			bool isRecent = (e.Position.Timestamp - this.start).TotalMilliseconds < this.timeout ||
+                            		(this.timeout == Timeout.Infinite && this.cancelToken == CancellationToken.None);
 
 			if (e.Position.Location.HorizontalAccuracy <= this.desiredAccuracy && isRecent)
 				this.tcs.TrySetResult (Geolocator.GetPosition (e.Position));
