@@ -1,4 +1,4 @@
-version: 0.7.5
+version: 0.7.6
 id: xamarin.mobile
 name: Xamarin.Mobile
 publisher: Xamarin Inc.
@@ -11,15 +11,15 @@ getting-started: GettingStarted.md
 no_build: true
 libraries:
   ios:
-    - MonoTouch/Xamarin.Mobile/bin/classic/iPhoneSimulator/Release/Xamarin.Mobile.dll
+    - ./output/ios/Xamarin.Mobile.dll
   ios-unified:
-    - MonoTouch/Xamarin.Mobile/bin/unified/iPhoneSimulator/Release/Xamarin.Mobile.dll
+    - ./output/ios-unified/Xamarin.Mobile.dll
   android:
-    - MonoDroid/Xamarin.Mobile/bin/Release/Xamarin.Mobile.dll
+    - ./output/android/Xamarin.Mobile.dll
   wp8:
-    - WindowsPhone8/Xamarin.Mobile/bin/x86/Release/Xamarin.Mobile.dll
+    - ./output/wp8/Xamarin.Mobile.dll
   winrt:
-    - WindowsRT/Xamarin.Mobile/bin/x86/Release/Xamarin.Mobile.dll
+    - ./output/winrt/Xamarin.Mobile.dll
 samples:
   - name: "Android Samples"
     path: MonoDroid/Samples/Xamarin.Mobile.Android.Samples.sln
