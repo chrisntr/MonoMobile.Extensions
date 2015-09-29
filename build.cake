@@ -10,12 +10,12 @@ Task ("libs").Does (() =>
 		CreateDirectory ("./output/wp8/");
 		CreateDirectory ("./output/winrt/");
 		
-		NuGetRestore ("./Xamarin.Mobile.sln");
+		NuGetRestore ("./Xamarin.Mobile.Windows.sln");
 
-		DotNetBuild ("./WindowsPhone8/Xamarin.Mobile/Xamarin.Mobile.csproj", c => c.Configuration = "Release");
-		CopyFiles ("./WindowsPhone8/Xamarin.Mobile/bin/Release/*.dll", "./output/wp8");
+		MSBuild("./WindowsPhone8/Xamarin.Mobile/Xamarin.Mobile.csproj", c => c.SetConfiguration("Release").SetPlatformTarget(PlatformTarget.x86));
+		CopyFiles ("./WindowsPhone8/Xamarin.Mobile/Bin/x86/Release/*.dll", "./output/wp8");
 
-		DotNetBuild ("./WindowsRT/Xamarin.Mobile/Xamarin.Mobile.csproj", c => c.Configuration = "Release");
+		MSBuild ("./WindowsRT/Xamarin.Mobile/Xamarin.Mobile.csproj", c => c.SetConfiguration("Release").SetPlatformTarget(PlatformTarget.x86));
 		CopyFiles ("./WindowsRT/Xamarin.Mobile/bin/Release/*.dll", "./output/winrt");
 
 	} else {
@@ -42,25 +42,24 @@ Task ("Default").IsDependentOn ("libs").Does (() => { });
 Task ("samples").IsDependentOn ("libs").Does (() => 
 {
 	if (IsRunningOnWindows ()) {
-		DotNetBuild ("./WindowsPhone8/Samples/ContactsSample/ContactsSample.csproj", c => c.Configuration = "Release");
-		DotNetBuild ("./WindowsPhone8/Samples/GeolocationSample/GeolocationSample.csproj", c => c.Configuration = "Release");
-		DotNetBuild ("./WindowsPhone8/Samples/MediaPickerSample/MediaPickerSample.csproj", c => c.Configuration = "Release");
+		MSBuild ("./WindowsPhone8/Samples/ContactsSample/ContactsSample.csproj", c => c.SetConfiguration("Release").SetPlatformTarget(PlatformTarget.x86));
+		MSBuild ("./WindowsPhone8/Samples/GeolocationSample/GeolocationSample.csproj", c => c.SetConfiguration("Release").SetPlatformTarget(PlatformTarget.x86));
+		MSBuild ("./WindowsPhone8/Samples/MediaPickerSample/MediaPickerSample.csproj", c => c.SetConfiguration("Release").SetPlatformTarget(PlatformTarget.x86));
 
-		DotNetBuild ("./WindowsRT/Samples/ContactsSample/ContactsSample.csproj", c => c.Configuration = "Release");
-		DotNetBuild ("./WindowsRT/Samples/GeolocationSample/GeolocationSample.csproj", c => c.Configuration = "Release");
-		DotNetBuild ("./WindowsRT/Samples/MediaPickerSample/MediaPickerSample.csproj", c => c.Configuration = "Release");
+		MSBuild ("./WindowsRT/Samples/GeolocationSample/GeolocationSample.csproj", c => c.SetConfiguration("Release").SetPlatformTarget(PlatformTarget.x86));
+		MSBuild ("./WindowsRT/Samples/MediaPickerSample/MediaPickerSample.csproj", c => c.SetConfiguration("Release").SetPlatformTarget(PlatformTarget.x86));
 	} else {		
 		DotNetBuild ("./MonoDroid/Samples/ContactsSample/Contacts Sample.csproj", c => c.Configuration = "Release");
 		DotNetBuild ("./MonoDroid/Samples/GeolocationSample/Geolocation Sample.csproj", c => c.Configuration = "Release");
 		DotNetBuild ("./MonoDroid/Samples/MediaPickerSample/MediaPicker Sample.csproj", c => c.Configuration = "Release");
 
-		iOSBuild ("./MonoTouch/Samples/ContactsSample/Contacts Sample.csproj", new MDToolSettings { Configuration = "Release|iPhone" });
-		iOSBuild ("./MonoTouch/Samples/GeolocationSample/Geolocation Sample.csproj", new MDToolSettings { Configuration = "Release|iPhone" });
-		iOSBuild ("./MonoTouch/Samples/MediaPickerSample/MediaPicker Sample.csproj", new MDToolSettings { Configuration = "Release|iPhone" });
+		DotNetBuild ("./MonoTouch/Samples/ContactsSample/Contacts Sample.csproj", c => c.Configuration = "Release"); //new MDToolSettings { Configuration = "Release|iPhone" });
+		DotNetBuild ("./MonoTouch/Samples/Geolocation/Geolocation Sample.csproj", c => c.Configuration = "Release"); // new MDToolSettings { Configuration = "Release|iPhone" });
+		DotNetBuild ("./MonoTouch/Samples/MediaPickerSample/MediaPicker Sample.csproj", c => c.Configuration = "Release"); //new MDToolSettings { Configuration = "Release|iPhone" });
 
-		iOSBuild ("./MonoTouch/Samples/ContactsSample-Classic/Contacts Sample-Classic.csproj", new MDToolSettings { Configuration = "Release|iPhone" });
-		iOSBuild ("./MonoTouch/Samples/GeolocationSample-Classic/Geolocation Sample-Classic.csproj", new MDToolSettings { Configuration = "Release|iPhone" });
-		iOSBuild ("./MonoTouch/Samples/MediaPickerSample-Classic/MediaPicker Sample-Classic.csproj", new MDToolSettings { Configuration = "Release|iPhone" });
+		DotNetBuild ("./MonoTouch/Samples/ContactsSample-Classic/Contacts Sample-Classic.csproj", c => c.Configuration = "Release"); // new MDToolSettings { Configuration = "Release|iPhone" });
+		DotNetBuild ("./MonoTouch/Samples/Geolocation-Classic/Geolocation Sample-Classic.csproj", c => c.Configuration = "Release"); //new MDToolSettings { Configuration = "Release|iPhone" });
+		DotNetBuild ("./MonoTouch/Samples/MediaPickerSample-Classic/MediaPicker Sample-Classic.csproj", c => c.Configuration = "Release"); //new MDToolSettings { Configuration = "Release|iPhone" });
 	}
 });
 
