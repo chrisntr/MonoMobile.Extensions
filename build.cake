@@ -92,7 +92,10 @@ Task ("clean").Does (() =>
 
 Task ("zip").Does (() =>
 {
-	Zip ("./output/", "./output.zip");
+	if (FileExists ("./win-output.zip"))
+		DeleteFile ("./win-output.zip");
+	
+	Zip ("./output/", "./win-output.zip");
 });
 
 RunTarget (TARGET);
