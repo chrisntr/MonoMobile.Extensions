@@ -36,6 +36,8 @@ Task ("libs").Does (() =>
 		iOSBuild ("./MonoTouch/Xamarin.Mobile/Xamarin.Mobile.iOS-Classic.csproj", new MDToolSettings { Configuration = "Release|iPhone" });
 		CopyFiles ("./MonoTouch/Xamarin.Mobile/bin/classic/iPhone/Release/*.dll", "./output/ios");
 	}
+
+	Zip ("./output/", "./output.zip");
 });
 Task ("Default").IsDependentOn ("libs").Does (() => { });
 
