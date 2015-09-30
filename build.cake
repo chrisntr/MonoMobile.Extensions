@@ -13,10 +13,10 @@ Task ("libs").Does (() =>
 		NuGetRestore ("./Xamarin.Mobile.Windows.sln");
 
 		MSBuild("./WindowsPhone8/Xamarin.Mobile/Xamarin.Mobile.csproj", c => c.SetConfiguration("Release").SetPlatformTarget(PlatformTarget.x86));
-		CopyFiles ("./WindowsPhone8/Xamarin.Mobile/Bin/x86/Release/*.dll", "./output/wp8");
+		CopyFiles ("./WindowsPhone8/Xamarin.Mobile/Bin/**/Release/*.dll", "./output/wp8");
 
 		MSBuild ("./WindowsRT/Xamarin.Mobile/Xamarin.Mobile.csproj", c => c.SetConfiguration("Release").SetPlatformTarget(PlatformTarget.x86));
-		CopyFiles ("./WindowsRT/Xamarin.Mobile/bin/Release/*.dll", "./output/winrt");
+		CopyFiles ("./WindowsRT/Xamarin.Mobile/bin/**/Release/*.dll", "./output/winrt");
 
 	} else {
 
