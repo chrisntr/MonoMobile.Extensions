@@ -27,7 +27,7 @@ Task ("libs").Does (() =>
 
 		NuGetRestore ("./Xamarin.Mobile.Mac.sln");
 
-		DotNetBuild ("./MonoDroid/Xamarin.Mobile/Xamarin.Mobile.Android.csproj");
+		DotNetBuild ("./MonoDroid/Xamarin.Mobile/Xamarin.Mobile.Android.csproj",  c => c.Configuration = "Release");
 		CopyFiles ("./MonoDroid/Xamarin.Mobile/bin/Release/*.dll", "./output/android");
 
 		iOSBuild ("./MonoTouch/Xamarin.Mobile/Xamarin.Mobile.iOS.csproj", new MDToolSettings { Configuration = "Release|iPhone" });
@@ -92,10 +92,18 @@ Task ("clean").Does (() =>
 
 Task ("zip").Does (() =>
 {
-	if (FileExists ("./win-output.zip"))
-		DeleteFile ("./win-output.zip");
+	if (IsRunningOnWindows ()) {
+		if (FileExists ("./win-output.zip"))
+			DeleteFile ("./win-output.zip");
 	
-	Zip ("./output/", "./win-output.zip");
+		Zip ("./output/", "./win-output.zip");
+	}
+	else {
+		if (FileExists ("./osx-output.zip"))
+			DeleteFile ("./osx-output.zip");
+	
+		Zip ("./output/", "./osx-output.zip");
+	}
 });
 
 RunTarget (TARGET);
