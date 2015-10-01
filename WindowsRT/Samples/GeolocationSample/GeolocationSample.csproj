@@ -13,7 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>GeolocationSample_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>3DB7A99E43EF33EE85DD9941A395403FC536499C</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>B4698CA8814E001DD9CC5B7E78B487DE2EDD6B6F</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>

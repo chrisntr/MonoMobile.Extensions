@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeolocationSample", "GeolocationSample\GeolocationSample.csproj", "{6597A270-F580-43DA-93EE-2B78473EECB3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaPickerSample", "MediaPickerSample\MediaPickerSample.csproj", "{B248460E-FBB8-40CF-835E-2E21E52E6AE9}"
