@@ -1,0 +1,54 @@
+<Type Name="MediaFileExtensions" FullName="Xamarin.Media.MediaFileExtensions">
+  <TypeSignature Language="C#" Value="public static class MediaFileExtensions" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract sealed beforefieldinit MediaFileExtensions extends System.Object" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.Mobile</AssemblyName>
+    <AssemblyVersion>0.7.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>Contains extension methods for the <see cref="T:Xamarin.Media.MediaFile" /> class.</summary>
+    <remarks>This class is only present in the Android version of Xamarin.Mobile.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="GetMediaFileExtraAsync">
+      <MemberSignature Language="C#" Value="public static System.Threading.Tasks.Task&lt;Xamarin.Media.MediaFile&gt; GetMediaFileExtraAsync (this Android.Content.Intent self, Android.Content.Context context);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Threading.Tasks.Task`1&lt;class Xamarin.Media.MediaFile&gt; GetMediaFileExtraAsync(class Android.Content.Intent self, class Android.Content.Context context) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;Xamarin.Media.MediaFile&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="self" Type="Android.Content.Intent" RefType="this" />
+        <Parameter Name="context" Type="Android.Content.Context" />
+      </Parameters>
+      <Docs>
+        <param name="self">The <see cref="T:Android.Content.Intent" /> to retrieve the <see cref="T:Xamarin.Media.MediaFile" /> from.</param>
+        <param name="context">The current <see cref="T:Android.Content.Context" />, typically your <see cref="T:Android.App.Activity" />.</param>
+        <summary>Asynchronously retrieves a <see cref="T:Xamarin.Media.MediaFile" /> from the </summary>
+        <returns>A <see cref="T:Xamarin.Media.MediaFile" /> representing the media selected or taken.</returns>
+        <remarks>This method is meant to be called on the <see cref="T:Android.Content.Intent" /> passed to <see cref="M:Android.App.Activity.OnActivityResult" />.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <para>
+            <paramref name="self" /> is <c>null</c>.
+          </para>
+          <para>
+            -- or --
+          </para>
+          <para>
+            <paramref name="context" /> is <c>null</c>.
+          </para>
+        </exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="self" /> is not an intent passed to <see cref="M:Android.App.Activity.OnActivityResult" /> from <see cref="T:Xamarin.Media.MediaPicker" />.
+        </exception>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

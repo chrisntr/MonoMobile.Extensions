@@ -1,0 +1,50 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Mobile", "Xamarin.Mobile\Xamarin.Mobile.csproj", "{075AA9A6-A76F-482D-B504-BA0A224B0480}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{B952601B-99D0-423D-8DDF-F22430A2A0DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactsSample", "Samples\ContactsSample\ContactsSample.csproj", "{B1C0A14A-7709-4FE7-B049-1B2AEB25E737}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeolocationSample", "Samples\GeolocationSample\GeolocationSample.csproj", "{F63C9A93-F120-4418-AB30-BCB3FA6E57BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaPickerSample", "Samples\MediaPickerSample\MediaPickerSample.csproj", "{B945D6E7-2A66-446A-A8DB-1673D90D74B0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{075AA9A6-A76F-482D-B504-BA0A224B0480}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{075AA9A6-A76F-482D-B504-BA0A224B0480}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{075AA9A6-A76F-482D-B504-BA0A224B0480}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{075AA9A6-A76F-482D-B504-BA0A224B0480}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1C0A14A-7709-4FE7-B049-1B2AEB25E737}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1C0A14A-7709-4FE7-B049-1B2AEB25E737}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1C0A14A-7709-4FE7-B049-1B2AEB25E737}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{B1C0A14A-7709-4FE7-B049-1B2AEB25E737}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1C0A14A-7709-4FE7-B049-1B2AEB25E737}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1C0A14A-7709-4FE7-B049-1B2AEB25E737}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{F63C9A93-F120-4418-AB30-BCB3FA6E57BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F63C9A93-F120-4418-AB30-BCB3FA6E57BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F63C9A93-F120-4418-AB30-BCB3FA6E57BA}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{F63C9A93-F120-4418-AB30-BCB3FA6E57BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F63C9A93-F120-4418-AB30-BCB3FA6E57BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F63C9A93-F120-4418-AB30-BCB3FA6E57BA}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{B945D6E7-2A66-446A-A8DB-1673D90D74B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B945D6E7-2A66-446A-A8DB-1673D90D74B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B945D6E7-2A66-446A-A8DB-1673D90D74B0}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{B945D6E7-2A66-446A-A8DB-1673D90D74B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B945D6E7-2A66-446A-A8DB-1673D90D74B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B945D6E7-2A66-446A-A8DB-1673D90D74B0}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B1C0A14A-7709-4FE7-B049-1B2AEB25E737} = {B952601B-99D0-423D-8DDF-F22430A2A0DB}
+		{F63C9A93-F120-4418-AB30-BCB3FA6E57BA} = {B952601B-99D0-423D-8DDF-F22430A2A0DB}
+		{B945D6E7-2A66-446A-A8DB-1673D90D74B0} = {B952601B-99D0-423D-8DDF-F22430A2A0DB}
+	EndGlobalSection
+EndGlobal

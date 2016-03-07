@@ -1,0 +1,63 @@
+<Type Name="CameraDevice" FullName="Xamarin.Media.CameraDevice">
+  <TypeSignature Language="C#" Value="public enum CameraDevice" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed CameraDevice extends System.Enum" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.Mobile</AssemblyName>
+    <AssemblyVersion>0.3.0.0</AssemblyVersion>
+    <AssemblyVersion>0.4.0.0</AssemblyVersion>
+    <AssemblyVersion>0.5.0.0</AssemblyVersion>
+    <AssemblyVersion>0.5.1.0</AssemblyVersion>
+    <AssemblyVersion>0.6.1.0</AssemblyVersion>
+    <AssemblyVersion>0.6.2.0</AssemblyVersion>
+    <AssemblyVersion>0.7.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Docs>
+    <summary>Represents the various types of cameras available.</summary>
+    <remarks />
+  </Docs>
+  <Members>
+    <Member MemberName="Front">
+      <MemberSignature Language="C#" Value="Front" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Media.CameraDevice Front = int32(1)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Media.CameraDevice</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>The front facing camera.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Rear">
+      <MemberSignature Language="C#" Value="Rear" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Media.CameraDevice Rear = int32(0)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Media.CameraDevice</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>The rear facing camera.</summary>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

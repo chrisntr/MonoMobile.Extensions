@@ -1,0 +1,98 @@
+<Type Name="StoreVideoOptions" FullName="Xamarin.Media.StoreVideoOptions">
+  <TypeSignature Language="C#" Value="public class StoreVideoOptions : Xamarin.Media.StoreCameraMediaOptions" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit StoreVideoOptions extends Xamarin.Media.StoreCameraMediaOptions" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.Mobile</AssemblyName>
+    <AssemblyVersion>0.3.0.0</AssemblyVersion>
+    <AssemblyVersion>0.4.0.0</AssemblyVersion>
+    <AssemblyVersion>0.5.0.0</AssemblyVersion>
+    <AssemblyVersion>0.5.1.0</AssemblyVersion>
+    <AssemblyVersion>0.6.1.0</AssemblyVersion>
+    <AssemblyVersion>0.6.2.0</AssemblyVersion>
+    <AssemblyVersion>0.7.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>Xamarin.Media.StoreCameraMediaOptions</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>Holds options for storing videos.</summary>
+    <remarks />
+    <altmember cref="M:Xamarin.Media.MediaPicker.TakeVideoAsync" />
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public StoreVideoOptions ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Media.StoreVideoOptions" /> class.</summary>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="DesiredLength">
+      <MemberSignature Language="C#" Value="public TimeSpan DesiredLength { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype System.TimeSpan DesiredLength" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.TimeSpan</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets or sets the desired length of the video recording.</summary>
+        <value>A <see cref="T:System.TimeSpan" /> representing the desired elngth of the recording.</value>
+        <remarks>
+          <para>
+				Not all camera implementations on Android respect this property, as such it should
+				be considered only a hint and not a guarantee of result length.
+			</para>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Quality">
+      <MemberSignature Language="C#" Value="public Xamarin.Media.VideoQuality Quality { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Xamarin.Media.VideoQuality Quality" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Media.VideoQuality</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets or sets the quality level for the video.</summary>
+        <value>Video quality level.</value>
+        <remarks>
+          <para>
+				Not all host systems support three settings. On Android, <see cref="F:Xamarin.Media.VideoQuality.Medium" /> is
+				interpreted as <see cref="F:Xamarin.Media.VideoQuality.High" />.
+			</para>
+        </remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

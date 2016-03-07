@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9A5D042F-607D-4E67-8FCE-176A8A7B21C0}</ProjectGuid>
+    <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Xamarin</RootNamespace>
+    <AssemblyName>Xamarin.Mobile</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\unified\iPhoneSimulator\Debug</OutputPath>
+    <IntermediateOutputPath>obj\unified\iPhoneSimulator\Debug\</IntermediateOutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <MtouchLink>None</MtouchLink>
+    <MtouchDebug>true</MtouchDebug>
+    <MtouchUseArmv7>false</MtouchUseArmv7>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\unified\iPhoneSimulator\Release</OutputPath>
+    <IntermediateOutputPath>obj\unified\iPhoneSimulator\Release\</IntermediateOutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <MtouchLink>None</MtouchLink>
+    <MtouchUseArmv7>false</MtouchUseArmv7>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\unified\iPhone\Debug</OutputPath>
+    <IntermediateOutputPath>obj\unified\iPhone\Debug\</IntermediateOutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchDebug>true</MtouchDebug>
+    <MtouchUseArmv7>false</MtouchUseArmv7>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\unified\iPhone\Release</OutputPath>
+    <IntermediateOutputPath>obj\unified\iPhone\Release\</IntermediateOutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchUseArmv7>false</MtouchUseArmv7>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>bin\unified\iPhone\Release\Xamarin.Mobile.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Xamarin.iOS" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="..\..\Shared\Contacts\Relationship.cs">
+      <Link>Contacts\Relationship.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\Media\MediaFileNotFoundException.cs">
+      <Link>Media\MediaFileNotFoundException.cs</Link>
+    </Compile>
+    <Compile Include="Media\MediaPickerController.cs" />
+    <Compile Include="NSErrorException.cs" />
+    <Compile Include="Geolocation\GeolocationSingleUpdateDelegate.cs" />
+    <Compile Include="Geolocation\Geolocator.cs" />
+    <Compile Include="..\..\Shared\Position.cs">
+      <Link>Geolocation\Position.cs</Link>
+    </Compile>
+    <Compile Include="Contacts\AddressBook.cs" />
+    <Compile Include="..\..\Shared\Contacts\Email.cs">
+      <Link>Contacts\Email.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\Contacts\Phone.cs">
+      <Link>Contacts\Phone.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\Query.cs">
+      <Link>Query.cs</Link>
+    </Compile>
+    <Compile Include="Contacts\ContactQueryProvider.cs" />
+    <Compile Include="Contacts\ContactHelper.cs" />
+    <Compile Include="Contacts\Contact.cs" />
+    <Compile Include="..\..\Shared\Contacts\Organization.cs">
+      <Link>Contacts\Organization.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\Contacts\InstantMessangingAccount.cs">
+      <Link>Contacts\InstantMessangingAccount.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\Contacts\Address.cs">
+      <Link>Contacts\Address.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\Contacts\Note.cs">
+      <Link>Contacts\Note.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\Contacts\Website.cs">
+      <Link>Contacts\Website.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\Media\MediaFile.cs">
+      <Link>Media\MediaFile.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Shared\Media\StoreMediaOptions.cs">
+      <Link>Media\StoreMediaOptions.cs</Link>
+    </Compile>
+    <Compile Include="Media\MediaPicker.cs" />
+    <Compile Include="Media\MediaPickerDelegate.cs" />
+    <Compile Include="NSDataStream.cs" />
+    <Compile Include="Media\MediaPickerPopoverDelegate.cs" />
+    <Compile Include="..\..\MonoDroid\Xamarin.Mobile\Properties\AssemblyInfo.cs">
+      <Link>Properties\AssemblyInfo.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Media\" />
+    <Folder Include="Properties\" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,717 @@
+<Type Name="MediaPicker" FullName="Xamarin.Media.MediaPicker">
+  <TypeSignature Language="C#" Value="public class MediaPicker" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit MediaPicker extends System.Object" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.Mobile</AssemblyName>
+    <AssemblyVersion>0.3.0.0</AssemblyVersion>
+    <AssemblyVersion>0.4.0.0</AssemblyVersion>
+    <AssemblyVersion>0.5.0.0</AssemblyVersion>
+    <AssemblyVersion>0.5.1.0</AssemblyVersion>
+    <AssemblyVersion>0.6.1.0</AssemblyVersion>
+    <AssemblyVersion>0.6.2.0</AssemblyVersion>
+    <AssemblyVersion>0.7.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>Contains methods allowing the asynchronous picking and taking of media.</summary>
+    <remarks>
+      <para>
+			Only one async operation can be active at a time for a single instance of <see cref="T:Xamarin.Media.MediaPicker" />.
+		</para>
+      <para>
+			Avoid blocking on the resulting task (by using <see cref="P:System.Threading.Tasks.Task{T}.Result" />
+			or <see cref="M:System.Threading.Tasks.Task.Wait" />) from the pick and take operations. As these operations
+			invoke the system UI for picking or taking media the operation occurs on the current UI thread and may deadlock
+			the application. Instead, use <c>await</c> or <see cref="M:System.Threading.Tasks.Tasks.ContinueWith" /> to handle the result of the operation.
+		</para>
+      <para>
+			If the user cancels a pick or take operation, the returned task will continue with <see cref="P:System.Threading.Tasks.Task.IsCanceled" />
+			as <c>true</c>. If an error occured during the operation, <see cref="P:System.Threading.Tasks.Task.IsFaulted" /> will
+			be <c>true</c> and <see cref="P:System.Threading.Tasks.Task.Exception" /> will contain the errors. It's important to check
+			for any exceptions as otherwise the exception will be rethrown when the task's finalizer runs.
+		</para>
+      <para>
+			On Windows Phone, your application may be deactivated while a pick or take operation UI is presented. To ensure that
+			<see cref="T:Xamarin.Media.MediaPicker" /> receives the result of the operation, the <see cref="T:Xamarin.Media.MediaPicker" />
+			must be in class scope of your PhoneApplicationPage and it must be initialized in the page's constructor. This is an unavoidable
+			limitation of the Windows Phone platform.
+		</para>
+    </remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public MediaPicker ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Media.MediaPicker" /> class.</summary>
+        <remarks>This constructor is available on iOS, Windows Phone and WinRT.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public MediaPicker (Android.Content.Context context);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class Android.Content.Context context) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="context" Type="Android.Content.Context" />
+      </Parameters>
+      <Docs>
+        <param name="context">The context to use for operations.</param>
+        <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Media.MediaPicker" /> class.</summary>
+        <remarks>This constructor is only available on Android.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetPickPhotoUI">
+      <MemberSignature Language="C#" Value="public Android.Content.Intent GetPickPhotoUI ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Android.Content.Intent GetPickPhotoUI() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Android.Content.Intent</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Gets a UI object for the system photo picker UI.</summary>
+        <returns>The UI object for you to display.</returns>
+        <remarks>
+          <para>This method is only present on the iOS and Android versions of Xamarin.Mobile.</para>
+        </remarks>
+        <example>
+          <para>On Android, this method returns an <see cref="T:Android.Content.Intent" /> to be used with <see cref="M:Android.App.Activity.StartActivityForResult" />.</para>
+          <code language="C#"><![CDATA[
+void PickPhoto()
+{
+  var picker = new MediaPicker (this);
+  Intent intent = picker.GetPickPhotoUI();
+  StartActivityForResult (intent, 1);
+}
+
+protected override void OnActivityResult (int requestCode, Result resultCode, Intent data)
+{
+  // Get our media file from the result
+  data.GetMediaFileExtraAsync (this).ContinueWith (t => {
+    MediaFile file = t.Result;
+    // Do stuff with file
+  }, TaskScheduler.FromCurrentSynchronizationContext());
+}
+]]></code>
+        </example>
+        <example>
+          <para>
+            On iOS, this method returns a <see cref="T:Xamarin.Media.MediaPickerController" />. Use <see cref="M:Xamarin.Media.MediaPickerController.GetResultAsync" /> 
+            to get the result. As you are controlling the display of the view controller, you must also dismiss it yourself.
+          </para>
+          <code language="C#"><![CDATA[
+async Task PickPhoto()
+{
+  var picker = new MediaPicker();
+  MediaPickerController mediaController = picker.GetPickPhotoUI();
+
+  // Present the media controller
+  topController.PresentViewController (mediaController, true, null);
+
+  // Get our result
+  MediaFile file = await mediaController.GetResultAsync();
+
+  // Dismiss the media controller.
+  mediaController.DismissViewController (true, null);
+
+  // Do stuff with file
+}
+]]></code>
+        </example>
+        <altmember cref="M:Xamarin.Media.MediaFileExtensions.GetMediaFileExtraAsync" />
+        <altmember cref="M:Xamarin.Media.MediaPickerController.GetResultAsync" />
+      </Docs>
+    </Member>
+    <Member MemberName="GetPickVideoUI">
+      <MemberSignature Language="C#" Value="public Android.Content.Intent GetPickVideoUI ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Android.Content.Intent GetPickVideoUI() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Android.Content.Intent</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Gets a UI object for the system video picker UI.</summary>
+        <returns>A UI object for you to display. <see cref="T:Android.Content.Intent" /> on Android, <see cref="T:Xamarin.Media.MediaPickerController" /> on iOS.</returns>
+        <remarks>
+          <para>This method is only present on the iOS and Android versions of Xamarin.Mobile.</para>
+        </remarks>
+        <example>
+          <para>
+            On Android, this method returns an <see cref="T:Android.Content.Intent" /> to be used with <see cref="M:Android.App.Activity.StartActivityForResult" />.
+          </para>
+          <code language="C#"><![CDATA[
+void PickVideo()
+{
+  var picker = new MediaPicker (this);
+  Intent intent = picker.GetPickVideoUI();
+  StartActivityForResult (intent, 1);
+}
+
+protected override void OnActivityResult (int requestCode, Result resultCode, Intent data)
+{
+  // Get our media file from the result
+  data.GetMediaFileExtraAsync (this).ContinueWith (t => {
+    MediaFile file = t.Result;
+    // Do stuff with file
+  }, TaskScheduler.FromCurrentSynchronizationContext());
+}
+]]></code>
+        </example>
+        <example>
+          <para>
+            On iOS, this method returns a <see cref="T:Xamarin.Media.MediaPickerController" />. Use <see cref="M:Xamarin.Media.MediaPickerController.GetResultAsync" />
+            to get the result. As you are controlling the display of the view controller, you must also dismiss it yourself.
+          </para>
+          <code language="C#"><![CDATA[
+async Task PickVideo()
+{
+  var picker = new MediaPicker();
+  MediaPickerController mediaController = picker.GetPickVideoUI();
+
+  // Present the media controller
+  topController.PresentViewController (mediaController, true, null);
+
+  // Get our result
+  MediaFile file = await mediaController.GetResultAsync();
+
+  // Dismiss the media controller.
+  mediaController.DismissViewController (true, null);
+
+  // Do stuff with file
+}
+]]></code>
+        </example>
+        <altmember cref="M:Xamarin.Media.MediaFileExtensions.GetMediaFileExtraAsync" />
+        <altmember cref="M:Xamarin.Media.MediaPickerController.GetResultAsync" />
+      </Docs>
+    </Member>
+    <Member MemberName="GetTakePhotoUI">
+      <MemberSignature Language="C#" Value="public Android.Content.Intent GetTakePhotoUI (Xamarin.Media.StoreCameraMediaOptions options);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Android.Content.Intent GetTakePhotoUI(class Xamarin.Media.StoreCameraMediaOptions options) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Android.Content.Intent</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="options" Type="Xamarin.Media.StoreCameraMediaOptions" />
+      </Parameters>
+      <Docs>
+        <param name="options">Options such as which camera to default to and where to store the photo.</param>
+        <summary>Gets a UI object for the system photo camera UI.</summary>
+        <returns>A UI object for you to display. <see cref="T:Android.Content.Intent" /> on Android, <see cref="T:Xamarin.Media.MediaPickerController" /> on iOS.</returns>
+        <remarks>
+          <para>This method is only present on the iOS and Android versions of Xamarin.Mobile.</para>
+        </remarks>
+        <example>
+          <para>
+            On Android, this method returns an <see cref="T:Android.Content.Intent" /> to be used with <see cref="M:Android.App.Activity.StartActivityForResult" />.
+          </para>
+          <code language="C#"><![CDATA[
+void TakePhoto()
+{
+  var picker = new MediaPicker (this);
+  Intent intent = picker.GetTakePhotoUI (new StoreCameraMediaOptions {
+	  Name = "test.jpg",
+	  Directory = "MediaPickerSample"
+	});
+  
+  StartActivityForResult (intent, 1);
+}
+
+protected override void OnActivityResult (int requestCode, Result resultCode, Intent data)
+{
+  // Get our media file from the result
+  data.GetMediaFileExtraAsync (this).ContinueWith (t => {
+    MediaFile file = t.Result;
+    // Do stuff with file
+  }, TaskScheduler.FromCurrentSynchronizationContext());
+}
+]]></code>
+        </example>
+        <example>
+          <para>
+            On iOS, this method returns a <see cref="T:Xamarin.Media.MediaPickerController" />. Use <see cref="M:Xamarin.Media.MediaPickerController.GetResultAsync" />
+            to get the result. As you are controlling the display of the view controller, you must also dismiss it yourself.
+          </para>
+          <code language="C#"><![CDATA[
+async Task TakePhoto()
+{
+  var picker = new MediaPicker();
+  MediaPickerController mediaController = picker.GetTakePhotoUI (new StoreCameraMediaOptions {
+	  Name = "test.jpg",
+	  Directory = "MediaPickerSample"
+	});
+
+  // Present the media controller
+  topController.PresentViewController (mediaController, true, null);
+
+  // Get our result
+  MediaFile file = await mediaController.GetResultAsync();
+
+  // Dismiss the media controller.
+  mediaController.DismissViewController (true, null);
+
+  // Do stuff with file
+}
+]]></code>
+        </example>
+        <altmember cref="M:Xamarin.Media.MediaFileExtensions.GetMediaFileExtraAsync" />
+        <altmember cref="M:Xamarin.Media.MediaPickerController.GetResultAsync" />
+      </Docs>
+    </Member>
+    <Member MemberName="GetTakeVideoUI">
+      <MemberSignature Language="C#" Value="public Android.Content.Intent GetTakeVideoUI (Xamarin.Media.StoreVideoOptions options);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Android.Content.Intent GetTakeVideoUI(class Xamarin.Media.StoreVideoOptions options) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Android.Content.Intent</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="options" Type="Xamarin.Media.StoreVideoOptions" />
+      </Parameters>
+      <Docs>
+        <param name="options">Options such as which camera to default to, quality, length and where to store the photo.</param>
+        <summary>Gets a UI object for the system photo camera UI.</summary>
+        <returns>
+          A UI object for you to display. <see cref="T:Android.Content.Intent" /> on Android, <see cref="T:Xamarin.Media.MediaPickerController" /> on iOS.
+        </returns>
+        <remarks>
+          <para>This method is only present on the iOS and Android versions of Xamarin.Mobile.</para>
+        </remarks>
+        <example>
+          <para>
+            On Android, this method returns an <see cref="T:Android.Content.Intent" /> to be used with <see cref="M:Android.App.Activity.StartActivityForResult" />.
+          </para>
+          <code language="C#"><![CDATA[
+void TakeVideo()
+{
+  var picker = new MediaPicker (this);
+  Intent intent = picker.GetTakeVideoUI (new StoreVideoOptions {
+	  Quality = VideoQuality.Medium,
+	  DesiredLength = TimeSpan.FromSeconds (10),
+	  Directory = "MediaPickerSample",
+	  Name = "test.mp4"
+  });
+  
+  StartActivityForResult (intent, 1);
+}
+
+protected override void OnActivityResult (int requestCode, Result resultCode, Intent data)
+{
+  // Get our media file from the result
+  data.GetMediaFileExtraAsync (this).ContinueWith (t => {
+    MediaFile file = t.Result;
+    // Do stuff with file
+  }, TaskScheduler.FromCurrentSynchronizationContext());
+}
+]]></code>
+        </example>
+        <example>
+          <para>
+            On iOS, this method returns a <see cref="T:Xamarin.Media.MediaPickerController" />. Use <see cref="M:Xamarin.Media.MediaPickerController.GetResultAsync" />
+            to get the result. As you are controlling the display of the view controller, you must also dismiss it yourself.
+          </para>
+          <code language="C#"><![CDATA[
+async Task TakeVideo()
+{
+  var picker = new MediaPicker();
+  MediaPickerController mediaController = picker.GetTakeVideoUI (new StoreVideoOptions {
+	  Quality = VideoQuality.Medium,
+	  DesiredLength = TimeSpan.FromSeconds (10),
+	  Directory = "MediaPickerSample",
+	  Name = "test.mp4"
+  });
+
+  // Present the media controller
+  topController.PresentViewController (mediaController, true, null);
+
+  // Get our result
+  MediaFile file = await mediaController.GetResultAsync();
+
+  // Dismiss the media controller.
+  mediaController.DismissViewController (true, null);
+
+  // Do stuff with file
+}
+]]></code>
+        </example>
+      </Docs>
+    </Member>
+    <Member MemberName="IsCameraAvailable">
+      <MemberSignature Language="C#" Value="public bool IsCameraAvailable { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool IsCameraAvailable" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets whether a camera is available on the device.</summary>
+        <value>
+          <c>true</c> if a camera is present and available, <c>false</c> otherwise.</value>
+        <remarks>
+          <para>
+				Check this property before using <see cref="M:Xamarin.Media.MediaPicker.TakeVideoAsync" /> or 
+				<see cref="M:Xamarin.Media.MediaPicker.TakePhotoAsync" />, as they will throw <see cref="T:System.NotSupportedException" />
+				if it is <c>false</c>.
+			</para>
+        </remarks>
+        <altmember cref="M:Xamarin.Media.MediaPicker.TakePhotoAsync" />
+        <altmember cref="M:Xamarin.Media.MediaPicker.TakeVideoAsync" />
+      </Docs>
+    </Member>
+    <Member MemberName="PhotosSupported">
+      <MemberSignature Language="C#" Value="public bool PhotosSupported { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool PhotosSupported" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets whether picking or taking photos is supported.</summary>
+        <value>
+          <c>true</c> if photos are supported, <c>false</c> otherwise.</value>
+        <remarks>
+          <para>
+				Check this property before using <see cref="M:Xamarin.Media.MediaPicker.PickPhotoAsync" /> or
+				<see cref="M:Xamarin.Media.MediaPicker.TakePhotoAsync" />, as they will throw <see cref="T:System.NotSupportedException" />
+				if it is <c>false</c>.
+			</para>
+        </remarks>
+        <altmember cref="M:Xamarin.Media.MediaPicker.TakePhotoAsync" />
+        <altmember cref="M:Xamarin.Media.MediaPicker.PickPhotoAsync" />
+      </Docs>
+    </Member>
+    <Member MemberName="PickPhotoAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;Xamarin.Media.MediaFile&gt; PickPhotoAsync ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;class Xamarin.Media.MediaFile&gt; PickPhotoAsync() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.Obsolete("On Android, use GetPickPhotoUI instead.")</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;Xamarin.Media.MediaFile&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Begins an asynchronous operation to pick a photo from the device's gallery by launching the system UI for this.</summary>
+        <returns>A <see cref="T:System.Threading.Tasks.Task{T}" /> of <see cref="T:Xamarin.Media.MediaFile" />.</returns>
+        <remarks>
+          <para>
+				When picking media, the returned file should be considered temporary. If you wish to persist this file, you should copy
+				the file before calling <see cref="M:Xamarin.Media.MediaFile.Dispose" />. Once you've persisted the file, or finished
+				viewing it, calling <see cref="M:Xamarin.Media.MediaFile.Dispose" /> will cleanup any temporary files that may have been
+				created.
+			</para>
+          <para>
+				Avoid blocking on the resulting task (by using <see cref="P:System.Threading.Tasks.Task{T}.Result" />
+				or <see cref="M:System.Threading.Tasks.Task.Wait" />). As this operation invokes the system UI for picking a photo,
+				the operation occurs on the current UI thread and may deadlock the application. Instead, use
+				<see cref="M:System.Threading.Tasks.Tasks.ContinueWith" /> to handle the result of the operation.
+			</para>
+          <para>
+				If the user cancels the operation, the returned task will continue with <see cref="P:System.Threading.Tasks.Task.IsCanceled" />
+				as <c>true</c>. If an error occured during the operation, <see cref="P:System.Threading.Tasks.Task.IsFaulted" /> will
+				be <c>true</c> and <see cref="P:System.Threading.Tasks.Task.Exception" /> will contain the errors. It's important to check
+				for any exceptions as otherwise the exception will be rethrown when the task's finalizer runs.
+			</para>
+          <para>
+				In the event that the system provides media that MediaPicker can not find or understand, a <see cref="T:Xamarin.Media.MediaFileNotFoundException" />
+				will be raised with the original path to the media supplied by the system. This is only a concern on Android where any camera or gallery app can
+				be used to retrieve media.
+			</para>
+        </remarks>
+        <exception cref="T:System.NotSupportedException">
+          <see cref="P:Xamarin.Media.MediaPicker.PhotosAvailable" /> is <c>false</c>.
+		  </exception>
+        <exception cref="T:System.InvalidOperationException">
+			  Another async operation is pending on this <see cref="T:Xamarin.Media.MediaPicker" /></exception>
+      </Docs>
+    </Member>
+    <Member MemberName="PickVideoAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;Xamarin.Media.MediaFile&gt; PickVideoAsync ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;class Xamarin.Media.MediaFile&gt; PickVideoAsync() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.Obsolete("On Android, use GetPickVideoUI instead.")</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;Xamarin.Media.MediaFile&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Begins an asynchronous operation to pick a video from the device's gallery by launching the system UI for this.</summary>
+        <returns>
+				A <see cref="T:System.Threading.Tasks.Task{T}" /> of <see cref="T:Xamarin.Media.MediaFile" />.
+			</returns>
+        <remarks>
+          <para>
+					When picking media, the returned file should be considered temporary. If you wish to persist this file, you should copy
+					the file before calling <see cref="M:Xamarin.Media.MediaFile.Dispose" />. Once you've persisted the file, or finished
+					viewing it, calling <see cref="M:Xamarin.Media.MediaFile.Dispose" /> will cleanup any temporary files that may have been
+					created.
+				</para>
+          <para>
+					Avoid blocking on the resulting task (by using <see cref="P:System.Threading.Tasks.Task{T}.Result" />
+					or <see cref="M:System.Threading.Tasks.Task.Wait" />). As this operation invokes the system UI for picking a video,
+					the operation occurs on the current UI thread and may deadlock the application. Instead, use
+					<see cref="M:System.Threading.Tasks.Tasks.ContinueWith" /> to handle the result of the operation.
+				</para>
+          <para>
+					If the user cancels the operation, the returned task will continue with <see cref="P:System.Threading.Tasks.Task.IsCanceled" />
+					as <c>true</c>. If an error occured during the operation, <see cref="P:System.Threading.Tasks.Task.IsFaulted" /> will
+					be <c>true</c> and <see cref="P:System.Threading.Tasks.Task.Exception" /> will contain the errors. It's important to check
+					for any exceptions as otherwise the exception will be rethrown when the task's finalizer runs.
+				</para>
+          <para>
+					In the event that the system provides media that MediaPicker can not find or understand, a <see cref="T:Xamarin.Media.MediaFileNotFoundException" />
+					will be raised with the original path to the media supplied by the system. This is only a concern on Android where any camera or gallery app can
+					be used to retrieve media.
+				</para>
+        </remarks>
+        <exception cref="T:System.NotSupportedException">
+          <see cref="P:Xamarin.Media.MediaPicker.PhotosAvailable" /> is <c>false</c>.
+			</exception>
+        <exception cref="T:System.InvalidOperationException">
+				Another async operation is pending on this <see cref="T:Xamarin.Media.MediaPicker" /></exception>
+      </Docs>
+    </Member>
+    <Member MemberName="TakePhotoAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;Xamarin.Media.MediaFile&gt; TakePhotoAsync (Xamarin.Media.StoreCameraMediaOptions options);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;class Xamarin.Media.MediaFile&gt; TakePhotoAsync(class Xamarin.Media.StoreCameraMediaOptions options) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.Obsolete("On Android, use GetTakePhotoUI instead.")</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;Xamarin.Media.MediaFile&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="options" Type="Xamarin.Media.StoreCameraMediaOptions" />
+      </Parameters>
+      <Docs>
+        <param name="options">Options such as which camera to default to and where to store the photo.</param>
+        <summary>Begins an asynchronous operation to take a new photo and store it in a file by launching the system UI for this.</summary>
+        <returns>
+				A <see cref="T:System.Threading.Tasks.Task{T}" /> of <see cref="T:Xamarin.Media.MediaFile" />.
+			</returns>
+        <remarks>
+          <para>
+					Avoid blocking on the resulting task (by using <see cref="P:System.Threading.Tasks.Task{T}.Result" />
+					or <see cref="M:System.Threading.Tasks.Task.Wait" />). As this operation invokes the system UI for taking photos,
+					the operation occurs on the current UI thread and may deadlock the application. Instead, use <c>await</c> or
+					<see cref="M:System.Threading.Tasks.Tasks.ContinueWith" /> to handle the result of the operation.
+				</para>
+          <para>
+					If the user cancels the operation, the returned task will continue with <see cref="P:System.Threading.Tasks.Task.IsCanceled" />
+					as <c>true</c>. If an error occured during the operation, <see cref="P:System.Threading.Tasks.Task.IsFaulted" /> will
+					be <c>true</c> and <see cref="P:System.Threading.Tasks.Task.Exception" /> will contain the errors. It's important to check
+					for any exceptions as otherwise the exception will be rethrown when the task's finalizer runs.
+				</para>
+          <para>
+					In the event that the system provides media that MediaPicker can not find or understand, a <see cref="T:Xamarin.Media.MediaFileNotFoundException" />
+					will be raised with the original path to the media supplied by the system. This is only a concern on Android where any camera or gallery app can
+					be used to retrieve media.
+				</para>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="options" /> is <c>null</c>.
+			</exception>
+        <exception cref="T:System.ArgumentException">
+				One of the members of <paramref name="options" /> has an invalid value.
+			</exception>
+        <exception cref="T:System.NotSupportedException">
+          <see cref="P:Xamarin.Media.MediaPicker.IsCameraAvailable" /> or <see cref="P:Xamarin.Media.MediaPicker.PhotosAvailable" />
+				is <c>false</c>.
+			</exception>
+        <exception cref="T:System.InvalidOperationException">
+				Another async operation is pending on this <see cref="T:Xamarin.Media.MediaPicker" /></exception>
+        <altmember cref="T:Xamarin.Media.StoreCameraMediaOptions" />
+      </Docs>
+    </Member>
+    <Member MemberName="TakeVideoAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;Xamarin.Media.MediaFile&gt; TakeVideoAsync (Xamarin.Media.StoreVideoOptions options);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;class Xamarin.Media.MediaFile&gt; TakeVideoAsync(class Xamarin.Media.StoreVideoOptions options) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.Obsolete("On Android, use GetTakeVideoUI instead.")</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;Xamarin.Media.MediaFile&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="options" Type="Xamarin.Media.StoreVideoOptions" />
+      </Parameters>
+      <Docs>
+        <param name="options">Options such as which camera to default to, quality, length and where to store the photo.</param>
+        <summary>Begins an asynchronous operation to record a new video and store it to a file by launching the system UI for this.</summary>
+        <returns>
+				A <see cref="T:System.Threading.Tasks.Task{T}" /> of <see cref="T:Xamarin.Media.MediaFile" />.
+			</returns>
+        <remarks>
+          <para>
+					Avoid blocking on the resulting task (by using <see cref="P:System.Threading.Tasks.Task{T}.Result" />
+					or <see cref="M:System.Threading.Tasks.Task.Wait" />). As this operation invokes the system UI for recording video,
+					the operation occurs on the current UI thread and may deadlock the application. Instead, use <c>await</c> or
+					<see cref="M:System.Threading.Tasks.Tasks.ContinueWith" /> to handle the result of the operation.
+				</para>
+          <para>
+					If the user cancels the operation, the returned task will continue with <see cref="P:System.Threading.Tasks.Task.IsCanceled" />
+					as <c>true</c>. If an error occured during the operation, <see cref="P:System.Threading.Tasks.Task.IsFaulted" /> will
+					be <c>true</c> and <see cref="P:System.Threading.Tasks.Task.Exception" /> will contain the errors. It's important to check
+					for any exceptions as otherwise the exception will be rethrown when the task's finalizer runs.
+				</para>
+          <para>
+					In the event that the system provides media that MediaPicker can not find or understand, a <see cref="T:Xamarin.Media.MediaFileNotFoundException" />
+					will be raised with the original path to the media supplied by the system. This is only a concern on Android where any camera or gallery app can
+					be used to retrieve media.
+				</para>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="options" /> is <c>null</c>.
+			</exception>
+        <exception cref="T:System.ArgumentException">
+				One of the members of <paramref name="options" /> has an invalid value.
+			</exception>
+        <exception cref="T:System.NotSupportedException">
+          <see cref="P:Xamarin.Media.MediaPicker.IsCameraAvailable" /> or <see cref="P:Xamarin.Media.MediaPicker.VideosAvailable" />
+				is <c>false</c>.
+			</exception>
+        <exception cref="T:System.InvalidOperationException">
+				Another async operation is pending on this <see cref="T:Xamarin.Media.MediaPicker" /></exception>
+      </Docs>
+    </Member>
+    <Member MemberName="VideosSupported">
+      <MemberSignature Language="C#" Value="public bool VideosSupported { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool VideosSupported" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets whether picking or taking videos is supported.</summary>
+        <value>
+          <c>true</c> if videos are supported, <c>false</c> otherwise.
+			</value>
+        <remarks>
+          <para>
+					Check this property before using <see cref="M:Xamarin.Media.MediaPicker.PickVideoAsync" /> or
+					<see cref="M:Xamarin.Media.MediaPicker.TakeVideoAsync" />, as they will throw <see cref="T:System.NotSupportedException" />
+					if it is <c>false</c>.
+				</para>
+          <para>
+					This currently always returns <c>false</c> on Windows Phone.
+				</para>
+        </remarks>
+        <altmember cref="M:Xamarin.Media.MediaPicker.TakeVideoAsync" />
+        <altmember cref="M:Xamarin.Media.MediaPicker.PickVideoAsync" />
+      </Docs>
+    </Member>
+  </Members>
+</Type>

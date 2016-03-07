@@ -1,0 +1,92 @@
+<Type Name="RelationshipType" FullName="Xamarin.Contacts.RelationshipType">
+  <TypeSignature Language="C#" Value="public enum RelationshipType" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed RelationshipType extends System.Enum" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.Mobile</AssemblyName>
+    <AssemblyVersion>0.2.0.0</AssemblyVersion>
+    <AssemblyVersion>0.3.0.0</AssemblyVersion>
+    <AssemblyVersion>0.4.0.0</AssemblyVersion>
+    <AssemblyVersion>0.5.0.0</AssemblyVersion>
+    <AssemblyVersion>0.5.1.0</AssemblyVersion>
+    <AssemblyVersion>0.6.1.0</AssemblyVersion>
+    <AssemblyVersion>0.6.2.0</AssemblyVersion>
+    <AssemblyVersion>0.7.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Docs>
+    <summary>Represents the type of a relationship.</summary>
+    <remarks>
+      <para>
+			Only the common subset of relationships across all three platforms (iOS, Android and Windows Phone) is present.
+			Any relationship types that do not fall under specific categorizations will be defined as
+			<see cref="F:Xamarin.Contacts.RelationshipType.Other" /></para>
+    </remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="Child">
+      <MemberSignature Language="C#" Value="Child" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Contacts.RelationshipType Child = int32(1)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.2.0.0</AssemblyVersion>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Contacts.RelationshipType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>A child of the contact.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Other">
+      <MemberSignature Language="C#" Value="Other" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Contacts.RelationshipType Other = int32(2)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.2.0.0</AssemblyVersion>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Contacts.RelationshipType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>An other type of relationship with the contact.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="SignificantOther">
+      <MemberSignature Language="C#" Value="SignificantOther" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Contacts.RelationshipType SignificantOther = int32(0)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.2.0.0</AssemblyVersion>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Contacts.RelationshipType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>A spouse, partner, friends or anyone else significant to the contact.</summary>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

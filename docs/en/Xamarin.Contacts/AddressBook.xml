@@ -1,0 +1,355 @@
+<Type Name="AddressBook" FullName="Xamarin.Contacts.AddressBook">
+  <TypeSignature Language="C#" Value="public sealed class AddressBook : System.Collections.Generic.IEnumerable&lt;Xamarin.Contacts.Contact&gt;, System.Linq.IQueryable&lt;Xamarin.Contacts.Contact&gt;" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit AddressBook extends System.Object implements class System.Collections.Generic.IEnumerable`1&lt;class Xamarin.Contacts.Contact&gt;, class System.Collections.IEnumerable, class System.Linq.IQueryable, class System.Linq.IQueryable`1&lt;class Xamarin.Contacts.Contact&gt;" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.Mobile</AssemblyName>
+    <AssemblyVersion>0.2.0.0</AssemblyVersion>
+    <AssemblyVersion>0.3.0.0</AssemblyVersion>
+    <AssemblyVersion>0.4.0.0</AssemblyVersion>
+    <AssemblyVersion>0.5.0.0</AssemblyVersion>
+    <AssemblyVersion>0.5.1.0</AssemblyVersion>
+    <AssemblyVersion>0.6.1.0</AssemblyVersion>
+    <AssemblyVersion>0.6.2.0</AssemblyVersion>
+    <AssemblyVersion>0.7.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces>
+    <Interface>
+      <InterfaceName>System.Collections.Generic.IEnumerable&lt;Xamarin.Contacts.Contact&gt;</InterfaceName>
+    </Interface>
+    <Interface>
+      <InterfaceName>System.Linq.IQueryable&lt;Xamarin.Contacts.Contact&gt;</InterfaceName>
+    </Interface>
+  </Interfaces>
+  <Docs>
+    <summary>Represents the address book of the user.</summary>
+    <remarks>
+      <para>
+				For storing and retrieving contacts, use the most uniquely identifying information for a contact
+				that is available, such as mobile phone numbers or personal email addresses. Even for platforms
+				that provide <see cref="P:Xamarin.Contacts.Contact.Id" />, it is not neccessarily stable long term,
+				as records can be removed and readded or merged.
+			</para>
+    </remarks>
+    <example>
+      <para>
+			This example shows how you can retrieve all contacts with the first name of
+			"Eric" and has a phone listed. Then it iterates through the contacts, making
+			a list of each person and their phones.
+		</para>
+      <code language="C#"><![CDATA[
+var abook = new AddressBook();
+abook.RequestPermissions().ContinueWith (t =>
+{
+	if (!t.Result)
+		return; // Permission denied
+
+	var builder = new StringBuilder();
+	
+	// Full LINQ support
+	foreach (Contact c in abook.Where (c => c.FirstName == "Eric" && c.Phones.Any()))
+	{
+		builder.AppendLine (c.DisplayName);
+		foreach (Phone p in c.Phones)
+			builder.AppendLine (String.Format ("{0}: {1}", p.Label, p.Number));
+
+		builder.AppendLine();
+	}
+	
+	contacts.Text = builder.ToString(); // Update UI
+	
+}, TaskScheduler.FromCurrentSynchronizationContext()); // Ensure we're on the UI Thread
+			]]></code>
+    </example>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public AddressBook ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.2.0.0</AssemblyVersion>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>
+          Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.AddressBook" /> class.
+        </summary>
+        <remarks>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public AddressBook (Android.Content.Context context);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class Android.Content.Context context) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.2.0.0</AssemblyVersion>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="context" Type="Android.Content.Context" />
+      </Parameters>
+      <Docs>
+        <param name="context">The <see cref="T:Android.Content.Context" /> to use to retrieve contacts.</param>
+        <summary>Constructs and initializes a new instance of the <see cref="T:Xamarin.Contacts.AddressBook" /> class.</summary>
+        <remarks>Available only on Android.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AggregateContactsSupported">
+      <MemberSignature Language="C#" Value="public bool AggregateContactsSupported { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool AggregateContactsSupported" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.2.0.0</AssemblyVersion>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets whether aggregated contacts are supported.</summary>
+        <value>
+          <c>true</c> if aggregated contacts are supported, <c>false</c> otherwise.
+			</value>
+        <remarks>
+          <para>This will return <c>true</c> on Android and Windows Phone, <c>false</c> on iOS.</para>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetEnumerator">
+      <MemberSignature Language="C#" Value="public System.Collections.Generic.IEnumerator&lt;Xamarin.Contacts.Contact&gt; GetEnumerator ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Collections.Generic.IEnumerator`1&lt;class Xamarin.Contacts.Contact&gt; GetEnumerator() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.2.0.0</AssemblyVersion>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Collections.Generic.IEnumerator&lt;Xamarin.Contacts.Contact&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Returns an enumerator that iterates through the <see href="T:Xamarin.Contacts.AddressBook" />.</summary>
+        <returns>An enumerator for the <see cref="T:Xamarin.Contacts.AddressBook" />.</returns>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="IsReadOnly">
+      <MemberSignature Language="C#" Value="public bool IsReadOnly { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool IsReadOnly" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.2.0.0</AssemblyVersion>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets whether this address book is read-only.</summary>
+        <value>
+          <c>true</c> if this address book is read-only, <c>false</c> otherwise.</value>
+        <remarks>Currently this will always return <c>true</c>.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Load">
+      <MemberSignature Language="C#" Value="public Xamarin.Contacts.Contact Load (string id);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Xamarin.Contacts.Contact Load(string id) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.2.0.0</AssemblyVersion>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Contacts.Contact</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="id" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="id">The <see cref="P:Xamarin.Contacts.Contact.Id" /> of the contact to load.</param>
+        <summary>Attempts to load a contact for the specified <paramref name="id" />.</summary>
+        <returns>The <see cref="T:Xamarin.Contacts.Contact" /> if found, <c>null</c> otherwise.</returns>
+        <remarks>
+          <para>
+				If <see cref="P:Xamarin.Contacts.AddressBook.PreferContactAggregation" /> and
+				<see cref="P:Xamarin.Contacts.AddressBook.AggregateContactsSupported" /> are <c>true</c>,
+				this will attempt to load the contact using <paramref name="id" /> as an aggregate ID.
+				You can use <see cref="P:Xamarin.Contacts.Contact.IsAggregate" /> to determine whether the
+				<see cref="P:Xamarin.Contacts.Contact.Id" /> is an aggregate ID or not when you originally
+				obtained the contact.
+			</para>
+          <para>
+				On Android, with <see cref="P:Xamarin.Contacts.AddressBook.PreferContactAggregation" /> enabled,
+				this can be used to retrieve <see cref="T:Xamarin.Contacts.Contact" /> instances from an Android
+				contact lookup key.
+			</para>
+        </remarks>
+        <altmember cref="P:Xamarin.Contacts.Contact.Id" />
+        <altmember cref="P:Xamarin.Contacts.Contact.IsAggregate" />
+        <altmember cref="P:Xamarin.Contacts.AddressBook.PreferContactAggregation" />
+        <exception cref="T:System.NotSupportedException">
+          <see cref="P:Xamarin.Contacts.AddressBook.LoadSupported" /> is <c>false</c>.
+        </exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="id" /> is <c>null</c>.
+        </exception>
+        <exception cref="T:System.ArgumentException">
+          <para>
+            <paramref name="id" /> is empty.</para>
+        </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="LoadSupported">
+      <MemberSignature Language="C#" Value="public bool LoadSupported { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool LoadSupported" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.2.0.0</AssemblyVersion>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets whether <see cref="M:Xamarin.Contacts.AddressBook.Load" /> is supported or not.</summary>
+        <value>
+          <c>true</c> on iOS and Android, <c>false</c> on Windows Phone.</value>
+        <remarks>Whether or not <see cref="M:Xamarin.Contacts.AddressBook.Load" /> is supported. Currently Windows Phone does not support this.</remarks>
+        <altmember cref="M:Xamarin.Contacts.AddressBook.Load" />
+      </Docs>
+    </Member>
+    <Member MemberName="PreferContactAggregation">
+      <MemberSignature Language="C#" Value="public bool PreferContactAggregation { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool PreferContactAggregation" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.2.0.0</AssemblyVersion>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets or sets whether to prefer contact aggregation.</summary>
+        <value>Whether or not to prefer contact aggregation, <c>false</c> by default.</value>
+        <remarks>
+          <para>
+				Currently, only Android and Windows Phone support contact aggregation.
+				As this may change in the future, you can use <see cref="P:Xamarin.Contacts.AddressBook.AggregateContactsSupported" />
+				to determine whether this will actually enable contact aggregation or not.
+			</para>
+        </remarks>
+        <altmember cref="P:Xamarin.Contacts.AddressBook.AggregateContactsSupported" />
+        <altmember cref="P:Xamarin.Contacts.AddressBook.SingleContactsSupported" />
+      </Docs>
+    </Member>
+    <Member MemberName="RequestPermission">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;bool&gt; RequestPermission ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;bool&gt; RequestPermission() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;System.Boolean&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Requests permission to access the user's contacts.</summary>
+        <returns>A task who's result will be <c>true</c> if given access to the user's contacts, <c>false</c> otherwise.</returns>
+        <remarks>
+          <para>
+                On iOS, calling this method is required before using the <see cref="T:Xamarin.Contacts.AddressBook" /> instance.
+                For it's first call the user will be prompted for permission to access their contacts. On Android and Windows Phone, calling this method will check the manifest based permissions for contacts
+                access on those platforms.
+            </para>
+          <para>
+                It's recommend that you call this method before accessing contacts regardless of platform.
+            </para>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SingleContactsSupported">
+      <MemberSignature Language="C#" Value="public bool SingleContactsSupported { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool SingleContactsSupported" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.2.0.0</AssemblyVersion>
+        <AssemblyVersion>0.3.0.0</AssemblyVersion>
+        <AssemblyVersion>0.4.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.0.0</AssemblyVersion>
+        <AssemblyVersion>0.5.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.1.0</AssemblyVersion>
+        <AssemblyVersion>0.6.2.0</AssemblyVersion>
+        <AssemblyVersion>0.7.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets whether individual, non-aggregated contacts are supported.</summary>
+        <value>
+          <c>true</c> if non-aggregated contacts are supported, <c>false</c> otherwise.</value>
+        <remarks>
+          <para>This will return <c>true</c> on iOS and Android, <c>false</c> on Windows Phone.</para>
+        </remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>
